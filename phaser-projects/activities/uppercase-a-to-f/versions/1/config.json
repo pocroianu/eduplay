@@ -1,0 +1,68 @@
+{
+  "meta": {
+    "gameId": "uppercase-a-to-f",
+    "version": "1.0.0",
+    "totalSteps": 6,
+    "gameType": "tracing",
+    "themeName": "nature",
+    "supportedLanguages": ["en", "ro"]
+  },
+  "settings": {
+    "toleranceRadius": 40,
+    "checkpointSpacing": 30,
+    "pointsPerItem": 10,
+    "showGuideLabels": true,
+    "autoAdvanceDelay": 1500
+  },
+  "items": [
+    {
+      "id": "letter-A",
+      "labelKey": "item.A",
+      "strokes": [
+        { "path": "M30,180 L100,20 L170,180", "checkpoints": 8 },
+        { "path": "M60,120 L140,120", "checkpoints": 4 }
+      ]
+    },
+    {
+      "id": "letter-B",
+      "labelKey": "item.B",
+      "strokes": [
+        { "path": "M40,20 L40,180", "checkpoints": 5 },
+        { "path": "M40,20 C130,20 130,100 40,100", "checkpoints": 6 },
+        { "path": "M40,100 C140,100 140,180 40,180", "checkpoints": 6 }
+      ]
+    },
+    {
+      "id": "letter-C",
+      "labelKey": "item.C",
+      "strokes": [
+        { "path": "M160,40 C100,0 20,40 20,100 C20,160 100,200 160,160", "checkpoints": 8 }
+      ]
+    },
+    {
+      "id": "letter-D",
+      "labelKey": "item.D",
+      "strokes": [
+        { "path": "M40,20 L40,180", "checkpoints": 5 },
+        { "path": "M40,20 C160,20 160,180 40,180", "checkpoints": 8 }
+      ]
+    },
+    {
+      "id": "letter-E",
+      "labelKey": "item.E",
+      "strokes": [
+        { "path": "M140,20 L40,20 L40,180 L140,180", "checkpoints": 8 },
+        { "path": "M40,100 L120,100", "checkpoints": 4 }
+      ]
+    },
+    {
+      "id": "letter-F",
+      "labelKey": "item.F",
+      "strokes": [
+        { "path": "M140,20 L40,20 L40,180", "checkpoints": 7 },
+        { "path": "M40,100 L120,100", "checkpoints": 4 }
+      ]
+    }
+  ],
+  "questions": []
+}

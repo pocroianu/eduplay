@@ -1,0 +1,11 @@
+{
+  "meta": { "title": "Shape Patterns" },
+  "instruction": "What comes next?",
+  "rounds": {
+    "r1": { "prompt": "What comes next?" },
+    "r2": { "prompt": "What comes next?" },
+    "r3": { "prompt": "What comes next?" },
+    "r4": { "prompt": "Finish the pattern" },
+    "r5": { "prompt": "Finish the pattern" }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "meta": { "title": "Animal Sounds" },
+  "instruction": "Repeat the sequence",
+  "watchPrompt": "Watch and listen",
+  "repeatPrompt": "Now you!",
+  "progressTemplate": "Round {current} of {total} • Length {length}",
+  "pads": {
+    "dog":  { "label": "dog" },
+    "cat":  { "label": "cat" },
+    "cow":  { "label": "cow" },
+    "duck": { "label": "duck" }
+  }
+}

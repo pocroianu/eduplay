@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Radii & shadows</title>
+<link rel="stylesheet" href="_preview.css">
+<style>
+  body { padding: 24px 28px; background: var(--ss-surface-2); }
+  .section + .section { margin-top: 18px; }
+  .specimens { display: flex; gap: 14px; }
+  .chip {
+    flex: 1; min-width: 0; height: 78px;
+    background: #fff;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    padding: 10px 12px;
+    font-family: var(--ss-font-mono); font-size: 11px;
+    color: var(--ss-fg-muted);
+  }
+  .shadow-chip { background: #fff; border-radius: 12px; }
+</style>
+</head>
+<body>
+  <div class="section">
+    <div class="eyebrow" style="margin-bottom:8px">Radii</div>
+    <div class="specimens">
+      <div class="chip" style="border-radius:4px"><span>xs</span><span>4</span></div>
+      <div class="chip" style="border-radius:6px"><span>sm</span><span>6</span></div>
+      <div class="chip" style="border-radius:8px"><span>md</span><span>8</span></div>
+      <div class="chip" style="border-radius:12px"><span>lg</span><span>12</span></div>
+      <div class="chip" style="border-radius:16px"><span>xl</span><span>16</span></div>
+      <div class="chip" style="border-radius:999px"><span>pill</span><span>∞</span></div>
+    </div>
+  </div>
+  <div class="section">
+    <div class="eyebrow" style="margin-bottom:8px">Shadows</div>
+    <div class="specimens">
+      <div class="chip shadow-chip" style="box-shadow:var(--ss-shadow-xs)"><span>xs</span></div>
+      <div class="chip shadow-chip" style="box-shadow:var(--ss-shadow-sm)"><span>sm · card</span></div>
+      <div class="chip shadow-chip" style="box-shadow:var(--ss-shadow-md)"><span>md · hover</span></div>
+      <div class="chip shadow-chip" style="box-shadow:var(--ss-shadow-lg)"><span>lg · modal lift</span></div>
+      <div class="chip shadow-chip" style="box-shadow:var(--ss-shadow-popover)"><span>popover</span></div>
+    </div>
+  </div>
+</body>
+</html>

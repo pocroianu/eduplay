@@ -1,0 +1,28 @@
+{
+  "name": "@edu-play/game-core",
+  "version": "0.1.0",
+  "description": "Shared Phaser game infrastructure for edu-play templates",
+  "main": "src/index.ts",
+  "author": "edu-play",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24.12.0",
+    "npm": ">=11.6.2"
+  },
+  "dependencies": {
+    "@edu-play/validation": "*"
+  },
+  "peerDependencies": {
+    "phaser": "^4.1.0"
+  },
+  "scripts": {
+    "build": "tsc --noEmit",
+    "generate:activity-host": "node scripts/activityHostCatalogGenerator.js",
+    "dev:host": "npm run generate:activity-host && vite --config vite.host.config.ts",
+    "build:host": "npm run generate:activity-host && vite build --config vite.host.config.ts",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vite": "5.4.21"
+  }
+}

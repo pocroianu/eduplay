@@ -1,0 +1,27 @@
+/* Preview card base — used by every preview/*.html card.
+   Cards are sized to fit the Design System tab's ~700×var slots.
+   Strip chrome to a minimum so the swatches/specimens dominate. */
+
+@import url('../colors_and_type.css');
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--ss-surface-2);
+  font-family: var(--ss-font-sans);
+  color: var(--ss-fg);
+  -webkit-font-smoothing: antialiased;
+}
+body {
+  padding: 24px;
+  min-height: 100vh;
+}
+
+.row { display: flex; gap: 12px; align-items: center; }
+.col { display: flex; flex-direction: column; gap: 8px; }
+.wrap { display: flex; flex-wrap: wrap; gap: 12px; }
+.mono { font-family: var(--ss-font-mono); font-size: 12px; }
+.subtle { color: var(--ss-fg-subtle); font-size: 12px; }
+.muted { color: var(--ss-fg-muted); font-size: 13px; }
+.eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ss-fg-muted); }

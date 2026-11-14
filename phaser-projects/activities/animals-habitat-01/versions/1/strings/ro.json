@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "title": "Casele animalelor",
+    "description": "Sorteaza animalele la ferma sau in salbaticie!"
+  },
+  "instruction": "Trage fiecare animal la casa lui!",
+  "categories": {
+    "cat.farm": "Ferma",
+    "cat.wild": "Salbatic"
+  },
+  "items": {
+    "item.cat": "Pisica",
+    "item.goat": "Capra",
+    "item.pig": "Porc",
+    "item.lion": "Leu",
+    "item.tiger": "Tigru",
+    "item.elephant": "Elefant"
+  }
+}

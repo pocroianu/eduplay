@@ -1,0 +1,9 @@
+{
+  "activityId": "instruments-sequence-01",
+  "version": 1,
+  "renderer": {
+    "id": "repeat-sequence",
+    "version": "^1.0.0"
+  },
+  "gameId": "instruments-sequence-01"
+}

@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "strict": true,
+    "noEmit": false,
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@edu-play/runtime": ["../../../packages/runtime/src/index.ts"],
+      "@edu-play/runtime/*": ["../../../packages/runtime/src/*"]
+    },
+    "rootDir": "../../",
+    "outDir": "./dist",
+    "types": ["node"]
+  },
+  "include": [
+    "src/**/*",
+    "../../packages/game-editor/src/**/*",
+    "../../packages/runtime/src/**/*",
+    "../../multiple-choice/src/**/*",
+    "../../multiple-choice/types/json.d.ts"
+  ]
+}

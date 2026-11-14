@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Feature cards</title>
+<link rel="stylesheet" href="_preview.css">
+<style>
+  body { padding: 24px; background: #fff; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .fcard {
+    border-radius: 16px;
+    padding: 20px;
+    color: #fff;
+    display: flex; align-items: flex-start; gap: 14px;
+    min-height: 110px;
+    box-shadow: var(--ss-shadow-sm);
+    cursor: pointer;
+    transition: box-shadow 200ms;
+  }
+  .fcard:hover { box-shadow: var(--ss-shadow-md); }
+  .fcard svg { width: 36px; height: 36px; fill: #fff; flex-shrink: 0; }
+  .fcard .ttl { font: 700 18px/1.2 Lexend, sans-serif; margin: 2px 0 6px; }
+  .fcard .sub { font: 400 14px/1.4 Lexend, sans-serif; opacity: 0.92; }
+  .fcard.journal { background: #2F7A2F; }
+  .fcard.activity { background: #0E7C8C; }
+  .fcard.generate { background: #062E36; }
+  .fcard.message  { background: #fff; color: var(--ss-fg); border: 1.5px solid var(--ss-line-300); box-shadow: none; }
+  .fcard.message svg { fill: var(--ss-primary); }
+  .fcard.message .ttl { color: var(--ss-fg); }
+  .fcard.message .sub { color: var(--ss-fg-muted); }
+  .pill {
+    display: inline-block; background: rgba(255,255,255,0.18); color: #fff;
+    font: 700 10px/1 Lexend; letter-spacing: 0.06em; text-transform: uppercase;
+    padding: 4px 8px; border-radius: 999px; margin-bottom: 6px;
+  }
+</style>
+</head>
+<body>
+<div class="grid">
+  <div class="fcard journal">
+    <svg viewBox="0 0 24 24"><path d="M4 4h7v16H4zM13 4h7v16h-7z"/></svg>
+    <div><div class="ttl">Post to Journal</div>
+      <div class="sub">A portfolio with photos, videos, and more</div></div>
+  </div>
+  <div class="fcard activity">
+    <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2zM9 19h6v2H9z"/></svg>
+    <div><div class="ttl">Create Activity</div>
+      <div class="sub">With engaging multimedia responses</div></div>
+  </div>
+  <div class="fcard generate">
+    <svg viewBox="0 0 24 24"><path d="m12 2 1.6 4.8L18 8l-4 3.6L15 17l-3-2-3 2 1-5.4L6 8l4.4-1.2z"/></svg>
+    <div><span class="pill">AI Preview</span><div class="ttl">Generate Activity</div>
+      <div class="sub">From resource, topic or YouTube video</div></div>
+  </div>
+  <div class="fcard message">
+    <svg viewBox="0 0 24 24"><path d="M4 4h16v12H7l-3 3z"/></svg>
+    <div><div class="ttl">Message Family</div>
+      <div class="sub">Announcements, group, and 1:1</div></div>
+  </div>
+</div>
+</body>
+</html>

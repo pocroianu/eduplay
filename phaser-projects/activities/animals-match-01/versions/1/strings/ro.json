@@ -1,0 +1,13 @@
+{
+	"meta": {
+		"title": "Nume de animale",
+		"description": "Potriveste fiecare animal cu numele lui"
+	},
+	"questions": {},
+	"pairs": {
+		"p1.label": "Pisică",
+		"p2.label": "Broască",
+		"p3.label": "Elefant",
+		"p4.label": "Leu"
+	}
+}

@@ -1,0 +1,13 @@
+.classCardLink {
+  border-radius: var(--mantine-radius-md);
+  display: block;
+}
+
+.classCardLink:focus {
+  outline: none;
+}
+
+.classCardLink:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--color-primary) 40%, transparent);
+  outline-offset: 2px;
+}

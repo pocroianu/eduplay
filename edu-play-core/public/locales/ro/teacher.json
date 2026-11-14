@@ -1,0 +1,971 @@
+{
+  "assignments": {
+    "title": "Teme",
+    "stats": {
+      "total": "Total teme",
+      "active": "Active",
+      "overdue": "Expirate",
+      "mandatory": "Obligatorii"
+    },
+    "createNew": "Temă nouă",
+    "createFirst": "Creează prima temă",
+    "filter": {
+      "all": "Toate",
+      "active": "Active",
+      "overdue": "Expirate",
+      "mandatory": "Obligatorii"
+    },
+    "empty": {
+      "title": "Nicio temă creată",
+      "description": "Creați prima temă pentru a atribui activități elevilor sau claselor.",
+      "filtered": "Nicio temă în această categorie",
+      "filteredDescription": "Modificați filtrele pentru a vedea alte teme."
+    },
+    "unknownActivity": "Activitate necunoscută",
+    "mandatory": "Obligatoriu",
+    "edit": "Editează tema",
+    "delete": "Șterge tema",
+    "deleteConfirm": {
+      "title": "Șterge tema",
+      "message": "Sigur doriți să ștergeți această temă? Acțiunea nu poate fi anulată.",
+      "confirm": "Șterge",
+      "cancel": "Anulează"
+    },
+    "composer": {
+      "createTitle": "Temă nouă",
+      "createDescription": "Alege activitatea, publicul și termenul fără să părăsești fluxul de atribuire.",
+      "editTitle": "Editează tema",
+      "editDescription": "Actualizează termenul și regulile temei deja trimise.",
+      "activity": "Activitate",
+      "selectActivity": "Selectați o activitate",
+      "assignTo": "Atribuie la",
+      "wholeClass": "Toată clasa",
+      "individualStudent": "Elev individual",
+      "class": "Clasă",
+      "selectClass": "Selectați o clasă",
+      "student": "Elev",
+      "selectStudent": "Selectați un elev",
+      "selectStudentsHint": "Puteți selecta unul sau mai mulți elevi.",
+      "loadingStudents": "Se încarcă elevii…",
+      "dueDate": "Termen limită",
+      "dueDateHint": "Opțional. Dacă nu setați un termen, tema rămâne activă permanent.",
+      "mandatory": "Temă obligatorie",
+      "create": "Creează tema",
+      "update": "Salvează modificările",
+      "saving": "Se salvează…",
+      "cancel": "Anulează",
+      "genericError": "A apărut o eroare. Încercați din nou."
+    }
+  },
+  "dashboard": {
+    "topAppBarTitle": "Tablou de bord",
+    "header": {
+      "ariaLabel": "Panou profesor",
+      "brandSuffix": "Clasele tale",
+      "greeting": "Bună, {{name}}!",
+      "teacherFallback": "profesor",
+      "subtitleNoClass": "{{name}} · învățătoare · {{count}} elevi",
+      "subtitleClass": "{{name}} · învățătoare · {{count}} elevi · {{classes}}",
+      "classCountOne": "o clasă",
+      "classCountOther": "{{count}} clase",
+      "streakLabel": "Activi săptămâna asta",
+      "streakValue": "{{active}}/{{total}}",
+      "sendLessonCta": "Creează activitate"
+    },
+    "feed": {
+      "eyebrow": "Flux clasă · azi",
+      "filterAria": "Filtrează fluxul",
+      "filterAll": "Toate · {{count}}",
+      "filterAttention": "Atenție · {{count}}",
+      "empty": {
+        "title": "Nicio activitate de raportat azi",
+        "body": "După ce elevii încep să joace, vei vedea aici activitatea lor în timp real.",
+        "firstLessonCta": "Trimite prima activitate",
+        "noStudentsTitle": "Bun venit! Începe prin a-ți adăuga clasa",
+        "noStudentsBody": "Creează o clasă și adaugă elevi pentru a vedea activitatea lor aici.",
+        "noStudentsCta": "Creează prima clasă",
+        "attentionClearedTitle": "Niciun elev nu are nevoie de atenție acum",
+        "attentionClearedBody": "Comută pe „Toate\" pentru a vedea fluxul complet al clasei."
+      },
+      "card": {
+        "noScore": "În progres",
+        "scoreValue": "Scor {{value}}",
+        "replyCta": "Răspunde",
+        "needsResponse": "Necesită răspuns"
+      },
+      "status": {
+        "completed": "a terminat",
+        "in_progress": "lucrează la",
+        "scheduled": "are programat"
+      }
+    },
+    "classState": {
+      "eyebrow": "Clasele tale · azi",
+      "completedLine": "{{completed}} din {{total}} au activitate săptămâna aceasta",
+      "lessonsCount": "{{value}} activități finalizate",
+      "noActivityTitle": "Aștept primele activități",
+      "noActivityBody": "După câteva sesiuni, aici vor apărea ritmul claselor și totalul activităților."
+    },
+    "subjects": {
+      "eyebrow": "Materii · ritm",
+      "completionLabel": "{{value}}% medie",
+      "empty": "Adaugă activități în clasă pentru a vedea ritmul pe materii."
+    },
+    "alert": {
+      "stuckTitle": "{{count}} elevi au nevoie de ajutor",
+      "stuckBody": "{{names}} — scoruri sub ritmul clasei.",
+      "stuckCta": "Vezi elevii",
+      "okTitle": "Toată clasa este pe ritm",
+      "okBody": "Niciun elev nu e blocat acum. Felicitări!"
+    },
+    "leaderboard": {
+      "title": "Reușite recente",
+      "subtitle": "Elevi care progresează bine",
+      "scoreLabel": "scor",
+      "completionLabel": "finalizat",
+      "winLine": "{{count}} activități finalizate · {{completion}}%",
+      "viewAllCta": "Vezi toți · {{count}}",
+      "empty": "Reușitele clasei vor apărea aici după primele activități."
+    },
+    "activity": {
+      "today": "azi",
+      "yesterday": "ieri",
+      "minutesAgo": "{{minutes}} min",
+      "hoursAgo": "{{hours}}h",
+      "noTimestamp": "fără activitate"
+    },
+    "addMenu": {
+      "button": "Adaugă",
+      "heading": "Adaugă sau atribuie",
+      "ariaLabel": "Adaugă din tabloul profesorului",
+      "createActivity": "Creează activitate",
+      "createActivityDescription": "Construiește o activitate cu răspunsuri multimedia.",
+      "generateWithAi": "Generează cu AI",
+      "generateWithAiDescription": "Pornește de la o resursă, un subiect sau un videoclip.",
+      "createClass": "Creează clasă",
+      "createClassDescription": "Configurează o clasă nouă pentru elevii tăi.",
+      "addStudent": "Adaugă elev",
+      "addStudentDescription": "Invită un elev în clasele existente.",
+      "openLibrary": "Deschide biblioteca",
+      "openLibraryDescription": "Alege activități salvate sau publice."
+    },
+    "home": {
+      "actions": {
+        "ariaLabel": "Acțiuni rapide",
+        "title": "Adaugă postare sau atribuie activitate",
+        "postJournal": {
+          "title": "Postează în jurnal",
+          "body": "Un portofoliu cu poze, video și notițe"
+        },
+        "createActivity": {
+          "title": "Creează activitate",
+          "body": "Cu răspunsuri multimedia captivante"
+        },
+        "generateActivity": {
+          "title": "Generează activitate",
+          "body": "Pornește rapid cu EduPlay AI"
+        }
+      },
+      "library": {
+        "ariaLabel": "Activități gata de predat",
+        "title": "Găsește activități gata de predat pentru {{grade}}",
+        "gradeFallback": "clasa ta",
+        "searchPlaceholder": "Caută activități pentru citire, matematică, științe",
+        "popularTitle": "Activități populare din comunitate în {{grade}}",
+        "viewAll": "Vezi biblioteca",
+        "recentMeta": "Din activitatea clasei",
+        "subjectMeta": "Activitate",
+        "assessmentMeta": "Evaluare",
+        "fallbackCards": {
+          "reading": {
+            "title": "Potrivește sunetul lung",
+            "creator": "Biblioteca EduPlay"
+          },
+          "assessment": {
+            "title": "Citire ghidată cu întrebări",
+            "creator": "Comunitate"
+          },
+          "math": {
+            "title": "Adunări rapide până la 20",
+            "creator": "Biblioteca EduPlay"
+          },
+          "science": {
+            "title": "Sortează animalele după habitat",
+            "creator": "Comunitate"
+          }
+        }
+      },
+      "classes": {
+        "ariaLabel": "Clasele mele",
+        "title": "Clasele mele",
+        "createClass": "Creează clasă",
+        "openClass": "Deschide clasa {{name}}",
+        "openCta": "Deschide",
+        "studentOne": "{{count}} elev",
+        "studentOther": "{{count}} elevi",
+        "emptyTitle": "Încă nu ai clase",
+        "emptyFilteredTitle": "Clasele apar aici",
+        "emptyBody": "Creează o clasă ca să vezi carduri ca în pagina Home Seesaw."
+      },
+      "resources": {
+        "ariaLabel": "Resurse pentru profesori",
+        "title": "Resurse pentru profesori",
+        "viewAll": "Vezi toate",
+        "spotlight": {
+          "title": "Spotlight EduPlay",
+          "meta": "Video"
+        },
+        "learning": {
+          "title": "Centrul de învățare",
+          "meta": "Website"
+        },
+        "topics": {
+          "title": "Subiecte de sezon",
+          "meta": "Website"
+        },
+        "community": {
+          "title": "Comunitate și evenimente",
+          "meta": "Website"
+        }
+      }
+    }
+  },
+  "classes": {
+    "topBarTitle": "Clasele Mele",
+    "header": {
+      "eyebrow": "Management",
+      "title": "Clasele tale",
+      "subtitle": "Organizează-ți elevii pe clase, urmărește progresul și creează clase noi.",
+      "newClassCta": "Clasă nouă"
+    },
+    "filters": {
+      "ariaLabel": "Filtrează clasele",
+      "all": "Toate",
+      "active": "Active",
+      "archived": "Arhivate"
+    },
+    "search": {
+      "ariaLabel": "Caută o clasă",
+      "placeholder": "Caută după nume sau descriere…"
+    },
+    "card": {
+      "statusActive": "Activă",
+      "statusArchived": "Arhivată",
+      "studentsOne": "{{count}} elev",
+      "studentsOther": "{{count}} elevi",
+      "openClass": "Deschide clasa {{name}}"
+    },
+    "gradeLevel": {
+      "preschool": "Preșcolar",
+      "kindergarten": "Grădiniță",
+      "grade-1": "Clasa I",
+      "grade-2": "Clasa a II-a"
+    },
+    "empty": {
+      "noClasses": {
+        "title": "Încă nu ai creat o clasă",
+        "description": "Creează prima ta clasă pentru a începe să adaugi elevi și să le urmărești progresul.",
+        "cta": "Creează clasă"
+      },
+      "noResults": {
+        "title": "Nicio clasă găsită",
+        "description": "Încearcă alți termeni de căutare sau resetează filtrul activ.",
+        "resetCta": "Resetează filtrele"
+      }
+    },
+    "detail": {
+      "topBarTitle": "Management clasă",
+      "stats": {
+        "totalStudents": "Total elevi",
+        "activeStudents": "Elevi activi",
+        "lessonsInProgress": "Activități în lucru",
+        "awardsToday": "Premii azi"
+      },
+      "roster": {
+        "heading": "Lista elevilor",
+        "tableCaption": "Lista elevilor din această clasă",
+        "filters": {
+          "ariaLabel": "Filtrează elevii",
+          "all": "Toți",
+          "online": "Online",
+          "needsHelp": "Au nevoie de ajutor"
+        },
+        "search": {
+          "ariaLabel": "Caută un elev",
+          "placeholder": "Caută după nume sau username…"
+        },
+        "columns": {
+          "student": "Elev",
+          "status": "Status",
+          "activity": "Activitate recentă",
+          "progress": "Progres activitate",
+          "actions": "Acțiuni"
+        },
+        "noActivity": "Fără activitate",
+        "actions": {
+          "viewReport": "Vezi raportul pentru {{name}}",
+          "assignGame": "Atribuie activitate pentru {{name}}"
+        },
+        "viewAllOne": "Vezi toți cei {{count}} elev",
+        "viewAllOther": "Vezi toți cei {{count}} elevi",
+        "empty": {
+          "noOnline": "Niciun elev online momentan",
+          "noNeedsHelp": "Niciun elev nu are nevoie de ajutor",
+          "noResults": "Niciun elev găsit",
+          "noStudents": "Niciun elev în această clasă",
+          "tryOtherTerms": "Încearcă alți termeni de căutare.",
+          "addStudent": "Adaugă un elev nou pentru a începe."
+        }
+      },
+      "relativeTime": {
+        "now": "chiar acum",
+        "minutesAgo": "acum {{count}} min",
+        "hoursAgoOne": "acum {{count}} oră",
+        "hoursAgoOther": "acum {{count}} ore",
+        "yesterday": "ieri",
+        "daysAgoOne": "acum {{count}} zi",
+        "daysAgoOther": "acum {{count}} zile"
+      },
+      "breadcrumb": {
+        "classes": "Clasele Mele",
+        "current": "{{name}}"
+      },
+      "quickActions": {
+        "heading": "Acțiuni Rapide",
+        "assignActivity": "Atribuie activitate",
+        "assignActivitySub": "Alege rapid o activitate pentru clasă",
+        "assignPath": "Atribuie parcurs",
+        "assignPathSub": "Trimite o secvență de activități",
+        "addStudent": "Adaugă elev nou",
+        "addStudentSub": "Înregistrează un copil în clasă"
+      },
+      "weeklyGoal": {
+        "heading": "Obiectivul Săptămânii",
+        "progress": "Aproape acolo! ({{percent}}%)",
+        "noGoal": "Niciun obiectiv setat",
+        "noGoalDescription": "Setează un obiectiv săptămânal pentru a urmări progresul clasei."
+      },
+      "leaderboard": {
+        "heading": "Clasament Premii",
+        "subtitle": "Topul micilor exploratori",
+        "points": "{{count}} pts",
+        "viewAll": "Vezi tot clasamentul",
+        "empty": "Nicio activitate încă"
+      },
+      "studentStatus": {
+        "online": "Online",
+        "needsHelp": "Nevoie de Ajutor",
+        "offline": "Offline"
+      },
+      "actions": {
+        "addStudents": "Adaugă elevi",
+        "addPost": "Adaugă postare",
+        "classSettings": "Setările clasei"
+      },
+      "tabs": {
+        "ariaLabel": "Filele clasei {{name}}",
+        "journal": "Jurnal",
+        "activities": "Activități",
+        "gradebook": "Catalog",
+        "notifications": "Notificări",
+        "settings": "Setări"
+      },
+      "addStudentsCard": {
+        "title": "Adaugă elevi în clasă",
+        "description": "Deschide fluxul clasei pentru nume lipite, rânduri manuale și coduri de conectare."
+      },
+      "journal": {
+        "classJournal": "Jurnalul clasei",
+        "postCountOne": "{{count}} postare",
+        "postCountOther": "{{count}} postări",
+        "feedFilter": "Filtru flux elevi",
+        "studentNavAria": "Elevi jurnal",
+        "addPostOrAssign": "Adaugă postare",
+        "dateFilter": "Dată",
+        "folders": "Dosare",
+        "review": "Revizuire",
+        "reviewUnapprovedPosts": "Revizuiește postările neaprobate",
+        "unapprovedPostsOne": "{{count}} postare neaprobată",
+        "unapprovedPostsOther": "{{count}} postări neaprobate",
+        "feedTitle": "Fluxul jurnalului clasei",
+        "everyone": "Toată lumea",
+        "pendingApproval": "Așteaptă aprobare",
+        "seenBy": "Văzut de:",
+        "taggedFolders": "Dosare etichetate",
+        "folderLabel": "test",
+        "like": "Apreciază",
+        "comment": "Comentează",
+        "showMore": "Arată mai multe",
+        "inResponseTo": "Ca răspuns la: {{title}}",
+        "newActivity": "Activitate nouă",
+        "addedNewItem": "A adăugat un element nou.",
+        "noPosts": "Nicio postare din jurnal nu corespunde filtrelor selectate."
+      },
+      "activities": {
+        "bulkArchive": "Arhivează activități în masă",
+        "pullToRefresh": "Trage pentru reîmprospătare",
+        "title": "Activități active",
+        "description": "Activități active pentru {{name}}, afișate în structura tabului Seesaw. Acțiunile reale rămân în fluxurile existente.",
+        "assignedToAll": "Atribuită tuturor elevilor și grupurilor",
+        "completed": "Finalizate",
+        "waitingForReview": "Așteaptă revizuire",
+        "drafts": "Ciorne",
+        "notStarted": "Neîncepute",
+        "start": "Pornește",
+        "viewResponses": "Vezi răspunsurile",
+        "realAssignmentsTitle": "Asignări reale",
+        "realAssignmentsDescription": "Pentru creare și asignare completă, folosește biblioteca profesorului.",
+        "viewAssignments": "Vezi asignările",
+        "classFallbackName": "Clasa",
+        "classFallbackUsername": "clasă",
+        "fallbackTitle": "Activitate de portofoliu",
+        "subjectLiteracy": "Alfabetizare timpurie",
+        "subjectCharacter": "Dezvoltare socio-emoțională"
+      },
+      "gradebook": {
+        "eyebrow": "Catalog",
+        "title": "Tablou de progres",
+        "description": "Vezi cine a finalizat activitățile. Etichetează activitățile cu standarde pentru a urmări progresul elevilor în timp.",
+        "preview": "Previzualizare pentru {{name}}, fără persistență sau abonament real.",
+        "getGradebook": "Activează catalogul",
+        "learnMore": "Află mai multe"
+      },
+      "notifications": {
+        "title": "Notificări",
+        "loading": "Se încarcă...",
+        "refresh": "Reîmprospătează",
+        "tapHere": "Apasă aici",
+        "unapprovedOne": "{{count}} element neaprobat în clasa ta.",
+        "unapprovedOther": "{{count}} elemente neaprobate în clasa ta.",
+        "studentFallback": "Elev",
+        "commentRequest": "{{name}} vrea să adauge un comentariu la elementul lui {{owner}}: „{{title}}”",
+        "itemRequest": "{{name}} vrea să adauge un element.",
+        "hoursAgo": "acum {{count}} ore",
+        "daysAgo": "acum {{count}} zile",
+        "weeklyDigest": "Săptămâna aceasta în Seesaw pentru {{name}}"
+      }
+    }
+  },
+  "activities": {
+    "eyebrow": "Bibliotecă profesor",
+    "title": "Activități",
+    "availableCount": "{{count}} activități disponibile",
+    "filteredCount": "{{count}} activități afișate",
+    "createActivity": "Creează activitate",
+    "assignmentHistory": "Istoric atribuiri",
+    "loadMore": "Vezi mai multe activități",
+    "search": {
+      "label": "Caută activități",
+      "placeholder": "Caută după titlu, descriere sau categorie"
+    },
+    "filters": {
+      "categoriesLabel": "Categorii de activități",
+      "all": "Toate",
+      "categories": {
+        "literacy": "Litere",
+        "math": "Numere",
+        "phonics": "Sunete",
+        "shapes": "Forme",
+        "colors": "Culori",
+        "vocabulary": "Cuvinte"
+      }
+    },
+    "sort": {
+      "label": "Sortează după:",
+      "newest": "Cele mai recente",
+      "difficulty": "Dificultate",
+      "age": "Vârstă"
+    },
+    "empty": {
+      "noActivities": "Nu există activități disponibile",
+      "noActivitiesBody": "Activitățile vor apărea aici după publicare.",
+      "noResults": "Nicio activitate nu corespunde căutării",
+      "noResultsBody": "Încearcă să modifici căutarea sau filtrele."
+    },
+    "card": {
+      "new": "Nou",
+      "popular": "Popular",
+      "favorite": "Adaugă la favorite",
+      "ageRange": "{{min}}-{{max}} ani",
+      "duration": "{{minutes}} min",
+      "assign": "Atribuie",
+      "assignActivityAria": "Atribuie activitatea {{title}}",
+      "previewActivityAria": "Previzualizează activitatea {{title}}",
+      "preview": "Previzualizează"
+    },
+    "library": {
+      "seesawLibrary": "Bibliotecă Seesaw",
+      "communityLibrary": "Bibliotecă comunitate",
+      "selectGrade": "Selectează nivelul",
+      "language": "Limbă",
+      "browseStandards": "Răsfoiește după standarde și curriculum",
+      "exploreTitle": "Explorează biblioteca EduPlay",
+      "exploreDescription": "Caută activități publice, apoi filtrează după materie, vârstă sau dificultate.",
+      "searchPlaceholder": "Ce vrei să predai?",
+      "allSubjects": "Toate materiile",
+      "activityCount_one": "{{count}} activitate",
+      "activityCount_other": "{{count}} activități",
+      "featuredTitle": "Colecții recomandate",
+      "popularTitle": "Activități populare"
+    },
+    "activitiesOwned": {
+      "eyebrow": "Biblioteca mea",
+      "title": "Biblioteca mea",
+      "subtitle": "Ciorne private, activități gata de atribuit și răspunsuri de verificat.",
+      "review": "Verifică răspunsuri",
+      "allGrades": "Toate nivelurile",
+      "allSubjects": "Toate materiile",
+      "allLanguages": "Toate limbile",
+      "viewAll": "Vezi tot ({{count}})",
+      "searchLabel": "Caută în activitățile mele",
+      "searchPlaceholder": "Caută",
+      "recent": "Activitățile mele recente",
+      "count_one": "{{count}} activitate",
+      "count_other": "{{count}} activități",
+      "emptyDraft": "Nu ai ciorne încă.",
+      "empty": "Nu sunt activități aici încă.",
+      "emptyBody": "Creează o activitate cu răspuns liber, salveaz-o ca ciornă și o vei vedea aici.",
+      "createCardTitle": "Creează o activitate sau o evaluare automată",
+      "createCardBody": "Pornește de la zero sau folosește generatorul EduPlay.",
+      "needIdeas": "Ai nevoie de idei?",
+      "browseCommunity": "Răsfoiește biblioteca comunității!",
+      "collections": "Colecțiile mele (0)",
+      "notInCollection": "Activități care nu sunt într-o colecție",
+      "createCollection": "Creează"
+    }
+  },
+  "createClass": {
+    "back": "Înapoi",
+    "setupBadge": "Configurare clasă",
+    "eyebrow": "Creează clasă",
+    "heading": "Creează clasa ta",
+    "subtitle": "Configurează elementele de bază pentru clasă înainte să adaugi elevi.",
+    "importGoogle": "Importă din Google Classroom",
+    "importNote": "Opțiune vizuală de referință; EduPlay nu conectează încă Google Classroom.",
+    "or": "sau",
+    "gradeTitle": "Alege nivelul clasei",
+    "name": "Numele clasei",
+    "description": "Descriere",
+    "grade": "Nivel",
+    "schoolYear": "An școlar",
+    "cancel": "Anulează",
+    "submit": "Creează clasa",
+    "submitting": "Se creează...",
+    "option": {
+      "select": "Selectează nivelul",
+      "preschool": "PK-TK",
+      "kindergarten": "K",
+      "grade1": "1st",
+      "grade2": "2nd"
+    }
+  },
+  "settingsHome": {
+    "back": "Înapoi la clasă",
+    "heading": "Setările clasei",
+    "settingsMenu": "Meniu setări",
+    "addStudents": "Adaugă elevi",
+    "inviteFamilies": "Invită familii",
+    "sectionClassSettings": "Setările clasei",
+    "sectionStudents": "Elevi",
+    "manageStudents": "Gestionează elevii",
+    "sharedDevices": "Cod de clasă — dispozitive partajate",
+    "likesComments": "Aprecieri și comentarii ale elevilor",
+    "itemEditing": "Editarea elementelor",
+    "sectionFamilies": "Familii",
+    "enableFamilyAccess": "Activează accesul familiei",
+    "inviteFamiliesLabel": "Invită familii",
+    "familyMessaging": "Mesagerie familie",
+    "studentSignInMode": "Mod de conectare elevi",
+    "studentGroups": "Grupuri de elevi",
+    "studentGroupsDescription": "Organizează elevii pe grupuri",
+    "homeLearningCodes": "Coduri pentru învățare acasă",
+    "homeLearningCodesDescription": "Coduri individuale pentru elevi",
+    "studentLikesCommentsDescription": "Aprecieri, comentarii și vizibilitate",
+    "itemEditingDescription": "Reguli de editare pentru postări",
+    "organization": "Organizare",
+    "folders": "Dosare",
+    "foldersDescription": "Organizează lucrările clasei",
+    "addFolderStep": "Pasul „Adaugă în dosar”",
+    "addFolderStepDescription": "Afișare la publicare",
+    "teachers": "Profesori",
+    "teachersDescription": "Invită și verifică accesul",
+    "navAria": "Secțiuni setări clasă",
+    "classActive": "Activă",
+    "classArchived": "Arhivată",
+    "classSummary": "elevi",
+    "classSummaryActive": "activi recent"
+  },
+  "settingsSection": {
+    "back": "Înapoi la setări",
+    "breadcrumbAria": "Breadcrumb",
+    "classActive": "Clasă activă",
+    "classArchived": "Clasă arhivată",
+    "close": "Închide secțiunea de setări",
+    "navTitle": "Secțiuni setări",
+    "navDescription": "Secțiuni detaliate pentru setările clasei.",
+    "navAria": "Secțiuni setări clasă"
+  },
+  "students": {
+    "add": {
+      "back": "Înapoi la clasă",
+      "headingEyebrow": "Elevi pentru clasă",
+      "heading": "Adaugă elevi în clasă",
+      "description": "Adaugă elevi fără să părăsești fluxul clasei: scrie numele, lipește o listă sau folosește codul clasei pentru conectare.",
+      "classActive": "Clasă activă",
+      "classArchived": "Clasă arhivată",
+      "createReal": "Adaugă în catalog",
+      "addStudentsTitle": "Adaugă elevi în clasă",
+      "addStudentsDescription": "Scrie câte un nume sau lipește o listă de nume, câte unul pe linie.",
+      "pasteTitle": "Lipește o listă de nume ale elevilor",
+      "pasteDescription": "Poți edita lista înainte să continui.",
+      "manualTitle": "Rânduri manuale",
+      "preview": "Editabil",
+      "moreLater": "Poți adăuga oricând mai mulți elevi mai târziu.",
+      "studentsTitle": "Elevi",
+      "studentsDescription": "Catalogul actual pentru această clasă.",
+      "noStudents": "Nu există elevi în această clasă încă.",
+      "familiesTitle": "Familii",
+      "familiesDescription": "Pregătește accesul familiei după crearea elevilor.",
+      "classCode": "Cod clasă",
+      "classCodeDescription": "Elevii pot scana codul sau pot folosi codul text al clasei pe dispozitive partajate.",
+      "deviceShared": "Dispozitiv partajat",
+      "deviceSharedDescription": "Elevii pot folosi codul clasei pe un dispozitiv partajat.",
+      "home": "Acasă",
+      "homeDescription": "Pentru acces de acasă, folosește setarea pentru coduri de învățare acasă.",
+      "existingAccount": "Cont existent",
+      "existingAccountDescription": "Elevii cu username pot continua să folosească fluxul actual de conectare.",
+      "classSummary": "Rezumat clasă",
+      "classSettings": "Setări clasă",
+      "addPeopleTitle": "Adaugă persoane în clasă"
+    }
+  },
+  "families": {
+    "back": "Înapoi la setări",
+    "heading": "Invită părinți și familii",
+    "loading": "Pregătește invitații pentru fiecare elev.",
+    "connectTitle": "Ajută familiile să se conecteze la învățarea copilului!",
+    "benefit1": "Familiile văd toate postările din jurnalul copilului lor",
+    "benefit2": "Familiile primesc notificări despre postări noi",
+    "benefit3": "Familiile primesc un flux clar de conectare",
+    "benefit4": "Familiile pot urmări de acasă noutățile despre învățare.",
+    "turnOn": "Pornește accesul familiilor",
+    "learnMore": "Află mai multe",
+    "students": "Elevi",
+    "infoTitle": "Acces familii",
+    "infoDescription": "Înregistrările de conectare a familiilor nu sunt disponibile încă. Pornește accesul înainte să marchezi familiile ca fiind conectate.",
+    "statusTitle": "Invitație necesară",
+    "statusDescription": "Nu există o conexiune de familie înregistrată încă.",
+    "statusPill": "Necesită invitație",
+    "emptyStudents": "Adaugă elevi înainte să pregătești invitații pentru familie."
+  },
+  "journal": {
+    "picker": {
+      "back": "Înapoi la jurnalul clasei",
+      "heading": "Postează lucrările elevilor",
+      "description": "Alege un instrument pentru această clasă. Fluxul rămâne doar previzualizare.",
+      "classActive": "Clasă activă",
+      "classArchived": "Clasă arhivată",
+      "toolsTitle": "Alege instrumentul",
+      "toolsDescription": "Seesaw afișează șase intrări clare: Fotografie, Desen, Video, Încărcare, Notiță și Link.",
+      "contextTitle": "Context jurnal",
+      "contextDescription": "Date reale din clasă, fără acțiuni de publicare.",
+      "noPersistenceTitle": "Fără persistență",
+      "noPersistenceDescription": "Acest flux completează doar interfața de referință. Pentru siguranță, nu salvează și nu publică nimic.",
+      "preview": "Previzualizare",
+      "photo": "Fotografie",
+      "photoDescription": "Adaugă o imagine sau o captură din clasă.",
+      "drawing": "Desen",
+      "drawingDescription": "Creează o schiță rapidă pentru portofoliu.",
+      "video": "Video",
+      "videoDescription": "Pregătește un răspuns video scurt.",
+      "upload": "Încărcare",
+      "uploadDescription": "Atașează o lucrare sau o resursă externă.",
+      "note": "Notiță",
+      "noteDescription": "Deschide editorul de text în stil Seesaw.",
+      "link": "Link",
+      "linkDescription": "Adaugă o adresă web pentru familie."
+    },
+    "note": {
+      "back": "Înapoi la instrumente",
+      "headingLabel": "Scrie o notiță",
+      "heading": "Scrie o notiță",
+      "description": "Editor în stil Seesaw pentru această clasă. Câmpurile rămân doar previzualizare, fără publicare.",
+      "draft": "Ciornă indisponibilă",
+      "publish": "Publicare indisponibilă",
+      "editorTitle": "Notiță pentru jurnal",
+      "editorDescription": "Spațiu text care urmărește editorul capturat.",
+      "editorPreview": "Previzualizare editor",
+      "textbox": "Notiță pentru jurnal",
+      "textboxPlaceholder": "Scrie o notiță pentru elevi sau familii. Nimic din ce introduci aici nu se salvează.",
+      "textboxHelp": "Nu există acțiune de publicare conectată în această implementare.",
+      "previewTitle": "Previzualizare postare",
+      "teacherLabel": "Profesor",
+      "previewPlaceholder": "Textul notiței va apărea aici înainte de publicare.",
+      "confirmation": "Necesită confirmare reală",
+      "audience": "Alege audiența",
+      "audienceDescription": "Lista folosește elevii reali din clasă.",
+      "noStudents": "Nu există elevi în această clasă încă.",
+      "noPersistenceTitle": "Fără persistență",
+      "noPersistenceDescription": "Această pagină completează doar fluxul vizual de referință. Pentru siguranță, nu modifică jurnalul clasei."
+    },
+    "side": {
+      "foldersTitle": "Dosare etichetate",
+      "foldersDescription": "Dosarele se aleg înainte de publicarea reală.",
+      "foldersValue": "Niciun dosar selectat",
+      "scheduleTitle": "Programare",
+      "scheduleDescription": "Publicarea programată nu este conectată încă.",
+      "scheduleValue": "Publicare manuală indisponibilă"
+    }
+  },
+  "generateActivity": {
+    "metadataTitle": "Generează activitate · EduPlay",
+    "back": "Înapoi la creare activitate",
+    "heading": "Generează activitate",
+    "aiBadge": "AI",
+    "trialNotice": "Primești o previzualizare a acestor funcții. Începe o probă gratuită pentru acces complet.",
+    "startTrial": "Începe proba gratuită",
+    "convert": {
+      "title": "Convertește resursă",
+      "description": "Încarcă orice resursă de predare"
+    },
+    "topic": {
+      "title": "Subiect sau prompt",
+      "description": "Introdu un subiect, obiectiv de învățare sau standard"
+    },
+    "youtube": {
+      "title": "Video YouTube",
+      "description": "Încorporează un video și generează întrebări"
+    },
+    "fluency": {
+      "title": "Fluență la citire",
+      "description": "Elevii citesc, iar AI evaluează fluența"
+    },
+    "instructions": "Transformă o resursă existentă într-o activitate EduPlay interactivă cu evaluări automate și instrumente multimedia.",
+    "worksheet": "Fișă de lucru",
+    "quiz": "Quiz",
+    "studyGuide": "Ghid de studiu",
+    "activity": "Activitate",
+    "uploadHint": "5 PDF-uri sau 10 imagini. Formate acceptate: pdf, jpg, png, heic.",
+    "upload": "Încarcă",
+    "googleDrive": "Google Drive",
+    "next": "Următorul"
+  },
+  "account": {
+    "tabs": {
+      "settings": "Setări cont",
+      "settingsDescription": "Profil și preferințe",
+      "school": "Școala mea",
+      "schoolDescription": "Director școlar și clase",
+      "device": "Informații dispozitiv",
+      "deviceDescription": "Browser și diagnostic"
+    },
+    "settings": {
+      "metadataTitle": "Setări cont · EduPlay",
+      "back": "Înapoi la tabloul profesorului",
+      "eyebrow": "Cont profesor",
+      "heading": "Setări cont",
+      "profile": "Profil",
+      "firstName": "Prenume:",
+      "lastName": "Nume:",
+      "displayName": "Nume afișat:",
+      "email": "Email",
+      "preferredLanguage": "Limba preferată:",
+      "phone": "Telefon:",
+      "password": "Parolă",
+      "change": "Modifică",
+      "manage": "Gestionează",
+      "mfa": "Autentificare în doi pași",
+      "accountActivity": "Detalii activitate cont",
+      "schools": "Școli",
+      "schoolDirectory": "Director școlar",
+      "classes": "Clase",
+      "currentClasses": "Clase curente",
+      "addToClass": "Adaugă la clasă",
+      "premiumHeading": "FUNCȚII PREMIUM EDUPLAY",
+      "tryTrial": "Încearcă gratuit 60 de zile",
+      "previewPremium": "Previzualizează funcțiile premium",
+      "learnMore": "Află mai multe",
+      "manageSubscription": "Gestionează abonamentul",
+      "notifications": "Notificări clasă",
+      "officeHours": "Program disponibil",
+      "emailNotifications": "Notificări email",
+      "pushNotifications": "Notificări push",
+      "smsNotifications": "Notificări SMS",
+      "tips": "Sfaturi, trucuri și noutăți EduPlay",
+      "parentNotifications": "Notificări părinți",
+      "archives": "Arhive jurnal",
+      "downloadArchives": "Descarcă arhivele jurnalului",
+      "archivedClasses": "Clase arhivate",
+      "manageArchived": "Gestionează clasele arhivate",
+      "privacy": "Politica de confidențialitate pentru elevi",
+      "coppa": "Notificare directă COPPA",
+      "deleteAccount": "Șterge contul",
+      "teacherRole": "Profesor",
+      "unavailable": "Indisponibil",
+      "noPhone": "Necompletat",
+      "readOnly": "Doar citire"
+    },
+    "school": {
+      "metadataTitle": "Școala mea · EduPlay",
+      "back": "Înapoi la tabloul profesorului",
+      "eyebrow": "Cont profesor",
+      "heading": "Școala mea",
+      "currentSchool": "Școala curentă",
+      "schoolName": "Numele școlii",
+      "organization": "Organizație",
+      "connectedClasses": "Clase conectate",
+      "findSchool": "Găsește școala",
+      "country": "Țară",
+      "state": "Județ sau regiune",
+      "city": "Oraș",
+      "loading": "Se încarcă...",
+      "addSchool": "Adaugă școală",
+      "myClasses": "Clasele mele",
+      "active": "Activă",
+      "inactive": "Inactivă",
+      "empty": "Nu există clase conectate încă.",
+      "workspace": "Nicio școală selectată · {{summary}}",
+      "classSummaryOne": "{{count}} clasă activă",
+      "classSummaryOther": "{{count}} clase active",
+      "noSchoolConnected": "Nicio școală conectată",
+      "findSchoolUnavailable": "Căutarea școlii nu este disponibilă încă în EduPlay"
+    },
+    "device": {
+      "metadataTitle": "Informații dispozitiv · EduPlay",
+      "back": "Înapoi la tabloul profesorului",
+      "eyebrow": "Cont profesor",
+      "heading": "Informații dispozitiv",
+      "browserLine": "Folosești {{browser}} {{version}}.",
+      "copy": "Copiază în clipboard",
+      "diagnostic": "Diagnostic",
+      "connection": "Conexiune",
+      "connectionValue": "Verificată de browser când EduPlay se încarcă",
+      "localTime": "Ora locală",
+      "localTimeValue": "Furnizată de acest dispozitiv"
+    }
+  },
+  "utility": {
+    "help": {
+      "metadataTitle": "Ajutor · EduPlay",
+      "heading": "Ajutor",
+      "subtitle": "Resurse pentru profesori",
+      "resourcesTitle": "Resurse pentru profesori",
+      "viewAll": "Vezi tot",
+      "spotlight": {
+        "title": "Noutăți EduPlay",
+        "type": "Video"
+      },
+      "learningCentral": {
+        "title": "Centrul de învățare",
+        "type": "Site web"
+      },
+      "timelyTopics": {
+        "title": "Subiecte actuale",
+        "type": "Site web"
+      },
+      "community": {
+        "title": "Comunitate și evenimente",
+        "type": "Site web"
+      },
+      "colorPicker": {
+        "title": "Selector de culoare",
+        "description": "Preia culori de pe pânză când creezi activități"
+      },
+      "ready": {
+        "title": "Activități gata de predat pentru iunie",
+        "description": "Activități pentru dezvoltarea competențelor și sărbători"
+      },
+      "whatsNew": "Ce este nou",
+      "whatsNewCount": "1",
+      "contactSupport": "Contactează suportul",
+      "helpCenter": "Centrul de ajutor",
+      "privacyPolicy": "Politica de confidențialitate",
+      "scanQr": "Scanează",
+      "backToDashboard": "Acasă"
+    },
+    "scan": {
+      "metadataTitle": "Scanare cod QR · EduPlay",
+      "heading": "Scanează cod QR",
+      "loading": "Se încarcă...",
+      "permissionTitle": "Acces la cameră necesar",
+      "permissionBody": "Scanarea codurilor QR are nevoie de acces la camera browserului. Deschide pagina într-un browser cu permisiuni pentru cameră activate, apoi permite accesul când apare solicitarea sistemului.",
+      "ok": "OK",
+      "backHome": "Acasă"
+    },
+    "trial": {
+      "metadataTitle": "Începe proba de 60 de zile · EduPlay",
+      "heading": "Crește implicarea cu funcții premium!",
+      "subtitle": "Primești mai mult cu un plan EduPlay premium",
+      "freePlan": "Plan gratuit",
+      "premiumPlan": "Plan premium",
+      "recommended": "Recomandat",
+      "activities": "Activități în biblioteca mea",
+      "classes": "Clase",
+      "classSingular": "Clasă",
+      "students": "Elevi per clasă",
+      "teachers": "Profesori per clasă",
+      "unlimited": "Nelimitat",
+      "aiActivities": "Activități generate cu AI",
+      "multipage": "Activități cu mai multe pagini",
+      "drafts": "Schițe de activități și trimite înapoi",
+      "scheduled": "Activități programate",
+      "aiAnnouncements": "Anunțuri generate cu AI",
+      "start": "Începe proba de 60 de zile",
+      "noCard": "Nu este necesar cardul",
+      "learnMore": "Află mai multe despre planuri",
+      "close": "Închide",
+      "unavailableNote": "Activarea probei premium este indisponibilă deoarece nu există încă un flux de abonare conectat.",
+      "startUnavailable": "Probă indisponibilă",
+      "learnMoreUnavailable": "Detalii plan indisponibile"
+    },
+    "language": {
+      "metadataTitle": "Selectare limbă · EduPlay",
+      "close": "Închide selectorul de limbă",
+      "eyebrow": "Limbă",
+      "heading": "Selectează limba",
+      "description": "Alege limba folosită în interfața profesorului.",
+      "available": "Limbi disponibile",
+      "current": "Curentă",
+      "cancel": "Anulează",
+      "setLanguage": "Setează limba",
+      "device": {
+        "label": "Folosește limba dispozitivului"
+      },
+      "options": {
+        "device": {
+          "sublabel": "Automat"
+        },
+        "english": "Engleză",
+        "romanian": "Română",
+        "arabic": "Arabă",
+        "german": "Germană",
+        "american": "Americană",
+        "australian": "Australiană",
+        "canadian": "Canadiană",
+        "british": "Britanică",
+        "irishEnglish": "Irlandeză",
+        "newZealand": "Noua Zeelandă",
+        "spanish": "Spaniolă",
+        "french": "Franceză",
+        "irish": "Irlandeză",
+        "hindi": "Hindi",
+        "indonesian": "Indoneziană",
+        "icelandic": "Islandeză",
+        "italian": "Italiană",
+        "japanese": "Japoneză",
+        "southKorean": "Coreeană",
+        "malay": "Malaeză",
+        "norwegian": "Norvegiană Bokmål",
+        "dutch": "Neerlandeză",
+        "polish": "Poloneză",
+        "portuguese": "Portugheză",
+        "tamil": "Tamil",
+        "thai": "Thailandeză",
+        "turkish": "Turcă",
+        "vietnamese": "Vietnameză",
+        "simplifiedChinese": "Chineză simplificată",
+        "traditionalChinese": "Chineză tradițională"
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+	"meta": {
+		"title": "Fruit & Object Quiz",
+		"description": "Learn to identify fruits, animals, and everyday objects!"
+	},
+	"questions": {
+		"q1": {
+			"question": "Which one is an apple?",
+			"audio": "question1"
+		},
+		"q2": {
+			"question": "Which animal says 'meow'?",
+			"audio": "question2"
+		},
+		"q3": {
+			"question": "What do you use to cut things?",
+			"audio": "question3"
+		}
+	},
+	"choices": {
+		"apple": "Apple",
+		"banana": "Banana",
+		"carrot": "Carrot",
+		"cat": "Cat",
+		"bird": "Bird",
+		"frog": "Frog",
+		"ax": "Ax",
+		"hat": "Hat",
+		"umbrella": "Umbrella"
+	}
+}

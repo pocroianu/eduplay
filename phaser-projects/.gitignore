@@ -1,0 +1,64 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+combined-dist/
+
+# IDE
+.idea/
+.vscode/*
+!.vscode/settings.json
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Phaser Editor
+*.backup
+.claude/settings.local.json
+
+# claude temp files
+tmpclaude-*
+
+# LoRA Training Artifacts (Phase 4)
+# Models are too large for git - use cloud storage
+packages/ai-content/loras/**/*.safetensors
+packages/ai-content/loras/**/checkpoints/**/*.safetensors
+packages/ai-content/loras/metadata/*.json
+packages/ai-content/models/checkpoints/**/*.safetensors
+packages/ai-content/training-state/*.json
+packages/ai-content/.runtime/
+nul
+.claude/worktrees
+
+
+assets/bulk/
+
+.playwright-mcp/
+.superpowers/
+
+test-results/
+
+# ComfyUI generated assets (large PNG outputs, regenerated on demand)
+comfyui/edu_assets*/
+comfyui/animal_outputs/
+comfyui/test_prompts*/
+
+# ComfyUI Python artifacts
+comfyui/__pycache__/
+comfyui/**/__pycache__/
+comfyui/agent-harness/.venv/
+
+context.md

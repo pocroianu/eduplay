@@ -1,0 +1,36 @@
+{
+	"meta": {
+		"title": "Mâncare Delicioasă",
+		"description": "Învață despre diferite mâncăruri și dulciuri!"
+	},
+	"questions": {
+		"q1": {
+			"question": "Care mâncare este rotundă și are brânză deasupra?"
+		},
+		"q2": {
+			"question": "Ce dulce mănânci la petrecerile de ziua de naștere?"
+		},
+		"q3": {
+			"question": "Ce legumă le place iepurilor să mănânce?"
+		},
+		"q4": {
+			"question": "Ce mâncare vine de la o găină?"
+		},
+		"q5": {
+			"question": "Ce bomboană este pe un băț?"
+		}
+	},
+	"choices": {
+		"pizza": "Pizza",
+		"cake": "Tort",
+		"bread": "Pâine",
+		"pie": "Plăcintă",
+		"cookie": "Biscuit",
+		"carrot": "Morcov",
+		"banana": "Banană",
+		"apple": "Măr",
+		"egg": "Ou",
+		"cereal": "Cereale",
+		"lollipop": "Acadea"
+	}
+}

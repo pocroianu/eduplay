@@ -1,0 +1,11 @@
+{
+  "meta": { "title": "Numărătoare la Fermă" },
+  "instruction": "Câte sunt?",
+  "rounds": {
+    "r1": { "prompt": "Câte mere sunt?", "objectLabel": "măr" },
+    "r2": { "prompt": "Câte mere sunt?", "objectLabel": "măr" },
+    "r3": { "prompt": "Câte mere sunt?", "objectLabel": "măr" },
+    "r4": { "prompt": "Câte mere sunt?", "objectLabel": "măr" },
+    "r5": { "prompt": "Câte mere sunt?", "objectLabel": "măr" }
+  }
+}

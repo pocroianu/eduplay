@@ -1,0 +1,20 @@
+{
+	"meta": {
+		"gameId": "animals-match-01",
+		"version": "1.0.0",
+		"totalSteps": 4,
+		"gameType": "matching",
+		"shufflePairs": true,
+		"themeName": "nature",
+		"pointsPerPair": 10,
+		"penaltyPoints": 2,
+		"supportedLanguages": ["en", "ro"]
+	},
+	"pairs": [
+		{ "id": "p1", "imageKey": "cat",      "labelKey": "p1.label" },
+		{ "id": "p2", "imageKey": "frog",     "labelKey": "p2.label" },
+		{ "id": "p3", "imageKey": "elephant", "labelKey": "p3.label" },
+		{ "id": "p4", "imageKey": "lion",     "labelKey": "p4.label" }
+	],
+	"questions": []
+}

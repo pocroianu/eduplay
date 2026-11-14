@@ -1,0 +1,13 @@
+{
+	"meta": {
+		"title": "Animal Names",
+		"description": "Match each animal to its name"
+	},
+	"questions": {},
+	"pairs": {
+		"p1.label": "Cat",
+		"p2.label": "Frog",
+		"p3.label": "Elephant",
+		"p4.label": "Lion"
+	}
+}

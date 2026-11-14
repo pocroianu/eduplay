@@ -1,0 +1,12 @@
+{
+  "instruction": "Pune numerele in ordine!",
+  "meta": { "title": "Numerele de la 1 la 6" },
+  "items": {
+    "item.1": "1",
+    "item.2": "2",
+    "item.3": "3",
+    "item.4": "4",
+    "item.5": "5",
+    "item.6": "6"
+  }
+}

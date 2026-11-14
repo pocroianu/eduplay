@@ -1,0 +1,10 @@
+{
+  "instruction": "Traseaza forma!",
+  "meta": { "title": "Traseaza Forme de Baza" },
+  "items": {
+    "item.circle": "Cerc",
+    "item.square": "Patrat",
+    "item.triangle": "Triunghi",
+    "item.star": "Stea"
+  }
+}

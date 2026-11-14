@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Accent colors</title>
+<link rel="stylesheet" href="_preview.css">
+<style>
+  body { padding: 28px; }
+  .swatch {
+    flex: 1; min-width: 0;
+    border-radius: 12px;
+    padding: 14px;
+    height: 110px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    box-shadow: var(--ss-shadow-sm);
+  }
+  .swatch .name { font-weight: 700; font-size: 14px; }
+  .swatch .role { font-size: 11px; opacity: 0.85; }
+  .swatch .hex  { font-family: var(--ss-font-mono); font-size: 11px; opacity: 0.85; }
+  .row + .row { margin-top: 12px; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="swatch" style="background:#2F7A2F;color:#fff">
+      <div><div class="name">Journal Green</div><div class="role">Post to Journal card</div></div>
+      <div class="hex">#2F7A2F</div>
+    </div>
+    <div class="swatch" style="background:#1F4A1F;color:#fff">
+      <div><div class="name">Green 900</div><div class="role">deep hover</div></div>
+      <div class="hex">#1F4A1F</div>
+    </div>
+    <div class="swatch" style="background:#C2DBB6;color:#0E1B22">
+      <div><div class="name">Green 200</div><div class="role">success soft</div></div>
+      <div class="hex">#C2DBB6</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="swatch" style="background:#D63B3B;color:#fff">
+      <div><div class="name">Notif Red</div><div class="role">notif dot · destructive</div></div>
+      <div class="hex">#D63B3B</div>
+    </div>
+    <div class="swatch" style="background:#F2B6B6;color:#0E1B22">
+      <div><div class="name">Pink 200</div><div class="role">danger soft</div></div>
+      <div class="hex">#F2B6B6</div>
+    </div>
+    <div class="swatch" style="background:#FFB400;color:#0E1B22">
+      <div><div class="name">Sunshine</div><div class="role">"New" badge</div></div>
+      <div class="hex">#FFB400</div>
+    </div>
+  </div>
+</body>
+</html>

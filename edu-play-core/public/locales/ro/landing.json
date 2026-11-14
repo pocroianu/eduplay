@@ -1,0 +1,362 @@
+{
+  "hero": {
+    "badge": "Acum live · Ediția 2026",
+    "utility": {
+      "eyebrow": "Creat pentru școli primare",
+      "message": "Jocuri sigure, progres vizibil și limba română corectă."
+    },
+    "titleLine1": "Copiii învață",
+    "titleLine2": "jucându-se",
+    "titleLine3": "Serios.",
+    "description": "EduPlay este platforma cu jocuri educaționale pentru copiii români 3–12 ani. Construită cu profesori, testată cu copii reali.",
+    "descriptionStrong": "Gratuit pentru profesori, mereu.",
+    "ctaRegister": "Începe gratuit",
+    "ctaHaveAccount": "Am deja cont",
+    "nav": {
+      "products": "Platformă",
+      "teachers": "Profesori",
+      "families": "Familii",
+      "schools": "Școli",
+      "demoCta": "Începe gratuit"
+    },
+    "trustPills": {
+      "ro": "Făcut în România",
+      "gdpr": "GDPR european",
+      "noAds": "Zero reclame",
+      "diacritics": "Diacritice corecte"
+    },
+    "visual": {
+      "gameCount": "10+",
+      "gameLabel": "JOCURI",
+      "gameSublabel": "și mai vin săptămânal",
+      "collageLabel": "Previzualizare EduPlay cu jocuri, progres și siguranță"
+    },
+    "subjects": {
+      "colors": "Culori",
+      "numbers": "Numere",
+      "animals": "Animale",
+      "letters": "Litere"
+    }
+  },
+  "socialProof": {
+    "headline": "100%",
+    "title": "garantat sigur pentru copii",
+    "subtitle": "Verificat la fiecare release.",
+    "stickers": {
+      "ro": {
+        "short": "RO",
+        "label": "Făcut în România"
+      },
+      "gdpr": {
+        "short": "GDPR",
+        "label": "Conformitate UE"
+      },
+      "noAds": {
+        "short": "0 ads",
+        "label": "Zero reclame"
+      },
+      "diacritics": {
+        "short": "în RO",
+        "label": "Diacritice corecte"
+      }
+    }
+  },
+  "carousel": {
+    "badge": "Biblioteca de jocuri",
+    "titleLine1": "Zece jocuri,",
+    "titleLine2": "o singură misiune",
+    "titleLine3": "să le placă să învețe.",
+    "description": "Fiecare joc este construit împreună cu profesori și testat cu copii reali. Limba română corectă, fără reclame, gândit pentru atenția scurtă a celor mici.",
+    "featuredBadge": "Joc recomandat",
+    "learnsLabel": "Ce învață",
+    "games": {
+      "featured": {
+        "title": "Curcubeul Culorilor",
+        "description": "Recunoaște, asociază, amestecă. Un joc tactil care învață copiii toate culorile curcubeului prin mini-aventuri scurte.",
+        "categoryLabel": "Culori",
+        "ageRange": "3–8 ani",
+        "learns": "Recunoaștere de culoare · Vocabular vizual · Coordonare ochi-mână"
+      },
+      "fruits": {
+        "title": "Fructe Colorate",
+        "description": "Învață fructele prin potrivire.",
+        "categoryLabel": "Vocabular",
+        "ageRange": "3–8 ani",
+        "learns": "Vocabular"
+      },
+      "animals": {
+        "title": "Prietenii Animale",
+        "description": "Animale și habitate naturale.",
+        "categoryLabel": "Natură",
+        "ageRange": "3–8 ani",
+        "learns": "Cunoștințe naturale"
+      },
+      "market": {
+        "title": "La Piață",
+        "description": "Cuvinte și obiceiuri zilnice.",
+        "categoryLabel": "Social",
+        "ageRange": "3–8 ani",
+        "learns": "Vocabular practic"
+      },
+      "objects": {
+        "title": "Obiecte din Jur",
+        "description": "Recunoaștere și atenție vizuală.",
+        "categoryLabel": "Vocabular",
+        "ageRange": "3–8 ani",
+        "learns": "Atenție vizuală"
+      },
+      "nature": {
+        "title": "Minunile Naturii",
+        "description": "Fenomene și curiozități.",
+        "categoryLabel": "Natură",
+        "ageRange": "3–8 ani",
+        "learns": "Curiozitate științifică"
+      }
+    }
+  },
+  "audienceSplit": {
+    "badge": "Cum funcționează",
+    "titleLine1": "Două căi.",
+    "titleLine2": "Aceeași destinație",
+    "description": "Profesorii primesc un instrument. Familiile primesc o experiență. Copiii primesc joacă serioasă.",
+    "teachers": {
+      "pillLabel": "Pentru profesori",
+      "titleLine1": "Instrument",
+      "titleLine2": "profesional.",
+      "cta": "Creează cont profesor",
+      "steps": {
+        "createClass": {
+          "title": "Creează clasa",
+          "description": "Adaugă elevii cu un cod simplu de acces. Fără emailuri pentru copii."
+        },
+        "assignGames": {
+          "title": "Atribuie jocuri",
+          "description": "Filtrează după vârstă, materie sau dificultate. Atribuie individual sau pe clasă."
+        },
+        "seeProgress": {
+          "title": "Vezi progresul",
+          "description": "Scor, timp petrecut, capitole terminate. Tabel sortabil și exportabil."
+        }
+      }
+    },
+    "families": {
+      "pillLabel": "Pentru familii",
+      "titleLine1": "Aventură",
+      "titleLine2": "distractivă.",
+      "cta": "Începe aventura",
+      "steps": {
+        "teacherInvites": {
+          "title": "Profesorul invită",
+          "description": "Primești cod de acces pentru copil. Tu vezi progresul, copilul se joacă."
+        },
+        "childChooses": {
+          "title": "Copilul alege",
+          "description": "Bibliotecă vizuală cu jocuri pe vârstă. Fără reclame, fără upsells."
+        },
+        "learnByPlaying": {
+          "title": "Învață jucându-se",
+          "description": "Câștigă stele, deblochează capitole, învață fără să-și dea seama."
+        }
+      }
+    },
+    "heading": "EduPlay îi ține pe toți conectați la învățare.",
+    "summary": "La fel ca un jurnal viu al clasei, fiecare rol vede exact ce are nevoie: activități pentru profesori, jocuri pentru elevi, progres pentru familii și claritate pentru școală.",
+    "cards": {
+      "cta": "Află mai multe",
+      "teachers": {
+        "title": "Profesorii văd progresul fără rapoarte complicate",
+        "description": "Creează clase, trimite activități potrivite și urmărește ce copil are nevoie de sprijin, într-un flux simplu pentru ora de la clasă.",
+        "proof": "Planificare, teme și progres într-un singur loc"
+      },
+      "students": {
+        "title": "Elevii învață prin jocuri clare și ghidate",
+        "description": "Copiii intră rapid cu datele clasei, aleg exerciții vizuale și primesc feedback imediat, fără distrageri sau meniuri greu de înțeles.",
+        "proof": "Ținte mari, text lizibil și ritm potrivit copiilor"
+      },
+      "families": {
+        "title": "Familiile rămân conectate la învățare",
+        "description": "Părinții văd ce lucrează copilul, pot continua acasă și înțeleg progresul prin mesaje scurte, pe limba lor.",
+        "proof": "Vizibilitate fără conturi complicate"
+      },
+      "admins": {
+        "title": "Directorii au o imagine clară la nivel de școală",
+        "description": "Activitățile, clasele și progresul pot fi urmărite consecvent, cu atenție la confidențialitate și la nevoile învățământului primar.",
+        "proof": "Date utile, fără încărcare administrativă inutilă"
+      }
+    }
+  },
+  "trust": {
+    "badge": "Promisiuni concrete",
+    "titleLine1": "Patru promisiuni.",
+    "titleLine2": "Verificabile",
+    "description": "Nu spunem doar „suntem siguri”. Iată exact ce înseamnă, și unde poți verifica.",
+    "verifiedLabel": "Verificat",
+    "promises": {
+      "gdpr": {
+        "title": "GDPR european",
+        "description": "Date stocate în UE, prelucrate doar pentru funcționarea platformei. Drept la ștergere, drept la portabilitate."
+      },
+      "noTrackers": {
+        "title": "Zero trackere pe rutele copiilor",
+        "description": "ESLint blochează la build orice import de bibliotecă de analytics terț pe paginile copiilor. Verificat în PR."
+      },
+      "romanian": {
+        "title": "Limba română corectă",
+        "description": "Diacritice corecte (ă, î, ș, ț, â). Vocabular adaptat curriculumului național. Conținut creat în România."
+      },
+      "free": {
+        "title": "Gratuit pentru profesori",
+        "description": "Acces complet pentru profesor și clasa lui. Fără limitări, fără upsells, fără surprize."
+      }
+    },
+    "evidenceBadge": "Ghiduri, cercetare și dovezi",
+    "evidenceTitle": "Sprijin pentru clasă, nu doar încă o aplicație.",
+    "evidenceDescription": "EduPlay păstrează energia jocului, dar prezintă informația ca un instrument de școală: ghidabil, măsurabil și ușor de explicat familiei.",
+    "guides": {
+      "teacher": {
+        "title": "Ghid pentru profesori",
+        "description": "Pași scurți pentru creare de clase, atribuire de jocuri și citirea progresului fără instruire tehnică."
+      },
+      "research": {
+        "title": "Cercetare aplicată",
+        "description": "Activități construite pentru repetiție, feedback rapid și sarcini potrivite copiilor din clasele primare."
+      },
+      "progress": {
+        "title": "Dovezi de progres",
+        "description": "Profesorii și familiile văd ce s-a lucrat și unde copilul are nevoie de sprijin suplimentar."
+      }
+    },
+    "proof": {
+      "privacy": {
+        "title": "Date tratate cu grijă",
+        "description": "Experiența este gândită cu atenție la confidențialitate, acces controlat și informații relevante pentru învățare."
+      },
+      "romanian": {
+        "title": "Română de la început",
+        "description": "Textele, fluxurile și explicațiile sunt concepute pentru profesori, elevi și familii din România."
+      }
+    },
+    "band": {
+      "eyebrow": "Încredere pentru școli și familii",
+      "title": "Confidențialitate, context și progres explicat clar.",
+      "description": "Banda de dovadă mută accentul de la promisiuni generale la semnale concrete: cine vede datele, cum se urmărește progresul și de ce familiile pot avea încredere în flux.",
+      "primaryCta": "Creează cont de profesor",
+      "secondaryCta": "Vezi platforma"
+    }
+  },
+  "finalCta": {
+    "badge": "Gratuit · Fără card · Începe acum",
+    "titleLine1": "Începe într-un",
+    "titleLine2": "minut",
+    "description": "Cont gratuit, fără card bancar, fără perioadă de probă. Doar EduPlay, complet, gratuit pentru profesori.",
+    "ctaTeacher": "Sunt profesor",
+    "ctaParent": "Sunt părinte",
+    "haveAccount": "Ai deja cont?",
+    "haveAccountLink": "Autentifică-te"
+  },
+  "footer": {
+    "description": "Platformă educațională interactivă pentru copiii din România, vârste 3–12 ani. Făcută de profesori, pentru profesori și familii.",
+    "gdprBadge": {
+      "title": "GDPR European",
+      "description": "Date procesate exclusiv în UE"
+    },
+    "columns": {
+      "platform": {
+        "title": "Platformă",
+        "register": "Creează cont",
+        "login": "Autentificare",
+        "faq": "Întrebări frecvente",
+        "teacherLogin": "Autentificare profesor",
+        "studentLogin": "Autentificare elev"
+      },
+      "resources": {
+        "title": "Resurse",
+        "about": "Despre noi",
+        "teacherGuide": "Ghid profesori",
+        "contact": "Contact"
+      },
+      "legal": {
+        "title": "Legal",
+        "privacy": "Confidențialitate",
+        "terms": "Termeni și condiții",
+        "gdpr": "GDPR"
+      },
+      "learning": {
+        "title": "Învățare",
+        "teachers": "Pentru profesori",
+        "families": "Pentru familii",
+        "activities": "Activități interactive"
+      },
+      "trust": {
+        "title": "Încredere",
+        "privacy": "Confidențialitate",
+        "gdpr": "GDPR",
+        "contact": "Contact"
+      }
+    },
+    "copyright": "© 2026 EduPlay România",
+    "madeInPrefix": "Făcut cu",
+    "madeInSuffix": "în București",
+    "diacriticsLetters": "ă î ș ț â",
+    "diacriticsLabel": "· diacritice corecte, mereu",
+    "navAria": "Navigare footer",
+    "badges": {
+      "romanian": "Română",
+      "gdpr": "GDPR",
+      "primary": "Primar"
+    }
+  },
+  "whyChoose": {
+    "badge": "De ce aleg școlile EduPlay",
+    "title": "Mai puțină administrare. Mai multă învățare vizibilă.",
+    "description": "Secțiunea de după hero trece de la promovarea jocurilor la motivul real pentru care o școală ar folosi platforma: conectează activitățile, progresul și familiile într-un spațiu coerent.",
+    "challengeLabel": "Provocare",
+    "benefitLabel": "Beneficiu",
+    "challenges": {
+      "fragmented": {
+        "description": "Activitățile digitale sunt împrăștiate între aplicații, fișe și mesaje către părinți."
+      },
+      "progress": {
+        "description": "Profesorii pierd timp ca să afle cine a lucrat, ce a înțeles și unde trebuie revenit."
+      },
+      "context": {
+        "description": "Familiile primesc prea puțin context ca să susțină învățarea acasă."
+      }
+    },
+    "benefits": {
+      "unified": {
+        "description": "Clase, elevi, jocuri și progres într-un flux coerent pentru ciclul primar."
+      },
+      "progress": {
+        "description": "Profesorii pot vedea rapid progresul și pot alege următoarea activitate potrivită."
+      },
+      "safe": {
+        "description": "Copiii lucrează într-un spațiu sigur, cu instrucțiuni scurte și feedback imediat."
+      }
+    },
+    "preview": {
+      "ariaLabel": "Exemplu de panou EduPlay pentru școală",
+      "eyebrow": "Panou școală",
+      "title": "Tot ce contează, la vedere",
+      "weeklyActivity": "Activitate săptămânală",
+      "live": "Live",
+      "note": "Profesorii pot trimite activități, elevii lucrează intuitiv, iar familiile primesc context fără să schimbe fluxul clasei.",
+      "primaryCta": "Începe gratuit",
+      "secondaryCta": "Intră în cont",
+      "rows": {
+        "class": {
+          "title": "Clasa a II-a",
+          "value": "24 elevi"
+        },
+        "activities": {
+          "title": "Activități trimise",
+          "value": "18 jocuri"
+        },
+        "progress": {
+          "title": "Progres vizibil",
+          "value": "87%"
+        }
+      }
+    }
+  }
+}

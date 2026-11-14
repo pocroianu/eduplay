@@ -1,0 +1,11 @@
+{
+  "meta": { "title": "Numărătoare în Spațiu" },
+  "instruction": "Câte stele sunt?",
+  "rounds": {
+    "r1": { "prompt": "Câte stele sunt?", "objectLabel": "stea" },
+    "r2": { "prompt": "Câte stele sunt?", "objectLabel": "stea" },
+    "r3": { "prompt": "Câte stele sunt?", "objectLabel": "stea" },
+    "r4": { "prompt": "Câte stele sunt?", "objectLabel": "stea" },
+    "r5": { "prompt": "Câte stele sunt?", "objectLabel": "stea" }
+  }
+}

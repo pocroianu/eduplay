@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "gameId": "food-memory-01",
+    "version": "1.0.0",
+    "totalSteps": 1,
+    "gameType": "memory",
+    "themeName": "candy",
+    "pointsPerPair": 10,
+    "flipBackDelay": 1500,
+    "gridColumns": 4,
+    "supportedLanguages": ["en", "ro"]
+  },
+  "pairs": [
+    { "id": "p1", "imageKey": "apple",  "labelKey": "pair.apple" },
+    { "id": "p2", "imageKey": "banana", "labelKey": "pair.banana" },
+    { "id": "p3", "imageKey": "carrot", "labelKey": "pair.carrot" },
+    { "id": "p4", "imageKey": "pizza",  "labelKey": "pair.pizza" },
+    { "id": "p5", "imageKey": "cake",   "labelKey": "pair.cake" },
+    { "id": "p6", "imageKey": "cookie", "labelKey": "pair.cookie" }
+  ],
+  "questions": []
+}

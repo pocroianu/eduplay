@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "gameId": "shapes-pattern-01",
+    "version": "1.0.0",
+    "totalSteps": 5,
+    "gameType": "pattern",
+    "themeName": "ocean",
+    "pointsPerRound": 10,
+    "roundDelay": 900,
+    "supportedLanguages": ["ro", "en"],
+    "defaultSize": "medium"
+  },
+  "tiles": {
+    "A": { "shape": "circle",   "fillColor": 16738407, "size": "medium" },
+    "B": { "shape": "square",   "fillColor": 5163204,  "size": "medium" },
+    "C": { "shape": "triangle", "fillColor": 16770157, "size": "medium" },
+    "D": { "shape": "star",     "fillColor": 4886242,  "size": "medium" }
+  },
+  "rounds": [
+    { "id": "r1", "pattern": "ABAB",     "gapCount": 1 },
+    { "id": "r2", "pattern": "AABBAABB", "gapCount": 2 },
+    { "id": "r3", "pattern": "ABCABC",   "gapCount": 1 },
+    { "id": "r4", "pattern": "ABCABC",   "gapCount": 3 },
+    { "id": "r5", "pattern": "ABABAB",   "gapCount": 2, "distractors": ["C", "D"] }
+  ],
+  "questions": []
+}

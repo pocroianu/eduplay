@@ -1,0 +1,7 @@
+{
+  "rendererId": "repeat-sequence",
+  "version": "1.0.0",
+  "defaultGameId": "animals-sequence-01",
+  "entry": "src/template.ts",
+  "configGameType": "repeat-sequence"
+}

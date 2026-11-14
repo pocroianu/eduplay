@@ -1,0 +1,121 @@
+{
+  "version": "2.0.0",
+  "baseUrl": "assets",
+  "sharedGroups": {
+    "core-mascots": {
+      "images": [
+        "guapen",
+        "FufuSuperDino"
+      ],
+      "audio": [],
+      "spritesheets": []
+    }
+  },
+  "games": {
+    "phonics-ro-01": {
+      "sharedGroups": [
+        "core-mascots"
+      ],
+      "manifest": {
+        "images": [],
+        "audio": [
+          "letter-a",
+          "letter-m",
+          "letter-p",
+          "letter-l",
+          "letter-s"
+        ],
+        "spritesheets": []
+      }
+    },
+    "animal-sounds-01": {
+      "sharedGroups": [
+        "core-mascots"
+      ],
+      "manifest": {
+        "images": [],
+        "audio": [
+          "animal-dog",
+          "animal-cat",
+          "animal-cow",
+          "animal-sheep"
+        ],
+        "spritesheets": []
+      }
+    }
+  },
+  "pinnedAssets": {
+    "animal-cat": {
+      "type": "audio",
+      "assetId": "sha256-a76888f554c8eadd320f588754c13b94777cf042c7247e495e55cc3ac17a9dc4",
+      "sha256": "a76888f554c8eadd320f588754c13b94777cf042c7247e495e55cc3ac17a9dc4",
+      "path": "/assets/library/audio/animal-cat.mp3"
+    },
+    "animal-cow": {
+      "type": "audio",
+      "assetId": "sha256-f027f2840bdbf6dc4b5b31c80824affd84c31bbb45895a3589e67f465a4720f3",
+      "sha256": "f027f2840bdbf6dc4b5b31c80824affd84c31bbb45895a3589e67f465a4720f3",
+      "path": "/assets/library/audio/animal-cow.mp3"
+    },
+    "animal-dog": {
+      "type": "audio",
+      "assetId": "sha256-9e858978f4e73372bbe53a1d50f82ec7b3fbb7937f10ce66ae9b6a9b93fc3816",
+      "sha256": "9e858978f4e73372bbe53a1d50f82ec7b3fbb7937f10ce66ae9b6a9b93fc3816",
+      "path": "/assets/library/audio/animal-dog.mp3"
+    },
+    "animal-sheep": {
+      "type": "audio",
+      "assetId": "sha256-9e858978f4e73372bbe53a1d50f82ec7b3fbb7937f10ce66ae9b6a9b93fc3816",
+      "sha256": "9e858978f4e73372bbe53a1d50f82ec7b3fbb7937f10ce66ae9b6a9b93fc3816",
+      "path": "/assets/library/audio/animal-sheep.mp3"
+    },
+    "FufuSuperDino": {
+      "type": "image",
+      "assetId": "sha256-25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "sha256": "25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "path": "/assets/library/images/FufuSuperDino.png"
+    },
+    "guapen": {
+      "type": "image",
+      "assetId": "sha256-260a68c55e92c97d78bdf97b331b781f9fde63f2b12bb203fb4bbac0cdf525fe",
+      "sha256": "260a68c55e92c97d78bdf97b331b781f9fde63f2b12bb203fb4bbac0cdf525fe",
+      "path": "/assets/library/images/guapen.png"
+    },
+    "letter-a": {
+      "type": "audio",
+      "assetId": "sha256-a76888f554c8eadd320f588754c13b94777cf042c7247e495e55cc3ac17a9dc4",
+      "sha256": "a76888f554c8eadd320f588754c13b94777cf042c7247e495e55cc3ac17a9dc4",
+      "path": "/assets/library/audio/letter-a.mp3"
+    },
+    "letter-l": {
+      "type": "audio",
+      "assetId": "sha256-a76888f554c8eadd320f588754c13b94777cf042c7247e495e55cc3ac17a9dc4",
+      "sha256": "a76888f554c8eadd320f588754c13b94777cf042c7247e495e55cc3ac17a9dc4",
+      "path": "/assets/library/audio/letter-l.mp3"
+    },
+    "letter-m": {
+      "type": "audio",
+      "assetId": "sha256-f027f2840bdbf6dc4b5b31c80824affd84c31bbb45895a3589e67f465a4720f3",
+      "sha256": "f027f2840bdbf6dc4b5b31c80824affd84c31bbb45895a3589e67f465a4720f3",
+      "path": "/assets/library/audio/letter-m.mp3"
+    },
+    "letter-p": {
+      "type": "audio",
+      "assetId": "sha256-9e858978f4e73372bbe53a1d50f82ec7b3fbb7937f10ce66ae9b6a9b93fc3816",
+      "sha256": "9e858978f4e73372bbe53a1d50f82ec7b3fbb7937f10ce66ae9b6a9b93fc3816",
+      "path": "/assets/library/audio/letter-p.mp3"
+    },
+    "letter-s": {
+      "type": "audio",
+      "assetId": "sha256-f027f2840bdbf6dc4b5b31c80824affd84c31bbb45895a3589e67f465a4720f3",
+      "sha256": "f027f2840bdbf6dc4b5b31c80824affd84c31bbb45895a3589e67f465a4720f3",
+      "path": "/assets/library/audio/letter-s.mp3"
+    },
+    "placeholder-owl": {
+      "type": "image",
+      "assetId": "sha256-25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "sha256": "25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "path": "/assets/library/images/placeholder-owl.png"
+    }
+  }
+}

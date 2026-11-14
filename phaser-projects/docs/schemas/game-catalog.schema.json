@@ -1,0 +1,122 @@
+{
+  "$ref": "#/definitions/game-catalog",
+  "definitions": {
+    "game-catalog": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "games": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "gameType": {
+                "type": "string",
+                "enum": [
+                  "multipleChoice",
+                  "matching",
+                  "memory",
+                  "categorize",
+                  "sequence",
+                  "tracing",
+                  "counting",
+                  "pattern",
+                  "repeat-sequence",
+                  "listen-tap"
+                ]
+              },
+              "name": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "propertyNames": {
+                  "enum": [
+                    "en",
+                    "ro"
+                  ]
+                }
+              },
+              "description": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                },
+                "propertyNames": {
+                  "enum": [
+                    "en",
+                    "ro"
+                  ]
+                }
+              },
+              "thumbnail": {
+                "type": "string"
+              },
+              "languages": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "enum": [
+                    "en",
+                    "ro"
+                  ]
+                },
+                "minItems": 1
+              },
+              "difficulty": {
+                "type": "string",
+                "enum": [
+                  "easy",
+                  "medium",
+                  "hard"
+                ]
+              },
+              "questionCount": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "pairCount": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "itemCount": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "roundCount": {
+                "type": "integer",
+                "exclusiveMinimum": 0
+              },
+              "tags": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": [
+              "id",
+              "name",
+              "languages",
+              "difficulty"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "version",
+        "games"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Game catalog manifest"
+}

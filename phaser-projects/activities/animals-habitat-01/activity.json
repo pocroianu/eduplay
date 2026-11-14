@@ -1,0 +1,9 @@
+{
+  "activityId": "animals-habitat-01",
+  "version": 1,
+  "renderer": {
+    "id": "categorize-game",
+    "version": "^1.0.0"
+  },
+  "gameId": "animals-habitat-01"
+}

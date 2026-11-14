@@ -1,0 +1,12 @@
+{
+  "instruction": "Gaseste perechile potrivite!",
+  "meta": { "title": "Memoria Mancarii" },
+  "pairs": {
+    "pair.apple": "Mar",
+    "pair.banana": "Banana",
+    "pair.carrot": "Morcov",
+    "pair.pizza": "Pizza",
+    "pair.cake": "Tort",
+    "pair.cookie": "Biscuite"
+  }
+}

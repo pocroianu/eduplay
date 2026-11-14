@@ -1,0 +1,9 @@
+{
+  "activityId": "phonics-ro-01",
+  "version": 1,
+  "renderer": {
+    "id": "listen-tap",
+    "version": "^1.0.0"
+  },
+  "gameId": "phonics-ro-01"
+}

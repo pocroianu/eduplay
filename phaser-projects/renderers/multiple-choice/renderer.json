@@ -1,0 +1,7 @@
+{
+  "rendererId": "multiple-choice",
+  "version": "1.0.0",
+  "defaultGameId": "fruits-01",
+  "entry": "src/template.ts",
+  "configGameType": "multipleChoice"
+}

@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "gameId": "food-vs-animals-01",
+    "version": "1.0.0",
+    "totalSteps": 1,
+    "gameType": "categorize",
+    "themeName": "forest",
+    "pointsPerItem": 10,
+    "shuffleItems": true,
+    "supportedLanguages": ["en", "ro"]
+  },
+  "categories": [
+    { "id": "food",    "labelKey": "cat.food",    "color": "#E91E63" },
+    { "id": "animals", "labelKey": "cat.animals", "color": "#4CAF50" }
+  ],
+  "items": [
+    { "id": "i1", "imageKey": "apple",  "labelKey": "item.apple",  "categoryId": "food" },
+    { "id": "i2", "imageKey": "banana", "labelKey": "item.banana", "categoryId": "food" },
+    { "id": "i3", "imageKey": "carrot", "labelKey": "item.carrot", "categoryId": "food" },
+    { "id": "i4", "imageKey": "cat",    "labelKey": "item.cat",    "categoryId": "animals" },
+    { "id": "i5", "imageKey": "lion",   "labelKey": "item.lion",   "categoryId": "animals" },
+    { "id": "i6", "imageKey": "tiger",  "labelKey": "item.tiger",  "categoryId": "animals" }
+  ],
+  "questions": []
+}

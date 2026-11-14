@@ -1,0 +1,11 @@
+{
+  "meta": { "title": "Space Counting" },
+  "instruction": "How many stars are there?",
+  "rounds": {
+    "r1": { "prompt": "How many stars are there?", "objectLabel": "star" },
+    "r2": { "prompt": "How many stars are there?", "objectLabel": "star" },
+    "r3": { "prompt": "How many stars are there?", "objectLabel": "star" },
+    "r4": { "prompt": "How many stars are there?", "objectLabel": "star" },
+    "r5": { "prompt": "How many stars are there?", "objectLabel": "star" }
+  }
+}

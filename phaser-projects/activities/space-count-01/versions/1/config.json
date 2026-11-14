@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "gameId": "space-count-01",
+    "version": "1.0.0",
+    "totalSteps": 5,
+    "gameType": "counting",
+    "themeName": "space",
+    "pointsPerRound": 10,
+    "roundDelay": 900,
+    "supportedLanguages": ["ro", "en"],
+    "defaultShape": "star",
+    "defaultFillColor": 16766287,
+    "defaultStrokeColor": 16361509
+  },
+  "rounds": [
+    { "id": "r1", "count": 4 },
+    { "id": "r2", "count": 8 },
+    { "id": "r3", "count": 6 },
+    { "id": "r4", "count": 10 },
+    { "id": "r5", "count": 7 }
+  ],
+  "questions": []
+}

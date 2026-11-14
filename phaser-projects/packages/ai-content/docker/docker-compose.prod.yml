@@ -1,0 +1,181 @@
+version: '3.8'
+
+services:
+  comfyui:
+    image: ai-content/comfyui:latest
+    container_name: ai-content-comfyui-prod
+    restart: unless-stopped
+    ports:
+      - "8188:8188"
+    volumes:
+      - ../models:/opt/ComfyUI/models
+      - ../output:/opt/ComfyUI/output
+      - comfyui-temp:/opt/ComfyUI/temp
+    deploy:
+      resources:
+        limits:
+          memory: 16G
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8188"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=0
+      - COMFYUI_PORT=8188
+    networks:
+      - ai-content-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ai-content-ollama-prod
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 120s
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=0
+      - OLLAMA_HOST=0.0.0.0
+    networks:
+      - ai-content-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  piper:
+    image: ai-content/piper:latest
+    container_name: ai-content-piper-prod
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    volumes:
+      - piper-models:/app/models
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+          cpus: '2'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    environment:
+      - PIPER_PORT=5000
+      - PIPER_MODELS_DIR=/app/models
+    networks:
+      - ai-content-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  redis:
+    image: redis:7-alpine
+    container_name: ai-content-redis-prod
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: '1'
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - ai-content-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  health-monitor:
+    image: ai-content/health-monitor:latest
+    container_name: ai-content-health-monitor
+    restart: unless-stopped
+    ports:
+      - "8889:8889"
+    depends_on:
+      - comfyui
+      - ollama
+      - piper
+      - redis
+    environment:
+      - NODE_ENV=production
+      - PORT=8889
+      - COMFYUI_URL=http://comfyui:8188
+      - OLLAMA_URL=http://ollama:11434
+      - PIPER_URL=http://piper:5000
+      - REDIS_URL=redis://redis:6379
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+          cpus: '0.5'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8889/health/liveness"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    networks:
+      - ai-content-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  ollama-data:
+    driver: local
+  redis-data:
+    driver: local
+  piper-models:
+    driver: local
+  comfyui-temp:
+    driver: local
+
+networks:
+  ai-content-network:
+    name: ai-content-network
+    driver: bridge

@@ -1,0 +1,12 @@
+{
+  "instruction": "Trace the letter!",
+  "meta": { "title": "Trace Letters A-F" },
+  "items": {
+    "item.A": "A",
+    "item.B": "B",
+    "item.C": "C",
+    "item.D": "D",
+    "item.E": "E",
+    "item.F": "F"
+  }
+}

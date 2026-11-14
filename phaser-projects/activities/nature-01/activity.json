@@ -1,0 +1,9 @@
+{
+  "activityId": "nature-01",
+  "version": 1,
+  "renderer": {
+    "id": "multiple-choice",
+    "version": "^1.0.0"
+  },
+  "gameId": "nature-01"
+}

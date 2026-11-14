@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "gameId": "animals-sequence-01",
+    "version": "1.0.0",
+    "gameType": "repeat-sequence",
+    "themeName": "forest",
+    "pointsPerRound": 10,
+    "roundDelay": 900,
+    "supportedLanguages": ["ro", "en"]
+  },
+  "pads": [
+    { "id": "dog",  "idleColor": 9847900,  "litColor": 14594196, "frequency": 293.66, "glyph": "pawprint" },
+    { "id": "cat",  "idleColor": 13724600, "litColor": 16756851, "frequency": 369.99, "glyph": "circle" },
+    { "id": "cow",  "idleColor": 15131880, "litColor": 16772275, "frequency": 440.00, "glyph": "star" },
+    { "id": "duck", "idleColor": 2527860,  "litColor": 4105374,  "frequency": 523.25, "glyph": "triangle" }
+  ],
+  "sequence": {
+    "startLength": 3,
+    "maxLength": 8,
+    "padLitMs": 560,
+    "playbackGapMs": 200,
+    "introDelayMs": 1000,
+    "replayOnMiss": false
+  },
+  "questions": []
+}

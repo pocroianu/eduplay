@@ -1,0 +1,9 @@
+{
+  "activityId": "animals-match-01",
+  "version": 1,
+  "renderer": {
+    "id": "matching-game",
+    "version": "^1.0.0"
+  },
+  "gameId": "animals-match-01"
+}

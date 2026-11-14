@@ -1,0 +1,13 @@
+{
+  "meta": { "title": "Secvența Culorilor" },
+  "instruction": "Repetă secvența",
+  "watchPrompt": "Privește",
+  "repeatPrompt": "Rândul tău!",
+  "progressTemplate": "Runda {current} din {total} • Lungime {length}",
+  "pads": {
+    "red":    { "label": "roșu" },
+    "blue":   { "label": "albastru" },
+    "yellow": { "label": "galben" },
+    "green":  { "label": "verde" }
+  }
+}

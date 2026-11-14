@@ -1,0 +1,7 @@
+{
+  "rendererId": "tracing-game",
+  "version": "1.0.0",
+  "defaultGameId": "shapes-basic",
+  "entry": "src/template.ts",
+  "configGameType": "tracing"
+}

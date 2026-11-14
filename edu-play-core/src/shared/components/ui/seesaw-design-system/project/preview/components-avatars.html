@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Avatars & class chips</title>
+<link rel="stylesheet" href="_preview.css">
+<style>
+  body { padding: 28px; background: #fff; }
+  .col + .col { margin-top: 14px; }
+  .avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: var(--ss-primary) center/cover no-repeat;
+    color: #fff;
+    font: 700 14px/1 Lexend; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .avatar.lg { width: 56px; height: 56px; font-size: 18px; }
+  .avatar.sm { width: 28px; height: 28px; font-size: 11px; }
+  .class-tile {
+    width: 40px; height: 40px; border-radius: 8px;
+    display: inline-flex; align-items: center; justify-content: center;
+    color: #fff; font: 700 16px/1 Lexend, sans-serif;
+    box-shadow: var(--ss-shadow-xs);
+  }
+  .class-tile.lg { width: 56px; height: 56px; font-size: 22px; border-radius: 10px; }
+  .row { gap: 12px; align-items: center; }
+  .row + .row { margin-top: 14px; }
+  .class-row {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+    border-radius: 8px;
+  }
+  .class-row .name { font: 600 15px/1.2 Lexend; }
+  .class-row .meta { font: 400 12px/1.2 Lexend; color: var(--ss-fg-muted); }
+  .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--ss-pink-600); margin-left: auto; }
+</style>
+</head>
+<body>
+  <div class="row">
+    <span class="avatar">GP</span>
+    <span class="avatar lg" style="background:#fdcb6b;color:#0E1B22">EM</span>
+    <span class="avatar" style="background:#fc747c">SJ</span>
+    <span class="avatar sm" style="background:#2F7A2F">KS</span>
+    <span class="avatar" style="background-image:linear-gradient(135deg,#0E7C8C,#D63B3B)">AI</span>
+  </div>
+  <div class="row">
+    <span class="class-tile" style="background:#0E7C8C">Br</span>
+    <span class="class-tile" style="background:#2F7A2F">3a</span>
+    <span class="class-tile" style="background:#D63B3B">RM</span>
+    <span class="class-tile" style="background:#FFB400;color:#0E1B22">Sn</span>
+    <span class="class-tile lg" style="background:#094856">K</span>
+  </div>
+  <div class="class-row" style="background:var(--ss-purple-050);max-width:260px">
+    <span class="class-tile" style="background:#0E7C8C">Br</span>
+    <div><div class="name">Bradiceni</div><div class="meta">22 students</div></div>
+    <span class="dot"></span>
+  </div>
+</body>
+</html>

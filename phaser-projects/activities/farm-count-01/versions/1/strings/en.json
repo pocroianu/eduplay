@@ -1,0 +1,11 @@
+{
+  "meta": { "title": "Farm Counting" },
+  "instruction": "How many are there?",
+  "rounds": {
+    "r1": { "prompt": "How many apples are there?", "objectLabel": "apple" },
+    "r2": { "prompt": "How many apples are there?", "objectLabel": "apple" },
+    "r3": { "prompt": "How many apples are there?", "objectLabel": "apple" },
+    "r4": { "prompt": "How many apples are there?", "objectLabel": "apple" },
+    "r5": { "prompt": "How many apples are there?", "objectLabel": "apple" }
+  }
+}

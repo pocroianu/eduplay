@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "gameId": "forest-count-01",
+    "version": "1.0.0",
+    "totalSteps": 5,
+    "gameType": "counting",
+    "themeName": "forest",
+    "pointsPerRound": 10,
+    "roundDelay": 900,
+    "supportedLanguages": ["ro", "en"],
+    "defaultShape": "triangle",
+    "defaultFillColor": 6732650,
+    "defaultStrokeColor": 3046706
+  },
+  "rounds": [
+    { "id": "r1", "count": 3 },
+    { "id": "r2", "count": 7 },
+    { "id": "r3", "count": 5 },
+    { "id": "r4", "count": 9 },
+    { "id": "r5", "count": 6 }
+  ],
+  "questions": []
+}

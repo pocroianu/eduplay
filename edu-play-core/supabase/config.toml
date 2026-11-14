@@ -1,0 +1,82 @@
+# Supabase CLI Configuration for EduPlay
+# https://supabase.com/docs/guides/cli/config
+
+project_id = "edu-play-core"
+
+[api]
+enabled = true
+port = 54421
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54422
+shadow_port = 54420
+major_version = 15
+
+[db.seed]
+# Demo data is owned by `npm run seed` (scripts/seed). Keep SQL seeds empty so
+# `supabase db reset && npm run seed` has a single baseline source of truth.
+sql_paths = []
+
+[db.pooler]
+enabled = false
+
+[studio]
+enabled = true
+port = 54423
+api_url = "http://127.0.0.1"
+
+# Inbucket (email mock) is disabled to shrink the supabase-CLI restart
+# fan-out after `db reset`. EDU-390: with [analytics]/[edge_runtime]/[pooler]
+# already off, inbucket is the next non-essential sibling the CLI restarts.
+# No E2E test exercises email reception. Re-enable locally with
+# `enabled = true` if you need to inspect outgoing email at
+# http://localhost:54424.
+[inbucket]
+enabled = false
+port = 54424
+smtp_port = 2500
+pop3_port = 1100
+
+[storage]
+enabled = true
+file_size_limit = "50MiB"
+
+# Image transformation (imgproxy) is explicitly disabled — no surface in
+# edu-play-core uses Supabase storage's transform endpoints, and imgproxy is
+# one of the sibling services the CLI restarts during `db reset`. Explicit
+# disable keeps it out of the restart fan-out (EDU-390).
+[storage.image_transformation]
+enabled = false
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["http://localhost:3000/**"]
+jwt_expiry = 3600
+enable_signup = true
+enable_anonymous_sign_ins = false
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = false
+enable_confirmations = false
+
+[auth.email.template.recovery]
+subject = "Resetare parolă EduPlay"
+content_path = "./supabase/templates/reset-password.html"
+
+[auth.sms]
+enable_signup = false
+
+[realtime]
+enabled = true
+ip_version = "IPv4"
+
+[analytics]
+enabled = false
+
+[edge_runtime]
+enabled = false

@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mock Game - Test postMessage</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: white;
+    }
+
+    .game-container {
+      background: white;
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    .subtitle {
+      color: #666;
+      margin-bottom: 30px;
+      font-size: 16px;
+    }
+
+    .question-box {
+      background: #f0f4ff;
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+
+    .question-number {
+      color: #667eea;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .question-text {
+      color: #333;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    .choices {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .choice-btn {
+      background: #f8f9fa;
+      border: 3px solid #e9ecef;
+      border-radius: 16px;
+      padding: 20px;
+      font-size: 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .choice-btn:hover {
+      border-color: #667eea;
+      transform: scale(1.02);
+    }
+
+    .choice-btn.correct {
+      background: #d4edda;
+      border-color: #28a745;
+    }
+
+    .choice-btn.incorrect {
+      background: #f8d7da;
+      border-color: #dc3545;
+    }
+
+    .choice-emoji {
+      font-size: 40px;
+    }
+
+    .progress-bar {
+      background: #e9ecef;
+      border-radius: 10px;
+      height: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .progress-fill {
+      background: linear-gradient(90deg, #667eea, #764ba2);
+      height: 100%;
+      transition: width 0.3s ease;
+    }
+
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    .complete-screen {
+      display: none;
+    }
+
+    .complete-screen.show {
+      display: block;
+    }
+
+    .game-screen.hide {
+      display: none;
+    }
+
+    .stars {
+      font-size: 48px;
+      margin: 20px 0;
+    }
+
+    .final-score {
+      font-size: 48px;
+      font-weight: bold;
+      color: #667eea;
+      margin: 20px 0;
+    }
+
+    .play-again-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 16px 40px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .play-again-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .debug-panel {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(0,0,0,0.8);
+      color: #0f0;
+      padding: 10px;
+      border-radius: 8px;
+      font-family: monospace;
+      font-size: 12px;
+      max-width: 300px;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-container">
+    <!-- Game Screen -->
+    <div class="game-screen" id="gameScreen">
+      <h1>Joc de Test</h1>
+      <p class="subtitle">Testeaza comunicarea postMessage</p>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-number" id="questionNumber">Intrebarea 1 din 5</div>
+        <div class="question-text" id="questionText">Care este un mar?</div>
+      </div>
+
+      <div class="choices" id="choices">
+        <!-- Choices will be rendered here -->
+      </div>
+
+      <div class="stats">
+        <div>
+          <div class="stat-value" id="scoreDisplay">0</div>
+          <div>Scor</div>
+        </div>
+        <div>
+          <div class="stat-value" id="timeDisplay">0:00</div>
+          <div>Timp</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Complete Screen -->
+    <div class="complete-screen" id="completeScreen">
+      <h1>Felicitari!</h1>
+      <div class="stars" id="starsDisplay"></div>
+      <div class="final-score" id="finalScore">0/5</div>
+      <p class="subtitle">Ai terminat jocul de test!</p>
+      <button class="play-again-btn" onclick="restartGame()">Joaca din nou</button>
+    </div>
+  </div>
+
+  <div class="debug-panel" id="debugPanel">
+    <strong>Debug postMessage:</strong><br>
+    <div id="debugLog"></div>
+  </div>
+
+  <script>
+    function toOrigin(value) {
+      try {
+        const url = new URL(value);
+        return url.protocol === 'http:' || url.protocol === 'https:' ? url.origin : undefined;
+      } catch {
+        return undefined;
+      }
+    }
+
+    const query = new URLSearchParams(window.location.search);
+    const parentOrigin =
+      toOrigin(query.get('origin')) ||
+      toOrigin(document.referrer) ||
+      toOrigin(window.location.href);
+
+    // Game state
+    let currentQuestion = 0;
+    let score = 0;
+    let startTime = Date.now();
+    let timerInterval;
+
+    // Questions data
+    const questions = [
+      {
+        text: 'Care este un mar?',
+        choices: [
+          { emoji: '🍌', label: 'Banana', correct: false },
+          { emoji: '🍎', label: 'Mar', correct: true },
+          { emoji: '🥕', label: 'Morcov', correct: false },
+          { emoji: '🍇', label: 'Strugure', correct: false }
+        ]
+      },
+      {
+        text: 'Care animal face "Miau"?',
+        choices: [
+          { emoji: '🐕', label: 'Caine', correct: false },
+          { emoji: '🐈', label: 'Pisica', correct: true },
+          { emoji: '🐦', label: 'Pasare', correct: false },
+          { emoji: '🐟', label: 'Peste', correct: false }
+        ]
+      },
+      {
+        text: 'Ce culoare are cerul?',
+        choices: [
+          { emoji: '🟢', label: 'Verde', correct: false },
+          { emoji: '🔴', label: 'Rosu', correct: false },
+          { emoji: '🔵', label: 'Albastru', correct: true },
+          { emoji: '🟡', label: 'Galben', correct: false }
+        ]
+      },
+      {
+        text: 'Care este un vehicul?',
+        choices: [
+          { emoji: '🚗', label: 'Masina', correct: true },
+          { emoji: '🏠', label: 'Casa', correct: false },
+          { emoji: '🌳', label: 'Copac', correct: false },
+          { emoji: '📚', label: 'Carte', correct: false }
+        ]
+      },
+      {
+        text: 'Cate picioare are un caine?',
+        choices: [
+          { emoji: '2️⃣', label: 'Doua', correct: false },
+          { emoji: '4️⃣', label: 'Patru', correct: true },
+          { emoji: '6️⃣', label: 'Sase', correct: false },
+          { emoji: '8️⃣', label: 'Opt', correct: false }
+        ]
+      }
+    ];
+
+    // Debug logging
+    function debugLog(message) {
+      const log = document.getElementById('debugLog');
+      const time = new Date().toLocaleTimeString();
+      log.innerHTML = `[${time}] ${message}<br>` + log.innerHTML;
+      if (log.children.length > 5) {
+        log.removeChild(log.lastChild);
+      }
+    }
+
+    // Send postMessage to parent
+    function sendToParent(data) {
+      if (window.parent !== window && parentOrigin) {
+        window.parent.postMessage(data, parentOrigin);
+        debugLog(`Sent: ${data.type}`);
+      } else {
+        debugLog(`No trusted parent origin for: ${data.type}`);
+      }
+    }
+
+    window.addEventListener('message', (event) => {
+      if (event.origin !== parentOrigin) return;
+
+      const { type, action } = event.data || {};
+      if (type === 'GAME_CONTROL') {
+        debugLog(`Received control: ${action}`);
+      }
+    });
+
+    function sendActivityReady() {
+      sendToParent({
+        type: 'ACTIVITY_READY',
+        gameId: 'mock-game',
+        capabilities: {
+          repeatInstruction: false
+        }
+      });
+    }
+
+
+    // Send progress update
+    function sendProgressUpdate() {
+      const totalQuestions = questions.length;
+      const progress = (currentQuestion + 1) / totalQuestions;
+
+      sendToParent({
+        type: 'PROGRESS_UPDATE',
+        currentSet: currentQuestion + 1,
+        totalSets: totalQuestions,
+        progress: progress
+      });
+    }
+
+    // Send game complete
+    function sendGameComplete() {
+      const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+
+      sendToParent({
+        type: 'GAME_COMPLETE',
+        score: score,
+        totalSets: questions.length,
+        timeSpent: timeSpent,
+        reason: 'completed'
+      });
+    }
+
+    // Render current question
+    function renderQuestion() {
+      const question = questions[currentQuestion];
+      const totalQuestions = questions.length;
+
+      document.getElementById('questionNumber').textContent =
+        `Intrebarea ${currentQuestion + 1} din ${totalQuestions}`;
+      document.getElementById('questionText').textContent = question.text;
+      document.getElementById('progressFill').style.width =
+        `${((currentQuestion) / totalQuestions) * 100}%`;
+
+      const choicesContainer = document.getElementById('choices');
+      choicesContainer.innerHTML = question.choices.map((choice, index) => `
+        <button class="choice-btn" onclick="selectAnswer(${index})">
+          <span class="choice-emoji">${choice.emoji}</span>
+          <span>${choice.label}</span>
+        </button>
+      `).join('');
+    }
+
+    // Handle answer selection
+    function selectAnswer(index) {
+      const question = questions[currentQuestion];
+      const choice = question.choices[index];
+      const buttons = document.querySelectorAll('.choice-btn');
+
+      // Disable all buttons
+      buttons.forEach(btn => btn.style.pointerEvents = 'none');
+
+      // Show correct/incorrect
+      buttons.forEach((btn, i) => {
+        if (question.choices[i].correct) {
+          btn.classList.add('correct');
+        } else if (i === index) {
+          btn.classList.add('incorrect');
+        }
+      });
+
+      // Update score
+      if (choice.correct) {
+        score++;
+        document.getElementById('scoreDisplay').textContent = score;
+      }
+
+      // Send progress update
+      sendProgressUpdate();
+
+      // Move to next question after delay
+      setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          renderQuestion();
+        } else {
+          showComplete();
+        }
+      }, 1000);
+    }
+
+    // Show completion screen
+    function showComplete() {
+      clearInterval(timerInterval);
+
+      document.getElementById('gameScreen').classList.add('hide');
+      document.getElementById('completeScreen').classList.add('show');
+
+      // Calculate stars
+      const percentage = score / questions.length;
+      let stars = '';
+      if (percentage >= 0.9) stars = '⭐⭐⭐';
+      else if (percentage >= 0.7) stars = '⭐⭐';
+      else if (percentage >= 0.5) stars = '⭐';
+      else stars = '😢';
+
+      document.getElementById('starsDisplay').textContent = stars;
+      document.getElementById('finalScore').textContent = `${score}/${questions.length}`;
+
+      // Send game complete
+      sendGameComplete();
+    }
+
+    // Restart game
+    function restartGame() {
+      currentQuestion = 0;
+      score = 0;
+      startTime = Date.now();
+
+      document.getElementById('gameScreen').classList.remove('hide');
+      document.getElementById('completeScreen').classList.remove('show');
+      document.getElementById('scoreDisplay').textContent = '0';
+
+      startTimer();
+      renderQuestion();
+    }
+
+    // Timer
+    function startTimer() {
+      timerInterval = setInterval(() => {
+        const elapsed = Math.floor((Date.now() - startTime) / 1000);
+        const mins = Math.floor(elapsed / 60);
+        const secs = elapsed % 60;
+        document.getElementById('timeDisplay').textContent =
+          `${mins}:${secs.toString().padStart(2, '0')}`;
+      }, 1000);
+    }
+
+
+    // Initialize game
+    startTimer();
+    renderQuestion();
+    sendActivityReady();
+    debugLog('Game initialized');
+  </script>
+</body>
+</html>

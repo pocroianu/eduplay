@@ -1,0 +1,164 @@
+def CI_IMAGE = 'ghcr.io/eduplay-org/eduplay-ci@sha256:836c0f124fd121a235782002ff0c69f0e73440bcf83211f9514e33acbe0c93d9'
+def CI_AGENT_ARGS = '-v /var/run/docker.sock:/var/run/docker.sock --group-add 989 -e HOME=/tmp --dns 1.1.1.1 --dns 8.8.8.8'
+
+pipeline {
+  agent {
+    docker {
+      image CI_IMAGE
+      args  CI_AGENT_ARGS
+      registryUrl 'https://ghcr.io'
+      registryCredentialsId 'ghcr-pull'
+    }
+  }
+
+  options {
+    timeout(time: 45, unit: 'MINUTES')
+    timestamps()
+    disableConcurrentBuilds(abortPrevious: true)
+    buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '10'))
+  }
+
+  environment {
+    CI = 'true'
+    PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = '1'
+    NODE_OPTIONS = '--max-old-space-size=2048'
+  }
+
+  stages {
+    stage('Identify') {
+      steps {
+        sh '''#!/bin/bash
+          set -euo pipefail
+          printf 'Built revision: %s on branch %s\n' "$(git rev-parse HEAD)" "${BRANCH_NAME:-unknown}"
+        '''
+        script {
+          if (env.CHANGE_ID) {
+            env.PR_HEAD_SHA = sh(
+              script: 'git rev-parse --verify -q HEAD^2 2>/dev/null || git rev-parse --verify HEAD',
+              returnStdout: true
+            ).trim()
+            echo "EDU-527: captured PR-${env.CHANGE_ID} head SHA at checkout: ${env.PR_HEAD_SHA}"
+          }
+        }
+      }
+    }
+
+    stage('Install') {
+      steps {
+        sh '''#!/bin/bash
+          set -euo pipefail
+          echo "=== Pre-install resource state ==="
+          node --version && npm --version
+          free -h || true
+          df -h /tmp / . || true
+          # Use the image's default npm (11.x with Node 24). Unlike edu-play-core,
+          # phaser-projects sets `engine-strict=true` in .npmrc and pins
+          # `engines.npm: >=11.6.2` in package.json, so the EDU-377 `npx npm@10`
+          # workaround errors out with `Unsupported engine`. The lockfile is
+          # ~11K lines (vs edu-play-core's much larger one), well below the
+          # threshold where npm 11's "Exit handler never called" bug
+          # (npm/cli#8268) tends to bite. EDU-404.
+          npm ci --no-audit --no-fund --prefer-offline
+        '''
+      }
+    }
+
+    stage('Validate configs') {
+      steps {
+        sh 'npm run validate:all-configs'
+        sh 'npm run test:config-validation'
+      }
+    }
+
+    stage('Test + Build') {
+      parallel {
+        stage('Validation tests') {
+          steps {
+            sh 'npm run test:validation'
+          }
+        }
+
+        stage('Build all workspaces') {
+          steps {
+            sh 'npm run build:all'
+          }
+          post {
+            always {
+              archiveArtifacts artifacts: 'tools/config-editor/dist/**', allowEmptyArchive: true, fingerprint: false
+            }
+          }
+        }
+      }
+    }
+
+    stage('E2E (chromium)') {
+      steps {
+        sh '''#!/bin/bash
+          set -euo pipefail
+          export PLAYWRIGHT_BROWSERS_PATH=/tmp/.cache/ms-playwright
+          npx playwright install chromium
+          npm run test:e2e:chromium
+        '''
+      }
+      post {
+        always {
+          archiveArtifacts artifacts: 'e2e/playwright-report/**, e2e/test-results/**', allowEmptyArchive: true, fingerprint: false
+          junit testResults: 'e2e/test-results/junit.xml', allowEmptyResults: true
+        }
+      }
+    }
+  }
+
+  post {
+    always {
+      script {
+        if (env.CHANGE_ID && env.PR_HEAD_SHA) {
+          try {
+            def stateMap = [
+              'SUCCESS' : 'SUCCESS',
+              'UNSTABLE': 'FAILURE',
+              'FAILURE' : 'FAILURE',
+              'ABORTED' : 'ERROR',
+            ]
+            def state = stateMap[currentBuild.currentResult] ?: 'ERROR'
+
+            step([
+              $class: 'GitHubCommitStatusSetter',
+              reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/eduplay-org/phaser-projects'],
+              commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: env.PR_HEAD_SHA],
+              contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'continuous-integration/jenkins/pr-merge'],
+              statusBackrefSource: [$class: 'ManuallyEnteredBackrefSource', backref: env.BUILD_URL],
+              statusResultSource: [
+                $class: 'ConditionalStatusResultSource',
+                results: [[$class: 'AnyBuildResult', state: state, message: "Build #${env.BUILD_NUMBER} ${currentBuild.currentResult.toLowerCase()}"]],
+              ],
+              errorHandlers: [[$class: 'ShallowAnyErrorHandler']],
+            ])
+            echo "EDU-527: posted ${state} for context continuous-integration/jenkins/pr-merge to PR-${env.CHANGE_ID} head ${env.PR_HEAD_SHA}"
+          } catch (Exception e) {
+            echo "EDU-527: failed to repost status to PR head: ${e.message}"
+          }
+        } else if (env.CHANGE_ID) {
+          echo "EDU-527: PR_HEAD_SHA unset (build failed before Identify); skipping head-SHA status repost."
+        }
+
+        sh '''#!/bin/bash
+          set +e
+          echo "=== Workspace cleanup diagnostics ==="
+          echo "WORKSPACE=${WORKSPACE:-$(pwd)}"
+          echo "--- df -h workspace + /tmp ---"
+          df -h "${WORKSPACE:-.}" /tmp 2>/dev/null || df -h . /tmp || true
+          echo "--- workspace size before cleanup ---"
+          du -sh "${WORKSPACE:-.}" 2>/dev/null || true
+          echo "=== Removing Jenkins workspace ==="
+        '''
+
+        try {
+          deleteDir()
+        } catch (err) {
+          echo "WARNING: deleteDir() failed during workspace cleanup: ${err}"
+        }
+      }
+    }
+  }
+}

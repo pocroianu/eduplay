@@ -1,0 +1,165 @@
+{
+  "loading": {
+    "iconAlt": "Se încarcă",
+    "preparingAdventure": "Se pregătește aventura…"
+  },
+  "error": {
+    "title": "Activitatea nu s-a putut încărca",
+    "subtitle": "Ceva nu a mers bine. Hai să mai încercăm o dată!",
+    "retry": "Reîncearcă",
+    "retryAria": "Reîncearcă activitatea",
+    "back": "Înapoi",
+    "backAria": "Înapoi la jocuri"
+  },
+  "controls": {
+    "resume": "Continuă",
+    "playAria": "Continuă jocul",
+    "pauseAria": "Pune pe pauză",
+    "muteOnAria": "Pornește sunetul",
+    "muteOffAria": "Oprește sunetul",
+    "fullscreenEnter": "Ecran complet",
+    "fullscreenExit": "Ieși din ecran complet",
+    "exit": "Ieși din joc"
+  },
+  "activityNavbar": {
+    "label": "Controale activitate",
+    "playerFallback": "Jucător",
+    "repeat": "Repetă instrucțiunea",
+    "repeatShort": "Repetă",
+    "repeatUnavailable": "Repetarea nu este disponibilă",
+    "pauseShort": "Pauză"
+  },
+  "pauseOverlay": {
+    "title": "Pauză",
+    "subtitle": "Ia-ți o clipă. Când ești gata, continuăm aventura.",
+    "resume": "Continuă",
+    "restart": "Reîncepe",
+    "soundOn": "Sunet pornit",
+    "soundOff": "Sunet oprit",
+    "fullscreenEnter": "Ecran complet",
+    "fullscreenExit": "Ieși din ecran complet",
+    "progress": "Progres",
+    "exit": "Ieși din joc",
+    "alertLabel": "Jocul este pe pauză"
+  },
+  "iframe": {
+    "title": "Joc educațional"
+  },
+  "actions": {
+    "next": "Următorul",
+    "continue": "Continuă",
+    "playAgain": "Joacă din nou",
+    "playAgainShort": "Din nou",
+    "backToGames": "Înapoi la jocuri"
+  },
+  "hud": {
+    "scoreAria": "Scor {{score}} la sută",
+    "timeAria": "Timp {{time}}",
+    "roundAria": "Runda {{current}} din {{total}}"
+  },
+  "progress": {
+    "label": "Progres {{filled}} din {{total}}"
+  },
+  "banner": {
+    "complete": "Felicitări!"
+  },
+  "drawer": {
+    "title": "Sfaturi pentru joc",
+    "close": "Închide"
+  },
+  "coach": {
+    "open": "Sfaturi de la Vulpița",
+    "byline": "Sfat de la Vulpița:"
+  },
+  "helper": {
+    "fresh": "Începe fără grabă. Jocul îți va arăta pe parcurs ce este important.",
+    "withProgress_one": "Ai deja {{count}} încercare. Continuă cu calm și păstrează ritmul.",
+    "withProgress_few": "Ai deja {{count}} încercări. Continuă cu calm și păstrează ritmul.",
+    "withProgress_other": "Ai deja {{count}} de încercări. Continuă cu calm și păstrează ritmul."
+  },
+  "results": {
+    "stars_one": "stea",
+    "stars_few": "stele",
+    "stars_other": "de stele",
+    "labels": {
+      "points": "Puncte",
+      "time": "Timp",
+      "attempts": "Încercări"
+    },
+    "encouragement": {
+      "high": "„Excelent! Munca ta a dat roade. Continuă să explorezi!”",
+      "mid": "„Bravo! Ai învățat ceva nou astăzi.”",
+      "low": "„Continuă să exersezi — fiecare încercare te face mai bun!”"
+    }
+  },
+  "emptyState": {
+    "title": "Aproape gata!",
+    "subtitle": "Acest joc este încă în pregătire. Vulpița îl pregătește cu grijă.",
+    "coachQuote": "„Între timp, alege alt joc din colecție — sunt multe aventuri care te așteaptă!”"
+  },
+  "themes": {
+    "default": {
+      "badge": "Misiune ghidată",
+      "title": "Jocul de Astăzi",
+      "subtitle": "Pornește de la indiciile din ecran și explorează cu răbdare, un pas pe rând.",
+      "quote": "Înaintează cu încredere. Fiecare încercare contează.",
+      "step1": "Citește sarcina",
+      "step2": "Încearcă răspunsul",
+      "step3": "Continuă mai departe"
+    },
+    "math": {
+      "badge": "Misiune: Matematică",
+      "title": "Provocarea Cifrelor Magice",
+      "subtitle": "Pentru a debloca poarta castelului, așază ideile în ordinea corectă și urmărește indiciile cu atenție.",
+      "quote": "Fii atent la valoarea fiecărui element și compară-le cu răbdare.",
+      "step1": "Identifică elementele de pe ecran",
+      "step2": "Alege răspunsul corect",
+      "step3": "Verifică rezultatul final"
+    },
+    "literacy": {
+      "badge": "Misiune: Limba română",
+      "title": "Lumea Literelor",
+      "subtitle": "Citește, recunoaște și completează răspunsul potrivit. Fiecare pas te aduce mai aproape de reușită.",
+      "quote": "Învață cuvintele pas cu pas și ascultă indiciile vizuale.",
+      "step1": "Citește enunțul",
+      "step2": "Potrivește corect",
+      "step3": "Continuă mai departe"
+    },
+    "phonics": {
+      "badge": "Misiune: Sunete",
+      "title": "Ascultă și Potrivește",
+      "subtitle": "Concentrează-te pe sunet, pe ritm și pe forma potrivită pentru a merge mai departe.",
+      "quote": "Ascultă cu atenție și încearcă încă o dată dacă ai dubii.",
+      "step1": "Ascultă sunetul",
+      "step2": "Alege simbolul corect",
+      "step3": "Confirmă potrivirea"
+    },
+    "shapes": {
+      "badge": "Misiune: Forme",
+      "title": "Găsește Forma Potrivită",
+      "subtitle": "Urmărește conturul și compară formele până când răspunsul se așază perfect.",
+      "quote": "Privește marginile și colțurile înainte să alegi.",
+      "step1": "Observă conturul",
+      "step2": "Compară formele",
+      "step3": "Trage răspunsul corect"
+    },
+    "colors": {
+      "badge": "Misiune: Culori",
+      "title": "Explorare Colorată",
+      "subtitle": "Alege nuanța corectă și lasă culorile să te ghideze spre răspunsul bun.",
+      "quote": "Privește detaliul și alege nuanța care se potrivește cel mai bine.",
+      "step1": "Privește detaliul",
+      "step2": "Alege culoarea",
+      "step3": "Vezi confirmarea"
+    },
+    "vocabulary": {
+      "badge": "Misiune: Cuvinte",
+      "title": "Descoperă Cuvinte Noi",
+      "subtitle": "Leagă imaginile de cuvinte și construiește sensul pas cu pas.",
+      "quote": "Spune cuvântul în minte înainte de a selecta răspunsul.",
+      "step1": "Privește imaginea",
+      "step2": "Alege cuvântul",
+      "step3": "Reține descoperirea"
+    }
+  }
+}

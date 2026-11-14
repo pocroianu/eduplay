@@ -1,0 +1,127 @@
+services:
+  # ComfyUI - Image Generation with mounted local model cache
+  comfyui:
+    build:
+      context: ./comfyui
+      dockerfile: Dockerfile
+    container_name: edu-comfyui
+    ports:
+      - "8188:8188"
+    volumes:
+      # Reuse the local ComfyUI Desktop model cache; do not download or copy
+      # large model files into this repo. Override COMFYUI_MODELS_DIR when needed.
+      - type: bind
+        source: ${COMFYUI_MODELS_DIR:-C:/Users/pocro/Documents/ComfyUI/models}
+        target: /app/models
+        read_only: true
+      - comfyui-output:/app/output
+      - ../.runtime/comfyui/input:/app/input
+      - ./comfyui/workflows:/app/workflows:ro
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - CLI_ARGS=--listen 0.0.0.0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    networks:
+      - ai-content-network
+
+  # Ollama - Optional LLM text generation profile
+  ollama:
+    profiles:
+      - ollama
+    image: ollama/ollama:latest
+    container_name: edu-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-models:/root/.ollama
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - OLLAMA_HOST=0.0.0.0
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    networks:
+      - ai-content-network
+    command: serve
+
+  # Piper TTS - Audio Generation (English + Romanian)
+  piper:
+    build:
+      context: ./piper
+      dockerfile: Dockerfile
+    container_name: edu-piper
+    ports:
+      - "5000:5000"
+    environment:
+      - PIPER_VOICE_EN=en_US-lessac-medium
+      - PIPER_VOICE_RO=ro_RO-mihai-medium
+    restart: unless-stopped
+    networks:
+      - ai-content-network
+
+  # F5 Romanian TTS - Optional experimental Romanian voice provider
+  f5-romanian:
+    profiles:
+      - f5
+    build:
+      context: ./f5-romanian
+      dockerfile: Dockerfile
+    container_name: edu-f5-romanian
+    ports:
+      - "5001:5001"
+    volumes:
+      - f5-romanian-models:/app/models
+      - ../.runtime/f5-romanian/reference:/app/reference:ro
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
+      - F5_MODEL_REPO=cdorob/f5-tts-romanian
+      - F5_MODEL_DIR=/app/models/f5-tts-romanian
+      - F5_REF_AUDIO_PATH=/app/reference/reference.wav
+      - F5_REF_TEXT=${F5_REF_TEXT:-}
+      - F5_VOICE_ID=f5-ro-reference
+      - F5_VOICE_DESCRIPTION=F5 Romanian reference voice
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    restart: unless-stopped
+    networks:
+      - ai-content-network
+
+  # Redis - Caching Layer
+  redis:
+    image: redis:7-alpine
+    container_name: edu-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    restart: unless-stopped
+    networks:
+      - ai-content-network
+
+networks:
+  ai-content-network:
+    driver: bridge
+
+volumes:
+  comfyui-output:
+  ollama-models:
+  f5-romanian-models:
+  redis-data:

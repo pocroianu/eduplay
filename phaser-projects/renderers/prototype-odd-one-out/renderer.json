@@ -1,0 +1,7 @@
+{
+  "rendererId": "prototype-odd-one-out",
+  "version": "0.0.0",
+  "defaultGameId": "prototype-odd-one-out-01",
+  "entry": "src/template.ts",
+  "configGameType": "counting"
+}

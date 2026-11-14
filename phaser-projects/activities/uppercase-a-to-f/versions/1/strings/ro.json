@@ -1,0 +1,12 @@
+{
+  "instruction": "Traseaza litera!",
+  "meta": { "title": "Traseaza Literele A-F" },
+  "items": {
+    "item.A": "A",
+    "item.B": "B",
+    "item.C": "C",
+    "item.D": "D",
+    "item.E": "E",
+    "item.F": "F"
+  }
+}

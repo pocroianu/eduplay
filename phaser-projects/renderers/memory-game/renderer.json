@@ -1,0 +1,7 @@
+{
+  "rendererId": "memory-game",
+  "version": "1.0.0",
+  "defaultGameId": "animals-memory-01",
+  "entry": "src/template.ts",
+  "configGameType": "memory"
+}

@@ -1,0 +1,243 @@
+
+def CI_IMAGE = 'ghcr.io/eduplay-org/eduplay-ci@sha256:836c0f124fd121a235782002ff0c69f0e73440bcf83211f9514e33acbe0c93d9'
+def CI_AGENT_ARGS = '-v /var/run/docker.sock:/var/run/docker.sock --group-add 989 -e HOME=/tmp --dns 1.1.1.1 --dns 8.8.8.8 --network=host'
+
+pipeline {
+  agent {
+    docker {
+      image CI_IMAGE
+      args  CI_AGENT_ARGS
+      registryUrl 'https://ghcr.io'
+      registryCredentialsId 'ghcr-pull'
+    }
+  }
+
+  options {
+    timeout(time: 45, unit: 'MINUTES')
+    timestamps()
+    disableConcurrentBuilds(abortPrevious: true)
+    buildDiscarder(logRotator(numToKeepStr: '30', artifactNumToKeepStr: '10'))
+  }
+
+  environment {
+    CI = 'true'
+    PLAYWRIGHT_BASE_URL = 'http://localhost:3000'
+    NEXT_PUBLIC_SUPABASE_URL = 'http://localhost:54421'
+    NEXT_PUBLIC_SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0'
+    PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD = '1'
+    NODE_OPTIONS = '--max-old-space-size=2048'
+  }
+
+  stages {
+    stage('Identify') {
+      steps {
+        sh '''#!/bin/bash
+          set -euo pipefail
+          printf 'Built revision: %s on branch %s\n' "$(git rev-parse HEAD)" "${BRANCH_NAME:-unknown}"
+        '''
+        script {
+          if (env.CHANGE_ID) {
+            env.PR_HEAD_SHA = sh(
+              script: 'git rev-parse --verify -q HEAD^2 2>/dev/null || git rev-parse --verify HEAD',
+              returnStdout: true
+            ).trim()
+            echo "EDU-527: captured PR-${env.CHANGE_ID} head SHA at checkout: ${env.PR_HEAD_SHA}"
+          }
+        }
+      }
+    }
+
+    stage('Install') {
+      steps {
+        sh '''#!/bin/bash
+          set -euo pipefail
+          # Pre-flight diagnostics. If npm dies again we want to know whether
+          # we're hitting a container memory limit, host RAM exhaustion, or a
+          # disk wall — without round-tripping to the board to ssh and check.
+          echo "=== Pre-install resource state ==="
+          echo "--- node + npm ---"
+          node --version
+          npm --version
+          echo "--- free -h ---"
+          free -h || true
+          echo "--- df -h /tmp / . ---"
+          df -h /tmp / . || true
+          echo "--- cgroup memory limits ---"
+          cat /sys/fs/cgroup/memory.max 2>/dev/null && echo " (memory.max bytes)" || true
+          cat /sys/fs/cgroup/memory.high 2>/dev/null && echo " (memory.high bytes)" || true
+          cat /sys/fs/cgroup/memory.current 2>/dev/null && echo " (memory.current bytes)" || true
+          echo "--- lockfile size ---"
+          wc -l package-lock.json || true
+          ls -la package-lock.json || true
+          echo "=== Starting npm ci via npm 10 (workaround for npm 11 Exit-handler-never-called) ==="
+          # npm 11.x ships with Node 24 and has documented "Exit handler never
+          # called!" crashes on large lockfiles (npm/cli#8268 family). Pin to
+          # npm 10.x via npx for this run; if the issue persists we know npm
+          # version isn't the cause and need to look elsewhere.
+          npx --yes npm@10 ci --no-audit --no-fund --prefer-offline
+        '''
+      }
+    }
+
+    stage('Checks') {
+      parallel {
+        stage('Lint') {
+          steps { sh 'npm run lint' }
+        }
+
+        stage('Typecheck') {
+          steps { sh 'npm run typecheck' }
+        }
+
+        stage('Agent Guardrails') {
+          steps { sh 'npm run check:agent-guardrails' }
+        }
+
+        stage('Unit + Coverage') {
+          steps {
+            sh 'npm run test:unit:coverage'
+          }
+          post {
+            always {
+              archiveArtifacts artifacts: 'coverage/**', allowEmptyArchive: true, fingerprint: false
+            }
+          }
+        }
+      }
+    }
+
+    stage('E2E (Supabase + Playwright)') {
+      options {
+        lock(resource: 'edu-play-core-supabase-e2e')
+      }
+      steps {
+        sh '''#!/bin/bash
+          set -euo pipefail
+
+          # Reconcile Playwright browser version drift between the image's
+          # baked-in 1.58.2 (under /ms-playwright, owned by image UID 1000,
+          # not writable by host UID 101) and the lockfile's pin (currently
+          # ^1.59.1). Override PLAYWRIGHT_BROWSERS_PATH to a writable temp
+          # dir so the install runs as host UID 101 without permission errors.
+          # `--with-deps` is unnecessary — the image already has every
+          # browser system dep apt-installed.
+          export PLAYWRIGHT_BROWSERS_PATH=/tmp/.cache/ms-playwright
+          npx playwright install chromium
+
+          # Start Supabase against the host docker daemon.
+          npx supabase start
+
+          # Wait for Kong gateway. Mirrors checkUrl() from the GH Actions
+          # workflow — any HTTP < 500 means the gateway is up.
+          for _ in $(seq 1 60); do
+            status=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 2 \
+              http://localhost:54421/rest/v1/ 2>/dev/null) || status=000
+            if [ "$status" -ge 200 ] && [ "$status" -lt 500 ]; then
+              echo "Supabase ready (HTTP $status)"
+              break
+            fi
+            sleep 2
+          done
+
+          # Pull the service role key out of `supabase status -o env` (it is
+          # NOT exported as an env var by `supabase start`). EDU-156 — the
+          # password-reset rate limiter throws on every form submit without
+          # SUPABASE_SERVICE_ROLE_KEY, masking real test failures as 500s.
+          SUPABASE_SERVICE_ROLE_KEY=$(npx supabase status -o env \
+            | grep -E '^SERVICE_ROLE_KEY=' | head -1 \
+            | sed -E 's/^SERVICE_ROLE_KEY=//' | tr -d '"')
+          export SUPABASE_SERVICE_ROLE_KEY
+
+          # EDU-35: Supabase persistent docker volumes survive between branch
+          # builds, so reset to the branch's migrations before generating
+          # types or running E2E. Without this the type-drift check returns
+          # both false positives and false negatives.
+          npx supabase db reset
+
+          # EDU-35: fail fast if database.ts drifted from supabase/migrations.
+          npm run check:types-drift
+
+          # Chromium-only matches GH Actions Phase 1 (firefox / webkit
+          # disabled per EDU-156 to keep the runner queue moving). Browsers
+          # are baked into the CI image at PLAYWRIGHT_BROWSERS_PATH=/ms-playwright.
+          npm run test:e2e -- --project=chromium
+        '''
+      }
+      post {
+        always {
+          sh '''#!/bin/bash
+            echo "=== EDU-390 supabase post-run diagnostics ==="
+            echo "--- docker ps -a (supabase only) ---"
+            docker ps -a --no-trunc --filter "name=supabase_" \
+              --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}' || true
+            echo "--- supabase status -o env ---"
+            npx supabase status -o env 2>&1 || true
+            echo "--- per-container logs (last 100 lines) ---"
+            for c in $(docker ps -a --filter "name=supabase_" --format '{{.Names}}' || true); do
+              echo "=== $c ==="
+              docker logs --tail 100 "$c" 2>&1 || true
+            done
+            echo "=== end EDU-390 diagnostics ==="
+          '''
+          sh 'npx supabase stop --no-backup || true'
+
+          archiveArtifacts artifacts: 'playwright-report/**, test-results/**', allowEmptyArchive: true, fingerprint: false
+          junit testResults: 'playwright-report/junit.xml', allowEmptyResults: true
+        }
+      }
+    }
+  }
+
+  post {
+    always {
+      sh '''#!/bin/bash
+        set +e
+        echo "=== Workspace cleanup diagnostics ==="
+        echo "WORKSPACE=${WORKSPACE:-$(pwd)}"
+        echo "--- df -h workspace + /tmp ---"
+        df -h "${WORKSPACE:-.}" /tmp 2>/dev/null || df -h . /tmp || true
+        echo "--- workspace size before cleanup ---"
+        du -sh "${WORKSPACE:-.}" 2>/dev/null || true
+        echo "=== Removing Jenkins workspace ==="
+      '''
+
+      script {
+        if (env.CHANGE_ID && env.PR_HEAD_SHA) {
+          try {
+            def stateMap = [
+              'SUCCESS' : 'SUCCESS',
+              'UNSTABLE': 'FAILURE',
+              'FAILURE' : 'FAILURE',
+              'ABORTED' : 'ERROR',
+            ]
+            def state = stateMap[currentBuild.currentResult] ?: 'ERROR'
+            step([
+              $class: 'GitHubCommitStatusSetter',
+              reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/eduplay-org/edu-play-core'],
+              commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: env.PR_HEAD_SHA],
+              contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: 'continuous-integration/jenkins/pr-merge'],
+              statusBackrefSource: [$class: 'ManuallyEnteredBackrefSource', backref: env.BUILD_URL],
+              statusResultSource: [
+                $class: 'ConditionalStatusResultSource',
+                results: [[$class: 'AnyBuildResult', state: state, message: "Build #${env.BUILD_NUMBER} ${currentBuild.currentResult.toLowerCase()}"]],
+              ],
+              errorHandlers: [[$class: 'ShallowAnyErrorHandler']],
+            ])
+            echo "EDU-527: posted ${state} for context continuous-integration/jenkins/pr-merge to PR-${env.CHANGE_ID} head ${env.PR_HEAD_SHA}"
+          } catch (Exception e) {
+            echo "EDU-527: failed to repost status to PR head: ${e.message}"
+          }
+        }
+        else if (env.CHANGE_ID) {
+          echo "EDU-527: PR_HEAD_SHA unset (build failed before Identify); skipping head-SHA status repost. Plugin's merge-SHA delivery still recorded the result."
+        }
+
+        try {
+          deleteDir()
+        } catch (err) {
+          echo "WARNING: deleteDir() failed during workspace cleanup: ${err}"
+        }
+      }
+    }
+  }
+}

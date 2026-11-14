@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "title": "Animal Homes",
+    "description": "Sort animals into farm or wild!"
+  },
+  "instruction": "Drag each animal to its home!",
+  "categories": {
+    "cat.farm": "Farm",
+    "cat.wild": "Wild"
+  },
+  "items": {
+    "item.cat": "Cat",
+    "item.goat": "Goat",
+    "item.pig": "Pig",
+    "item.lion": "Lion",
+    "item.tiger": "Tiger",
+    "item.elephant": "Elephant"
+  }
+}

@@ -1,0 +1,38 @@
+{
+	"meta": {
+		"title": "Everyday Objects",
+		"description": "Learn about things we use every day!"
+	},
+	"questions": {
+		"q1": {
+			"question": "What keeps you dry when it rains?"
+		},
+		"q2": {
+			"question": "What do you use to open a door?"
+		},
+		"q3": {
+			"question": "Where do you sleep at night?"
+		},
+		"q4": {
+			"question": "What flies in the wind on a string?"
+		},
+		"q5": {
+			"question": "What goes to outer space?"
+		}
+	},
+	"choices": {
+		"umbrella": "Umbrella",
+		"hat": "Hat",
+		"jacket": "Jacket",
+		"key": "Key",
+		"brush": "Brush",
+		"bottle": "Bottle",
+		"bed": "Bed",
+		"ladder": "Ladder",
+		"mat": "Mat",
+		"kite": "Kite",
+		"rocket": "Rocket",
+		"bird": "Bird",
+		"sun": "Sun"
+	}
+}

@@ -1,0 +1,73 @@
+{
+  "3": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": ["10", 0],
+      "positive": ["27", 0],
+      "negative": ["34", 0],
+      "latent_image": ["13", 0],
+      "seed": 0,
+      "steps": 30,
+      "cfg": 5.5,
+      "sampler_name": "euler",
+      "scheduler": "normal",
+      "denoise": 1.0
+    }
+  },
+  "8": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": ["3", 0],
+      "vae": ["30", 0]
+    }
+  },
+  "9": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": ["8", 0],
+      "filename_prefix": "edu-play"
+    }
+  },
+  "10": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "qwen_image_fp8_e4m3fn.safetensors",
+      "weight_dtype": "fp8_e4m3fn"
+    }
+  },
+  "13": {
+    "class_type": "EmptySD3LatentImage",
+    "inputs": {
+      "width": 512,
+      "height": 512,
+      "batch_size": 1
+    }
+  },
+  "20": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen_2.5_vl_7b_fp8_scaled.safetensors",
+      "type": "qwen_image"
+    }
+  },
+  "27": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": ["20", 0],
+      "text": ""
+    }
+  },
+  "30": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "qwen_image_vae.safetensors"
+    }
+  },
+  "34": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "clip": ["20", 0],
+      "text": "photorealistic, realistic, 3D render, gradient, soft shading, pastel colors, texture, watercolor, painterly, sketch, multiple objects, duplicates, dark background, black background, gray background, colored background, busy background, patterned background, scenery, shadows, glossy, metallic, blurry, watermark, text, logo, face on object, eyes on object, anthropomorphic object, thick outlines, heavy outlines, bold outlines, monochrome, silhouette, single color object"
+    }
+  }
+}

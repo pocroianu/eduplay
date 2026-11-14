@@ -1,0 +1,33 @@
+{
+	"meta": {
+		"title": "Aventura Culorilor",
+		"description": "Învață culorile găsind obiecte!"
+	},
+	"questions": {
+		"q1": {
+			"question": "Care este ROȘU?"
+		},
+		"q2": {
+			"question": "Care este GALBEN?"
+		},
+		"q3": {
+			"question": "Care este VERDE?"
+		},
+		"q4": {
+			"question": "Care este PORTOCALIU?"
+		},
+		"q5": {
+			"question": "Care este tot PORTOCALIU?"
+		}
+	},
+	"choices": {
+		"apple": "Măr (Roșu)",
+		"banana": "Banană (Galben)",
+		"carrot": "Morcov (Portocaliu)",
+		"frog": "Broască (Verde)",
+		"leaf": "Frunză (Verde)",
+		"pig": "Porc (Roz)",
+		"sun": "Soare (Portocaliu)",
+		"water": "Apă (Albastru)"
+	}
+}

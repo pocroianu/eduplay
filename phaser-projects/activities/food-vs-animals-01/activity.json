@@ -1,0 +1,9 @@
+{
+  "activityId": "food-vs-animals-01",
+  "version": 1,
+  "renderer": {
+    "id": "categorize-game",
+    "version": "^1.0.0"
+  },
+  "gameId": "food-vs-animals-01"
+}

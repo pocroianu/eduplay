@@ -1,0 +1,45 @@
+{
+	"meta": {
+		"gameId": "fruits-01",
+		"gameType": "multipleChoice",
+		"version": "1.0.0",
+		"totalSteps": 3,
+		"difficulty": "easy",
+		"shuffleQuestions": false,
+		"shuffleChoices": false,
+		"supportedLanguages": ["en", "ro"],
+		"themeName": "ocean"
+	},
+	"questions": [
+		{
+			"id": "q1",
+			"questionKey": "q1.question",
+			"audioKey": "question1",
+			"choices": [
+				{ "type": "image", "value": "banana", "isCorrect": false },
+				{ "type": "image", "value": "apple", "isCorrect": true },
+				{ "type": "image", "value": "carrot", "isCorrect": false }
+			]
+		},
+		{
+			"id": "q2",
+			"questionKey": "q2.question",
+			"audioKey": "question2",
+			"choices": [
+				{ "type": "image", "value": "bird", "isCorrect": false },
+				{ "type": "image", "value": "cat", "isCorrect": true },
+				{ "type": "image", "value": "frog", "isCorrect": false }
+			]
+		},
+		{
+			"id": "q3",
+			"questionKey": "q3.question",
+			"audioKey": "question3",
+			"choices": [
+				{ "type": "image", "value": "ax", "isCorrect": true },
+				{ "type": "image", "value": "hat", "isCorrect": false },
+				{ "type": "image", "value": "umbrella", "isCorrect": false }
+			]
+		}
+	]
+}

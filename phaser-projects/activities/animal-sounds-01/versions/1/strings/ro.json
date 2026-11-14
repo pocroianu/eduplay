@@ -1,0 +1,9 @@
+{
+  "meta": { "title": "Sunetele Animalelor 1" },
+  "rounds": {
+    "r1": { "prompt": "Care este câinele?" },
+    "r2": { "prompt": "Care este pisica?" },
+    "r3": { "prompt": "Care este vaca?" },
+    "r4": { "prompt": "Care este oaia?" }
+  }
+}

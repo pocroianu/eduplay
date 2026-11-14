@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "gameId": "animals-memory-01",
+    "version": "1.0.0",
+    "totalSteps": 1,
+    "gameType": "memory",
+    "themeName": "nature",
+    "pointsPerPair": 10,
+    "flipBackDelay": 1500,
+    "gridColumns": 4,
+    "supportedLanguages": ["en", "ro"]
+  },
+  "pairs": [
+    { "id": "p1", "imageKey": "cat", "labelKey": "pair.cat" },
+    { "id": "p2", "imageKey": "lion", "labelKey": "pair.lion" },
+    { "id": "p3", "imageKey": "elephant", "labelKey": "pair.elephant" },
+    { "id": "p4", "imageKey": "tiger", "labelKey": "pair.tiger" },
+    { "id": "p5", "imageKey": "pig", "labelKey": "pair.pig" },
+    { "id": "p6", "imageKey": "goat", "labelKey": "pair.goat" }
+  ],
+  "questions": []
+}

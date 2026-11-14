@@ -1,0 +1,13 @@
+{
+  "meta": { "title": "Little Orchestra" },
+  "instruction": "Repeat the melody",
+  "watchPrompt": "Listen",
+  "repeatPrompt": "Your turn to play!",
+  "progressTemplate": "Round {current} of {total} • Length {length}",
+  "pads": {
+    "drum":  { "label": "drum" },
+    "bell":  { "label": "bell" },
+    "flute": { "label": "flute" },
+    "piano": { "label": "piano" }
+  }
+}

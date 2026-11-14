@@ -1,0 +1,14 @@
+{
+  "idleTimeoutMs": 600000,
+  "servers": {
+    "typescript-language-server": {
+      "fileTypes": [".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs", ".mts", ".cts"]
+    },
+    "dockerls": {
+      "rootMarkers": ["package.json", "packages/ai-content/docker/piper/Dockerfile", "packages/ai-content/docker/comfyui/Dockerfile"]
+    },
+    "marksman": {
+      "rootMarkers": ["package.json", "README.md", "docs"]
+    }
+  }
+}

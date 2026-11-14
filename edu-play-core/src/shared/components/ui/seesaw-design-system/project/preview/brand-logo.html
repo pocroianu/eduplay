@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>EduPlay logo</title>
+<link rel="stylesheet" href="_preview.css">
+<style>
+  body { padding: 28px; background: #fff; }
+  .row { gap: 24px; align-items: center; flex-wrap: wrap; }
+  .row + .row { margin-top: 22px; }
+  .panel {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 10px;
+    padding: 18px 24px; border-radius: 12px;
+    border: 1px solid var(--ss-line-200);
+  }
+  .panel.dark { background: #094856; border-color: transparent; }
+  .panel.purple { background: var(--ss-purple-050); border-color: transparent; }
+  .panel img { height: 38px; }
+  .tag { font: 600 11px/1 Lexend; color: var(--ss-fg-subtle); text-transform: uppercase; letter-spacing: 0.06em; }
+  .panel.dark .tag { color: rgba(255,255,255,0.65); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="panel">
+      <img src="../assets/eduplay-logo.svg" alt="EduPlay">
+      <span class="tag">Default</span>
+    </div>
+    <div class="panel purple">
+      <img src="../assets/eduplay-logo.svg" alt="EduPlay">
+      <span class="tag">On lavender</span>
+    </div>
+    <div class="panel dark">
+      <img src="../assets/eduplay-logo-white.svg" alt="EduPlay">
+      <span class="tag">Reversed</span>
+    </div>
+  </div>
+  <div class="row">
+    <img src="../assets/eduplay-logo.svg" alt="EduPlay" style="height:22px">
+    <img src="../assets/eduplay-logo.svg" alt="EduPlay" style="height:30px">
+    <img src="../assets/eduplay-logo.svg" alt="EduPlay" style="height:42px">
+    <img src="../assets/eduplay-logo.svg" alt="EduPlay" style="height:56px">
+  </div>
+</body>
+</html>

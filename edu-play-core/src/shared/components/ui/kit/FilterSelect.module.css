@@ -1,0 +1,123 @@
+.root {
+  display: inline-flex;
+  min-width: 0;
+  align-items: center;
+  gap: var(--filter-select-gap);
+}
+
+.root[data-full-width] {
+  width: 100%;
+}
+
+.label {
+  flex-shrink: 0;
+  color: var(--color-on-surface-variant);
+  font-size: var(--filter-select-font-size);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.input {
+  min-height: var(--filter-select-height);
+  min-width: var(--filter-select-width);
+  justify-content: space-between;
+  border-color: var(--color-outline-variant);
+  background: var(--color-surface);
+  color: var(--color-on-surface);
+  font-size: var(--filter-select-font-size);
+  font-weight: 700;
+  transition:
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    background-color 150ms ease;
+}
+
+.input:hover {
+  border-color: var(--color-primary);
+  background: var(--color-surface-container);
+}
+
+.input:focus-visible {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-purple-soft);
+}
+
+.input[data-invalid] {
+  border-color: var(--color-error);
+}
+
+.input[data-invalid]:focus-visible {
+  box-shadow: 0 0 0 3px var(--color-error-container);
+}
+
+.value {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.value[data-placeholder] {
+  color: var(--color-on-surface-variant);
+}
+
+.dropdown {
+  border-color: var(--color-outline-variant);
+  background: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-soft-md);
+}
+
+.option {
+  border-radius: var(--radius-sm);
+  color: var(--color-on-surface);
+  font-size: var(--filter-select-font-size);
+  font-weight: 700;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease;
+}
+
+.option:hover,
+.option[data-combobox-active] {
+  background: var(--color-purple-soft);
+  color: var(--color-purple-deep);
+}
+
+.option[data-selected] {
+  background: var(--color-primary);
+  color: white;
+}
+
+.optionLabel {
+  display: block;
+}
+
+.description {
+  display: block;
+  margin-top: 2px;
+  color: inherit;
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  opacity: 0.72;
+}
+
+@media (max-width: 640px) {
+  .root {
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .input {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .input,
+  .option {
+    transition: none;
+  }
+}

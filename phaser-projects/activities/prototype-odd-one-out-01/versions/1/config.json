@@ -1,0 +1,18 @@
+{
+  "meta": {
+    "gameId": "prototype-odd-one-out-01",
+    "version": "0.0.0",
+    "totalSteps": 3,
+    "gameType": "counting",
+    "themeName": "forest",
+    "pointsPerRound": 10,
+    "roundDelay": 650,
+    "supportedLanguages": ["ro", "en"]
+  },
+  "rounds": [
+    { "id": "flyers", "count": 1 },
+    { "id": "water", "count": 1 },
+    { "id": "music", "count": 1 }
+  ],
+  "questions": []
+}

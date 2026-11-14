@@ -1,0 +1,10 @@
+{
+  "meta": { "title": "Romanian Phonics 1" },
+  "rounds": {
+    "r1": { "prompt": "Where is the letter A?" },
+    "r2": { "prompt": "Where is the letter M?" },
+    "r3": { "prompt": "Where is the letter P?" },
+    "r4": { "prompt": "Where is the letter L?" },
+    "r5": { "prompt": "Where is the letter S?" }
+  }
+}

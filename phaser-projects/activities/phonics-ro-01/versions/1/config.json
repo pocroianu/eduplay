@@ -1,0 +1,58 @@
+{
+  "meta": {
+    "gameId": "phonics-ro-01",
+    "version": "1.0.0",
+    "totalSteps": 5,
+    "gameType": "listen-tap",
+    "themeName": "default",
+    "pointsPerRound": 10,
+    "roundDelay": 900,
+    "supportedLanguages": ["ro", "en"]
+  },
+  "rounds": [
+    {
+      "id": "r1",
+      "promptAudioId": "letter-a",
+      "choices": [
+        { "id": "c1", "imageAssetId": "letter-a-tile", "letter": "A", "correct": true },
+        { "id": "c2", "imageAssetId": "letter-m-tile", "letter": "M", "correct": false }
+      ]
+    },
+    {
+      "id": "r2",
+      "promptAudioId": "letter-m",
+      "choices": [
+        { "id": "c1", "imageAssetId": "letter-p-tile", "letter": "P", "correct": false },
+        { "id": "c2", "imageAssetId": "letter-m-tile", "letter": "M", "correct": true }
+      ]
+    },
+    {
+      "id": "r3",
+      "promptAudioId": "letter-p",
+      "choices": [
+        { "id": "c1", "imageAssetId": "letter-a-tile", "letter": "A", "correct": false },
+        { "id": "c2", "imageAssetId": "letter-p-tile", "letter": "P", "correct": true },
+        { "id": "c3", "imageAssetId": "letter-l-tile", "letter": "L", "correct": false }
+      ]
+    },
+    {
+      "id": "r4",
+      "promptAudioId": "letter-l",
+      "choices": [
+        { "id": "c1", "imageAssetId": "letter-s-tile", "letter": "S", "correct": false },
+        { "id": "c2", "imageAssetId": "letter-l-tile", "letter": "L", "correct": true },
+        { "id": "c3", "imageAssetId": "letter-m-tile", "letter": "M", "correct": false }
+      ]
+    },
+    {
+      "id": "r5",
+      "promptAudioId": "letter-s",
+      "choices": [
+        { "id": "c1", "imageAssetId": "letter-s-tile", "letter": "S", "correct": true },
+        { "id": "c2", "imageAssetId": "letter-p-tile", "letter": "P", "correct": false },
+        { "id": "c3", "imageAssetId": "letter-a-tile", "letter": "A", "correct": false }
+      ]
+    }
+  ],
+  "questions": []
+}

@@ -1,0 +1,91 @@
+.tabsRoot {
+  background: var(--color-surface-container-lowest);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-soft-sm);
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 560px;
+  overflow: hidden;
+}
+
+.tabsNav {
+  background: var(--color-surface-container-lowest);
+  border-bottom: 1px solid var(--color-outline-variant);
+}
+
+.tabsList {
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.tab {
+  border-bottom: 1px solid var(--color-outline-variant);
+  border-left: 0;
+  border-right: 0;
+  border-top: 0;
+  border-radius: 0;
+  color: var(--color-on-surface);
+  font-size: 0.875rem;
+  font-weight: 700;
+  justify-content: flex-start;
+  min-height: 52px;
+  padding: 0 1rem;
+  text-align: left;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
+  width: 100%;
+}
+
+.tab:hover {
+  background: var(--color-surface-alt);
+}
+
+.tab:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: -3px;
+}
+
+.tab[data-active] {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-deep);
+}
+
+.tab[data-active]:hover {
+  background: var(--color-primary-soft);
+}
+
+.tabLabel {
+  flex: 1;
+  text-align: left;
+}
+
+.tabSection {
+  color: currentColor;
+  margin-left: auto;
+}
+
+.tabsContent {
+  background: var(--color-surface-alt);
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+}
+
+.panel {
+  height: 100%;
+}
+
+@media (min-width: 80rem) {
+  .tabsRoot {
+    grid-template-columns: 300px minmax(0, 1fr);
+  }
+
+  .tabsNav {
+    border-bottom: 0;
+    border-right: 1px solid var(--color-outline-variant);
+  }
+}

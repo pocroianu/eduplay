@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sidebar nav items</title>
+<link rel="stylesheet" href="_preview.css">
+<style>
+  body { padding: 28px; background: var(--ss-bg-app); }
+  .nav { width: 260px; }
+  .item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font: 500 15px/1 Lexend, sans-serif;
+    color: var(--ss-fg);
+    cursor: pointer;
+    transition: background-color 200ms cubic-bezier(0.4,0,0.2,1);
+  }
+  .item svg { width: 22px; height: 22px; fill: var(--ss-fg-muted); }
+  .item.active { background: var(--ss-purple-050); color: var(--ss-primary); font-weight: 600; }
+  .item.active svg { fill: var(--ss-primary); }
+  .item.hover { background: var(--ss-purple-100); }
+  .item .spacer { flex: 1; }
+  .item .badge {
+    background: var(--ss-yellow-500);
+    color: var(--ss-ink-900);
+    font: 700 11px/1 Lexend; padding: 3px 8px; border-radius: 6px;
+  }
+  .state { font-family: var(--ss-font-mono); font-size: 10px; color: var(--ss-fg-subtle); margin-left: 8px; }
+  .col { gap: 6px; }
+</style>
+</head>
+<body>
+<div class="col nav">
+  <div class="item active">
+    <svg viewBox="0 0 24 24"><path d="M12 3 3 10v11h6v-7h6v7h6V10z"/></svg>
+    Home<span class="state">active</span>
+  </div>
+  <div class="item">
+    <svg viewBox="0 0 24 24"><path d="m12 2 1.6 4.8L18 8l-4 3.6L15 17l-3-2-3 2 1-5.4L6 8l4.4-1.2z"/></svg>
+    EduPlay AI <span class="spacer"></span><span class="badge">New</span>
+  </div>
+  <div class="item hover">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="m15 9-4.5 1.5L9 15l4.5-1.5z"/></svg>
+    Explore Libraries<span class="state">hover</span>
+  </div>
+  <div class="item">
+    <svg viewBox="0 0 24 24"><path d="M7 3h10a2 2 0 0 1 2 2v16l-7-3-7 3V5a2 2 0 0 1 2-2z"/></svg>
+    My Library
+  </div>
+  <div class="item">
+    <svg viewBox="0 0 24 24"><path d="M4 4h16v12H7l-3 3z"/></svg>
+    Messages
+  </div>
+</div>
+</body>
+</html>

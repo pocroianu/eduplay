@@ -1,0 +1,218 @@
+/* ============================================================
+   EduPlay Design System — colors & type
+   Primary brand: Lexend + Ocean Teal spine, forest-green success,
+   coral-red danger, sunshine-yellow accents. Calm + classroom-warm.
+   ============================================================ */
+
+/* ---------- Fonts ---------- */
+/* Lexend is EduPlay's primary UI typeface. Loaded from Google Fonts. */
+@import url('https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Quicksand:wght@400;500;600;700&family=DM+Serif+Text&display=swap');
+
+:root {
+  /* ---------- Brand palette: Ocean Teal ----------
+     Variable names are kept as --ss-purple-* for internal-API
+     stability across the kit; the *values* are now Ocean Teal.
+     New --ep-* aliases below are the preferred public names. */
+  --ss-purple-900: #24104F;   /* deepest purple — text on light pop */
+  --ss-purple-800: #330072;   /* class-context top bar (deep purple) */
+  --ss-purple-700: #4F248D;   /* dark accents */
+  --ss-purple-600: #5F2FA8;   /* PRIMARY — logo, primary CTA */
+  --ss-purple-500: #7B4AC4;   /* primary hover */
+  --ss-purple-400: #BFA2F8;   /* primary pressed/tint accent */
+  --ss-purple-200: #D7C4FB;   /* outlines on purple */
+  --ss-purple-100: #E8DDFD;   /* hover row on white */
+  --ss-purple-050: #F3EBFF;   /* selected nav background */
+  --ss-purple-025: #F7F1FF;   /* page tint */
+
+  /* Cleaner-named aliases (preferred for new code) */
+  --ep-teal-900: var(--ss-purple-900);
+  --ep-teal-800: var(--ss-purple-800);
+  --ep-teal-700: var(--ss-purple-700);
+  --ep-teal-600: var(--ss-purple-600);
+  --ep-teal-500: var(--ss-purple-500);
+  --ep-teal-400: var(--ss-purple-400);
+  --ep-teal-200: var(--ss-purple-200);
+  --ep-teal-100: var(--ss-purple-100);
+  --ep-teal-050: var(--ss-purple-050);
+
+  /* Deep ocean / navy — used for the class-context header band */
+  --ep-navy-900: #062B43;
+  --ep-navy-800: #0E3A57;
+  --ep-navy-700: #1F4A6B;
+
+  /* Success — slightly warmer green that sings against teal */
+  --ss-green-900: #1F4A1F;
+  --ss-green-800: #2F7A2F;    /* Post to Journal card */
+  --ss-green-700: #3E8E2F;    /* generic success */
+  --ss-green-200: #C2DBB6;
+  --ss-green-050: #E9F2DF;
+
+  /* Danger — coral-red, less candy-pink than before */
+  --ss-pink-900: #7A1F1F;
+  --ss-pink-800: #962525;
+  --ss-pink-700: #B83C3C;
+  --ss-pink-600: #D63B3B;     /* destructive / notification dot */
+  --ss-pink-200: #F2B6B6;
+  --ss-pink-100: #FBE3E3;
+
+  /* Sunshine yellow — kept warm for "New" badges */
+  --ss-yellow-500: #FFB400;
+  --ss-yellow-400: #FFCB47;
+  --ss-yellow-100: #FFF1CC;
+
+  /* Info / link — soft cyan-blue that lives with teal */
+  --ss-blue-500: #1F6FB8;
+  --ss-blue-400: #3E8FD6;
+  --ss-blue-100: #DAEAF7;
+
+  /* ---------- Neutrals ---------- */
+  /* With a cool teal primary we shift the warm-brown ink slightly
+     toward a cool slate, but keep just enough warmth for friendliness. */
+  --ss-ink-900: #0E1B22;      /* primary text */
+  --ss-ink-700: #455661;      /* secondary text */
+  --ss-ink-500: #7B8993;      /* tertiary / placeholder */
+  --ss-ink-400: #ABB4BB;      /* disabled text */
+
+  --ss-line-300: #D3DBE0;     /* default border */
+  --ss-line-200: #E3E8EC;     /* subtle divider */
+  --ss-line-100: #ECEFF2;     /* faintest hairline */
+
+  --ss-surface-0: #FFFFFF;    /* card */
+  --ss-surface-1: #F3F7F8;    /* app shell / sidebar bg (teal-tinted) */
+  --ss-surface-2: #F5F7F8;    /* page canvas */
+  --ss-surface-3: #EEF3F5;    /* inset / cool panel */
+
+  /* ---------- Semantic ---------- */
+  --ss-bg: var(--ss-surface-2);
+  --ss-bg-app: var(--ss-surface-1);
+  --ss-bg-card: var(--ss-surface-0);
+  --ss-bg-page-header: var(--ss-surface-0);
+
+  --ss-fg: var(--ss-ink-900);
+  --ss-fg-muted: var(--ss-ink-700);
+  --ss-fg-subtle: var(--ss-ink-500);
+  --ss-fg-on-purple: #FFFFFF;
+  --ss-fg-on-green: #FFFFFF;
+
+  --ss-border: var(--ss-line-300);
+  --ss-border-subtle: var(--ss-line-200);
+
+  --ss-primary: var(--ss-purple-600);
+  --ss-primary-hover: var(--ss-purple-500);
+  --ss-primary-pressed: var(--ss-purple-400);
+  --ss-primary-fg: #FFFFFF;
+  --ss-primary-soft-bg: var(--ss-purple-050);
+  --ss-primary-soft-fg: var(--ss-purple-600);
+
+  --ss-success: var(--ss-green-800);
+  --ss-success-fg: #FFFFFF;
+  --ss-success-soft-bg: var(--ss-green-050);
+
+  --ss-danger: var(--ss-pink-600);
+  --ss-danger-hover: var(--ss-pink-700);
+  --ss-danger-soft-bg: var(--ss-pink-100);
+
+  --ss-warning: var(--ss-yellow-400);
+  --ss-info: var(--ss-blue-400);
+
+  --ss-notif-dot: var(--ss-pink-600);
+
+  /* ---------- Typography ---------- */
+  --ss-font-sans: "Lexend", "Tajawal", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ss-font-display: "Lexend", "Quicksand", sans-serif;
+  --ss-font-serif: "DM Serif Text", Georgia, serif;
+  --ss-font-mono: ui-monospace, "SF Mono", Menlo, monospace;
+
+  --ss-text-xs:  12px;
+  --ss-text-sm:  14px;
+  --ss-text-md:  16px;
+  --ss-text-lg:  18px;
+  --ss-text-xl:  22px;
+  --ss-text-2xl: 28px;
+  --ss-text-3xl: 34px;
+  --ss-text-4xl: 44px;
+
+  --ss-leading-tight: 1.2;
+  --ss-leading-snug:  1.35;
+  --ss-leading-normal: 1.45;
+  --ss-leading-relaxed: 1.6;
+
+  --ss-tracking-tight: -0.01em;
+  --ss-tracking-normal: 0;
+  --ss-tracking-wide: 0.04em;
+
+  /* ---------- Radii ---------- */
+  --ss-radius-xs: 4px;
+  --ss-radius-sm: 6px;
+  --ss-radius-md: 8px;
+  --ss-radius-lg: 12px;
+  --ss-radius-xl: 16px;
+  --ss-radius-2xl: 20px;
+  --ss-radius-pill: 999px;
+
+  /* ---------- Shadows ---------- */
+  /* Cool-tinted shadows to match teal palette. */
+  --ss-shadow-xs: 0 1px 2px rgba(14, 27, 34, 0.06);
+  --ss-shadow-sm: 0 1px 3px rgba(14, 27, 34, 0.08), 0 1px 2px rgba(14, 27, 34, 0.04);
+  --ss-shadow-md: 0 4px 12px rgba(14, 27, 34, 0.08), 0 1px 2px rgba(14, 27, 34, 0.04);
+  --ss-shadow-lg: 0 12px 28px rgba(14, 27, 34, 0.12), 0 2px 4px rgba(14, 27, 34, 0.04);
+  --ss-shadow-popover: 0 8px 24px rgba(14, 27, 34, 0.14), 0 2px 6px rgba(14, 27, 34, 0.06);
+  --ss-shadow-modal: 0 24px 64px rgba(14, 27, 34, 0.28);
+
+  /* Focus ring — teal */
+  --ss-focus-ring: 0 0 0 3px rgba(14, 124, 140, 0.32);
+
+  /* ---------- Spacing ---------- */
+  --ss-sp-1: 4px;
+  --ss-sp-2: 8px;
+  --ss-sp-3: 12px;
+  --ss-sp-4: 16px;
+  --ss-sp-5: 20px;
+  --ss-sp-6: 24px;
+  --ss-sp-8: 32px;
+  --ss-sp-10: 40px;
+  --ss-sp-12: 48px;
+  --ss-sp-16: 64px;
+
+  /* App-shell layout */
+  --ss-sidebar-w: 240px;
+  --ss-sidebar-collapsed-w: 64px;
+  --ss-class-header-h: 88px;
+  --ss-page-header-h: 72px;
+
+  /* ---------- Motion ---------- */
+  --ss-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ss-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ss-dur-fast: 120ms;
+  --ss-dur: 200ms;
+  --ss-dur-slow: 300ms;
+}
+
+/* ---------- Element-level semantic styles ---------- */
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--ss-font-sans);
+  font-size: var(--ss-text-md);
+  line-height: var(--ss-leading-normal);
+  color: var(--ss-fg);
+  background: var(--ss-bg);
+  margin: 0;
+}
+
+.ss-h1, h1.ss { font: 700 var(--ss-text-3xl)/var(--ss-leading-tight) var(--ss-font-display); letter-spacing: var(--ss-tracking-tight); margin: 0; }
+.ss-h2, h2.ss { font: 700 var(--ss-text-2xl)/var(--ss-leading-tight) var(--ss-font-display); margin: 0; }
+.ss-h3, h3.ss { font: 700 var(--ss-text-xl)/var(--ss-leading-snug) var(--ss-font-sans); margin: 0; }
+.ss-h4, h4.ss { font: 600 var(--ss-text-lg)/var(--ss-leading-snug) var(--ss-font-sans); margin: 0; }
+.ss-eyebrow {
+  font: 600 var(--ss-text-xs)/1 var(--ss-font-sans);
+  letter-spacing: var(--ss-tracking-wide);
+  text-transform: uppercase;
+  color: var(--ss-fg-muted);
+}
+.ss-body { font: 400 var(--ss-text-md)/var(--ss-leading-normal) var(--ss-font-sans); color: var(--ss-fg); }
+.ss-body-sm { font: 400 var(--ss-text-sm)/var(--ss-leading-normal) var(--ss-font-sans); color: var(--ss-fg-muted); }
+.ss-caption { font: 400 var(--ss-text-xs)/1.3 var(--ss-font-sans); color: var(--ss-fg-subtle); }
+.ss-label { font: 600 var(--ss-text-sm)/1 var(--ss-font-sans); color: var(--ss-fg); }
+.ss-code { font: 500 0.95em var(--ss-font-mono); background: var(--ss-surface-3); padding: 2px 6px; border-radius: var(--ss-radius-xs); }
+.ss-link { color: var(--ss-primary); text-decoration: none; font-weight: 600; }
+.ss-link:hover { text-decoration: underline; }

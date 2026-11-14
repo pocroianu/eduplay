@@ -1,0 +1,142 @@
+{
+  "version": "2.0.0",
+  "baseUrl": "assets",
+  "sharedGroups": {
+    "core-mascots": {
+      "images": [
+        "guapen",
+        "FufuSuperDino"
+      ],
+      "audio": [],
+      "spritesheets": []
+    }
+  },
+  "games": {
+    "animals-memory-01": {
+      "sharedGroups": [
+        "core-mascots"
+      ],
+      "manifest": {
+        "images": [
+          "cat",
+          "lion",
+          "elephant",
+          "tiger",
+          "pig",
+          "goat"
+        ],
+        "audio": [],
+        "spritesheets": []
+      }
+    },
+    "food-memory-01": {
+      "sharedGroups": [
+        "core-mascots"
+      ],
+      "manifest": {
+        "images": [
+          "apple",
+          "banana",
+          "carrot",
+          "pizza",
+          "cake",
+          "cookie"
+        ],
+        "audio": [],
+        "spritesheets": []
+      }
+    }
+  },
+  "pinnedAssets": {
+    "apple": {
+      "type": "image",
+      "assetId": "sha256-0a827d9b4661d0a949ed5edd796de47170fdc3e1923aee592e70c40de2a29f28",
+      "sha256": "0a827d9b4661d0a949ed5edd796de47170fdc3e1923aee592e70c40de2a29f28",
+      "path": "/assets/library/images/apple.png"
+    },
+    "banana": {
+      "type": "image",
+      "assetId": "sha256-e1e2b50ef86de8a6bc34475cf8018a6ea19d35b24dccd801daf54eddef85d94b",
+      "sha256": "e1e2b50ef86de8a6bc34475cf8018a6ea19d35b24dccd801daf54eddef85d94b",
+      "path": "/assets/library/images/banana.png"
+    },
+    "cake": {
+      "type": "image",
+      "assetId": "sha256-69686b00629242b8b6f9ce7886cfb5840ec8a317007a8686db1c28d991c3c948",
+      "sha256": "69686b00629242b8b6f9ce7886cfb5840ec8a317007a8686db1c28d991c3c948",
+      "path": "/assets/library/images/cake.png"
+    },
+    "carrot": {
+      "type": "image",
+      "assetId": "sha256-22bcda9ec32f95dbe715efbeded30169af08ed8633921f8103bd8156ec1ed76c",
+      "sha256": "22bcda9ec32f95dbe715efbeded30169af08ed8633921f8103bd8156ec1ed76c",
+      "path": "/assets/library/images/carrot.png"
+    },
+    "cat": {
+      "type": "image",
+      "assetId": "sha256-46e0730d9c8aaaa2d49410b330361111c58b01ed9e18ea252bb563c34d320a20",
+      "sha256": "46e0730d9c8aaaa2d49410b330361111c58b01ed9e18ea252bb563c34d320a20",
+      "path": "/assets/library/images/cat.png"
+    },
+    "cookie": {
+      "type": "image",
+      "assetId": "sha256-43e502e746df5b2b665cfbc2a8c5a048ae1ac9cff3be06ada689788a08d4aa4e",
+      "sha256": "43e502e746df5b2b665cfbc2a8c5a048ae1ac9cff3be06ada689788a08d4aa4e",
+      "path": "/assets/library/images/cookie.png"
+    },
+    "elephant": {
+      "type": "image",
+      "assetId": "sha256-e5e0a4eb02cca12c807d92cd465cd86079556662a38eb24b98718b039607e0bd",
+      "sha256": "e5e0a4eb02cca12c807d92cd465cd86079556662a38eb24b98718b039607e0bd",
+      "path": "/assets/library/images/elephant.png"
+    },
+    "FufuSuperDino": {
+      "type": "image",
+      "assetId": "sha256-25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "sha256": "25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "path": "/assets/library/images/FufuSuperDino.png"
+    },
+    "goat": {
+      "type": "image",
+      "assetId": "sha256-1e9195d50705b6d13425a5955dd6cd35420be234494e2fbb1810a1809209aadd",
+      "sha256": "1e9195d50705b6d13425a5955dd6cd35420be234494e2fbb1810a1809209aadd",
+      "path": "/assets/library/images/goat.png"
+    },
+    "guapen": {
+      "type": "image",
+      "assetId": "sha256-260a68c55e92c97d78bdf97b331b781f9fde63f2b12bb203fb4bbac0cdf525fe",
+      "sha256": "260a68c55e92c97d78bdf97b331b781f9fde63f2b12bb203fb4bbac0cdf525fe",
+      "path": "/assets/library/images/guapen.png"
+    },
+    "lion": {
+      "type": "image",
+      "assetId": "sha256-7bc655bfaf5d0ecb50b3bc8c7d222f122adedc41f1c108875957d39529069251",
+      "sha256": "7bc655bfaf5d0ecb50b3bc8c7d222f122adedc41f1c108875957d39529069251",
+      "path": "/assets/library/images/lion.png"
+    },
+    "pig": {
+      "type": "image",
+      "assetId": "sha256-b73bc4e09f97974ac3e160385ff259a198e265632508b5dc223f35050b59a821",
+      "sha256": "b73bc4e09f97974ac3e160385ff259a198e265632508b5dc223f35050b59a821",
+      "path": "/assets/library/images/pig.png"
+    },
+    "pizza": {
+      "type": "image",
+      "assetId": "sha256-7b864c547888b578132058eb97a84b740d7ac5f180d7c4a889c470d03184c49d",
+      "sha256": "7b864c547888b578132058eb97a84b740d7ac5f180d7c4a889c470d03184c49d",
+      "path": "/assets/library/images/pizza.png"
+    },
+    "placeholder-owl": {
+      "type": "image",
+      "assetId": "sha256-25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "sha256": "25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "path": "/assets/library/images/placeholder-owl.png"
+    },
+    "tiger": {
+      "type": "image",
+      "assetId": "sha256-6c6a6b7da5d6b8845ab7cd7ab12bdb89d84d59e8e3a3e9ba853a07a84f7b9685",
+      "sha256": "6c6a6b7da5d6b8845ab7cd7ab12bdb89d84d59e8e3a3e9ba853a07a84f7b9685",
+      "path": "/assets/library/images/tiger.png"
+    }
+  }
+}

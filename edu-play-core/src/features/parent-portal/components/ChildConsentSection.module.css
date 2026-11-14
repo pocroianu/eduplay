@@ -1,0 +1,28 @@
+.row {
+  align-items: start;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 44px minmax(0, 1fr);
+}
+
+.switchSlot {
+  align-items: center;
+  border-top: 1px solid var(--color-outline-variant);
+  display: flex;
+  grid-column: 1 / -1;
+  justify-content: flex-end;
+  min-height: 44px;
+  padding-top: 0.75rem;
+}
+
+@media (min-width: 40rem) {
+  .row {
+    grid-template-columns: 44px minmax(0, 1fr) auto;
+  }
+
+  .switchSlot {
+    border-top: 0;
+    grid-column: auto;
+    padding-top: 0;
+  }
+}

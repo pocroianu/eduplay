@@ -1,0 +1,9 @@
+{
+  "activityId": "animal-sounds-01",
+  "version": 1,
+  "renderer": {
+    "id": "listen-tap",
+    "version": "^1.0.0"
+  },
+  "gameId": "animal-sounds-01"
+}

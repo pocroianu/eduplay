@@ -1,0 +1,77 @@
+{
+  "name": "@edu-play/ai-content",
+  "version": "1.0.0",
+  "description": "Open-source AI-powered content generation for educational Phaser games",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./common": {
+      "types": "./dist/common/index.d.ts",
+      "require": "./dist/common/index.js",
+      "default": "./dist/common/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "edu-generate": "./dist/cli/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:integration": "ts-node src/providers/__tests__/run-integration.ts",
+    "lint": "eslint src/",
+    "generate": "ts-node src/cli/index.ts",
+    "train:lora:spike": "ts-node --transpile-only scripts/train-lora-spike.ts",
+    "benchmark:image:spike": "ts-node --transpile-only scripts/benchmark-image-models.ts"
+  },
+  "dependencies": {
+    "chalk": "^5.0.0",
+    "commander": "^12.0.0",
+    "compromise": "^14.0.0",
+    "dotenv": "^16.0.0",
+    "inquirer": "^9.0.0",
+    "natural": "^6.0.0",
+    "ora": "^8.0.0",
+    "p-queue": "^8.0.0",
+    "redis": "^4.0.0",
+    "sharp": "^0.33.0",
+    "syllable": "^5.0.0",
+    "uuid": "11.1.0",
+    "ws": "^8.0.0",
+    "zod": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.0",
+    "@types/node": "^22.0.0",
+    "@types/uuid": "10.0.0",
+    "@types/ws": "^8.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.46.0",
+    "@typescript-eslint/parser": "^8.46.0",
+    "@eslint/js": "^9.39.0",
+    "eslint": "^9.0.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=24.12.0"
+  },
+  "keywords": [
+    "ai",
+    "content-generation",
+    "phaser",
+    "educational",
+    "stable-diffusion",
+    "comfyui",
+    "tts"
+  ],
+  "license": "MIT"
+}

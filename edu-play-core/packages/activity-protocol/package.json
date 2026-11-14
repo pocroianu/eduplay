@@ -1,0 +1,27 @@
+{
+  "name": "@edu-play/activity-protocol",
+  "version": "0.1.0",
+  "description": "Framework-free EduPlay iframe activity protocol schemas and fixtures.",
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/patch-dist-extensions.mjs"
+  },
+  "dependencies": {
+    "zod": "^4.3.4"
+  },
+  "devDependencies": {}
+}

@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "title": "Test Game"
+  },
+  "questions": {
+    "q1": {
+      "question": "Which one is an apple?",
+      "choices": {
+        "apple": "Apple",
+        "banana": "Banana",
+        "orange": "Orange"
+      }
+    },
+    "q2": {
+      "question": "Which one is a grape?",
+      "choices": {
+        "grape": "Grape",
+        "strawberry": "Strawberry"
+      }
+    }
+  }
+}

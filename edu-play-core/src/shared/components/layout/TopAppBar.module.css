@@ -1,0 +1,269 @@
+.libraryTopbar {
+  border-bottom: 1px solid var(--color-outline);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+}
+
+.libraryTopbarContent {
+  display: flex;
+  width: min(1020px, calc(100% - 48px));
+  height: 100%;
+  align-items: center;
+  gap: 16px;
+  margin-inline: auto;
+}
+
+.libraryExploreTopbarContent {
+  position: relative;
+  display: block;
+  height: 100%;
+}
+
+.libraryTitle {
+  display: inline-flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 10px;
+}
+
+.libraryTitleIcon {
+  flex: 0 0 auto;
+  background-color: var(--color-purple-wash);
+  color: var(--color-purple-dim);
+}
+
+.libraryTitleText {
+  margin: 0;
+  color: var(--color-on-surface);
+  font-size: 22px;
+  font-weight: 800;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.libraryExploreTitle {
+  position: absolute;
+  top: 6px;
+  left: 0;
+}
+
+.libraryExploreTitle .libraryTitleIcon {
+  border: 2px solid currentColor;
+  background-color: transparent;
+  color: var(--color-on-surface);
+}
+
+.libraryExploreTitle .libraryTitleText {
+  font-size: 24px;
+}
+
+.libraryTabs {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  border: 1px solid var(--color-outline);
+  border-radius: 999px;
+  background-color: var(--color-surface);
+  padding: 4px;
+}
+
+.libraryExploreTabs {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: min(520px, 100%);
+  min-height: 44px;
+  align-items: stretch;
+  gap: 24px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  border: 0;
+  border-bottom: 1px solid var(--color-outline);
+  border-radius: 0;
+  background-color: transparent;
+  padding: 0;
+  scrollbar-width: none;
+}
+
+.libraryExploreTabs::-webkit-scrollbar {
+  display: none;
+}
+
+.libraryTab {
+  min-height: 40px;
+  min-width: max-content;
+  border-radius: 999px;
+  padding-inline: 16px;
+  color: var(--color-on-surface-variant);
+  font-weight: 800;
+  transition:
+    background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.libraryExploreTab {
+  min-height: 44px;
+  flex: 0 0 auto;
+  border-bottom: 4px solid transparent;
+  border-radius: 0;
+  padding-inline: 8px;
+}
+
+
+.libraryTab:hover,
+.libraryTab:focus-visible {
+  background-color: var(--color-surface-hover);
+  color: var(--color-purple-dim);
+}
+
+.libraryTab.libraryExploreTab:hover,
+.libraryTab.libraryExploreTab:focus-visible {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.libraryTabSelected {
+  background-color: var(--color-purple-wash);
+  color: var(--color-purple-dim);
+  box-shadow: var(--shadow-soft-sm);
+}
+
+.libraryExploreTabSelected {
+  border-bottom-color: var(--color-purple-dim);
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.libraryPrimaryAction {
+  min-height: 44px;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  background-color: var(--color-purple-dim);
+  padding-inline: 20px;
+  color: var(--color-on-primary);
+  font-weight: 800;
+  transition:
+    background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    filter 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.libraryPrimaryAction:hover,
+.libraryPrimaryAction:focus-visible {
+  background-color: var(--color-purple-deep);
+  color: var(--color-on-primary);
+  box-shadow: var(--shadow-soft);
+}
+
+.libraryExploreAction {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-height: 44px;
+  border-radius: 0 0 8px 8px;
+}
+
+.libraryTabIcon {
+  display: inline-flex;
+  width: 20px;
+  height: 20px;
+  align-items: center;
+  justify-content: center;
+  color: currentColor;
+}
+
+.librarySeesawIcon {
+  border-radius: 999px;
+  background-color: var(--color-purple-wash);
+  color: var(--color-purple-dim);
+  font-size: 16px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.appTabs {
+  display: none;
+  min-width: 0;
+  flex: 0 1 auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.appTab {
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  padding: 8px 12px;
+  color: var(--color-on-surface-variant);
+  font-family: var(--font-lexend), sans-serif;
+  font-weight: 700;
+  line-height: 1.25;
+  white-space: nowrap;
+  transition:
+    background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.appTab:hover {
+  background-color: var(--color-surface-container);
+  color: var(--color-on-surface);
+}
+
+.appTabActive {
+  background-color: var(--color-primary-soft);
+  color: var(--color-primary-deep);
+}
+
+.appTabKid {
+  min-width: 64px;
+  min-height: 64px;
+}
+
+@media (min-width: 768px) {
+  .appTabs {
+    display: flex;
+  }
+}
+
+@media (max-width: 767px) {
+  .libraryTopbarContent {
+    width: calc(100% - 24px);
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .libraryTitleText {
+    font-size: 18px;
+  }
+
+  .libraryTabs {
+    gap: 4px;
+  }
+
+  .libraryTab {
+    min-height: 44px;
+    padding-inline: 12px;
+    font-size: 14px;
+  }
+
+  .libraryPrimaryAction {
+    min-height: 44px;
+    padding-inline: 14px;
+    font-size: 14px;
+  }
+
+  .libraryExploreTabs {
+    gap: 8px;
+  }
+}

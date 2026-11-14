@@ -1,0 +1,22 @@
+{
+  "meta": {
+    "title": "Joc de Test"
+  },
+  "questions": {
+    "q1": {
+      "question": "Care este marul?",
+      "choices": {
+        "apple": "Măr",
+        "banana": "Banană",
+        "orange": "Portocală"
+      }
+    },
+    "q2": {
+      "question": "Care este strugurele?",
+      "choices": {
+        "grape": "Strugure",
+        "strawberry": "Căpșună"
+      }
+    }
+  }
+}

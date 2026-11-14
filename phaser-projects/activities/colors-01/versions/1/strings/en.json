@@ -1,0 +1,33 @@
+{
+	"meta": {
+		"title": "Color Quest",
+		"description": "Learn colors by finding objects!"
+	},
+	"questions": {
+		"q1": {
+			"question": "Which one is RED?"
+		},
+		"q2": {
+			"question": "Which one is YELLOW?"
+		},
+		"q3": {
+			"question": "Which one is GREEN?"
+		},
+		"q4": {
+			"question": "Which one is ORANGE?"
+		},
+		"q5": {
+			"question": "Which one is also ORANGE?"
+		}
+	},
+	"choices": {
+		"apple": "Apple (Red)",
+		"banana": "Banana (Yellow)",
+		"carrot": "Carrot (Orange)",
+		"frog": "Frog (Green)",
+		"leaf": "Leaf (Green)",
+		"pig": "Pig (Pink)",
+		"sun": "Sun (Orange)",
+		"water": "Water (Blue)"
+	}
+}

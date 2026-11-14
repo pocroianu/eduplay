@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "title": "Mancare sau animal?",
+    "description": "Sorteaza imaginile: mancare sau animal?"
+  },
+  "instruction": "Trage fiecare imagine in cosul potrivit!",
+  "categories": {
+    "cat.food": "Mancare",
+    "cat.animals": "Animale"
+  },
+  "items": {
+    "item.apple": "Mar",
+    "item.banana": "Banana",
+    "item.carrot": "Morcov",
+    "item.cat": "Pisica",
+    "item.lion": "Leu",
+    "item.tiger": "Tigru"
+  }
+}

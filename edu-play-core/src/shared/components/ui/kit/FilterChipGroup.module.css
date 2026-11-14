@@ -1,0 +1,83 @@
+.root {
+  align-items: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--filter-chip-gap, var(--mantine-spacing-xs));
+}
+
+.root[data-wrap='false'] {
+  flex-wrap: nowrap;
+}
+
+.chip {
+  align-items: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--filter-chip-radius, var(--mantine-radius-xl));
+  color: var(--color-on-surface-variant);
+  display: inline-flex;
+  font-family: var(--font-lexend);
+  font-size: var(--filter-chip-font-size, var(--mantine-font-size-sm));
+  font-weight: 700;
+  gap: var(--mantine-spacing-xs);
+  justify-content: center;
+  min-height: var(--filter-chip-height, 2.5rem);
+  padding: var(--filter-chip-padding-y, 0.5rem) var(--filter-chip-padding-x, 0.75rem);
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    color 150ms ease;
+}
+
+.chip:where(:not(:disabled)):hover {
+  background: var(--color-surface-container);
+  color: var(--color-on-surface);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.chip[data-active='true'] {
+  background: var(--color-primary-soft);
+  border-color: var(--color-primary);
+  color: var(--color-primary-deep);
+}
+
+.chip[data-active='true']:where(:not(:disabled)):hover {
+  background: var(--color-primary-soft);
+  color: var(--color-primary-deep);
+}
+
+.icon {
+  color: currentColor;
+  display: inline-flex;
+}
+
+.label {
+  line-height: var(--mantine-line-height-sm);
+}
+
+.count {
+  align-items: center;
+  background: var(--color-surface-container);
+  border-radius: var(--mantine-radius-xl);
+  color: var(--color-on-surface-variant);
+  display: inline-flex;
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 800;
+  justify-content: center;
+  min-width: 1.25rem;
+  padding-inline: var(--mantine-spacing-xs);
+}
+
+.chip[data-active='true'] .count {
+  background: var(--color-surface-container-lowest);
+  color: var(--color-primary-deep);
+}

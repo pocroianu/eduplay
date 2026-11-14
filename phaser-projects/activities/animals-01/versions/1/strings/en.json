@@ -1,0 +1,40 @@
+{
+	"meta": {
+		"title": "Animal Friends",
+		"description": "Learn to identify different animals!"
+	},
+	"questions": {
+		"q1": {
+			"question": "Which animal says 'meow'?"
+		},
+		"q2": {
+			"question": "Which animal has a long trunk?"
+		},
+		"q3": {
+			"question": "Which animal is called the 'King of the Jungle'?"
+		},
+		"q4": {
+			"question": "Which insect has colorful wings?"
+		},
+		"q5": {
+			"question": "Which animal lives in the ocean and has sharp teeth?"
+		}
+	},
+	"choices": {
+		"cat": "Cat",
+		"bird": "Bird",
+		"frog": "Frog",
+		"elephant": "Elephant",
+		"koala": "Koala",
+		"pig": "Pig",
+		"lion": "Lion",
+		"tiger": "Tiger",
+		"goat": "Goat",
+		"butterfly": "Butterfly",
+		"bee": "Bee",
+		"spider": "Spider",
+		"shark": "Shark",
+		"goldfish": "Goldfish",
+		"crab": "Crab"
+	}
+}

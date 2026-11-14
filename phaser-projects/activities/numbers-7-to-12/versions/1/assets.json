@@ -1,0 +1,56 @@
+{
+  "version": "2.0.0",
+  "baseUrl": "assets",
+  "sharedGroups": {
+    "core-mascots": {
+      "images": [
+        "guapen",
+        "FufuSuperDino"
+      ],
+      "audio": [],
+      "spritesheets": []
+    }
+  },
+  "games": {
+    "numbers-1-to-6": {
+      "sharedGroups": [
+        "core-mascots"
+      ],
+      "manifest": {
+        "images": [],
+        "audio": [],
+        "spritesheets": []
+      }
+    },
+    "numbers-7-to-12": {
+      "sharedGroups": [
+        "core-mascots"
+      ],
+      "manifest": {
+        "images": [],
+        "audio": [],
+        "spritesheets": []
+      }
+    }
+  },
+  "pinnedAssets": {
+    "FufuSuperDino": {
+      "type": "image",
+      "assetId": "sha256-25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "sha256": "25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "path": "/assets/library/images/FufuSuperDino.png"
+    },
+    "guapen": {
+      "type": "image",
+      "assetId": "sha256-260a68c55e92c97d78bdf97b331b781f9fde63f2b12bb203fb4bbac0cdf525fe",
+      "sha256": "260a68c55e92c97d78bdf97b331b781f9fde63f2b12bb203fb4bbac0cdf525fe",
+      "path": "/assets/library/images/guapen.png"
+    },
+    "placeholder-owl": {
+      "type": "image",
+      "assetId": "sha256-25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "sha256": "25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "path": "/assets/library/images/placeholder-owl.png"
+    }
+  }
+}

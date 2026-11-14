@@ -1,0 +1,11 @@
+{
+  "meta": { "title": "Modele cu Forme" },
+  "instruction": "Ce urmează?",
+  "rounds": {
+    "r1": { "prompt": "Ce urmează?" },
+    "r2": { "prompt": "Ce urmează?" },
+    "r3": { "prompt": "Ce urmează?" },
+    "r4": { "prompt": "Completează modelul" },
+    "r5": { "prompt": "Completează modelul" }
+  }
+}

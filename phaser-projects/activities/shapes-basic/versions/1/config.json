@@ -1,0 +1,48 @@
+{
+  "meta": {
+    "gameId": "shapes-basic",
+    "version": "1.0.0",
+    "totalSteps": 4,
+    "gameType": "tracing",
+    "themeName": "candy",
+    "supportedLanguages": ["en", "ro"]
+  },
+  "settings": {
+    "toleranceRadius": 45,
+    "checkpointSpacing": 25,
+    "pointsPerItem": 10,
+    "showGuideLabels": true,
+    "autoAdvanceDelay": 1500
+  },
+  "items": [
+    {
+      "id": "circle",
+      "labelKey": "item.circle",
+      "strokes": [
+        { "path": "M100,10 C155,10 190,45 190,100 C190,155 155,190 100,190 C45,190 10,155 10,100 C10,45 45,10 100,10", "checkpoints": 12 }
+      ]
+    },
+    {
+      "id": "square",
+      "labelKey": "item.square",
+      "strokes": [
+        { "path": "M30,30 L170,30 L170,170 L30,170 L30,30", "checkpoints": 10 }
+      ]
+    },
+    {
+      "id": "triangle",
+      "labelKey": "item.triangle",
+      "strokes": [
+        { "path": "M100,20 L180,180 L20,180 L100,20", "checkpoints": 8 }
+      ]
+    },
+    {
+      "id": "star",
+      "labelKey": "item.star",
+      "strokes": [
+        { "path": "M100,10 L120,75 L190,75 L135,120 L155,185 L100,145 L45,185 L65,120 L10,75 L80,75 L100,10", "checkpoints": 14 }
+      ]
+    }
+  ],
+  "questions": []
+}

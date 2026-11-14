@@ -1,0 +1,61 @@
+{
+  "meta": {
+    "gameId": "test-game-01",
+    "version": "1.0.0",
+    "title": "Test Game",
+    "totalSteps": 3,
+    "themeName": "nature",
+    "difficulty": "easy",
+    "supportedLanguages": ["en", "ro"]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "questionKey": "q1.question",
+      "category": "fruits",
+      "difficulty": 1,
+      "choices": [
+        {
+          "id": "apple",
+          "textKey": "q1.choices.apple",
+          "assetKey": "assets/images/apple.png",
+          "category": "fruits"
+        },
+        {
+          "id": "banana",
+          "textKey": "q1.choices.banana",
+          "assetKey": "assets/images/banana.png",
+          "category": "fruits"
+        },
+        {
+          "id": "orange",
+          "textKey": "q1.choices.orange",
+          "assetKey": "assets/images/orange.png",
+          "category": "fruits"
+        }
+      ],
+      "correctChoiceId": "apple"
+    },
+    {
+      "id": "q2",
+      "questionKey": "q2.question",
+      "category": "fruits",
+      "difficulty": 2,
+      "choices": [
+        {
+          "id": "grape",
+          "textKey": "q2.choices.grape",
+          "assetKey": "assets/images/grape.png",
+          "category": "fruits"
+        },
+        {
+          "id": "strawberry",
+          "textKey": "q2.choices.strawberry",
+          "assetKey": "assets/images/strawberry.png",
+          "category": "fruits"
+        }
+      ],
+      "correctChoiceId": "grape"
+    }
+  ]
+}

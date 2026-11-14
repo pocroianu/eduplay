@@ -1,0 +1,13 @@
+{
+  "meta": { "title": "Mica Orchestră" },
+  "instruction": "Repetă melodia",
+  "watchPrompt": "Ascultă",
+  "repeatPrompt": "Cântă tu!",
+  "progressTemplate": "Runda {current} din {total} • Lungime {length}",
+  "pads": {
+    "drum":  { "label": "tobă" },
+    "bell":  { "label": "clopoțel" },
+    "flute": { "label": "fluier" },
+    "piano": { "label": "pian" }
+  }
+}

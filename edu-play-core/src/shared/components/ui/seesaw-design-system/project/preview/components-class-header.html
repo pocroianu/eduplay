@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Class context header</title>
+<link rel="stylesheet" href="_preview.css">
+<style>
+  body { padding: 0; background: #fff; }
+  .header { background: #094856; color: #fff; padding: 20px 28px 0; }
+  .top { display: flex; align-items: center; gap: 14px; padding-bottom: 14px; }
+  .top .tile {
+    width: 56px; height: 56px; border-radius: 10px;
+    background: rgba(255,255,255,0.08);
+    border: 1.5px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font: 700 22px/1 Lexend; color: #fff;
+  }
+  .name { font: 700 26px/1 Lexend; letter-spacing: -0.01em; }
+  .wrench {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,0.14);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .wrench svg { width: 16px; height: 16px; fill: #fff; }
+  .tabs { display: flex; gap: 4px; margin-left: 70px; }
+  .tab {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 18px;
+    font: 600 15px/1 Lexend;
+    color: rgba(255,255,255,0.7);
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+  }
+  .tab.active { color: #fff; border-bottom-color: #fff; background: rgba(255,255,255,0.08); }
+  .tab svg { width: 20px; height: 20px; fill: currentColor; }
+</style>
+</head>
+<body>
+  <div class="header">
+    <div class="top">
+      <div class="tile">Br</div>
+      <div class="name">Bradiceni</div>
+      <div class="wrench" title="Class settings">
+        <svg viewBox="0 0 24 24"><path d="M22 7a4.5 4.5 0 0 1-6 4.2L8.5 18.7a3 3 0 1 1-3.2-3.2L12.8 8A4.5 4.5 0 0 1 18 2l-2.5 2.5L18 7l2.5-2.5z"/></svg>
+      </div>
+    </div>
+    <div class="tabs">
+      <div class="tab active">
+        <svg viewBox="0 0 24 24"><path d="M4 4h7v16H4zM13 4h7v16h-7z"/></svg>Journal</div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg>Activities</div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24"><path d="M3 7h18l-2 2H5z M3 11h18v9H3z"/></svg>Gradebook</div>
+      <div class="tab">
+        <svg viewBox="0 0 24 24"><path d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2zm7-6V11a7 7 0 0 0-14 0v5l-2 2v1h18v-1z"/></svg>Notifications</div>
+    </div>
+  </div>
+</body>
+</html>

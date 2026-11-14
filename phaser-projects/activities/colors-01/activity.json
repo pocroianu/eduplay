@@ -1,0 +1,9 @@
+{
+  "activityId": "colors-01",
+  "version": 1,
+  "renderer": {
+    "id": "multiple-choice",
+    "version": "^1.0.0"
+  },
+  "gameId": "colors-01"
+}

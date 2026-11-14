@@ -1,0 +1,12 @@
+{
+  "instruction": "Find the matching pairs!",
+  "meta": { "title": "Animal Memory" },
+  "pairs": {
+    "pair.cat": "Cat",
+    "pair.lion": "Lion",
+    "pair.elephant": "Elephant",
+    "pair.tiger": "Tiger",
+    "pair.pig": "Pig",
+    "pair.goat": "Goat"
+  }
+}

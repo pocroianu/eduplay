@@ -1,0 +1,34 @@
+{
+  "mode": "self-hosted",
+  "providers": {
+    "text": {
+      "provider": "template",
+      "config": {}
+    },
+    "image": {
+      "provider": "comfyui",
+      "config": {
+        "baseUrl": "http://localhost:8188",
+        "workflowPath": "src/providers/image/workflows/qwen-duolingo.json",
+        "timeout": 600000
+      }
+    },
+    "audio": {
+      "provider": "piper",
+      "config": {
+        "baseUrl": "http://localhost:5000",
+        "voices": {
+          "en": "en_US-lessac-medium",
+          "ro": "ro_RO-mihai-medium"
+        }
+      }
+    }
+  },
+  "cache": {
+    "enabled": true,
+    "redis": {
+      "host": "localhost",
+      "port": 6379
+    }
+  }
+}

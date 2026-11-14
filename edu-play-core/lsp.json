@@ -1,0 +1,28 @@
+{
+  "idleTimeoutMs": 600000,
+  "servers": {
+    "typescript-language-server": {
+      "fileTypes": [".ts", ".tsx", ".js", ".jsx", ".mjs", ".cjs", ".mts", ".cts"]
+    },
+    "tailwindcss": {
+      "rootMarkers": ["package.json", "postcss.config.mjs", "src/app/globals.css"],
+      "settings": {
+        "tailwindCSS": {
+          "includeLanguages": {
+            "typescript": "javascript",
+            "typescriptreact": "javascript"
+          }
+        }
+      }
+    },
+    "sql-language-server": {
+      "command": "sql-language-server",
+      "args": ["up", "--method", "stdio"],
+      "fileTypes": [".sql"],
+      "rootMarkers": ["supabase/config.toml", "package.json"]
+    },
+    "marksman": {
+      "rootMarkers": ["package.json", "README.md", "docs"]
+    }
+  }
+}

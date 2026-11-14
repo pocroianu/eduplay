@@ -1,0 +1,24 @@
+{
+  "gameToHost": [
+    {
+      "type": "ACTIVITY_READY",
+      "gameId": "mock-game",
+      "capabilities": {
+        "repeatInstruction": false
+      }
+    },
+    {
+      "type": "PROGRESS_UPDATE",
+      "currentSet": 1,
+      "totalSets": 5,
+      "progress": 0.2
+    },
+    {
+      "type": "GAME_COMPLETE",
+      "score": 5,
+      "totalSets": 5,
+      "timeSpent": 30,
+      "reason": "completed"
+    }
+  ]
+}

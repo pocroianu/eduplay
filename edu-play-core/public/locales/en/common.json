@@ -1,0 +1,111 @@
+{
+  "loading": "Loading...",
+  "error": "Error",
+  "success": "Success",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit",
+  "create": "Create",
+  "back": "Back",
+  "next": "Next",
+  "previous": "Previous",
+  "search": "Search",
+  "filter": "Filter",
+  "all": "All",
+  "none": "None",
+  "yes": "Yes",
+  "no": "No",
+  "close": "Close",
+  "confirm": "Confirm",
+  "retry": "Retry",
+  "fields": {
+    "password": {
+      "show": "Show password",
+      "hide": "Hide password"
+    }
+  },
+  "language": {
+    "label": "Language",
+    "switcher": "Change language",
+    "ro": "Romanian",
+    "en": "English"
+  },
+  "nav": {
+    "teacher": {
+      "dashboard": "Dashboard",
+      "classes": "My Classes",
+      "activities": "Activities",
+      "librariesExplore": "Libraries",
+      "library": "My Library",
+      "paths": "Paths"
+    }
+  },
+  "roles": {
+    "teacher": "Teacher",
+    "parent": "Parent",
+    "student": "Student",
+    "admin": "Administrator"
+  },
+  "shell": {
+    "accountFallback": "Account",
+    "navbarAriaLabel": "Page header",
+    "notifications": "Notifications",
+    "trophy": "Rewards",
+    "pageTitles": {
+      "teacher": "Dashboard",
+      "teacherClasses": "My classes",
+      "teacherStudents": "Students",
+      "teacherActivities": "Activities",
+      "teacherLibrariesExplore": "Libraries",
+      "teacherLibrary": "My library",
+      "teacherAssignments": "Assignments",
+      "teacherPaths": "Learning paths",
+      "teacherPortfolio": "Portfolio",
+      "teacherGames": "Games",
+      "teacherLanguage": "Language settings",
+      "teacherHelp": "Help",
+      "teacherScan": "Scan",
+      "teacherTrial": "Trial",
+      "teacherAccountSettings": "Account settings",
+      "teacherAccountSchool": "My school",
+      "teacherAccountDevice": "Device information",
+      "parent": "Parent home",
+      "parentChildren": "My children",
+      "parentActivities": "Activities",
+      "parentNotifications": "Notifications",
+      "admin": "Administration",
+      "adminUsers": "Users",
+      "adminActivities": "Content",
+      "adminFlags": "Feature flags",
+      "adminAudit": "Audit log",
+      "adminPrivacy": "Privacy",
+      "teacherWelcome": "Welcome, {{name}}"
+    },
+    "sidebar": {
+      "collapse": "Collapse navigation",
+      "expand": "Expand navigation",
+      "accountMenuButton": "Open account menu",
+      "accountMenuTitle": "Account Menu",
+      "accountSettings": "Account Settings",
+      "mySchool": "My School",
+      "deviceInformation": "Device Information",
+      "signOut": "Sign Out",
+      "addAccount": "Add Account",
+      "languageSettings": "Select Language",
+      "languageSettingsShort": "Settings",
+      "help": "Help",
+      "scan": "Scan",
+      "trial": "Trial",
+      "addClass": "Add class"
+    },
+    "createMenu": {
+      "button": "Open create menu",
+      "title": "Create",
+      "postToJournal": "Choose class for post",
+      "assignActivity": "Assign activity",
+      "createActivity": "Create activity",
+      "generateActivity": "Generate activity"
+    }
+  }
+}

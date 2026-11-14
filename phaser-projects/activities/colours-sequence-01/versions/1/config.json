@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "gameId": "colours-sequence-01",
+    "version": "1.0.0",
+    "gameType": "repeat-sequence",
+    "themeName": "ocean",
+    "pointsPerRound": 10,
+    "roundDelay": 900,
+    "supportedLanguages": ["ro", "en"]
+  },
+  "pads": [
+    { "id": "red",    "idleColor": 13369395, "litColor": 16738407, "frequency": 261.63, "glyph": "circle" },
+    { "id": "blue",   "idleColor": 2263722,  "litColor": 4297957,  "frequency": 329.63, "glyph": "square" },
+    { "id": "yellow", "idleColor": 14329120, "litColor": 16770157, "frequency": 392.00, "glyph": "triangle" },
+    { "id": "green",  "idleColor": 2263842,  "litColor": 4886146,  "frequency": 493.88, "glyph": "diamond" }
+  ],
+  "sequence": {
+    "startLength": 3,
+    "maxLength": 7,
+    "padLitMs": 520,
+    "playbackGapMs": 180,
+    "introDelayMs": 900,
+    "replayOnMiss": false
+  },
+  "questions": []
+}

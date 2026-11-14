@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "language": "en",
+    "name": "English",
+    "flag": "🇬🇧"
+  },
+  "ui": {
+    "pause": "Pause",
+    "resume": "Resume",
+    "repeat": "Repeat",
+    "player": "Player",
+    "progress": "{current} / {total}",
+    "loading": "Loading...",
+    "start": "Start",
+    "restart": "Play Again",
+    "home": "Home",
+    "settings": "Settings",
+    "language": "Language"
+  },
+  "feedback": {
+    "correct": [
+      "Great job! 🌟",
+      "You got it! ⭐",
+      "Amazing! 🎉",
+      "Super! 🚀",
+      "Wonderful! 🌈",
+      "Excellent! ✨",
+      "Perfect! 💫"
+    ],
+    "incorrect": [
+      "Nice try! 💪",
+      "Almost! Keep going! 🌟",
+      "You can do it! 💫",
+      "Good effort! 🎯",
+      "Try again! 🌈"
+    ]
+  },
+  "results": {
+    "title": "Great Work!",
+    "score": "Your Score",
+    "perfect": "Perfect Score! 🏆",
+    "excellent": "Excellent! 🌟",
+    "good": "Good Job! 👍",
+    "tryAgain": "Keep Practicing! 💪",
+    "stars": "{count} Stars",
+    "questionsCorrect": "{correct} of {total} correct"
+  },
+  "questions": {
+    "whichOne": "Which one is {item}?",
+    "whatIs": "What is this?",
+    "select": "Select the correct answer"
+  },
+  "items": {
+    "apple": "an apple",
+    "banana": "a banana",
+    "carrot": "a carrot",
+    "cat": "a cat",
+    "dog": "a dog",
+    "bird": "a bird",
+    "frog": "a frog",
+    "ax": "an ax",
+    "hat": "a hat",
+    "umbrella": "an umbrella"
+  }
+}

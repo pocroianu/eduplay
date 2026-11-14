@@ -1,0 +1,278 @@
+{
+  "$ref": "#/definitions/game-config.repeat-sequence",
+  "definitions": {
+    "game-config.repeat-sequence": {
+      "type": "object",
+      "properties": {
+        "meta": {
+          "type": "object",
+          "properties": {
+            "gameId": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d+\\.\\d+$"
+            },
+            "totalSteps": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "themeName": {
+              "type": "string"
+            },
+            "theme": {
+              "type": "object",
+              "properties": {
+                "primary": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16777215
+                },
+                "secondary": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16777215
+                },
+                "background": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16777215
+                },
+                "cardBg": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16777215
+                },
+                "textColor": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{3}$|^rgb\\(|^rgba\\("
+                },
+                "containerBg": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16777215
+                },
+                "containerText": {
+                  "type": "string",
+                  "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{3}$|^rgb\\(|^rgba\\("
+                },
+                "containerBorder": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16777215
+                },
+                "backgroundStyle": {
+                  "type": "string"
+                },
+                "correctColor": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16777215
+                },
+                "incorrectColor": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16777215
+                },
+                "starColor": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 16777215
+                }
+              },
+              "additionalProperties": false
+            },
+            "difficulty": {
+              "type": "string",
+              "enum": [
+                "easy",
+                "medium",
+                "hard"
+              ]
+            },
+            "supportedLanguages": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "en",
+                  "ro"
+                ]
+              },
+              "minItems": 1
+            },
+            "gameType": {
+              "type": "string",
+              "const": "repeat-sequence"
+            },
+            "pointsPerRound": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "roundDelay": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "gameId",
+            "version",
+            "supportedLanguages",
+            "gameType"
+          ],
+          "additionalProperties": false
+        },
+        "pads": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "idleColor": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 16777215
+              },
+              "litColor": {
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 16777215
+              },
+              "frequency": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "glyph": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "id",
+              "idleColor",
+              "litColor",
+              "frequency"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 2
+        },
+        "sequence": {
+          "type": "object",
+          "properties": {
+            "startLength": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "maxLength": {
+              "type": "integer",
+              "exclusiveMinimum": 0
+            },
+            "padLitMs": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "playbackGapMs": {
+              "type": "number",
+              "minimum": 0
+            },
+            "introDelayMs": {
+              "type": "number",
+              "minimum": 0
+            },
+            "replayOnMiss": {
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "startLength",
+            "maxLength",
+            "padLitMs",
+            "playbackGapMs"
+          ],
+          "additionalProperties": false
+        },
+        "questions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1
+              },
+              "questionKey": {
+                "type": "string",
+                "minLength": 1
+              },
+              "audioKey": {
+                "type": "string"
+              },
+              "imageKey": {
+                "type": "string"
+              },
+              "choices": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "enum": [
+                        "text",
+                        "image",
+                        "audio"
+                      ]
+                    },
+                    "value": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "isCorrect": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "value",
+                    "isCorrect"
+                  ],
+                  "additionalProperties": false
+                },
+                "minItems": 2,
+                "maxItems": 6
+              },
+              "timeLimit": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "points": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "required": [
+              "id",
+              "questionKey",
+              "choices"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "meta",
+        "pads",
+        "sequence"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Repeat-sequence game configuration"
+}

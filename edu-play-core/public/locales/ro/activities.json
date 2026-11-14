@@ -1,0 +1,44 @@
+{
+  "player": {
+    "title": "Activitate creativă",
+    "subtitle": {
+      "ready": "Hai să creăm ceva frumos!",
+      "comingSoon": "Acest tip de activitate va fi disponibil în curând."
+    },
+    "toolbar": {
+      "ariaLabel": "Bara de instrumente activitate",
+      "save": "Salvează",
+      "undo": "Înapoi",
+      "redo": "Înainte",
+      "submit": "Trimite",
+      "exit": "Ieșire"
+    },
+    "gate": {
+      "backToDashboard": "Înapoi la tabloul de bord",
+      "consent": {
+        "title": "Avem nevoie de permisiune",
+        "body": "Întoarce-te la tabloul de bord și roagă pe cineva mare să dea acordul pentru această activitate.",
+        "audioRecordingBody": "Vocea ta e specială — avem nevoie de acordul cuiva mare înainte să o înregistrăm."
+      },
+      "gradeLocked": {
+        "title": "Nu e pentru clasa ta încă",
+        "body": "Această activitate va fi disponibilă mai târziu. Întoarce-te la tabloul de bord și încearcă altceva."
+      },
+      "classDisabled": {
+        "title": "Activitatea e închisă acum",
+        "body": "Doamna a închis această activitate pentru clasa ta. Întoarce-te la tabloul de bord și alege alta."
+      }
+    },
+    "invalidConfig": {
+      "title": "Hopa, ceva nu e în regulă",
+      "body": "Această activitate are nevoie de o mică reglare din partea profesorului tău. Întoarce-te la tabloul de bord și încearcă o altă activitate."
+    },
+    "notReady": {
+      "title": "În curând",
+      "body": "Am pregătit locul pentru această activitate. Tipul <code>{{typeId}}</code> va fi adăugat de echipă în pașii următori."
+    },
+    "result": {
+      "previewLabel": "Rezultat primit (preview):"
+    }
+  }
+}

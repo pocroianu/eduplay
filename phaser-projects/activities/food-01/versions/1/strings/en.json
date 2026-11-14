@@ -1,0 +1,36 @@
+{
+	"meta": {
+		"title": "Yummy Food",
+		"description": "Learn about different foods and treats!"
+	},
+	"questions": {
+		"q1": {
+			"question": "Which food is round and has cheese on top?"
+		},
+		"q2": {
+			"question": "Which treat do you eat at birthday parties?"
+		},
+		"q3": {
+			"question": "Which vegetable do rabbits love to eat?"
+		},
+		"q4": {
+			"question": "Which food comes from a chicken?"
+		},
+		"q5": {
+			"question": "Which candy is on a stick?"
+		}
+	},
+	"choices": {
+		"pizza": "Pizza",
+		"cake": "Cake",
+		"bread": "Bread",
+		"pie": "Pie",
+		"cookie": "Cookie",
+		"carrot": "Carrot",
+		"banana": "Banana",
+		"apple": "Apple",
+		"egg": "Egg",
+		"cereal": "Cereal",
+		"lollipop": "Lollipop"
+	}
+}

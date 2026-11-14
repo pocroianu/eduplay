@@ -1,0 +1,18 @@
+{
+  "name": "@edu-play/phaser-ui",
+  "version": "0.1.0",
+  "description": "Duo design tokens + Phaser-side chrome primitives mirrored from edu-play-core's @/shared/components/ui/kit/",
+  "main": "src/index.ts",
+  "author": "edu-play",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24.12.0",
+    "npm": ">=11.6.2"
+  },
+  "peerDependencies": {
+    "phaser": "^4.1.0"
+  },
+  "scripts": {
+    "build": "tsc --noEmit"
+  }
+}

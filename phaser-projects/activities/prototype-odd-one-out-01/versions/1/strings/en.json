@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Prototype: Odd one out",
+    "description": "Throwaway UI prototype for a new activity type: find the item that does not match the rule."
+  },
+  "instruction": "Choose the item that does not match the rule."
+}

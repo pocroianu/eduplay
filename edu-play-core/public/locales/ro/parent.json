@@ -1,0 +1,111 @@
+{
+  "dashboard": {
+    "topAppBarTitle": "Panoul Părintelui",
+    "greeting": "Bună, {{firstName}}!",
+    "greetingLabel": "Bun venit înapoi",
+    "greetingSummary": "Iată un rezumat liniștitor al progresului copiilor tăi în această săptămână.",
+    "childrenConnected_one": "1 copil conectat",
+    "childrenConnected_other": "{{count}} copii conectați",
+    "stats": {
+      "connectedChildren": "Copii conectați",
+      "gamesPlayed": "Jocuri jucate",
+      "averageScore": "Scor mediu"
+    },
+    "quickAction": {
+      "label": "Acțiune rapidă",
+      "titleNoChildren": "Conectează primul copil",
+      "titleHasChildren": "Adaugă încă un copil",
+      "cta": "Începe acum"
+    },
+    "myChildren": "Copiii mei",
+    "addChild": "Adaugă copil",
+    "recommendation": {
+      "label": "Recomandare",
+      "noChildrenHeadline": "Începe cu primul copil",
+      "noChildrenBody": "Conectează un cont folosind codul primit de la profesor pentru a vedea progresul în timp real.",
+      "noActivityHeadline": "Niciun joc încă",
+      "noActivityBody": "Încurajează copiii să exploreze biblioteca — primele activități vor apărea aici imediat după.",
+      "pauseHeadline": "Pauză în această săptămână",
+      "pauseBody": "Nu am înregistrat activitate recentă. O sesiune scurtă astăzi poate menține ritmul de învățare.",
+      "supportHeadline": "Sprijin pentru {{childName}}",
+      "supportBody": "Scorul mediu este {{score}}%. Vezi care jocuri merită repetate împreună.",
+      "goodPaceHeadline": "Ritm bun de învățare",
+      "goodPaceBody": "Copiii avansează constant. Continuă să încurajezi sesiuni scurte și frecvente."
+    },
+    "weeklySummary": {
+      "label": "Această săptămână",
+      "title": "Rezumat de joc",
+      "totalTime": "Timp total",
+      "activities": "Activități"
+    },
+    "recentActivity": "Activitate Recentă",
+    "emptyState": {
+      "label": "Niciun copil conectat",
+      "title": "Conectează primul tău copil pentru a-i vedea progresul",
+      "body": "Folosește codul de invitație primit de la profesorul copilului. În câteva secunde vei vedea jocurile completate, scorurile și recomandări utile.",
+      "cta": "Conectează cu cod"
+    }
+  ,
+  "familyShell": {
+    "eyebrow": "Familie EduPlay",
+    "heading": "Acasă familie",
+    "summary": "Urmărește copiii într-un fir simplu, asemănător mesajelor de la clasă.",
+    "threadsTitle": "Fire de familie",
+    "feedTitle": "Firul familiei",
+    "detailsTitle": "Pentru familie",
+    "connectedChildren": "Copii conectați",
+    "addAnotherChild": "Adaugă încă un copil"
+  }
+,
+  "feed": {
+    "empty": {
+      "noneHeadline": "Nicio activitate nouă încă",
+      "noneBody": "Lucrările publicate de profesori și jocurile finalizate vor apărea aici, în ordinea în care se întâmplă.",
+      "childHeadline": "Niciun moment recent pentru {{name}}",
+      "childBody": "Apare aici imediat ce profesorul publică o lucrare sau copilul finalizează un joc."
+    },
+    "badgeArtifact": "Lucrare nouă",
+    "badgeGame": "Joc finalizat",
+    "unavailablePhoto": "Lucrarea nu este disponibilă momentan.",
+    "unavailableAudio": "Înregistrarea nu este disponibilă momentan.",
+    "unavailableVideo": "Filmul nu este disponibil momentan.",
+    "gameSubtitle": "A finalizat un joc nou",
+    "defaultPhotoTitle": "Fotografie nouă",
+    "defaultDrawingTitle": "Desen nou",
+    "defaultAudioTitle": "Înregistrare nouă",
+    "defaultVideoTitle": "Filmare nouă",
+    "defaultArtifactTitle": "Lucrare nouă"
+  }
+  },
+  "notifications": {
+    "title": "Notificări",
+    "topAppBarTitle": "Notificări",
+    "markAllRead": "Marchează toate ca citite",
+    "markAsRead": "Marchează ca citită",
+    "noNotifications": "Nu ai notificări încă.",
+    "noNotificationsBody": "Vei primi notificări aici când copilul tău va primi teme noi sau va atinge realizări importante.",
+    "viewAll": "Vezi toate notificările",
+    "unreadCount_one": "1 notificare necitită",
+    "unreadCount_other": "{{count}} notificări necitite",
+    "bellAriaLabel": "Notificări",
+    "dropdownTitle": "Notificări recente",
+    "emptyDropdown": "Nicio notificare nouă",
+    "types": {
+      "assignment_due": "Temă aproape scadentă",
+      "assignment_completed": "Temă finalizată",
+      "game_completed": "Joc finalizat",
+      "milestone": "Realizare nouă",
+      "achievement": "Premiu obținut",
+      "weekly_summary": "Rezumatul săptămânal"
+    },
+    "timeAgo": {
+      "justNow": "Chiar acum",
+      "minutesAgo_one": "Acum 1 minut",
+      "minutesAgo_other": "Acum {{count}} minute",
+      "hoursAgo_one": "Acum 1 oră",
+      "hoursAgo_other": "Acum {{count}} ore",
+      "daysAgo_one": "Acum 1 zi",
+      "daysAgo_other": "Acum {{count}} zile"
+    }
+  }
+}

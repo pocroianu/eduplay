@@ -1,0 +1,60 @@
+{
+	"meta": {
+		"gameId": "food-01",
+		"gameType": "multipleChoice",
+		"version": "1.0.0",
+		"totalSteps": 5,
+		"difficulty": "easy",
+		"shuffleQuestions": false,
+		"shuffleChoices": true,
+		"supportedLanguages": ["en", "ro"],
+		"themeName": "sunset"
+	},
+	"questions": [
+		{
+			"id": "q1",
+			"questionKey": "q1.question",
+			"choices": [
+				{ "type": "image", "value": "pizza", "isCorrect": true },
+				{ "type": "image", "value": "cake", "isCorrect": false },
+				{ "type": "image", "value": "bread", "isCorrect": false }
+			]
+		},
+		{
+			"id": "q2",
+			"questionKey": "q2.question",
+			"choices": [
+				{ "type": "image", "value": "cake", "isCorrect": true },
+				{ "type": "image", "value": "pie", "isCorrect": false },
+				{ "type": "image", "value": "cookie", "isCorrect": false }
+			]
+		},
+		{
+			"id": "q3",
+			"questionKey": "q3.question",
+			"choices": [
+				{ "type": "image", "value": "carrot", "isCorrect": true },
+				{ "type": "image", "value": "banana", "isCorrect": false },
+				{ "type": "image", "value": "apple", "isCorrect": false }
+			]
+		},
+		{
+			"id": "q4",
+			"questionKey": "q4.question",
+			"choices": [
+				{ "type": "image", "value": "egg", "isCorrect": true },
+				{ "type": "image", "value": "bread", "isCorrect": false },
+				{ "type": "image", "value": "cereal", "isCorrect": false }
+			]
+		},
+		{
+			"id": "q5",
+			"questionKey": "q5.question",
+			"choices": [
+				{ "type": "image", "value": "lollipop", "isCorrect": true },
+				{ "type": "image", "value": "cookie", "isCorrect": false },
+				{ "type": "image", "value": "pie", "isCorrect": false }
+			]
+		}
+	]
+}

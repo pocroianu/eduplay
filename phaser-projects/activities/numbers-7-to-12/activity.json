@@ -1,0 +1,9 @@
+{
+  "activityId": "numbers-7-to-12",
+  "version": 1,
+  "renderer": {
+    "id": "sequence-order",
+    "version": "^1.0.0"
+  },
+  "gameId": "numbers-7-to-12"
+}

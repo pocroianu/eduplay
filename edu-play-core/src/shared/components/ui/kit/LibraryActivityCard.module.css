@@ -1,0 +1,227 @@
+.card {
+  position: relative;
+  width: 191px;
+  min-height: 268px;
+  overflow: hidden;
+  border: 1px solid var(--color-outline);
+  border-radius: 8px;
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  box-shadow: var(--shadow-soft-sm);
+  text-decoration: none;
+}
+
+.cardInteractive {
+  transition:
+    border-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    filter 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cardInteractive:hover,
+.cardInteractive:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-soft);
+}
+
+.createCard {
+  border-color: var(--color-purple-dim);
+  background-color: var(--color-purple-dim);
+  color: var(--color-on-primary);
+}
+
+.createCard.cardInteractive:hover,
+.createCard.cardInteractive:focus-within {
+  border-color: var(--color-purple-deep);
+  background-color: var(--color-purple-deep);
+}
+
+.ideasCard {
+  background-color: var(--color-purple-wash);
+}
+
+.ideasCard.cardInteractive:hover,
+.ideasCard.cardInteractive:focus-within {
+  background-color: var(--color-purple-soft);
+}
+
+.main {
+  display: flex;
+  min-height: 264px;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+}
+
+.thumbnail {
+  position: relative;
+  display: block;
+  height: 142px;
+  overflow: hidden;
+}
+
+.thumbnailPurple {
+  background: linear-gradient(135deg, var(--color-purple-dim) 0%, var(--color-purple) 100%);
+}
+
+.thumbnailGreen {
+  background: linear-gradient(135deg, var(--color-primary-wash) 0%, var(--color-tertiary-container) 100%);
+}
+
+.thumbnailBlue {
+  background: linear-gradient(135deg, var(--color-blue-wash) 0%, var(--color-blue-dim) 100%);
+}
+
+.thumbnailGold {
+  background: linear-gradient(135deg, var(--color-gold-soft) 0%, var(--color-gold) 100%);
+}
+
+.thumbnailPink {
+  background: linear-gradient(135deg, var(--color-gold-soft) 0%, var(--color-pink) 100%);
+}
+
+.createMark,
+.ideasMark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.createMark {
+  color: var(--color-on-primary);
+}
+
+.ideasMark {
+  color: var(--color-purple-dim);
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 999px;
+  box-shadow: var(--shadow-soft-sm);
+}
+
+.bubbleOne {
+  left: 18px;
+  top: 22px;
+  width: 44px;
+  height: 44px;
+  background-color: var(--color-pink);
+}
+
+.bubbleTwo {
+  right: 22px;
+  top: 30px;
+  width: 48px;
+  height: 48px;
+  background-color: var(--color-tertiary-container);
+}
+
+.bubbleThree {
+  left: 58px;
+  bottom: 20px;
+  width: 64px;
+  height: 64px;
+  background-color: var(--color-blue-dim);
+}
+
+.badge {
+  position: absolute;
+  right: 28px;
+  bottom: 20px;
+  display: flex;
+  width: 48px;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-purple-dim);
+  font-size: 32px;
+  font-weight: 800;
+  box-shadow: var(--shadow-soft-sm);
+}
+
+.body {
+  display: flex;
+  min-height: 122px;
+  flex: 1;
+  flex-direction: column;
+  padding: 10px 12px 12px;
+  color: var(--color-on-surface);
+}
+
+.createCard .body {
+  justify-content: center;
+  color: var(--color-on-primary);
+  text-align: center;
+}
+
+.ideasCard .body {
+  justify-content: center;
+  text-align: center;
+}
+
+.creator {
+  margin-bottom: 6px;
+  color: var(--color-on-surface-variant);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.title {
+  display: -webkit-box;
+  overflow: hidden;
+  color: inherit;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+.meta {
+  margin-top: auto;
+  padding-top: 8px;
+  color: var(--color-on-surface-variant);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.action {
+  position: absolute;
+  right: 8px;
+  top: 10px;
+  min-height: 32px;
+  border: 1px solid var(--color-outline);
+  border-radius: 6px;
+  background-color: var(--color-surface-container-lowest);
+  padding: 0 12px;
+  color: var(--color-on-surface);
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: var(--shadow-soft-sm);
+}
+
+.actionInteractive {
+  transition:
+    border-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    filter 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.actionInteractive:hover,
+.actionInteractive:focus-visible {
+  border-color: var(--color-purple-dim);
+  background-color: var(--color-purple-wash);
+  color: var(--color-purple-dim);
+  box-shadow: var(--shadow-soft);
+  filter: brightness(0.96);
+}

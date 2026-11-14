@@ -1,0 +1,69 @@
+{
+  "gameId": "test-game-01",
+  "meta": {
+    "title": "Test Game",
+    "theme": "nature",
+    "difficulty": "easy",
+    "languages": ["en", "ro"]
+  },
+  "questions": [
+    {
+      "id": "q1",
+      "text": {
+        "en": "Which one is an apple?",
+        "ro": "Care este marul?"
+      },
+      "category": "fruits",
+      "choices": [
+        {
+          "id": "apple",
+          "text": {
+            "en": "Apple",
+            "ro": "Măr"
+          },
+          "assetPath": "assets/images/apple.png",
+          "category": "fruits"
+        },
+        {
+          "id": "banana",
+          "text": {
+            "en": "Banana",
+            "ro": "Banană"
+          },
+          "assetPath": "assets/images/banana.png",
+          "category": "fruits"
+        }
+      ],
+      "correctChoice": "apple",
+      "difficulty": 1
+    }
+  ],
+  "assets": [
+    {
+      "path": "assets/images/apple.png",
+      "type": "image",
+      "category": "fruits",
+      "tags": ["fruit", "apple", "red"],
+      "metadata": {
+        "width": 512,
+        "height": 512,
+        "format": "png"
+      }
+    }
+  ],
+  "statistics": {
+    "totalQuestions": 1,
+    "totalChoices": 2,
+    "totalAssets": 1,
+    "categoryCounts": {
+      "fruits": 1
+    },
+    "languageCounts": {
+      "en": 1,
+      "ro": 1
+    },
+    "difficultyDistribution": {
+      "1": 1
+    }
+  }
+}

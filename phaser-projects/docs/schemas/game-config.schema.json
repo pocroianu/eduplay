@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "game-config",
+  "description": "Any supported game configuration. Selects the correct per-template schema by meta.gameType.",
+  "oneOf": [
+    {
+      "$ref": "./game-config.multipleChoice.schema.json"
+    },
+    {
+      "$ref": "./game-config.matching.schema.json"
+    },
+    {
+      "$ref": "./game-config.memory.schema.json"
+    },
+    {
+      "$ref": "./game-config.categorize.schema.json"
+    },
+    {
+      "$ref": "./game-config.sequence.schema.json"
+    },
+    {
+      "$ref": "./game-config.tracing.schema.json"
+    },
+    {
+      "$ref": "./game-config.counting.schema.json"
+    },
+    {
+      "$ref": "./game-config.pattern.schema.json"
+    },
+    {
+      "$ref": "./game-config.repeat-sequence.schema.json"
+    },
+    {
+      "$ref": "./game-config.listen-tap.schema.json"
+    }
+  ]
+}

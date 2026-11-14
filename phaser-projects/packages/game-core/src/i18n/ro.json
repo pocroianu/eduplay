@@ -1,0 +1,65 @@
+{
+  "meta": {
+    "language": "ro",
+    "name": "Română",
+    "flag": "🇷🇴"
+  },
+  "ui": {
+    "pause": "Pauză",
+    "resume": "Continuă",
+    "repeat": "Repetă",
+    "player": "Jucător",
+    "progress": "{current} / {total}",
+    "loading": "Se încarcă...",
+    "start": "Start",
+    "restart": "Joacă din nou",
+    "home": "Acasă",
+    "settings": "Setări",
+    "language": "Limbă"
+  },
+  "feedback": {
+    "correct": [
+      "Bravo! 🌟",
+      "Corect! ⭐",
+      "Minunat! 🎉",
+      "Super! 🚀",
+      "Excelent! 🌈",
+      "Foarte bine! ✨",
+      "Perfect! 💫"
+    ],
+    "incorrect": [
+      "Aproape! 💪",
+      "Mai încearcă! 🌟",
+      "Poți să reușești! 💫",
+      "Bună încercare! 🎯",
+      "Încearcă din nou! 🌈"
+    ]
+  },
+  "results": {
+    "title": "Felicitări!",
+    "score": "Scorul tău",
+    "perfect": "Scor perfect! 🏆",
+    "excellent": "Excelent! 🌟",
+    "good": "Bine lucrat! 👍",
+    "tryAgain": "Continuă să exersezi! 💪",
+    "stars": "{count} Stele",
+    "questionsCorrect": "{correct} din {total} corecte"
+  },
+  "questions": {
+    "whichOne": "Care este {item}?",
+    "whatIs": "Ce este asta?",
+    "select": "Selectează răspunsul corect"
+  },
+  "items": {
+    "apple": "un măr",
+    "banana": "o banană",
+    "carrot": "un morcov",
+    "cat": "o pisică",
+    "dog": "un câine",
+    "bird": "o pasăre",
+    "frog": "o broască",
+    "ax": "un topor",
+    "hat": "o pălărie",
+    "umbrella": "o umbrelă"
+  }
+}

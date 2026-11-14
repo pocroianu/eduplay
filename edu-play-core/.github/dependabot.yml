@@ -1,0 +1,67 @@
+# Dependabot configuration — edu-play-core
+#
+# Restored 2026-04-28 as part of [EDU-159] post-Phase-1 cleanup, after
+# self-hosted CI gating came online (EDU-104 / EDU-108) and the EDU-99
+# hold-posture pause ended (EDU-109 sunset).
+#
+# Cadence: weekly (Monday 06:00 Europe/Bucharest) so the self-hosted
+# Windows runner queue can absorb the load without patch-storms.
+#
+# Strategy:
+#   - Group dev-deps and runtime patches into a small number of PRs.
+#   - Keep majors as separate, individually-reviewable PRs.
+#   - github-actions versions are grouped together (low churn, low risk).
+#
+# Auto-merge is intentionally NOT configured here — the board has not yet
+# decided whether dev-deps should auto-merge once CI gates them. That
+# decision belongs to a separate ticket. See EDU-159 (out of scope).
+#
+# Commit-message prefixes match the existing convention used by prior
+# Dependabot PRs (`chore(deps): ...`, `chore(deps-dev): ...`).
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Bucharest"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+      - "dependabot"
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+      include: "scope"
+    groups:
+      dev-dependencies:
+        dependency-type: "development"
+        update-types:
+          - "minor"
+          - "patch"
+      production-patches:
+        dependency-type: "production"
+        update-types:
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Bucharest"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+    commit-message:
+      prefix: "ci(deps)"
+      include: "scope"
+    groups:
+      github-actions:
+        patterns:
+          - "*"

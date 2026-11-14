@@ -1,0 +1,7 @@
+{
+  "rendererId": "listen-tap",
+  "version": "1.0.0",
+  "defaultGameId": "phonics-ro-01",
+  "entry": "src/template.ts",
+  "configGameType": "listen-tap"
+}

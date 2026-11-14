@@ -1,0 +1,362 @@
+{
+  "hero": {
+    "badge": "Now live · 2026 Edition",
+    "titleLine1": "Kids learn",
+    "titleLine2": "by playing",
+    "titleLine3": "Seriously.",
+    "description": "EduPlay is the platform with educational games for Romanian kids ages 3–12. Built with teachers, tested with real children.",
+    "descriptionStrong": "Free for teachers, always.",
+    "ctaRegister": "Get started free",
+    "ctaHaveAccount": "I already have an account",
+    "trustPills": {
+      "ro": "Made in Romania",
+      "gdpr": "EU-grade GDPR",
+      "noAds": "Zero ads",
+      "diacritics": "Proper diacritics"
+    },
+    "visual": {
+      "gameCount": "10+",
+      "gameLabel": "GAMES",
+      "gameSublabel": "and more every week",
+      "collageLabel": "EduPlay preview with games, progress, and safety"
+    },
+    "subjects": {
+      "colors": "Colors",
+      "numbers": "Numbers",
+      "animals": "Animals",
+      "letters": "Letters"
+    },
+    "utility": {
+      "eyebrow": "Built for primary schools",
+      "message": "Safe games, visible progress, and careful Romanian language."
+    },
+    "nav": {
+      "products": "Platform",
+      "teachers": "Teachers",
+      "families": "Families",
+      "schools": "Schools",
+      "demoCta": "Start free"
+    }
+  },
+  "socialProof": {
+    "headline": "100%",
+    "title": "guaranteed safe for kids",
+    "subtitle": "Verified on every release.",
+    "stickers": {
+      "ro": {
+        "short": "RO",
+        "label": "Made in Romania"
+      },
+      "gdpr": {
+        "short": "GDPR",
+        "label": "EU compliance"
+      },
+      "noAds": {
+        "short": "0 ads",
+        "label": "Zero ads"
+      },
+      "diacritics": {
+        "short": "in RO",
+        "label": "Proper diacritics"
+      }
+    }
+  },
+  "carousel": {
+    "badge": "Game library",
+    "titleLine1": "Ten games,",
+    "titleLine2": "one mission",
+    "titleLine3": "make them love learning.",
+    "description": "Every game is built with teachers and tested with real children. Proper Romanian, no ads, designed for short attention spans.",
+    "featuredBadge": "Featured game",
+    "learnsLabel": "Learns",
+    "games": {
+      "featured": {
+        "title": "Rainbow of Colors",
+        "description": "Recognize, match, mix. A tactile game that teaches kids every color of the rainbow through short mini-adventures.",
+        "categoryLabel": "Colors",
+        "ageRange": "ages 3–8",
+        "learns": "Color recognition · Visual vocabulary · Hand-eye coordination"
+      },
+      "fruits": {
+        "title": "Colorful Fruits",
+        "description": "Learn fruits through matching.",
+        "categoryLabel": "Vocabulary",
+        "ageRange": "ages 3–8",
+        "learns": "Vocabulary"
+      },
+      "animals": {
+        "title": "Animal Friends",
+        "description": "Animals and natural habitats.",
+        "categoryLabel": "Nature",
+        "ageRange": "ages 3–8",
+        "learns": "Natural-world knowledge"
+      },
+      "market": {
+        "title": "At the Market",
+        "description": "Words and daily routines.",
+        "categoryLabel": "Social",
+        "ageRange": "ages 3–8",
+        "learns": "Practical vocabulary"
+      },
+      "objects": {
+        "title": "Objects Around You",
+        "description": "Recognition and visual attention.",
+        "categoryLabel": "Vocabulary",
+        "ageRange": "ages 3–8",
+        "learns": "Visual attention"
+      },
+      "nature": {
+        "title": "Wonders of Nature",
+        "description": "Phenomena and curiosities.",
+        "categoryLabel": "Nature",
+        "ageRange": "ages 3–8",
+        "learns": "Scientific curiosity"
+      }
+    }
+  },
+  "audienceSplit": {
+    "badge": "How it works",
+    "titleLine1": "Two paths.",
+    "titleLine2": "Same destination",
+    "description": "Teachers get a tool. Families get an experience. Kids get serious play.",
+    "teachers": {
+      "pillLabel": "For teachers",
+      "titleLine1": "A professional",
+      "titleLine2": "tool.",
+      "cta": "Create teacher account",
+      "steps": {
+        "createClass": {
+          "title": "Create your class",
+          "description": "Add students with a simple access code. No emails needed for kids."
+        },
+        "assignGames": {
+          "title": "Assign games",
+          "description": "Filter by age, subject, or difficulty. Assign per student or per class."
+        },
+        "seeProgress": {
+          "title": "See progress",
+          "description": "Scores, time on task, chapters completed. Sortable, exportable table."
+        }
+      }
+    },
+    "families": {
+      "pillLabel": "For families",
+      "titleLine1": "A fun",
+      "titleLine2": "adventure.",
+      "cta": "Start the adventure",
+      "steps": {
+        "teacherInvites": {
+          "title": "Teacher invites",
+          "description": "You get an access code for your child. You see progress, the child plays."
+        },
+        "childChooses": {
+          "title": "Child chooses",
+          "description": "A visual library of age-appropriate games. No ads, no upsells."
+        },
+        "learnByPlaying": {
+          "title": "Learn by playing",
+          "description": "Earn stars, unlock chapters, learn without realizing it."
+        }
+      }
+    },
+    "heading": "EduPlay keeps everyone connected to learning.",
+    "summary": "Like a living classroom journal, every role sees exactly what they need: activities for teachers, games for students, progress for families, and clarity for the school.",
+    "cards": {
+      "cta": "Learn more",
+      "teachers": {
+        "title": "Teachers see progress without complicated reports",
+        "description": "Create classes, send appropriate activities, and track which child needs support in a simple classroom workflow.",
+        "proof": "Planning, assignments, and progress in one place"
+      },
+      "students": {
+        "title": "Students learn through clear, guided games",
+        "description": "Children sign in quickly with class details, choose visual exercises, and get immediate feedback without distractions or confusing menus.",
+        "proof": "Large targets, readable text, and a kid-friendly pace"
+      },
+      "families": {
+        "title": "Families stay connected to learning",
+        "description": "Parents see what their child is working on, can continue at home, and understand progress through short messages in plain language.",
+        "proof": "Visibility without complicated accounts"
+      },
+      "admins": {
+        "title": "School leaders get a clear school-level view",
+        "description": "Activities, classes, and progress can be tracked consistently, with attention to privacy and primary-school needs.",
+        "proof": "Useful data without unnecessary admin load"
+      }
+    }
+  },
+  "trust": {
+    "badge": "Concrete promises",
+    "titleLine1": "Four promises.",
+    "titleLine2": "Verifiable",
+    "description": "We don't just say we're safe. Here's what that actually means, and where you can verify it.",
+    "verifiedLabel": "Verified",
+    "promises": {
+      "gdpr": {
+        "title": "EU-grade GDPR",
+        "description": "Data stored in the EU, processed only to run the platform. Right to erasure, right to portability."
+      },
+      "noTrackers": {
+        "title": "Zero trackers on kids' routes",
+        "description": "ESLint blocks any third-party analytics import on kids' pages at build time. Verified in every PR."
+      },
+      "romanian": {
+        "title": "Proper Romanian",
+        "description": "Correct diacritics (ă, î, ș, ț, â). Vocabulary aligned with the national curriculum. Authored in Romania."
+      },
+      "free": {
+        "title": "Free for teachers",
+        "description": "Full access for the teacher and their class. No limits, no upsells, no surprises."
+      }
+    },
+    "evidenceBadge": "Guides, research, and evidence",
+    "evidenceTitle": "Support for the classroom, not just another app.",
+    "evidenceDescription": "EduPlay keeps the energy of play while presenting information as a school tool: guided, measurable, and easy to explain to families.",
+    "guides": {
+      "teacher": {
+        "title": "Teacher guide",
+        "description": "Short steps for creating classes, assigning games, and reading progress without technical training."
+      },
+      "research": {
+        "title": "Applied research",
+        "description": "Activities built for repetition, fast feedback, and tasks suited to primary-school children."
+      },
+      "progress": {
+        "title": "Progress evidence",
+        "description": "Teachers and families see what was completed and where the child needs extra support."
+      }
+    },
+    "proof": {
+      "privacy": {
+        "title": "Data handled with care",
+        "description": "The experience is designed with attention to privacy, controlled access, and information relevant to learning."
+      },
+      "romanian": {
+        "title": "Romanian from the start",
+        "description": "Copy, flows, and explanations are designed for teachers, students, and families in Romania."
+      }
+    },
+    "band": {
+      "eyebrow": "Trust for schools and families",
+      "title": "Privacy, context, and progress explained clearly.",
+      "description": "The evidence band shifts from general promises to concrete signals: who sees the data, how progress is tracked, and why families can trust the flow.",
+      "primaryCta": "Create teacher account",
+      "secondaryCta": "View the platform"
+    }
+  },
+  "finalCta": {
+    "badge": "Free · No card · Start now",
+    "titleLine1": "Start in one",
+    "titleLine2": "minute",
+    "description": "A free account, no credit card, no trial period. Just EduPlay, complete, free for teachers.",
+    "ctaTeacher": "I'm a teacher",
+    "ctaParent": "I'm a parent",
+    "haveAccount": "Already have an account?",
+    "haveAccountLink": "Sign in →"
+  },
+  "footer": {
+    "description": "Interactive educational platform for Romanian kids ages 3–12. Made by teachers, for teachers and families.",
+    "gdprBadge": {
+      "title": "EU GDPR",
+      "description": "Data processed exclusively in the EU"
+    },
+    "columns": {
+      "platform": {
+        "title": "Platform",
+        "register": "Create account",
+        "login": "Sign in",
+        "faq": "FAQ",
+        "teacherLogin": "Teacher sign in",
+        "studentLogin": "Student sign in"
+      },
+      "resources": {
+        "title": "Resources",
+        "about": "About",
+        "teacherGuide": "Teacher guide",
+        "contact": "Contact"
+      },
+      "legal": {
+        "title": "Legal",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "gdpr": "GDPR"
+      },
+      "learning": {
+        "title": "Learning",
+        "teachers": "For teachers",
+        "families": "For families",
+        "activities": "Interactive activities"
+      },
+      "trust": {
+        "title": "Trust",
+        "privacy": "Privacy",
+        "gdpr": "GDPR",
+        "contact": "Contact"
+      }
+    },
+    "copyright": "© 2026 EduPlay Romania",
+    "madeInPrefix": "Made with",
+    "madeInSuffix": "in Bucharest",
+    "diacriticsLetters": "ă î ș ț â",
+    "diacriticsLabel": "· proper diacritics, always",
+    "navAria": "Footer navigation",
+    "badges": {
+      "romanian": "Romanian",
+      "gdpr": "GDPR",
+      "primary": "Primary"
+    }
+  },
+  "whyChoose": {
+    "badge": "Why schools choose EduPlay",
+    "title": "Less administration. More visible learning.",
+    "description": "The section after the hero moves from promoting games to the real reason a school would use the platform: it connects activities, progress, and families in one coherent space.",
+    "challengeLabel": "Challenge",
+    "benefitLabel": "Benefit",
+    "challenges": {
+      "fragmented": {
+        "description": "Digital activities are scattered across apps, worksheets, and parent messages."
+      },
+      "progress": {
+        "description": "Teachers lose time figuring out who worked, what they understood, and where to revisit."
+      },
+      "context": {
+        "description": "Families receive too little context to support learning at home."
+      }
+    },
+    "benefits": {
+      "unified": {
+        "description": "Classes, students, games, and progress in one coherent primary-school workflow."
+      },
+      "progress": {
+        "description": "Teachers can quickly see progress and choose the right next activity."
+      },
+      "safe": {
+        "description": "Children work in a safe space with short instructions and immediate feedback."
+      }
+    },
+    "preview": {
+      "ariaLabel": "Example EduPlay school dashboard",
+      "eyebrow": "School dashboard",
+      "title": "Everything that matters, visible",
+      "weeklyActivity": "Weekly activity",
+      "live": "Live",
+      "note": "Teachers can send activities, students work intuitively, and families get context without changing the classroom flow.",
+      "primaryCta": "Get started free",
+      "secondaryCta": "Sign in",
+      "rows": {
+        "class": {
+          "title": "Grade 2",
+          "value": "24 students"
+        },
+        "activities": {
+          "title": "Activities sent",
+          "value": "18 games"
+        },
+        "progress": {
+          "title": "Visible progress",
+          "value": "87%"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "meta": { "title": "Sunete și Litere 1" },
+  "rounds": {
+    "r1": { "prompt": "Unde este litera A?" },
+    "r2": { "prompt": "Unde este litera M?" },
+    "r3": { "prompt": "Unde este litera P?" },
+    "r4": { "prompt": "Unde este litera L?" },
+    "r5": { "prompt": "Unde este litera S?" }
+  }
+}

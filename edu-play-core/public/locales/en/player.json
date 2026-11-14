@@ -1,0 +1,98 @@
+{
+  "loading": {
+    "iconAlt": "Loading",
+    "preparingAdventure": "Getting your adventure ready…"
+  },
+  "error": {
+    "title": "We couldn't load this activity",
+    "subtitle": "Something went wrong. Let's try again!",
+    "retry": "Try again",
+    "retryAria": "Retry the activity",
+    "back": "Back",
+    "backAria": "Back to games"
+  },
+  "controls": {
+    "resume": "Resume",
+    "playAria": "Resume game",
+    "pauseAria": "Pause",
+    "muteOnAria": "Turn sound on",
+    "muteOffAria": "Turn sound off",
+    "fullscreenEnter": "Enter fullscreen",
+    "fullscreenExit": "Exit fullscreen",
+    "exit": "Exit game"
+  },
+  "activityNavbar": {
+    "label": "Activity controls",
+    "playerFallback": "Player",
+    "repeat": "Repeat instruction",
+    "repeatShort": "Repeat",
+    "repeatUnavailable": "Repeat is not available",
+    "pauseShort": "Pause"
+  },
+  "pauseOverlay": {
+    "title": "Paused",
+    "subtitle": "Take a moment. We'll continue the adventure when you're ready.",
+    "resume": "Resume",
+    "restart": "Restart",
+    "soundOn": "Sound on",
+    "soundOff": "Sound off",
+    "fullscreenEnter": "Fullscreen",
+    "fullscreenExit": "Exit fullscreen",
+    "progress": "Progress",
+    "exit": "Exit game",
+    "alertLabel": "Game is paused"
+  },
+  "iframe": {
+    "title": "Educational game"
+  },
+  "actions": {
+    "next": "Next",
+    "continue": "Continue",
+    "playAgain": "Play again",
+    "playAgainShort": "Replay",
+    "backToGames": "Back to games"
+  },
+  "hud": {
+    "scoreAria": "Score {{score}} percent",
+    "timeAria": "Time {{time}}",
+    "roundAria": "Round {{current}} of {{total}}"
+  },
+  "progress": {
+    "label": "Progress {{filled}} of {{total}}"
+  },
+  "banner": {
+    "complete": "Well done!"
+  },
+  "drawer": {
+    "title": "Lesson tips",
+    "close": "Close"
+  },
+  "coach": {
+    "open": "Tips from Vulpița",
+    "byline": "Tip from Vulpița:"
+  },
+  "helper": {
+    "fresh": "Take your time. The game will guide you through what matters.",
+    "withProgress_one": "You already have {{count}} attempt. Keep your pace and stay calm.",
+    "withProgress_other": "You already have {{count}} attempts. Keep your pace and stay calm."
+  },
+  "results": {
+    "stars_one": "star",
+    "stars_other": "stars",
+    "labels": {
+      "points": "Points",
+      "time": "Time",
+      "attempts": "Attempts"
+    },
+    "encouragement": {
+      "high": "\"Excellent! Your hard work paid off. Keep exploring!\"",
+      "mid": "\"Great job! You learned something new today.\"",
+      "low": "\"Keep practicing — every try makes you better!\""
+    }
+  },
+  "emptyState": {
+    "title": "Almost ready!",
+    "subtitle": "This game is still being prepared. Vulpița is getting it ready with care.",
+    "coachQuote": "\"In the meantime, pick another game from the collection — there are many adventures waiting for you!\""
+  }
+}

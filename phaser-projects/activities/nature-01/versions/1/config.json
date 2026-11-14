@@ -1,0 +1,60 @@
+{
+	"meta": {
+		"gameId": "nature-01",
+		"gameType": "multipleChoice",
+		"version": "1.0.0",
+		"totalSteps": 5,
+		"difficulty": "easy",
+		"shuffleQuestions": false,
+		"shuffleChoices": true,
+		"supportedLanguages": ["en", "ro"],
+		"themeName": "forest"
+	},
+	"questions": [
+		{
+			"id": "q1",
+			"questionKey": "q1.question",
+			"choices": [
+				{ "type": "image", "value": "sun", "isCorrect": true },
+				{ "type": "image", "value": "water", "isCorrect": false },
+				{ "type": "image", "value": "leaf", "isCorrect": false }
+			]
+		},
+		{
+			"id": "q2",
+			"questionKey": "q2.question",
+			"choices": [
+				{ "type": "image", "value": "leaf", "isCorrect": true },
+				{ "type": "image", "value": "log", "isCorrect": false },
+				{ "type": "image", "value": "sun", "isCorrect": false }
+			]
+		},
+		{
+			"id": "q3",
+			"questionKey": "q3.question",
+			"choices": [
+				{ "type": "image", "value": "water", "isCorrect": true },
+				{ "type": "image", "value": "ocean", "isCorrect": false },
+				{ "type": "image", "value": "beach", "isCorrect": false }
+			]
+		},
+		{
+			"id": "q4",
+			"questionKey": "q4.question",
+			"choices": [
+				{ "type": "image", "value": "garden", "isCorrect": true },
+				{ "type": "image", "value": "cabin", "isCorrect": false },
+				{ "type": "image", "value": "city", "isCorrect": false }
+			]
+		},
+		{
+			"id": "q5",
+			"questionKey": "q5.question",
+			"choices": [
+				{ "type": "image", "value": "ocean", "isCorrect": true },
+				{ "type": "image", "value": "garden", "isCorrect": false },
+				{ "type": "image", "value": "water", "isCorrect": false }
+			]
+		}
+	]
+}

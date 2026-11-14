@@ -1,0 +1,7 @@
+{
+  "rendererId": "pattern-game",
+  "version": "1.0.0",
+  "defaultGameId": "shapes-pattern-01",
+  "entry": "src/template.ts",
+  "configGameType": "pattern"
+}

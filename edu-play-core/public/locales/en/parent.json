@@ -1,0 +1,111 @@
+{
+  "dashboard": {
+    "topAppBarTitle": "Parent Dashboard",
+    "greeting": "Hello, {{firstName}}!",
+    "greetingLabel": "Welcome back",
+    "greetingSummary": "Here's a reassuring summary of your children's progress this week.",
+    "childrenConnected_one": "1 child connected",
+    "childrenConnected_other": "{{count}} children connected",
+    "stats": {
+      "connectedChildren": "Connected children",
+      "gamesPlayed": "Games played",
+      "averageScore": "Average score"
+    },
+    "quickAction": {
+      "label": "Quick action",
+      "titleNoChildren": "Connect your first child",
+      "titleHasChildren": "Add another child",
+      "cta": "Start now"
+    },
+    "myChildren": "My Children",
+    "addChild": "Add child",
+    "recommendation": {
+      "label": "Recommendation",
+      "noChildrenHeadline": "Start with your first child",
+      "noChildrenBody": "Connect an account using the code from the teacher to see progress in real time.",
+      "noActivityHeadline": "No games yet",
+      "noActivityBody": "Encourage your children to explore the library — the first activities will appear here right away.",
+      "pauseHeadline": "Break this week",
+      "pauseBody": "No recent activity recorded. A short session today can keep the learning rhythm going.",
+      "supportHeadline": "Support for {{childName}}",
+      "supportBody": "The average score is {{score}}%. See which games are worth repeating together.",
+      "goodPaceHeadline": "Good learning pace",
+      "goodPaceBody": "Children are progressing steadily. Keep encouraging short and frequent sessions."
+    },
+    "weeklySummary": {
+      "label": "This week",
+      "title": "Play summary",
+      "totalTime": "Total time",
+      "activities": "Activities"
+    },
+    "recentActivity": "Recent Activity",
+    "emptyState": {
+      "label": "No children connected",
+      "title": "Connect your first child to see their progress",
+      "body": "Use the invite code from your child's teacher. In a few seconds you'll see completed games, scores, and useful recommendations.",
+      "cta": "Connect with code"
+    }
+  ,
+  "familyShell": {
+    "eyebrow": "Family EduPlay",
+    "heading": "Family Home",
+    "summary": "Follow your children in a simple feed, similar to class messages.",
+    "threadsTitle": "Family Threads",
+    "feedTitle": "Family Feed",
+    "detailsTitle": "For Families",
+    "connectedChildren": "Connected Children",
+    "addAnotherChild": "Add Another Child"
+  }
+,
+  "feed": {
+    "empty": {
+      "noneHeadline": "No new activity yet",
+      "noneBody": "Teacher posts and finished games will appear here in the order they happen.",
+      "childHeadline": "No recent moments for {{name}}",
+      "childBody": "This will appear as soon as a teacher posts work or the child finishes a game."
+    },
+    "badgeArtifact": "New Work",
+    "badgeGame": "Game Completed",
+    "unavailablePhoto": "Work is not available right now.",
+    "unavailableAudio": "Recording is not available right now.",
+    "unavailableVideo": "Video is not available right now.",
+    "gameSubtitle": "Finished a new game",
+    "defaultPhotoTitle": "New Photo",
+    "defaultDrawingTitle": "New Drawing",
+    "defaultAudioTitle": "New Recording",
+    "defaultVideoTitle": "New Video",
+    "defaultArtifactTitle": "New Work"
+  }
+  },
+  "notifications": {
+    "title": "Notifications",
+    "topAppBarTitle": "Notifications",
+    "markAllRead": "Mark all as read",
+    "markAsRead": "Mark as read",
+    "noNotifications": "You have no notifications yet.",
+    "noNotificationsBody": "You'll receive notifications here when your child gets new assignments or reaches important milestones.",
+    "viewAll": "View all notifications",
+    "unreadCount_one": "1 unread notification",
+    "unreadCount_other": "{{count}} unread notifications",
+    "bellAriaLabel": "Notifications",
+    "dropdownTitle": "Recent notifications",
+    "emptyDropdown": "No new notifications",
+    "types": {
+      "assignment_due": "Assignment almost due",
+      "assignment_completed": "Assignment completed",
+      "game_completed": "Game completed",
+      "milestone": "New milestone",
+      "achievement": "Achievement earned",
+      "weekly_summary": "Weekly summary"
+    },
+    "timeAgo": {
+      "justNow": "Just now",
+      "minutesAgo_one": "1 minute ago",
+      "minutesAgo_other": "{{count}} minutes ago",
+      "hoursAgo_one": "1 hour ago",
+      "hoursAgo_other": "{{count}} hours ago",
+      "daysAgo_one": "1 day ago",
+      "daysAgo_other": "{{count}} days ago"
+    }
+  }
+}

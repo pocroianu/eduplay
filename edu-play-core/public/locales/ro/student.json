@@ -1,0 +1,136 @@
+{
+  "questMap": {
+    "greeting": "Bună, {{name}}!",
+    "subtitle": "Clasa {{className}} · {{subject}}",
+    "subtitleNoClass": "Astăzi învățăm împreună",
+    "subjectFallback": "Aventura ta",
+    "stats": {
+      "lives": "vieți",
+      "lives_one": "viață",
+      "lives_few": "vieți",
+      "lives_other": "de vieți",
+      "weeklyXp": "XP săpt.",
+      "streak_one": "zi",
+      "streak_few": "zile",
+      "streak_other": "de zile"
+    },
+    "node": {
+      "stateLabel": {
+        "done": "Finalizat",
+        "active": "În progres",
+        "locked": "Blocat",
+        "upcoming": "Următorul"
+      },
+      "guidance": {
+        "done": "Terminat",
+        "active": "Joacă acum",
+        "locked": "Blocat — joacă lecția anterioară",
+        "upcoming": "Urmează"
+      },
+      "ariaLabel": "{{label}}, {{state}}",
+      "startNow": "Începe acum"
+    },
+    "vulpita": {
+      "title": "Vulpița spune:",
+      "cheer": "„Hai să continuăm! Mai ai {{count}} ca să-ți ții streak-ul azi.”",
+      "cheer_one": "„Hai să continuăm! Mai ai {{count}} lecție ca să-ți ții streak-ul azi.”",
+      "cheer_few": "„Hai să continuăm! Mai ai {{count}} lecții ca să-ți ții streak-ul azi.”",
+      "cheer_other": "„Hai să continuăm! Mai ai {{count}} de lecții ca să-ți ții streak-ul azi.”",
+      "happy": "„Felicitări! Ai terminat tot pe azi. Ce zici de o aventură nouă?”",
+      "thinking": "„Hmm... Hai să alegem împreună o lecție?”",
+      "sleep": "„E târziu — odihnește-te și ne vedem mâine!”"
+    },
+    "todaysLessons": {
+      "title": "Azi · {{count}} lecții",
+      "title_one": "Azi · {{count}} lecție",
+      "title_few": "Azi · {{count}} lecții",
+      "title_other": "Azi · {{count}} de lecții",
+      "duration": "{{minutes}} min",
+      "done": "Gata",
+      "play": "Joacă",
+      "empty": {
+        "title": "Niciun joc programat încă",
+        "body": "Alege orice joc din lista de aventuri ca să începi."
+      },
+      "viewAll": "Vezi toate jocurile"
+    },
+    "actions": {
+      "playNow": "Joacă acum!",
+      "exploreLessons": "Vezi lecțiile",
+      "openMap": "Deschide harta"
+    }
+  },
+  "schoolAge": {
+    "weeklyProgress": {
+      "completed": "Finalizat",
+      "title": "Progresul săptămânal",
+      "xpToNext": "Încă {{xp}} XP până la nivelul următor!"
+    },
+    "welcome": {
+      "greeting": "Bună, {{name}}!",
+      "subtitle_one": "Ești gata de aventură azi? Ai {{count}} misiune nouă.",
+      "subtitle_other": "Ești gata de aventură azi? Ai {{count}} misiuni noi.",
+      "subtitleNoMissions": "Ești gata de aventură azi? Alege un joc ca să începi.",
+      "streak_one": "{{count}} Zi Streak",
+      "streak_other": "{{count}} Zile Streak",
+      "xpBadge": "{{xp}} XP"
+    },
+    "stats": {
+      "gamesPlayed": "Jocuri Jucate",
+      "totalScore": "Scor Total",
+      "streak": "Zile Consecutiv",
+      "level": "Nivel"
+    },
+    "missions": {
+      "title": "Misiunile Zilei",
+      "empty": "Nicio misiune astăzi. Alege un joc ca să începi!",
+      "viewAll": "Vezi tot"
+    },
+    "subjects": {
+      "title": "Explorare Materii",
+      "addNew": "Alege un curs nou",
+      "complete": "{{percent}}% complet"
+    },
+    "recentGames": {
+      "title": "Jocuri Recente",
+      "viewAll": "Vezi tot"
+    },
+    "progress": {
+      "title": "Progresul Meu",
+      "emptyBadges": "Joacă pentru a le debloca"
+    },
+    "leaderboard": {
+      "title": "Top Exploratori",
+      "you": "{{name}} (Tu)",
+      "emptyNoClass": "Alătură-te unei clase ca să vezi colegii tăi.",
+      "emptyNoScores": "Nu există încă scoruri în clasă — tu poți fi primul!"
+    },
+    "fab": {
+      "label": "Pornește misiunea!",
+      "ariaLabel": "Pornește misiunea"
+    }
+  },
+  "preschool": {
+    "featured": {
+      "badge": "Recomandat",
+      "fallbackTitle": "Descoperire nouă",
+      "playNow": "JOACĂ ACUM"
+    },
+    "dailyMission": {
+      "title": "Misiunea de azi",
+      "subtitle": "Găsește {{count}} stele magice!"
+    },
+    "newGames": {
+      "title": "Jocuri noi",
+      "viewAll": "Vezi tot"
+    },
+    "favorites": {
+      "title": "Favoritele mele",
+      "playedTimes": "Ai jucat de {{count}} ori!",
+      "points": "{{count}} puncte"
+    },
+    "fab": {
+      "ariaLabel": "Pornește misiunea"
+    }
+  }
+}

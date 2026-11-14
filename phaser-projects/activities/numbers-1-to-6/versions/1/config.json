@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "gameId": "numbers-1-to-6",
+    "version": "1.0.0",
+    "totalSteps": 1,
+    "gameType": "sequence",
+    "themeName": "nature",
+    "pointsPerItem": 10,
+    "shuffleItems": true,
+    "supportedLanguages": ["en", "ro"]
+  },
+  "items": [
+    { "id": "i1", "labelKey": "item.1", "position": 1 },
+    { "id": "i2", "labelKey": "item.2", "position": 2 },
+    { "id": "i3", "labelKey": "item.3", "position": 3 },
+    { "id": "i4", "labelKey": "item.4", "position": 4 },
+    { "id": "i5", "labelKey": "item.5", "position": 5 },
+    { "id": "i6", "labelKey": "item.6", "position": 6 }
+  ],
+  "questions": []
+}

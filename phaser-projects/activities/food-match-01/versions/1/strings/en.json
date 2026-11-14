@@ -1,0 +1,13 @@
+{
+	"meta": {
+		"title": "My Favorite Foods",
+		"description": "Match each food with its name"
+	},
+	"questions": {},
+	"pairs": {
+		"p1.label": "Apple",
+		"p2.label": "Banana",
+		"p3.label": "Carrot",
+		"p4.label": "Pizza"
+	}
+}

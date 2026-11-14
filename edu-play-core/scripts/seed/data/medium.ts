@@ -1,0 +1,265 @@
+import type { SeedTierData } from '../types';
+
+export const mediumData: SeedTierData = {
+  tier: 'medium',
+
+  teachers: [
+    {
+      id: '00000000-0000-4000-b000-000000000001',
+      email: 'teacher1@eduplay.ro',
+      password: 'password123',
+      fullName: 'Maria Popescu',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000002',
+      email: 'teacher2@eduplay.ro',
+      password: 'password123',
+      fullName: 'Andrei Vasile',
+    },
+  ],
+
+  parents: [
+    {
+      id: '00000000-0000-4000-b000-000000000101',
+      email: 'parent1@eduplay.ro',
+      password: 'password123',
+      fullName: 'Ion Ionescu',
+      children: [
+        { username: 'ana.b1', relationshipType: 'father' },
+        { username: 'alex.b1', relationshipType: 'father' },
+      ],
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000102',
+      email: 'parent2@eduplay.ro',
+      password: 'password123',
+      fullName: 'Elena Marinescu',
+      children: [{ username: 'ana.b1', relationshipType: 'mother' }],
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000103',
+      email: 'parent3@eduplay.ro',
+      password: 'password123',
+      fullName: 'Gabriela Popa',
+      children: [{ username: 'mihai.b1', relationshipType: 'mother' }],
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000104',
+      email: 'parent4@eduplay.ro',
+      password: 'password123',
+      fullName: 'Cristian Dumitrescu',
+      children: [
+        { username: 'daria.b2', relationshipType: 'father' },
+        { username: 'stefan.b3', relationshipType: 'father' },
+      ],
+    },
+  ],
+
+  classes: [
+    {
+      id: '00000000-0000-4000-b000-000000000201',
+      name: 'Grupa Albinuțelor',
+      description: 'Grupa de preșcolari',
+      gradeLevel: 'preschool',
+      schoolYear: '2025-2026',
+      teacherEmail: 'teacher1@eduplay.ro',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000202',
+      name: 'Grupa Fluturașilor',
+      description: 'Grupa pregătitoare',
+      gradeLevel: 'kindergarten',
+      schoolYear: '2025-2026',
+      teacherEmail: 'teacher1@eduplay.ro',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000203',
+      name: 'Clasa I-A',
+      description: 'Clasa întâi A',
+      gradeLevel: 'grade-1',
+      schoolYear: '2025-2026',
+      teacherEmail: 'teacher2@eduplay.ro',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000204',
+      name: 'Clasa a II-a B',
+      description: 'Clasa a doua B',
+      gradeLevel: 'grade-2',
+      schoolYear: '2025-2026',
+      teacherEmail: 'teacher2@eduplay.ro',
+    },
+  ],
+
+  students: [
+    // Class 1: Grupa Albinuțelor (preschool, born 2021-2022)
+    {
+      id: '00000000-0000-4000-b000-000000000301',
+      username: 'ana.b1',
+      pin: '1001',
+      fullName: 'Ana Ionescu',
+      dateOfBirth: '2021-03-15',
+      className: 'Grupa Albinuțelor',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000302',
+      username: 'alex.b1',
+      pin: '1002',
+      fullName: 'Alexandru Marinescu',
+      dateOfBirth: '2021-07-22',
+      className: 'Grupa Albinuțelor',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000303',
+      username: 'mihai.b1',
+      pin: '1003',
+      fullName: 'Mihai Popa',
+      dateOfBirth: '2021-11-08',
+      className: 'Grupa Albinuțelor',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000304',
+      username: 'sofia.b1',
+      pin: '1004',
+      fullName: 'Sofia Radu',
+      dateOfBirth: '2022-01-19',
+      className: 'Grupa Albinuțelor',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000305',
+      username: 'matei.b1',
+      pin: '1005',
+      fullName: 'Matei Georgescu',
+      dateOfBirth: '2021-09-30',
+      className: 'Grupa Albinuțelor',
+    },
+
+    // Class 2: Grupa Fluturașilor (kindergarten, born 2020)
+    {
+      id: '00000000-0000-4000-b000-000000000306',
+      username: 'daria.b2',
+      pin: '1006',
+      fullName: 'Daria Dumitrescu',
+      dateOfBirth: '2020-02-14',
+      className: 'Grupa Fluturașilor',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000307',
+      username: 'luca.b2',
+      pin: '1007',
+      fullName: 'Luca Stancu',
+      dateOfBirth: '2020-05-28',
+      className: 'Grupa Fluturașilor',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000308',
+      username: 'ioana.b2',
+      pin: '1008',
+      fullName: 'Ioana Munteanu',
+      dateOfBirth: '2020-08-11',
+      className: 'Grupa Fluturașilor',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000309',
+      username: 'david.b2',
+      pin: '1009',
+      fullName: 'David Preda',
+      dateOfBirth: '2020-04-03',
+      className: 'Grupa Fluturașilor',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000310',
+      username: 'maria.b2',
+      pin: '1010',
+      fullName: 'Maria Florea',
+      dateOfBirth: '2020-12-25',
+      className: 'Grupa Fluturașilor',
+    },
+
+    // Class 3: Clasa I-A (grade-1, born 2019)
+    {
+      id: '00000000-0000-4000-b000-000000000311',
+      username: 'stefan.b3',
+      pin: '1011',
+      fullName: 'Ștefan Dumitrescu',
+      dateOfBirth: '2019-01-20',
+      className: 'Clasa I-A',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000312',
+      username: 'emma.b3',
+      pin: '1012',
+      fullName: 'Emma Nistor',
+      dateOfBirth: '2019-06-15',
+      className: 'Clasa I-A',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000313',
+      username: 'andrei.b3',
+      pin: '1013',
+      fullName: 'Andrei Barbu',
+      dateOfBirth: '2019-03-07',
+      className: 'Clasa I-A',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000314',
+      username: 'maya.b3',
+      pin: '1014',
+      fullName: 'Maya Constantin',
+      dateOfBirth: '2019-10-30',
+      className: 'Clasa I-A',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000315',
+      username: 'radu.b3',
+      pin: '1015',
+      fullName: 'Radu Tomescu',
+      dateOfBirth: '2019-08-18',
+      className: 'Clasa I-A',
+    },
+
+    // Class 4: Clasa a II-a B (grade-2, born 2018)
+    {
+      id: '00000000-0000-4000-b000-000000000316',
+      username: 'teodora.b4',
+      pin: '1016',
+      fullName: 'Teodora Vlad',
+      dateOfBirth: '2018-04-12',
+      className: 'Clasa a II-a B',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000317',
+      username: 'denis.b4',
+      pin: '1017',
+      fullName: 'Denis Moldovan',
+      dateOfBirth: '2018-07-25',
+      className: 'Clasa a II-a B',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000318',
+      username: 'iris.b4',
+      pin: '1018',
+      fullName: 'Iris Lazăr',
+      dateOfBirth: '2018-11-02',
+      className: 'Clasa a II-a B',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000319',
+      username: 'bogdan.b4',
+      pin: '1019',
+      fullName: 'Bogdan Ciobanu',
+      dateOfBirth: '2018-02-28',
+      className: 'Clasa a II-a B',
+    },
+    {
+      id: '00000000-0000-4000-b000-000000000320',
+      username: 'carmen.b4',
+      pin: '1020',
+      fullName: 'Carmen Dragomir',
+      dateOfBirth: '2018-09-14',
+      className: 'Clasa a II-a B',
+    },
+  ],
+
+  assignmentsPerClass: 4,
+  progressPerStudent: 4,
+};

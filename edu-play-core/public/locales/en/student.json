@@ -1,0 +1,130 @@
+{
+  "questMap": {
+    "greeting": "Hi, {{name}}!",
+    "subtitle": "Class {{className}} · {{subject}}",
+    "subtitleNoClass": "Today we learn together",
+    "subjectFallback": "Your adventure",
+    "stats": {
+      "lives": "lives",
+      "lives_one": "life",
+      "lives_other": "lives",
+      "weeklyXp": "XP this week",
+      "streak_one": "day",
+      "streak_other": "days"
+    },
+    "node": {
+      "stateLabel": {
+        "done": "Completed",
+        "active": "In progress",
+        "locked": "Locked",
+        "upcoming": "Up next"
+      },
+      "guidance": {
+        "done": "Done",
+        "active": "Play now",
+        "locked": "Locked — play the previous lesson",
+        "upcoming": "Up next"
+      },
+      "ariaLabel": "{{label}}, {{state}}",
+      "startNow": "Start now"
+    },
+    "vulpita": {
+      "title": "Vulpița says:",
+      "cheer_one": "\"Let's keep going! You have {{count}} lesson left to keep your streak today.\"",
+      "cheer_other": "\"Let's keep going! You have {{count}} lessons left to keep your streak today.\"",
+      "happy": "\"Great job! You finished everything today. Ready for a new adventure?\"",
+      "thinking": "\"Hmm... shall we pick a lesson together?\"",
+      "sleep": "\"It's late — rest up and see you tomorrow!\""
+    },
+    "todaysLessons": {
+      "title_one": "Today · {{count}} lesson",
+      "title_other": "Today · {{count}} lessons",
+      "duration": "{{minutes}} min",
+      "done": "Done",
+      "play": "Play",
+      "empty": {
+        "title": "Nothing scheduled yet",
+        "body": "Pick any game from the list to get started."
+      },
+      "viewAll": "See all games"
+    },
+    "actions": {
+      "playNow": "Play now!",
+      "exploreLessons": "See lessons",
+      "openMap": "Open map"
+    }
+  },
+  "schoolAge": {
+    "weeklyProgress": {
+      "completed": "Completed",
+      "title": "Weekly Progress",
+      "xpToNext": "{{xp}} more XP to the next level!"
+    },
+    "welcome": {
+      "greeting": "Hi, {{name}}!",
+      "subtitle_one": "Ready for adventure today? You have {{count}} new mission.",
+      "subtitle_other": "Ready for adventure today? You have {{count}} new missions.",
+      "subtitleNoMissions": "Ready for adventure today? Pick a game to get started.",
+      "streak_one": "{{count}} Day Streak",
+      "streak_other": "{{count}} Days Streak",
+      "xpBadge": "{{xp}} XP"
+    },
+    "stats": {
+      "gamesPlayed": "Games Played",
+      "totalScore": "Total Score",
+      "streak": "Day Streak",
+      "level": "Level"
+    },
+    "missions": {
+      "title": "Daily Missions",
+      "empty": "No missions today. Pick a game to get started!",
+      "viewAll": "View all"
+    },
+    "subjects": {
+      "title": "Explore Subjects",
+      "addNew": "Pick a new course",
+      "complete": "{{percent}}% complete"
+    },
+    "recentGames": {
+      "title": "Recent Games",
+      "viewAll": "View all"
+    },
+    "progress": {
+      "title": "My Progress",
+      "emptyBadges": "Play to unlock them"
+    },
+    "leaderboard": {
+      "title": "Top Explorers",
+      "you": "{{name}} (You)",
+      "emptyNoClass": "Join a class to see your classmates.",
+      "emptyNoScores": "No scores in the class yet — you can be the first!"
+    },
+    "fab": {
+      "label": "Start the mission!",
+      "ariaLabel": "Start the mission"
+    }
+  },
+  "preschool": {
+    "featured": {
+      "badge": "Recommended",
+      "fallbackTitle": "New discovery",
+      "playNow": "PLAY NOW"
+    },
+    "dailyMission": {
+      "title": "Today's mission",
+      "subtitle": "Find {{count}} magic stars!"
+    },
+    "newGames": {
+      "title": "New games",
+      "viewAll": "View all"
+    },
+    "favorites": {
+      "title": "My favourites",
+      "playedTimes": "You played {{count}} times!",
+      "points": "{{count}} points"
+    },
+    "fab": {
+      "ariaLabel": "Start the mission"
+    }
+  }
+}

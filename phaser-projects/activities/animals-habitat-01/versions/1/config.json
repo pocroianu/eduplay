@@ -1,0 +1,25 @@
+{
+  "meta": {
+    "gameId": "animals-habitat-01",
+    "version": "1.0.0",
+    "totalSteps": 1,
+    "gameType": "categorize",
+    "themeName": "nature",
+    "pointsPerItem": 10,
+    "shuffleItems": true,
+    "supportedLanguages": ["en", "ro"]
+  },
+  "categories": [
+    { "id": "farm", "labelKey": "cat.farm", "color": "#4CAF50" },
+    { "id": "wild", "labelKey": "cat.wild", "color": "#FF9800" }
+  ],
+  "items": [
+    { "id": "i1", "imageKey": "cat",      "labelKey": "item.cat",      "categoryId": "farm" },
+    { "id": "i2", "imageKey": "goat",     "labelKey": "item.goat",     "categoryId": "farm" },
+    { "id": "i3", "imageKey": "pig",      "labelKey": "item.pig",      "categoryId": "farm" },
+    { "id": "i4", "imageKey": "lion",     "labelKey": "item.lion",     "categoryId": "wild" },
+    { "id": "i5", "imageKey": "tiger",    "labelKey": "item.tiger",    "categoryId": "wild" },
+    { "id": "i6", "imageKey": "elephant", "labelKey": "item.elephant", "categoryId": "wild" }
+  ],
+  "questions": []
+}

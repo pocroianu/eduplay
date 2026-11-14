@@ -1,0 +1,32 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "eslint.useFlatConfig": true,
+  "eslint.workingDirectories": [
+    {
+      "directory": "packages/ai-content",
+      "changeProcessCWD": true
+    }
+  ],
+  "json.schemas": [
+    {
+      "fileMatch": ["activities/*/activity.json"],
+      "url": "./docs/schemas/activity.schema.json"
+    },
+    {
+      "fileMatch": ["activities/*/versions/*/config.json"],
+      "url": "./docs/schemas/game-config.schema.json"
+    },
+    {
+      "fileMatch": [
+        "activities/*/versions/*/strings/en.json",
+        "activities/*/versions/*/strings/ro.json"
+      ],
+      "url": "./docs/schemas/game-strings.schema.json"
+    },
+    {
+      "fileMatch": ["activities/*/versions/*/assets.json"],
+      "url": "./docs/schemas/activity-assets.schema.json"
+    }
+  ]
+}

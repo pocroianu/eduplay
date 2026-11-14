@@ -1,0 +1,990 @@
+{
+  "assignments": {
+    "title": "Assignments",
+    "stats": {
+      "total": "Total assignments",
+      "active": "Active",
+      "overdue": "Overdue",
+      "mandatory": "Mandatory"
+    },
+    "createNew": "New assignment",
+    "createFirst": "Create first assignment",
+    "filter": {
+      "all": "All",
+      "active": "Active",
+      "overdue": "Overdue",
+      "mandatory": "Mandatory"
+    },
+    "empty": {
+      "title": "No assignments created",
+      "description": "Create your first assignment to assign activities to students or classes.",
+      "filtered": "No assignments in this category",
+      "filteredDescription": "Change the filters to see other assignments."
+    },
+    "unknownActivity": "Unknown Activity",
+    "mandatory": "Mandatory",
+    "edit": "Edit assignment",
+    "delete": "Delete assignment",
+    "deleteConfirm": {
+      "title": "Delete assignment",
+      "message": "Are you sure you want to delete this assignment? This action cannot be undone.",
+      "confirm": "Delete",
+      "cancel": "Cancel"
+    },
+    "composer": {
+      "createTitle": "New assignment",
+      "createDescription": "Choose the activity, audience, and due date without leaving the assignment flow.",
+      "editTitle": "Edit assignment",
+      "editDescription": "Update the due date and rules for an assignment that is already sent.",
+      "activity": "Activity",
+      "selectActivity": "Select an activity",
+      "assignTo": "Assign to",
+      "wholeClass": "Whole class",
+      "individualStudent": "Individual student",
+      "class": "Class",
+      "selectClass": "Select a class",
+      "student": "Student",
+      "selectStudent": "Select a student",
+      "selectStudentsHint": "You can select one or more students.",
+      "loadingStudents": "Loading students…",
+      "dueDate": "Due date",
+      "dueDateHint": "Optional. If not set, the assignment remains active permanently.",
+      "mandatory": "Mandatory assignment",
+      "create": "Create assignment",
+      "update": "Save changes",
+      "saving": "Saving…",
+      "cancel": "Cancel",
+      "genericError": "An error occurred. Please try again.",
+      "validation": {
+        "selectActivity": "Select an activity",
+        "selectClass": "Select a class",
+        "selectStudent": "Select at least one student"
+      },
+      "steps": {
+        "activity": "1. Activity",
+        "recipients": "2. Recipients",
+        "dueDate": "3. Due date"
+      },
+      "preview": {
+        "eyebrow": "Preview",
+        "title": "Assignment summary",
+        "activity": "Activity",
+        "destination": "Destination",
+        "studentCount_one": "{{count}} student selected",
+        "studentCount_other": "{{count}} students selected",
+        "status": "Status"
+      }
+    }
+  },
+  "dashboard": {
+    "topAppBarTitle": "Dashboard",
+    "header": {
+      "ariaLabel": "Teacher panel",
+      "brandSuffix": "Your classes",
+      "greeting": "Hi, {{name}}!",
+      "teacherFallback": "teacher",
+      "subtitleNoClass": "{{name}} · teacher · {{count}} students",
+      "subtitleClass": "{{name}} · teacher · {{count}} students · {{classes}}",
+      "classCountOne": "one class",
+      "classCountOther": "{{count}} classes",
+      "streakLabel": "Active this week",
+      "streakValue": "{{active}}/{{total}}",
+      "sendLessonCta": "Create activity"
+    },
+    "feed": {
+      "eyebrow": "Class feed · today",
+      "filterAria": "Filter feed",
+      "filterAll": "All · {{count}}",
+      "filterAttention": "Attention · {{count}}",
+      "empty": {
+        "title": "No activity to report today",
+        "body": "Once students start playing, you'll see their activity here in real time.",
+        "firstLessonCta": "Send first activity",
+        "noStudentsTitle": "Welcome! Start by adding your class",
+        "noStudentsBody": "Create a class and add students to see their activity here.",
+        "noStudentsCta": "Create first class",
+        "attentionClearedTitle": "No student needs attention right now",
+        "attentionClearedBody": "Switch to \"All\" to see the full class feed."
+      },
+      "card": {
+        "noScore": "In progress",
+        "scoreValue": "Score {{value}}",
+        "replyCta": "Reply",
+        "needsResponse": "Needs reply"
+      },
+      "status": {
+        "completed": "finished",
+        "in_progress": "is working on",
+        "scheduled": "is scheduled for"
+      }
+    },
+    "classState": {
+      "eyebrow": "Your classes · today",
+      "completedLine": "{{completed}} of {{total}} are active this week",
+      "lessonsCount": "{{value}} activities completed",
+      "noActivityTitle": "Waiting for first activity",
+      "noActivityBody": "After a few sessions, class pace and activity totals will appear here."
+    },
+    "subjects": {
+      "eyebrow": "Subjects · pace",
+      "completionLabel": "{{value}}% average",
+      "empty": "Add activities to the class to see subject pace."
+    },
+    "alert": {
+      "stuckTitle": "{{count}} students need help",
+      "stuckBody": "{{names}} — scores below class pace.",
+      "stuckCta": "View students",
+      "okTitle": "Whole class is on pace",
+      "okBody": "No student is stuck right now. Great job!"
+    },
+    "leaderboard": {
+      "title": "Recent wins",
+      "subtitle": "Students making good progress",
+      "scoreLabel": "score",
+      "completionLabel": "completed",
+      "winLine": "{{count}} activities completed · {{completion}}%",
+      "viewAllCta": "View all · {{count}}",
+      "empty": "Class wins will appear here after the first activities."
+    },
+    "activity": {
+      "today": "today",
+      "yesterday": "yesterday",
+      "minutesAgo": "{{minutes}}m",
+      "hoursAgo": "{{hours}}h",
+      "noTimestamp": "no activity"
+    },
+    "addMenu": {
+      "button": "Add",
+      "heading": "Add or assign",
+      "ariaLabel": "Add from teacher dashboard",
+      "createActivity": "Create activity",
+      "createActivityDescription": "Build an activity with multimedia responses.",
+      "generateWithAi": "Generate with AI",
+      "generateWithAiDescription": "Start from a resource, subject, or video.",
+      "createClass": "Create class",
+      "createClassDescription": "Set up a new class for your students.",
+      "addStudent": "Add student",
+      "addStudentDescription": "Invite a student to existing classes.",
+      "openLibrary": "Open library",
+      "openLibraryDescription": "Choose saved or public activities."
+    },
+    "home": {
+      "actions": {
+        "ariaLabel": "Quick actions",
+        "title": "Add Post or Assign Activity",
+        "postJournal": {
+          "title": "Post to Journal",
+          "body": "A portfolio with photos, video, and notes"
+        },
+        "createActivity": {
+          "title": "Create Activity",
+          "body": "With engaging multimedia responses"
+        },
+        "generateActivity": {
+          "title": "Generate Activity",
+          "body": "Start quickly with EduPlay AI"
+        }
+      },
+      "library": {
+        "ariaLabel": "Ready-to-teach activities",
+        "title": "Find ready-to-teach activities for {{grade}}",
+        "gradeFallback": "your class",
+        "searchPlaceholder": "Search activities for reading, math, science",
+        "popularTitle": "Popular community activities in {{grade}}",
+        "viewAll": "View library",
+        "recentMeta": "From class activity",
+        "subjectMeta": "Activity",
+        "assessmentMeta": "Assessment",
+        "fallbackCards": {
+          "reading": {
+            "title": "Match the long vowel sound",
+            "creator": "EduPlay Library"
+          },
+          "assessment": {
+            "title": "Guided reading with questions",
+            "creator": "Community"
+          },
+          "math": {
+            "title": "Quick sums up to 20",
+            "creator": "EduPlay Library"
+          },
+          "science": {
+            "title": "Sort animals by habitat",
+            "creator": "Community"
+          }
+        }
+      },
+      "classes": {
+        "ariaLabel": "My classes",
+        "title": "My classes",
+        "createClass": "Create class",
+        "openClass": "Open class {{name}}",
+        "openCta": "Open",
+        "studentOne": "{{count}} student",
+        "studentOther": "{{count}} students",
+        "emptyTitle": "No classes yet",
+        "emptyFilteredTitle": "Classes appear here",
+        "emptyBody": "Create a class to see cards like the Seesaw Home page."
+      },
+      "resources": {
+        "ariaLabel": "Teacher resources",
+        "title": "Teacher resources",
+        "viewAll": "View all",
+        "spotlight": {
+          "title": "EduPlay Spotlight",
+          "meta": "Video"
+        },
+        "learning": {
+          "title": "Learning Central",
+          "meta": "Website"
+        },
+        "topics": {
+          "title": "Timely Topics",
+          "meta": "Website"
+        },
+        "community": {
+          "title": "Community and Events",
+          "meta": "Website"
+        }
+      }
+    }
+  },
+  "classes": {
+    "topBarTitle": "My Classes",
+    "header": {
+      "eyebrow": "Management",
+      "title": "Your classes",
+      "subtitle": "Organise students into classes, track progress, and create new classes.",
+      "newClassCta": "New class"
+    },
+    "filters": {
+      "ariaLabel": "Filter classes",
+      "all": "All",
+      "active": "Active",
+      "archived": "Archived"
+    },
+    "search": {
+      "ariaLabel": "Search a class",
+      "placeholder": "Search by name or description…"
+    },
+    "card": {
+      "statusActive": "Active",
+      "statusArchived": "Archived",
+      "studentsOne": "{{count}} student",
+      "studentsOther": "{{count}} students",
+      "openClass": "Open class {{name}}"
+    },
+    "gradeLevel": {
+      "preschool": "Preschool",
+      "kindergarten": "Kindergarten",
+      "grade-1": "Grade 1",
+      "grade-2": "Grade 2"
+    },
+    "empty": {
+      "noClasses": {
+        "title": "You haven't created a class yet",
+        "description": "Create your first class to start adding students and tracking their progress.",
+        "cta": "Create a class"
+      },
+      "noResults": {
+        "title": "No class found",
+        "description": "Try different search terms or reset the active filter.",
+        "resetCta": "Reset filters"
+      }
+    },
+    "detail": {
+      "topBarTitle": "Class management",
+      "stats": {
+        "totalStudents": "Total students",
+        "activeStudents": "Active students",
+        "lessonsInProgress": "Activities in progress",
+        "awardsToday": "Awards today"
+      },
+      "roster": {
+        "heading": "Student roster",
+        "tableCaption": "Students in this class",
+        "filters": {
+          "ariaLabel": "Filter students",
+          "all": "All",
+          "online": "Online",
+          "needsHelp": "Need help"
+        },
+        "search": {
+          "ariaLabel": "Search a student",
+          "placeholder": "Search by name or username…"
+        },
+        "columns": {
+          "student": "Student",
+          "status": "Status",
+          "activity": "Recent activity",
+          "progress": "Activity progress",
+          "actions": "Actions"
+        },
+        "noActivity": "No activity",
+        "actions": {
+          "viewReport": "View report for {{name}}",
+          "assignGame": "Assign an activity to {{name}}"
+        },
+        "viewAllOne": "View all {{count}} student",
+        "viewAllOther": "View all {{count}} students",
+        "empty": {
+          "noOnline": "No student is online right now",
+          "noNeedsHelp": "No student needs help",
+          "noResults": "No student found",
+          "noStudents": "No student in this class",
+          "tryOtherTerms": "Try different search terms.",
+          "addStudent": "Add a new student to get started."
+        }
+      },
+      "relativeTime": {
+        "now": "just now",
+        "minutesAgo": "{{count}} min ago",
+        "hoursAgoOne": "{{count}} hour ago",
+        "hoursAgoOther": "{{count}} hours ago",
+        "yesterday": "yesterday",
+        "daysAgoOne": "{{count}} day ago",
+        "daysAgoOther": "{{count}} days ago"
+      },
+      "breadcrumb": {
+        "classes": "My Classes",
+        "current": "{{name}}"
+      },
+      "quickActions": {
+        "heading": "Quick Actions",
+        "assignActivity": "Assign activity",
+        "assignActivitySub": "Quickly choose an activity for the class",
+        "assignPath": "Assign path",
+        "assignPathSub": "Send a sequence of activities",
+        "addStudent": "Add new student",
+        "addStudentSub": "Register a child in this class"
+      },
+      "weeklyGoal": {
+        "heading": "Weekly Goal",
+        "progress": "Almost there! ({{percent}}%)",
+        "noGoal": "No goal set yet",
+        "noGoalDescription": "Set a weekly goal to track class progress."
+      },
+      "leaderboard": {
+        "heading": "Rewards Leaderboard",
+        "subtitle": "Top little explorers",
+        "points": "{{count}} pts",
+        "viewAll": "View full leaderboard",
+        "empty": "No activity yet"
+      },
+      "studentStatus": {
+        "online": "Online",
+        "needsHelp": "Needs Help",
+        "offline": "Offline"
+      },
+      "actions": {
+        "addStudents": "Add students",
+        "addPost": "Add post",
+        "classSettings": "Class settings"
+      },
+      "tabs": {
+        "ariaLabel": "Class tabs for {{name}}",
+        "journal": "Journal",
+        "activities": "Activities",
+        "gradebook": "Gradebook",
+        "notifications": "Notifications",
+        "settings": "Settings"
+      },
+      "addStudentsCard": {
+        "title": "Add students to class",
+        "description": "Open the class flow for pasted names, manual rows, and login codes."
+      },
+      "journal": {
+        "classJournal": "Class Journal",
+        "postCountOne": "{{count}} post",
+        "postCountOther": "{{count}} posts",
+        "feedFilter": "Student Feed Filter",
+        "studentNavAria": "Journal students",
+        "addPostOrAssign": "Add Post",
+        "dateFilter": "Date",
+        "folders": "Folders",
+        "review": "Review",
+        "reviewUnapprovedPosts": "Review unapproved posts",
+        "unapprovedPostsOne": "{{count}} unapproved post",
+        "unapprovedPostsOther": "{{count}} unapproved posts",
+        "feedTitle": "Class Journal Feed",
+        "everyone": "Everyone",
+        "pendingApproval": "Pending Approval",
+        "seenBy": "Seen by:",
+        "taggedFolders": "Tagged Folders",
+        "folderLabel": "test",
+        "like": "Like",
+        "comment": "Comment",
+        "showMore": "Show More",
+        "inResponseTo": "In response to: {{title}}",
+        "newActivity": "New activity",
+        "addedNewItem": "Added a new item.",
+        "noPosts": "No journal posts match the selected filters."
+      },
+      "activities": {
+        "bulkArchive": "Bulk Archive Activities",
+        "pullToRefresh": "Pull to refresh",
+        "title": "Active Activities",
+        "description": "Active activities for {{name}}, shown in the Seesaw tab structure. Real actions stay in the existing flows.",
+        "assignedToAll": "Assigned to All Students and Groups",
+        "completed": "Completed",
+        "waitingForReview": "Waiting for Review",
+        "drafts": "Drafts",
+        "notStarted": "Not Started",
+        "start": "Start",
+        "viewResponses": "View Responses",
+        "realAssignmentsTitle": "Real assignments",
+        "realAssignmentsDescription": "Use the teacher library for complete creation and assignment.",
+        "viewAssignments": "View assignments",
+        "classFallbackName": "Class",
+        "classFallbackUsername": "class",
+        "fallbackTitle": "Portfolio activity",
+        "subjectLiteracy": "Early Literacy",
+        "subjectCharacter": "Character Building"
+      },
+      "gradebook": {
+        "eyebrow": "Gradebook",
+        "title": "Progress Dashboard",
+        "description": "See who has completed activities. Tag activities with standards to see student progress over time.",
+        "preview": "Preview for {{name}}, without persistence or a real subscription.",
+        "getGradebook": "Get Gradebook",
+        "learnMore": "Learn More"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "loading": "Loading...",
+        "refresh": "Refresh",
+        "tapHere": "Tap here",
+        "unapprovedOne": "{{count}} unapproved item in your class.",
+        "unapprovedOther": "{{count}} unapproved items in your class.",
+        "studentFallback": "Student",
+        "commentRequest": "{{name}} wants to add a comment on {{owner}}'s item: \"{{title}}\"",
+        "itemRequest": "{{name}} wants to add an item.",
+        "hoursAgo": "{{count}} hours ago",
+        "daysAgo": "{{count}} days ago",
+        "weeklyDigest": "This Week in Seesaw in {{name}}"
+      }
+    }
+  },
+  "activities": {
+    "eyebrow": "Teacher library",
+    "title": "Activities",
+    "availableCount": "{{count}} activities available",
+    "filteredCount": "{{count}} activities shown",
+    "createActivity": "Create activity",
+    "assignmentHistory": "Assignment history",
+    "loadMore": "Show more activities",
+    "search": {
+      "label": "Search activities",
+      "placeholder": "Search by title, description, or category"
+    },
+    "filters": {
+      "categoriesLabel": "Activity categories",
+      "all": "All",
+      "categories": {
+        "literacy": "Letters",
+        "math": "Numbers",
+        "phonics": "Sounds",
+        "shapes": "Shapes",
+        "colors": "Colors",
+        "vocabulary": "Words"
+      }
+    },
+    "sort": {
+      "label": "Sort by:",
+      "newest": "Newest",
+      "difficulty": "Difficulty",
+      "age": "Age"
+    },
+    "empty": {
+      "noActivities": "No activities available",
+      "noActivitiesBody": "Activities will appear here after they are published.",
+      "noResults": "No activities match your search",
+      "noResultsBody": "Try changing the search or filters."
+    },
+    "card": {
+      "new": "New",
+      "popular": "Popular",
+      "favorite": "Add to favorites",
+      "ageRange": "Ages {{min}}-{{max}}",
+      "duration": "{{minutes}} min",
+      "assign": "Assign",
+      "assignActivityAria": "Assign activity {{title}}",
+      "previewActivityAria": "Preview activity {{title}}",
+      "preview": "Preview"
+    },
+    "library": {
+      "seesawLibrary": "Seesaw Library",
+      "communityLibrary": "Community Library",
+      "selectGrade": "Select grade",
+      "language": "Language",
+      "browseStandards": "Browse by Standards and Curriculum",
+      "exploreTitle": "Explore the EduPlay library",
+      "exploreDescription": "Search public activities, then filter by subject, age, or difficulty.",
+      "searchPlaceholder": "What do you want to teach?",
+      "allSubjects": "All subjects",
+      "activityCount_one": "{{count}} activity",
+      "activityCount_other": "{{count}} activities",
+      "featuredTitle": "Recommended collections",
+      "popularTitle": "Popular activities"
+    },
+    "activitiesOwned": {
+      "eyebrow": "My Library",
+      "title": "My Library",
+      "subtitle": "Private drafts, ready-to-assign activities, and responses to review.",
+      "review": "Review Responses",
+      "allGrades": "All Grades",
+      "allSubjects": "All Subjects",
+      "allLanguages": "All Languages",
+      "viewAll": "View All ({{count}})",
+      "searchLabel": "Search my activities",
+      "searchPlaceholder": "Search",
+      "recent": "My Recent Activities",
+      "count_one": "{{count}} activity",
+      "count_other": "{{count}} activities",
+      "emptyDraft": "You don't have drafts yet.",
+      "empty": "There are no activities here yet.",
+      "emptyBody": "Create a free response activity, save it as a draft, and it will appear here.",
+      "createCardTitle": "Create an Activity or Auto-graded Assessment",
+      "createCardBody": "Start from scratch or use the EduPlay generator.",
+      "needIdeas": "Need Ideas?",
+      "browseCommunity": "Browse the Community Library!",
+      "collections": "My Collections (0)",
+      "notInCollection": "Activities not in a collection",
+      "createCollection": "Create"
+    }
+  },
+  "createClass": {
+    "back": "Back",
+    "setupBadge": "Class Setup",
+    "eyebrow": "Create Class",
+    "heading": "Create Your Class",
+    "subtitle": "Set up the basics for your class before adding students.",
+    "importGoogle": "Import from Google Classroom",
+    "importNote": "Reference-only visual option; EduPlay does not connect Google Classroom yet.",
+    "or": "or",
+    "gradeTitle": "Choose Your Grade Level",
+    "name": "Class Name",
+    "description": "Description",
+    "grade": "Grade Level",
+    "schoolYear": "School Year",
+    "cancel": "Cancel",
+    "submit": "Create Class",
+    "submitting": "Creating...",
+    "option": {
+      "select": "Select grade level",
+      "preschool": "PK-TK",
+      "kindergarten": "K",
+      "grade1": "1st",
+      "grade2": "2nd"
+    }
+  },
+  "settingsHome": {
+    "back": "Back to class",
+    "heading": "Class Settings",
+    "settingsMenu": "Settings Menu",
+    "addStudents": "Add Students",
+    "inviteFamilies": "Invite Families",
+    "sectionClassSettings": "Class Settings",
+    "sectionStudents": "Students",
+    "manageStudents": "Manage Students",
+    "sharedDevices": "Class Code - Shared Devices",
+    "likesComments": "Student Likes and Comments",
+    "itemEditing": "Item Editing",
+    "sectionFamilies": "Families",
+    "enableFamilyAccess": "Enable Family Access",
+    "inviteFamiliesLabel": "Invite Families",
+    "familyMessaging": "Family Messaging",
+    "studentSignInMode": "Student Sign-in Mode",
+    "studentGroups": "Student Groups",
+    "studentGroupsDescription": "Organize students into groups",
+    "homeLearningCodes": "Home Learning Codes",
+    "homeLearningCodesDescription": "Individual codes for students",
+    "studentLikesCommentsDescription": "Likes, comments, and visibility",
+    "itemEditingDescription": "Editing rules for posts",
+    "organization": "Organization",
+    "folders": "Folders",
+    "foldersDescription": "Organize class work",
+    "addFolderStep": "Add to Folder Step",
+    "addFolderStepDescription": "Show during publishing",
+    "teachers": "Teachers",
+    "teachersDescription": "Invite and review access",
+    "navAria": "Class settings sections",
+    "classActive": "Active",
+    "classArchived": "Archived",
+    "classSummary": "students",
+    "classSummaryActive": "recently active"
+  },
+  "settingsSection": {
+    "back": "Back to settings",
+    "breadcrumbAria": "Breadcrumb",
+    "classActive": "Active class",
+    "classArchived": "Archived class",
+    "close": "Close settings section",
+    "navTitle": "Settings sections",
+    "navDescription": "Detailed sections for class settings.",
+    "navAria": "Class settings sections"
+  },
+  "students": {
+    "add": {
+      "back": "Back to class",
+      "headingEyebrow": "Students for Class",
+      "heading": "Add Students to Class",
+      "description": "Page inspired by the Seesaw Add Students flow. Controls remain preview-only while real creation stays in the existing flow.",
+      "classActive": "Active class",
+      "classArchived": "Archived class",
+      "createReal": "Create Real Student",
+      "addStudentsTitle": "Add Students to Class",
+      "addStudentsDescription": "Add one name at a time or paste a list of names, one per line.",
+      "pasteTitle": "Paste a list of student names",
+      "pasteDescription": "This panel mirrors the Seesaw paste flow; the list is not submitted automatically.",
+      "manualTitle": "Manual rows",
+      "preview": "Preview",
+      "moreLater": "You can always add more later.",
+      "studentsTitle": "Students",
+      "studentsDescription": "Preview of the real roster for this class.",
+      "noStudents": "There are no students in this class yet.",
+      "familiesTitle": "Families",
+      "familiesDescription": "Prepare family access after student creation.",
+      "classCode": "Class Code",
+      "classCodeDescription": "Preview-only class code. Regeneration and sharing stay in class settings.",
+      "deviceShared": "Shared Device",
+      "deviceSharedDescription": "Students can use the class code on a shared device.",
+      "home": "Home",
+      "homeDescription": "For home access, use the home learning codes setting.",
+      "existingAccount": "Existing Account",
+      "existingAccountDescription": "Students with usernames can keep using the existing sign-in flow.",
+      "classSummary": "Class Summary",
+      "classSettings": "Class Settings",
+      "addPeopleTitle": "Add People to Class"
+    }
+  },
+  "families": {
+    "back": "Back to settings",
+    "heading": "Invite Parents and Families",
+    "loading": "Prepare family invitations for each student.",
+    "connectTitle": "Help families connect to their child's learning!",
+    "benefit1": "Families see all posts in their child's journal",
+    "benefit2": "Families get notified about new posts",
+    "benefit3": "Families get a clear connection setup flow",
+    "benefit4": "Families can follow learning updates from home.",
+    "turnOn": "Turn on family access",
+    "learnMore": "Learn more",
+    "students": "Students",
+    "infoTitle": "Family access",
+    "infoDescription": "Family connection records are not available yet. Turn on access before marking families as connected.",
+    "statusTitle": "Invite needed",
+    "statusDescription": "No family connection is recorded yet.",
+    "statusPill": "Needs invite",
+    "emptyStudents": "Add students before preparing family invitations."
+  },
+  "journal": {
+    "picker": {
+      "back": "Back to class journal",
+      "heading": "Post Student Work",
+      "description": "Choose a tool for this class. This remains a preview only.",
+      "classActive": "Active class",
+      "classArchived": "Archived class",
+      "toolsTitle": "Choose Tool",
+      "toolsDescription": "Seesaw shows six clear entry points: Photo, Drawing, Video, Upload, Note, and Link.",
+      "contextTitle": "Journal Context",
+      "contextDescription": "Real class data, no publishing actions.",
+      "noPersistenceTitle": "No persistence",
+      "noPersistenceDescription": "This flow completes the reference UI only. For safety, it does not save or publish anything.",
+      "preview": "Preview",
+      "photo": "Photo",
+      "photoDescription": "Add an image or classroom capture.",
+      "drawing": "Drawing",
+      "drawingDescription": "Create a quick sketch for the portfolio.",
+      "video": "Video",
+      "videoDescription": "Prepare a short video response.",
+      "upload": "Upload",
+      "uploadDescription": "Attach work or an external resource.",
+      "note": "Note",
+      "noteDescription": "Open the Seesaw-style text editor.",
+      "link": "Link",
+      "linkDescription": "Add a web address for the family."
+    },
+    "note": {
+      "back": "Back to tools",
+      "headingLabel": "Type a Note",
+      "heading": "Type a Note",
+      "description": "Seesaw-style editor for this class. Fields remain preview-only with no publishing.",
+      "draft": "Draft unavailable",
+      "publish": "Publish unavailable",
+      "editorTitle": "Journal Note",
+      "editorDescription": "Text space matching the captured editor.",
+      "editorPreview": "Editor preview",
+      "textbox": "Journal Note",
+      "textboxPlaceholder": "Type a note for students or families. Nothing entered here is saved.",
+      "textboxHelp": "No publish action is connected in this implementation.",
+      "previewTitle": "Post Preview",
+      "teacherLabel": "Teacher",
+      "previewPlaceholder": "Your note text will appear here before publishing.",
+      "confirmation": "Needs real confirmation",
+      "audience": "Choose Audience",
+      "audienceDescription": "The list uses real students from the class.",
+      "noStudents": "There are no students in this class yet.",
+      "noPersistenceTitle": "No persistence",
+      "noPersistenceDescription": "This page completes the reference visual flow only. For safety, it does not change the class journal."
+    },
+    "side": {
+      "foldersTitle": "Tagged Folders",
+      "foldersDescription": "Folders are chosen before real publishing.",
+      "foldersValue": "No folder selected",
+      "scheduleTitle": "Schedule",
+      "scheduleDescription": "Scheduled publishing is not connected yet.",
+      "scheduleValue": "Manual publishing unavailable"
+    }
+  },
+  "generateActivity": {
+    "metadataTitle": "Generate Activity · EduPlay",
+    "back": "Back to create activity",
+    "heading": "Generate Activity",
+    "aiBadge": "AI",
+    "trialNotice": "You're getting a sneak peek at these features. Start a free trial to get full access.",
+    "startTrial": "Start Free Trial",
+    "convert": {
+      "title": "Convert Resource",
+      "description": "Upload any teaching resource"
+    },
+    "topic": {
+      "title": "Topic or Prompt",
+      "description": "Enter a topic, learning goal or standard"
+    },
+    "youtube": {
+      "title": "YouTube Video",
+      "description": "Embed a video and generate questions"
+    },
+    "fluency": {
+      "title": "Reading Fluency",
+      "description": "Students read and AI grades reading fluency"
+    },
+    "instructions": "Turn an existing resource into an interactive Seesaw activity with auto-graded assessments and multimedia tools.",
+    "worksheet": "Worksheet",
+    "quiz": "Quiz",
+    "studyGuide": "Study Guide",
+    "activity": "Activity",
+    "uploadHint": "5 PDFs or 10 Images. Supported formats: pdf, jpg, png, heic.",
+    "upload": "Upload",
+    "googleDrive": "Google Drive",
+    "next": "Next"
+  },
+  "account": {
+    "tabs": {
+      "settings": "Account Settings",
+      "settingsDescription": "Profile and preferences",
+      "school": "My School",
+      "schoolDescription": "School directory and classes",
+      "device": "Device Information",
+      "deviceDescription": "Browser and diagnostics"
+    },
+    "settings": {
+      "metadataTitle": "Account Settings · EduPlay",
+      "back": "Back to teacher dashboard",
+      "eyebrow": "Teacher Account",
+      "heading": "Account Settings",
+      "profile": "Profile",
+      "firstName": "First Name:",
+      "lastName": "Last Name:",
+      "displayName": "Display Name:",
+      "email": "Email",
+      "preferredLanguage": "Preferred language:",
+      "phone": "Phone:",
+      "password": "Password",
+      "change": "Change",
+      "manage": "Manage",
+      "mfa": "Multi-Factor Authentication",
+      "accountActivity": "Account Activity Details",
+      "schools": "Schools",
+      "schoolDirectory": "School Directory",
+      "classes": "Classes",
+      "currentClasses": "Current Classes",
+      "addToClass": "Add to Class",
+      "premiumHeading": "SEESAW PREMIUM FEATURES",
+      "tryTrial": "Try Free for 60 Days",
+      "previewPremium": "Preview Premium Features",
+      "learnMore": "Learn More",
+      "manageSubscription": "Manage Subscription",
+      "notifications": "Class notifications",
+      "officeHours": "Office Hours",
+      "emailNotifications": "Email Notifications",
+      "pushNotifications": "Push Notifications",
+      "smsNotifications": "SMS notifications",
+      "tips": "Tips, tricks, and Seesaw updates",
+      "parentNotifications": "Parent notifications",
+      "archives": "Journal archives",
+      "downloadArchives": "Download Journal Archives",
+      "archivedClasses": "Archived Classes",
+      "manageArchived": "Manage Archived Classes",
+      "privacy": "Student Privacy Policy",
+      "coppa": "COPPA Direct Notice",
+      "deleteAccount": "Delete Account",
+      "teacherRole": "Teacher",
+      "unavailable": "Unavailable",
+      "noPhone": "Not added",
+      "readOnly": "Read only"
+    },
+    "school": {
+      "metadataTitle": "My School · EduPlay",
+      "back": "Back to teacher dashboard",
+      "eyebrow": "Teacher Account",
+      "heading": "My School",
+      "currentSchool": "Current School",
+      "schoolName": "School Name",
+      "organization": "Organization",
+      "connectedClasses": "Connected Classes",
+      "findSchool": "Find Your School",
+      "country": "Country",
+      "state": "State or Territory",
+      "city": "City",
+      "loading": "Loading...",
+      "addSchool": "Add School",
+      "myClasses": "My Classes",
+      "active": "Active",
+      "inactive": "Inactive",
+      "empty": "No connected classes yet.",
+      "workspace": "No school selected · {{summary}}",
+      "classSummaryOne": "{{count}} active class",
+      "classSummaryOther": "{{count}} active classes",
+      "noSchoolConnected": "No school connected",
+      "findSchoolUnavailable": "School search is not available in EduPlay yet"
+    },
+    "device": {
+      "metadataTitle": "Device Information · EduPlay",
+      "back": "Back to teacher dashboard",
+      "eyebrow": "Teacher Account",
+      "heading": "Device Information",
+      "browserLine": "You are using {{browser}} {{version}}.",
+      "copy": "Copy to Clipboard",
+      "diagnostic": "Diagnostic",
+      "connection": "Connection",
+      "connectionValue": "Checked by the browser when EduPlay loads",
+      "localTime": "Local Time",
+      "localTimeValue": "Provided by this device"
+    }
+  },
+  "utility": {
+    "help": {
+      "metadataTitle": "Help · EduPlay",
+      "heading": "Help",
+      "subtitle": "Teacher Resources",
+      "resourcesTitle": "Teacher Resources",
+      "viewAll": "View All",
+      "spotlight": {
+        "title": "Seesaw Spotlight",
+        "type": "Video"
+      },
+      "learningCentral": {
+        "title": "Learning Central",
+        "type": "Website"
+      },
+      "timelyTopics": {
+        "title": "Timely Topics",
+        "type": "Website"
+      },
+      "community": {
+        "title": "Community and Events",
+        "type": "Website"
+      },
+      "colorPicker": {
+        "title": "Color Picker",
+        "description": "Grab colors from the canvas when creating activities"
+      },
+      "ready": {
+        "title": "Ready-to-teach activities for June",
+        "description": "Activities for skill development and holidays"
+      },
+      "whatsNew": "What's New",
+      "whatsNewCount": "1",
+      "contactSupport": "Contact Support",
+      "helpCenter": "Help Center",
+      "privacyPolicy": "Privacy Policy",
+      "scanQr": "Scan",
+      "backToDashboard": "Home"
+    },
+    "scan": {
+      "metadataTitle": "Scan QR Code · EduPlay",
+      "heading": "Scan QR Code",
+      "loading": "Loading...",
+      "permissionTitle": "Camera access required",
+      "permissionBody": "QR scanning needs browser camera access. Open this page in a browser with camera permissions enabled, then use the system prompt to allow access.",
+      "ok": "OK",
+      "backHome": "Home"
+    },
+    "trial": {
+      "metadataTitle": "Start 60 Day Trial · EduPlay",
+      "heading": "Maximize Engagement with Premium Features!",
+      "subtitle": "Get more with a premium EduPlay plan",
+      "freePlan": "Free Plan",
+      "premiumPlan": "Premium Plan",
+      "recommended": "Recommended",
+      "activities": "Activities in My Library",
+      "classes": "Classes",
+      "classSingular": "Class",
+      "students": "Students per Class",
+      "teachers": "Teachers per Class",
+      "unlimited": "Unlimited",
+      "aiActivities": "AI-Generated Activities",
+      "multipage": "Multipage Activities",
+      "drafts": "Activity Drafts and Send Back",
+      "scheduled": "Scheduled Activities",
+      "aiAnnouncements": "AI Generated Announcements",
+      "start": "Start 60 Day Trial",
+      "noCard": "No credit card required",
+      "learnMore": "Learn more about our plans",
+      "close": "Close",
+      "unavailableNote": "Premium trial activation is unavailable because no subscription flow is connected yet.",
+      "startUnavailable": "Trial unavailable",
+      "learnMoreUnavailable": "Plan details unavailable"
+    },
+    "language": {
+      "metadataTitle": "Select Language · EduPlay",
+      "close": "Close language selector",
+      "eyebrow": "Language",
+      "heading": "Select Language",
+      "description": "Choose the language used across the teacher interface.",
+      "available": "Available languages",
+      "current": "Current",
+      "cancel": "Cancel",
+      "setLanguage": "Set Language",
+      "device": {
+        "label": "Use Device Language"
+      },
+      "options": {
+        "device": {
+          "sublabel": "Automatic"
+        },
+        "english": "English",
+        "romanian": "Romanian",
+        "arabic": "Arabic",
+        "german": "German",
+        "american": "American",
+        "australian": "Australian",
+        "canadian": "Canadian",
+        "british": "British",
+        "irishEnglish": "Irish",
+        "newZealand": "New Zealand",
+        "spanish": "Spanish",
+        "french": "French",
+        "irish": "Irish",
+        "hindi": "Hindi",
+        "indonesian": "Indonesian",
+        "icelandic": "Icelandic",
+        "italian": "Italian",
+        "japanese": "Japanese",
+        "southKorean": "South Korean",
+        "malay": "Malay",
+        "norwegian": "Norwegian Bokmål",
+        "dutch": "Dutch",
+        "polish": "Polish",
+        "portuguese": "Portuguese",
+        "tamil": "Tamil",
+        "thai": "Thai",
+        "turkish": "Turkish",
+        "vietnamese": "Vietnamese",
+        "simplifiedChinese": "Simplified Chinese",
+        "traditionalChinese": "Traditional Chinese"
+      }
+    }
+  }
+}

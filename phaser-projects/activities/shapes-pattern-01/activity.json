@@ -1,0 +1,9 @@
+{
+  "activityId": "shapes-pattern-01",
+  "version": 1,
+  "renderer": {
+    "id": "pattern-game",
+    "version": "^1.0.0"
+  },
+  "gameId": "shapes-pattern-01"
+}

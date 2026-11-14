@@ -1,0 +1,11 @@
+{
+  "meta": { "title": "Numărătoare în Pădure" },
+  "instruction": "Câți copaci sunt?",
+  "rounds": {
+    "r1": { "prompt": "Câți copaci sunt?", "objectLabel": "copac" },
+    "r2": { "prompt": "Câți copaci sunt?", "objectLabel": "copac" },
+    "r3": { "prompt": "Câți copaci sunt?", "objectLabel": "copac" },
+    "r4": { "prompt": "Câți copaci sunt?", "objectLabel": "copac" },
+    "r5": { "prompt": "Câți copaci sunt?", "objectLabel": "copac" }
+  }
+}

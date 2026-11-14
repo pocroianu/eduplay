@@ -1,0 +1,13 @@
+{
+	"meta": {
+		"title": "Mâncarea mea preferată",
+		"description": "Potrivește fiecare aliment cu numele lui"
+	},
+	"questions": {},
+	"pairs": {
+		"p1.label": "Măr",
+		"p2.label": "Banană",
+		"p3.label": "Morcov",
+		"p4.label": "Pizza"
+	}
+}

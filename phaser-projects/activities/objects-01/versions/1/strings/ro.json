@@ -1,0 +1,38 @@
+{
+	"meta": {
+		"title": "Obiecte de Zi cu Zi",
+		"description": "Învață despre lucrurile pe care le folosim în fiecare zi!"
+	},
+	"questions": {
+		"q1": {
+			"question": "Ce te ține uscat când plouă?"
+		},
+		"q2": {
+			"question": "Ce folosești pentru a deschide o ușă?"
+		},
+		"q3": {
+			"question": "Unde dormi noaptea?"
+		},
+		"q4": {
+			"question": "Ce zboară în vânt pe o sfoară?"
+		},
+		"q5": {
+			"question": "Ce merge în spațiul cosmic?"
+		}
+	},
+	"choices": {
+		"umbrella": "Umbrelă",
+		"hat": "Pălărie",
+		"jacket": "Jachetă",
+		"key": "Cheie",
+		"brush": "Perie",
+		"bottle": "Sticlă",
+		"bed": "Pat",
+		"ladder": "Scară",
+		"mat": "Covoraș",
+		"kite": "Zmeu",
+		"rocket": "Rachetă",
+		"bird": "Pasăre",
+		"sun": "Soare"
+	}
+}

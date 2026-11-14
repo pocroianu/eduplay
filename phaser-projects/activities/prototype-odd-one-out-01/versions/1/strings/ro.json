@@ -1,0 +1,7 @@
+{
+  "meta": {
+    "title": "Prototip: Ce nu se potrivește?",
+    "description": "Prototip UI aruncabil pentru un tip nou de activitate: găsește intrusul dintr-un set."
+  },
+  "instruction": "Alege obiectul care nu respectă regula."
+}

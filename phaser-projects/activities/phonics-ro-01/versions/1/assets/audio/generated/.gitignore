@@ -1,0 +1,4 @@
+# Generated TTS audio files — not committed to git.
+# Regenerate with: AZURE_TTS_KEY=<key> npm run generate:ro-tts
+*.mp3
+.manifest.json

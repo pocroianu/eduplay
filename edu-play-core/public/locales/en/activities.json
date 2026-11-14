@@ -1,0 +1,44 @@
+{
+  "player": {
+    "title": "Creative activity",
+    "subtitle": {
+      "ready": "Let's make something beautiful!",
+      "comingSoon": "This activity type will be available soon."
+    },
+    "toolbar": {
+      "ariaLabel": "Activity toolbar",
+      "save": "Save",
+      "undo": "Undo",
+      "redo": "Redo",
+      "submit": "Submit",
+      "exit": "Exit"
+    },
+    "gate": {
+      "backToDashboard": "Back to dashboard",
+      "consent": {
+        "title": "We need permission",
+        "body": "Head back to the dashboard and ask a grown-up to give permission for this activity.",
+        "audioRecordingBody": "Your voice is special — we need a grown-up to say yes before we record it."
+      },
+      "gradeLocked": {
+        "title": "Not for your class yet",
+        "body": "This activity will be available later. Head back to the dashboard and try something else."
+      },
+      "classDisabled": {
+        "title": "Activity is closed right now",
+        "body": "Your teacher has closed this activity for your class. Head back to the dashboard and pick another one."
+      }
+    },
+    "invalidConfig": {
+      "title": "Oops, something isn't right",
+      "body": "This activity needs a small fix from your teacher. Head back to the dashboard and try a different activity."
+    },
+    "notReady": {
+      "title": "Coming soon",
+      "body": "We've made room for this activity. The <code>{{typeId}}</code> type will be added by the team in the next steps."
+    },
+    "result": {
+      "previewLabel": "Result received (preview):"
+    }
+  }
+}

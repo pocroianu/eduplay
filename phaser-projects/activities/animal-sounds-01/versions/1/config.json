@@ -1,0 +1,49 @@
+{
+  "meta": {
+    "gameId": "animal-sounds-01",
+    "version": "1.0.0",
+    "totalSteps": 4,
+    "gameType": "listen-tap",
+    "themeName": "nature",
+    "pointsPerRound": 10,
+    "roundDelay": 900,
+    "supportedLanguages": ["ro", "en"]
+  },
+  "rounds": [
+    {
+      "id": "r1",
+      "promptAudioId": "animal-dog",
+      "choices": [
+        { "id": "c1", "imageAssetId": "dog-tile", "correct": true },
+        { "id": "c2", "imageAssetId": "cat-tile", "correct": false }
+      ]
+    },
+    {
+      "id": "r2",
+      "promptAudioId": "animal-cat",
+      "choices": [
+        { "id": "c1", "imageAssetId": "cow-tile", "correct": false },
+        { "id": "c2", "imageAssetId": "cat-tile", "correct": true }
+      ]
+    },
+    {
+      "id": "r3",
+      "promptAudioId": "animal-cow",
+      "choices": [
+        { "id": "c1", "imageAssetId": "sheep-tile", "correct": false },
+        { "id": "c2", "imageAssetId": "cow-tile", "correct": true },
+        { "id": "c3", "imageAssetId": "dog-tile", "correct": false }
+      ]
+    },
+    {
+      "id": "r4",
+      "promptAudioId": "animal-sheep",
+      "choices": [
+        { "id": "c1", "imageAssetId": "sheep-tile", "correct": true },
+        { "id": "c2", "imageAssetId": "cow-tile", "correct": false },
+        { "id": "c3", "imageAssetId": "cat-tile", "correct": false }
+      ]
+    }
+  ],
+  "questions": []
+}

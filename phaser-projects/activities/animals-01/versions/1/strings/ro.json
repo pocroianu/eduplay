@@ -1,0 +1,40 @@
+{
+	"meta": {
+		"title": "Prietenii Animale",
+		"description": "Învață să identifici diferite animale!"
+	},
+	"questions": {
+		"q1": {
+			"question": "Care animal face 'miau'?"
+		},
+		"q2": {
+			"question": "Care animal are o trompă lungă?"
+		},
+		"q3": {
+			"question": "Care animal este numit 'Regele Junglei'?"
+		},
+		"q4": {
+			"question": "Care insectă are aripi colorate?"
+		},
+		"q5": {
+			"question": "Care animal trăiește în ocean și are dinți ascuțiți?"
+		}
+	},
+	"choices": {
+		"cat": "Pisică",
+		"bird": "Pasăre",
+		"frog": "Broască",
+		"elephant": "Elefant",
+		"koala": "Koala",
+		"pig": "Porc",
+		"lion": "Leu",
+		"tiger": "Tigru",
+		"goat": "Capră",
+		"butterfly": "Fluture",
+		"bee": "Albină",
+		"spider": "Păianjen",
+		"shark": "Rechin",
+		"goldfish": "Pește auriu",
+		"crab": "Crab"
+	}
+}

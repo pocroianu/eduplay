@@ -1,0 +1,31 @@
+{
+	"meta": {
+		"title": "Test Fructe și Obiecte",
+		"description": "Învață să identifici fructe, animale și obiecte de zi cu zi!"
+	},
+	"questions": {
+		"q1": {
+			"question": "Care este un măr?",
+			"audio": "question1"
+		},
+		"q2": {
+			"question": "Care animal face 'miau'?",
+			"audio": "question2"
+		},
+		"q3": {
+			"question": "Cu ce tai lucrurile?",
+			"audio": "question3"
+		}
+	},
+	"choices": {
+		"apple": "Măr",
+		"banana": "Banană",
+		"carrot": "Morcov",
+		"cat": "Pisică",
+		"bird": "Pasăre",
+		"frog": "Broască",
+		"ax": "Topor",
+		"hat": "Pălărie",
+		"umbrella": "Umbrelă"
+	}
+}

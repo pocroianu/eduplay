@@ -1,0 +1,34 @@
+{
+  "metadata": {
+    "title": "LoRA Training Workflow - SDXL Spike Template",
+    "description": "Experimental SDXL LoRA proof-of-life workflow backed by comfyUI-Realtime-Lora.",
+    "version": "2.0.0",
+    "author": "edu-play AI Content Package"
+  },
+  "nodes": {
+    "1": {
+      "class_type": "SDXLLoraTrainer",
+      "inputs": {
+        "inputcount": 1,
+        "images_path": "{{DATASET_PATH}}",
+        "sd_scripts_path": "{{SD_SCRIPTS_PATH}}",
+        "ckpt_name": "{{BASE_MODEL}}",
+        "caption": "{{DEFAULT_CAPTION}}",
+        "training_steps": "{{TRAINING_STEPS}}",
+        "learning_rate": "{{LEARNING_RATE}}",
+        "lora_rank": "{{LORA_RANK}}",
+        "vram_mode": "{{VRAM_MODE}}",
+        "keep_lora": true,
+        "output_name": "{{OUTPUT_NAME}}",
+        "custom_python_exe": "",
+        "no_half_vae": false
+      },
+      "_meta": {
+        "title": "SDXL LoRA Trainer"
+      }
+    }
+  },
+  "executionOrder": [
+    "1"
+  ]
+}

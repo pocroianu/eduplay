@@ -1,0 +1,12 @@
+{
+  "instruction": "Find the matching pairs!",
+  "meta": { "title": "Food Memory" },
+  "pairs": {
+    "pair.apple": "Apple",
+    "pair.banana": "Banana",
+    "pair.carrot": "Carrot",
+    "pair.pizza": "Pizza",
+    "pair.cake": "Cake",
+    "pair.cookie": "Cookie"
+  }
+}

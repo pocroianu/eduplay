@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Menu popover</title>
+<link rel="stylesheet" href="_preview.css">
+<style>
+  body { padding: 28px; background: var(--ss-surface-2); }
+  .menu {
+    width: 280px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: var(--ss-shadow-popover);
+    padding: 6px;
+    overflow: hidden;
+  }
+  .menu .header {
+    padding: 14px 14px 10px;
+    border-bottom: 1px solid var(--ss-line-200);
+    margin: -6px -6px 6px;
+  }
+  .menu .name { font: 700 15px/1.2 Lexend; }
+  .menu .sub  { font: 400 12px/1.3 Lexend; color: var(--ss-fg-muted); margin-top: 3px; }
+  .item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font: 500 14px/1 Lexend;
+    color: var(--ss-fg); cursor: pointer;
+  }
+  .item:hover { background: var(--ss-purple-050); }
+  .item i { color: var(--ss-fg-muted); }
+  .item .spacer { flex: 1; }
+  .item .badge { background: var(--ss-yellow-500); font: 700 10px/1 Lexend; padding: 3px 7px; border-radius: 6px; color: var(--ss-ink-900); }
+  .divider { height: 1px; background: var(--ss-line-200); margin: 6px 4px; }
+  .item.danger { color: var(--ss-danger); }
+  .item.danger i { color: var(--ss-danger); }
+</style>
+</head>
+<body>
+<div class="menu">
+  <div class="header">
+    <div class="name">Geani Pocroianu</div>
+    <div class="sub">pocroianu.nicolae@gmail.com · Teacher</div>
+  </div>
+  <div class="item"><i data-icon="person" data-size="20"></i>Account Settings</div>
+  <div class="item"><i data-icon="school" data-size="20"></i>My School</div>
+  <div class="item"><i data-icon="language" data-size="20"></i>Select Language<span class="spacer"></span><span class="muted" style="font-size:12px">English</span></div>
+  <div class="item"><i data-icon="auto_awesome" data-size="20"></i>EduPlay AI<span class="spacer"></span><span class="badge">New</span></div>
+  <div class="divider"></div>
+  <div class="item"><i data-icon="help_outline" data-size="20"></i>Help &amp; Support</div>
+  <div class="item danger"><i data-icon="logout" data-size="20"></i>Sign Out</div>
+</div>
+<script src="_icons.js"></script>
+</body>
+</html>

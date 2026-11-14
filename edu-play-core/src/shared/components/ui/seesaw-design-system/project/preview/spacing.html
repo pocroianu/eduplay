@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Spacing scale</title>
+<link rel="stylesheet" href="_preview.css">
+<style>
+  body { padding: 24px 28px; background: #fff; }
+  .specimens { display: flex; flex-direction: column; gap: 8px; }
+  .row.sp { align-items: center; gap: 14px; }
+  .tag { width: 60px; font-family: var(--ss-font-mono); font-size: 11px; color: var(--ss-fg-subtle); }
+  .px  { width: 50px; font-family: var(--ss-font-mono); font-size: 11px; color: var(--ss-fg-muted); }
+  .bar { background: var(--ss-primary); height: 12px; border-radius: 3px; }
+  .role { color: var(--ss-fg-muted); font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="specimens">
+  <div class="row sp"><div class="tag">sp-1</div><div class="px">4px</div>
+    <div class="bar" style="width:4px"></div><div class="role">icon padding</div></div>
+  <div class="row sp"><div class="tag">sp-2</div><div class="px">8px</div>
+    <div class="bar" style="width:8px"></div><div class="role">label gap</div></div>
+  <div class="row sp"><div class="tag">sp-3</div><div class="px">12px</div>
+    <div class="bar" style="width:12px"></div><div class="role">control gap</div></div>
+  <div class="row sp"><div class="tag">sp-4</div><div class="px">16px</div>
+    <div class="bar" style="width:16px"></div><div class="role">card padding · row gap</div></div>
+  <div class="row sp"><div class="tag">sp-5</div><div class="px">20px</div>
+    <div class="bar" style="width:20px"></div><div class="role">section padding</div></div>
+  <div class="row sp"><div class="tag">sp-6</div><div class="px">24px</div>
+    <div class="bar" style="width:24px"></div><div class="role">feature card padding</div></div>
+  <div class="row sp"><div class="tag">sp-8</div><div class="px">32px</div>
+    <div class="bar" style="width:32px"></div><div class="role">section break</div></div>
+  <div class="row sp"><div class="tag">sp-10</div><div class="px">40px</div>
+    <div class="bar" style="width:40px"></div><div class="role">page gutter</div></div>
+  <div class="row sp"><div class="tag">sp-12</div><div class="px">48px</div>
+    <div class="bar" style="width:48px"></div><div class="role">hero block</div></div>
+</div>
+</body>
+</html>

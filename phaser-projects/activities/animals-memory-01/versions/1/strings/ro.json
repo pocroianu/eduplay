@@ -1,0 +1,12 @@
+{
+  "instruction": "Gaseste perechile potrivite!",
+  "meta": { "title": "Memoria Animalelor" },
+  "pairs": {
+    "pair.cat": "Pisica",
+    "pair.lion": "Leu",
+    "pair.elephant": "Elefant",
+    "pair.tiger": "Tigru",
+    "pair.pig": "Porc",
+    "pair.goat": "Capra"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "activityId": "animals-memory-01",
+  "version": 1,
+  "renderer": {
+    "id": "memory-game",
+    "version": "^1.0.0"
+  },
+  "gameId": "animals-memory-01"
+}

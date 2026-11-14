@@ -1,0 +1,9 @@
+{
+  "activityId": "shapes-basic",
+  "version": 1,
+  "renderer": {
+    "id": "tracing-game",
+    "version": "^1.0.0"
+  },
+  "gameId": "shapes-basic"
+}

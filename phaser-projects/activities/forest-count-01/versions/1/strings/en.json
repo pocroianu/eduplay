@@ -1,0 +1,11 @@
+{
+  "meta": { "title": "Forest Counting" },
+  "instruction": "How many trees are there?",
+  "rounds": {
+    "r1": { "prompt": "How many trees are there?", "objectLabel": "tree" },
+    "r2": { "prompt": "How many trees are there?", "objectLabel": "tree" },
+    "r3": { "prompt": "How many trees are there?", "objectLabel": "tree" },
+    "r4": { "prompt": "How many trees are there?", "objectLabel": "tree" },
+    "r5": { "prompt": "How many trees are there?", "objectLabel": "tree" }
+  }
+}

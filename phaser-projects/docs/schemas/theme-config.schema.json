@@ -1,0 +1,76 @@
+{
+  "$ref": "#/definitions/theme-config",
+  "definitions": {
+    "theme-config": {
+      "type": "object",
+      "properties": {
+        "primary": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16777215
+        },
+        "secondary": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16777215
+        },
+        "background": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16777215
+        },
+        "cardBg": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16777215
+        },
+        "textColor": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{3}$|^rgb\\(|^rgba\\("
+        },
+        "containerBg": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16777215
+        },
+        "containerText": {
+          "type": "string",
+          "pattern": "^#[0-9A-Fa-f]{6}$|^#[0-9A-Fa-f]{3}$|^rgb\\(|^rgba\\("
+        },
+        "containerBorder": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16777215
+        },
+        "backgroundStyle": {
+          "type": "string"
+        },
+        "correctColor": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16777215
+        },
+        "incorrectColor": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16777215
+        },
+        "starColor": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 16777215
+        }
+      },
+      "required": [
+        "primary",
+        "secondary",
+        "background",
+        "cardBg",
+        "textColor"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Theme configuration"
+}

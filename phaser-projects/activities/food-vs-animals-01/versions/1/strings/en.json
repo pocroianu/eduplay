@@ -1,0 +1,19 @@
+{
+  "meta": {
+    "title": "Food or Animal?",
+    "description": "Sort the pictures: food or animal?"
+  },
+  "instruction": "Drag each picture into the correct bin!",
+  "categories": {
+    "cat.food": "Food",
+    "cat.animals": "Animals"
+  },
+  "items": {
+    "item.apple": "Apple",
+    "item.banana": "Banana",
+    "item.carrot": "Carrot",
+    "item.cat": "Cat",
+    "item.lion": "Lion",
+    "item.tiger": "Tiger"
+  }
+}

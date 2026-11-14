@@ -1,0 +1,7 @@
+{
+  "rendererId": "counting-game",
+  "version": "1.0.0",
+  "defaultGameId": "farm-count-01",
+  "entry": "src/template.ts",
+  "configGameType": "counting"
+}

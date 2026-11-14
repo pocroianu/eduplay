@@ -1,0 +1,431 @@
+.interactive {
+  transition:
+    background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    filter 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.surfaceInteractive:hover,
+.surfaceInteractive:focus-visible,
+.surfaceInteractive:focus-within {
+  border-color: var(--color-primary);
+  background-color: var(--color-surface-hover);
+  box-shadow: var(--shadow-soft);
+}
+
+.actionInteractive:hover,
+.actionInteractive:focus-visible {
+  box-shadow: var(--shadow-soft);
+  filter: brightness(0.96);
+}
+
+.librariesControlSurface {
+  min-height: 44px;
+  border: 1px solid var(--color-outline);
+  border-radius: 8px;
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+}
+
+.librariesTopicSurface {
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: var(--color-on-surface);
+}
+
+.librariesTopicSurfaceSelected {
+  background-color: var(--color-surface-hover);
+  color: var(--color-purple-dim);
+}
+
+.librariesCardSurface {
+  border: 1px solid var(--color-outline);
+  border-bottom-width: 3px;
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  box-shadow: none;
+  text-decoration: none;
+}
+
+.librariesPrimaryAction {
+  background-color: var(--color-purple-dim);
+  color: var(--color-on-primary);
+}
+
+.librariesFloatingAction {
+  border: 1px solid var(--color-outline);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  box-shadow: var(--shadow-soft-sm);
+}
+
+.librariesPage {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.librariesColumn {
+  width: min(1020px, calc(100% - 48px));
+  max-width: none;
+  margin-inline: auto;
+  padding: 0 0 64px;
+}
+
+.librariesSearchBlock {
+  padding-top: 68px;
+}
+
+.librariesTopicGrid {
+  grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+  gap: 8px;
+  margin-top: 34px;
+}
+
+.librariesTopicButton {
+  display: flex;
+  min-height: 96px;
+  width: 100%;
+  min-width: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  border-radius: 8px;
+  padding: 7px 4px 6px;
+}
+
+.librariesFilterRow {
+  min-height: 44px;
+  margin-top: 27px;
+  overflow: visible;
+}
+
+.librariesFilterSelect {
+  flex: 0 1 180px;
+  min-width: 148px;
+}
+
+.librariesCurriculumBadge {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.librariesCollectionCard {
+  min-height: 104px;
+}
+
+.librariesCollectionThumb {
+  width: 96px;
+  height: 100%;
+  flex: 0 0 96px;
+}
+
+.librariesActivityCard {
+  min-height: 236px;
+}
+
+.librariesActivityThumb {
+  height: 134px;
+}
+
+.choiceGrid {
+  display: grid;
+  gap: var(--mantine-spacing-sm);
+}
+
+.choiceButton {
+  display: flex;
+  min-height: 112px;
+  align-items: flex-start;
+  gap: var(--mantine-spacing-sm);
+  border: 1px solid var(--color-outline-variant);
+  border-radius: var(--radius-lg);
+  padding: var(--mantine-spacing-md);
+  background: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+  box-shadow: var(--shadow-soft-sm);
+  text-align: left;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    color 150ms ease;
+}
+
+.choiceButton:hover {
+  border-color: var(--color-outline);
+  background: var(--color-surface-container);
+}
+
+.choiceButton:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--color-purple-soft);
+}
+
+.choiceButton[data-selected='true'] {
+  border-color: var(--color-primary);
+  background: var(--color-primary-soft);
+  color: var(--color-primary-deep);
+}
+
+.choiceIcon {
+  display: flex;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-container-lowest);
+  box-shadow: var(--shadow-soft-sm);
+}
+
+.choiceCopy {
+  min-width: 0;
+}
+
+.choiceTitle {
+  display: block;
+  font-size: var(--font-size-md);
+  font-weight: 700;
+}
+
+.choiceDescription {
+  display: block;
+  margin-top: 4px;
+  color: var(--color-on-surface-variant);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+}
+
+@media (min-width: 48em) {
+  .choiceGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.libraryColumn {
+  width: min(1020px, calc(100% - 48px));
+  max-width: none;
+  margin-inline: auto;
+  padding: 8px 0 48px;
+}
+
+.libraryToolbar {
+  display: flex;
+  min-height: 44px;
+  max-width: 100%;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.libraryControlSurface {
+  border: 1px solid var(--color-outline);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface);
+}
+
+.libraryStaticFilter {
+  display: inline-flex;
+  min-width: 112px;
+  min-height: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  padding: 2px 8px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-transform: none;
+}
+
+.librarySearchSurface {
+  display: flex;
+  min-height: 44px;
+  width: 196px;
+  flex: 0 0 196px;
+  align-items: center;
+  overflow: hidden;
+  border: 1px solid var(--color-outline);
+  border-radius: 8px;
+  background-color: var(--color-surface-container-lowest);
+}
+
+.librarySearchInput {
+  min-height: 44px;
+  padding: 6px 8px;
+  color: var(--color-on-surface);
+  font-size: 14px;
+}
+
+.librarySearchButton {
+  min-height: 44px;
+  border-left: 1px solid var(--color-outline);
+  border-radius: 0;
+  padding: 0 12px;
+  color: var(--color-on-surface);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.librarySectionHeader {
+  align-items: center;
+}
+
+.librarySectionHeading {
+  margin: 28px 0 8px;
+  color: var(--color-on-surface);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 36px;
+}
+
+.libraryViewAll {
+  color: var(--color-purple-dim);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.libraryActivityGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(191px, 100%), 1fr));
+  gap: 16px;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.libraryCollections {
+  margin-top: 24px;
+}
+
+.libraryCollectionRow {
+  display: flex;
+  width: 100%;
+  min-height: 40px;
+  align-items: center;
+  gap: 12px;
+  border-top: 1px solid var(--color-outline);
+  border-bottom: 1px solid var(--color-outline);
+  background-color: transparent;
+  color: var(--color-on-surface);
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.libraryCollectionCount {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background-color: var(--color-coral);
+  color: var(--color-on-coral);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.libraryCreateCollection {
+  height: 40px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.libraryCreateCollectionField {
+  min-width: 0;
+  flex: 1;
+}
+
+.libraryCreateCollectionInput {
+  min-height: 40px;
+  border: 1px solid var(--color-outline);
+  border-radius: 8px;
+  background-color: var(--color-surface-container-lowest);
+  padding: 9px 13px;
+  color: var(--color-on-surface);
+  font-size: 16px;
+}
+
+.libraryCreateCollectionButton {
+  min-height: 40px;
+  border-radius: 8px;
+  background-color: var(--color-outline);
+  padding: 0 16px;
+  color: var(--color-on-surface-variant);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+@media (max-width: 767px) {
+  .librariesColumn {
+    width: calc(100% - 24px);
+    padding-bottom: 88px;
+  }
+
+  .librariesSearchBlock {
+    padding-top: 40px;
+  }
+
+  .librariesTopicGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .librariesFilterRow {
+    align-items: stretch;
+  }
+
+  .librariesFilterSelect {
+    flex: 1 1 calc(50% - 6px);
+    min-width: 0;
+  }
+
+  .librariesCurriculumBadge {
+    width: 100%;
+  }
+
+  .libraryColumn {
+    width: calc(100% - 24px);
+    padding: 12px 12px 88px;
+  }
+
+  .libraryActivityGrid {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 191px;
+    overflow-x: auto;
+  }
+}
+
+@media (max-width: 420px) {
+  .librariesTopicGrid {
+    gap: 6px;
+  }
+
+  .librariesTopicButton {
+    min-height: 104px;
+    padding-inline: 3px;
+  }
+
+  .librariesFilterSelect {
+    flex-basis: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interactive,
+  .choiceButton {
+    transition: none;
+  }
+}

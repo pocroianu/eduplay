@@ -1,0 +1,68 @@
+{
+  "name": "phaser-projects",
+  "version": "0.1.0",
+  "description": "Monorepo for educational Phaser games - edu-play organization",
+  "private": true,
+  "workspaces": [
+    "packages/game-core",
+    "packages/game-editor",
+    "packages/ai-content",
+    "packages/phaser-ui",
+    "packages/validation",
+    "tools/config-editor"
+  ],
+  "scripts": {
+    "build:all": "npm run build --workspaces --if-present",
+    "start:activities": "npm run dev:host --workspace=@edu-play/game-core",
+    "start:config-editor": "npm run start --workspace=config-editor",
+    "build:config-editor": "npm run build --workspace=config-editor",
+    "generate:schemas": "npm run generate-schemas --workspace=@edu-play/validation",
+    "ai:setup": "npm run generate --workspace=@edu-play/ai-content -- setup-services",
+    "ai:health": "npm run generate --workspace=@edu-play/ai-content -- check-health",
+    "ai:models": "npm run generate --workspace=@edu-play/ai-content -- download-models --all",
+    "validate:all-configs": "npm run build --workspace=@edu-play/validation --silent && ts-node scripts/validate-all-configs.ts",
+    "validate:config": "npm run validate-config --workspace=@edu-play/validation --",
+    "migrate:activity-assets": "node scripts/migrate-activity-assets-to-library.mjs",
+    "import:activity-package": "node scripts/import-activity-package.mjs",
+    "lint": "echo 'Add linting here'",
+    "test": "npm run test:e2e",
+    "test:validation": "npm test --workspace=@edu-play/validation",
+    "test:config-validation": "node --test scripts/__tests__/*.test.mjs",
+    "test:game-core": "npm test --workspace=@edu-play/game-core",
+    "test:e2e": "playwright test --config=e2e/playwright.config.ts",
+    "test:e2e:activity-dist": "playwright test --config=e2e/playwright.activity-dist.config.ts",
+    "test:e2e:ui": "playwright test --config=e2e/playwright.config.ts --ui",
+    "test:e2e:debug": "playwright test --config=e2e/playwright.config.ts --debug",
+    "test:e2e:headed": "playwright test --config=e2e/playwright.config.ts --headed",
+    "test:e2e:chromium": "playwright test --config=e2e/playwright.config.ts",
+    "test:e2e:activity-interaction": "playwright test --config=e2e/playwright.config.ts --project=activity-host e2e/tests/activity-host/activity-interaction.spec.ts",
+    "test:e2e:report": "playwright show-report e2e/playwright-report"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/edu-play/phaser-projects.git"
+  },
+  "keywords": [
+    "phaser",
+    "educational",
+    "games",
+    "kids",
+    "learning",
+    "monorepo"
+  ],
+  "author": "edu-play",
+  "license": "MIT",
+  "engines": {
+    "node": ">=24.12.0",
+    "npm": ">=11.6.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.57.0",
+    "@types/node": "^22.0.0",
+    "dockerfile-language-server-nodejs": "0.15.0",
+    "glob": "13.0.3",
+    "typescript-language-server": "5.3.0",
+    "vscode-langservers-extracted": "4.10.0",
+    "yaml-language-server": "1.23.0"
+  }
+}

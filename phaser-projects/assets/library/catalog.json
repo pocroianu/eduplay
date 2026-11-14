@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0",
+  "images": {
+    "apple": {
+      "variants": {
+        "red-cartoon": {
+          "path": "/assets/library/images/apple.png",
+          "sha256": "0a827d9b4661d0a949ed5edd796de47170fdc3e1923aee592e70c40de2a29f28",
+          "candidates": []
+        }
+      }
+    }
+  },
+  "audio": {}
+}

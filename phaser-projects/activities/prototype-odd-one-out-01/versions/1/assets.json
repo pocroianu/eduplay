@@ -1,0 +1,13 @@
+{
+  "version": "2.0.0",
+  "baseUrl": "assets",
+  "games": {
+    "prototype-odd-one-out-01": {
+      "manifest": {
+        "images": [],
+        "audio": [],
+        "spritesheets": []
+      }
+    }
+  }
+}

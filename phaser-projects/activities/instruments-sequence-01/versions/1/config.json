@@ -1,0 +1,26 @@
+{
+  "meta": {
+    "gameId": "instruments-sequence-01",
+    "version": "1.0.0",
+    "gameType": "repeat-sequence",
+    "themeName": "sunset",
+    "pointsPerRound": 10,
+    "roundDelay": 900,
+    "supportedLanguages": ["ro", "en"]
+  },
+  "pads": [
+    { "id": "drum",  "idleColor": 8396800,  "litColor": 12482078, "frequency": 196.00, "glyph": "circle" },
+    { "id": "bell",  "idleColor": 13598960, "litColor": 16770157, "frequency": 659.25, "glyph": "star" },
+    { "id": "flute", "idleColor": 3185350,  "litColor": 4886242,  "frequency": 783.99, "glyph": "note" },
+    { "id": "piano", "idleColor": 10053171, "litColor": 14524637, "frequency": 523.25, "glyph": "square" }
+  ],
+  "sequence": {
+    "startLength": 4,
+    "maxLength": 10,
+    "padLitMs": 500,
+    "playbackGapMs": 150,
+    "introDelayMs": 1000,
+    "replayOnMiss": false
+  },
+  "questions": []
+}

@@ -1,0 +1,9 @@
+{
+  "activityId": "prototype-odd-one-out-01",
+  "version": 1,
+  "renderer": {
+    "id": "prototype-odd-one-out",
+    "version": "^0.0.0"
+  },
+  "gameId": "prototype-odd-one-out-01"
+}

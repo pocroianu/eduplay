@@ -1,0 +1,7 @@
+{
+  "rendererId": "matching-game",
+  "version": "1.0.0",
+  "defaultGameId": "animals-match-01",
+  "entry": "src/template.ts",
+  "configGameType": "matching"
+}

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Iconography</title>
+<link rel="stylesheet" href="_preview.css">
+<style>
+  body { padding: 24px 28px; background: #fff; }
+  .grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: 10px; }
+  .cell {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    padding: 10px 6px; border-radius: 8px;
+    background: var(--ss-surface-1);
+  }
+  .cell i { color: var(--ss-fg); }
+  .cell .lbl { font: 500 10px/1.1 Lexend; color: var(--ss-fg-muted); text-align: center; }
+  .row.tones { gap: 14px; align-items: center; margin-top: 14px; display: flex; }
+  .tone { width: 36px; height: 36px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center; background: var(--ss-surface-1);}
+  .note { font: 400 11px/1.4 Lexend; color: var(--ss-fg-muted); margin-top: 12px; }
+</style>
+</head>
+<body>
+  <div class="grid">
+    <div class="cell"><i data-icon="home" data-size="26"></i><span class="lbl">home</span></div>
+    <div class="cell"><i data-icon="auto_awesome" data-size="26"></i><span class="lbl">AI</span></div>
+    <div class="cell"><i data-icon="explore" data-size="26"></i><span class="lbl">explore</span></div>
+    <div class="cell"><i data-icon="bookmark" data-size="26"></i><span class="lbl">library</span></div>
+    <div class="cell"><i data-icon="chat_bubble" data-size="26"></i><span class="lbl">messages</span></div>
+    <div class="cell"><i data-icon="menu_book" data-size="26"></i><span class="lbl">journal</span></div>
+    <div class="cell"><i data-icon="lightbulb" data-size="26"></i><span class="lbl">activity</span></div>
+    <div class="cell"><i data-icon="school" data-size="26"></i><span class="lbl">gradebook</span></div>
+    <div class="cell"><i data-icon="notifications" data-size="26"></i><span class="lbl">notifs</span></div>
+    <div class="cell"><i data-icon="build" data-size="26"></i><span class="lbl">settings</span></div>
+    <div class="cell"><i data-icon="add" data-size="26"></i><span class="lbl">add</span></div>
+    <div class="cell"><i data-icon="qr_code_scanner" data-size="26"></i><span class="lbl">scan</span></div>
+    <div class="cell"><i data-icon="help_outline" data-size="26"></i><span class="lbl">help</span></div>
+    <div class="cell"><i data-icon="folder" data-size="26"></i><span class="lbl">folder</span></div>
+    <div class="cell"><i data-icon="favorite" data-size="26"></i><span class="lbl">like</span></div>
+    <div class="cell"><i data-icon="mic" data-size="26"></i><span class="lbl">mic</span></div>
+  </div>
+  <div class="row tones">
+    <span class="tone" style="color:var(--ss-primary)"><i data-icon="home" data-size="22"></i></span>
+    <span class="tone" style="color:var(--ss-green-800)"><i data-icon="menu_book" data-size="22"></i></span>
+    <span class="tone" style="color:var(--ss-danger)"><i data-icon="notifications" data-size="22"></i></span>
+    <span class="tone" style="color:var(--ss-fg-muted)"><i data-icon="help_outline" data-size="22"></i></span>
+    <span class="tone" style="color:var(--ss-ink-400)"><i data-icon="build" data-size="22"></i></span>
+    <span class="muted">primary · success · danger · muted · disabled</span>
+  </div>
+  <div class="note">Inline SVG icons modeled on Material's filled-rounded register. Production EduPlay should ship a custom set with proprietary Journal/Activity/Library/Class-Theme glyphs.</div>
+  <script src="_icons.js"></script>
+</body>
+</html>

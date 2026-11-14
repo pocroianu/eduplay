@@ -1,0 +1,119 @@
+# Phase 2 Webhook Bridge (EDU-73-E / EDU-86)
+#
+# Bridges GitHub pull_request events to the Paperclip `code-review-deep`
+# routine by firing the routine's HMAC-signed webhook endpoint.
+#
+# The Paperclip instance runs locally (127.0.0.1:3100), so this workflow
+# must run on the self-hosted Windows runner that shares the same network.
+# This replaces a native GitHub webhook, which cannot reach localhost.
+#
+# ----------------------------------------------------------------------------
+# Prerequisites
+# ----------------------------------------------------------------------------
+# Repo variable:
+#   AI_REVIEW_ENABLED  — must be 'true' (shared kill-switch with Phase 1)
+#
+# Repo secret:
+#   PAPERCLIP_WEBHOOK_SECRET — HMAC-SHA256 signing secret for the
+#     code-review-deep routine trigger. Obtain by calling:
+#       POST /api/routine-triggers/{triggerId}/rotate-secret
+#     with board-level Paperclip auth. See docs/operations/code-review.md.
+#
+# Per-PR escapes:
+#   - Apply the `skip-ai-review` label.
+#   - Keep the PR as a draft.
+#
+# ----------------------------------------------------------------------------
+# Debounce
+# ----------------------------------------------------------------------------
+# The concurrency group (keyed on PR number) with cancel-in-progress ensures
+# rapid `synchronize` events only fire the webhook for the latest push.
+# This is simpler and more reliable than routine-level dedup — see the
+# runbook decision log for rationale.
+
+name: Code Review Webhook
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review]
+
+concurrency:
+  group: code-review-webhook-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  fire-webhook:
+    name: Fire Paperclip code-review-deep webhook
+    if: >-
+      vars.AI_REVIEW_ENABLED == 'true'
+      && github.event.pull_request.draft == false
+      && !contains(toJson(github.event.pull_request.labels.*.name), 'skip-ai-review')
+    runs-on: [self-hosted, windows, x64]
+    timeout-minutes: 2
+    steps:
+      - name: Fire webhook
+        shell: pwsh
+        env:
+          PAPERCLIP_WEBHOOK_SECRET: ${{ secrets.PAPERCLIP_WEBHOOK_SECRET }}
+          # Public webhook fire endpoint for the code-review-deep routine.
+          # Public ID: 737acb458b67d58fcef37674
+          WEBHOOK_URL: http://127.0.0.1:3100/api/routine-triggers/public/737acb458b67d58fcef37674/fire
+        run: |
+          if (-not $env:PAPERCLIP_WEBHOOK_SECRET) {
+            Write-Host "::warning::PAPERCLIP_WEBHOOK_SECRET not set; skipping webhook."
+            exit 0
+          }
+
+          # Build minimal payload matching the expected trigger schema
+          $payload = @{
+            action = '${{ github.event.action }}'
+            number = ${{ github.event.pull_request.number }}
+            repository = @{
+              name = '${{ github.event.repository.name }}'
+              full_name = '${{ github.event.repository.full_name }}'
+            }
+            pull_request = @{
+              number = ${{ github.event.pull_request.number }}
+              title = ${{ toJson(github.event.pull_request.title) }}
+              html_url = '${{ github.event.pull_request.html_url }}'
+              base = @{ ref = '${{ github.event.pull_request.base.ref }}' }
+              head = @{
+                ref = '${{ github.event.pull_request.head.ref }}'
+                sha = '${{ github.event.pull_request.head.sha }}'
+              }
+              user = @{ login = '${{ github.event.pull_request.user.login }}' }
+              changed_files = ${{ github.event.pull_request.changed_files }}
+            }
+          } | ConvertTo-Json -Depth 5 -Compress
+
+          # HMAC-SHA256 signature: sign "timestamp.body" with the webhook secret
+          $timestamp = [DateTimeOffset]::UtcNow.ToUnixTimeSeconds().ToString()
+          $signInput = "$timestamp.$payload"
+
+          $hmac = [System.Security.Cryptography.HMACSHA256]::new(
+            [System.Text.Encoding]::UTF8.GetBytes($env:PAPERCLIP_WEBHOOK_SECRET)
+          )
+          $hash = $hmac.ComputeHash(
+            [System.Text.Encoding]::UTF8.GetBytes($signInput)
+          )
+          $signature = -join ($hash | ForEach-Object { $_.ToString('x2') })
+
+          # Fire the webhook
+          $headers = @{
+            'Content-Type'           = 'application/json'
+            'X-Paperclip-Signature'  = $signature
+            'X-Paperclip-Timestamp'  = $timestamp
+          }
+
+          try {
+            $response = Invoke-RestMethod -Uri $env:WEBHOOK_URL `
+              -Method Post -Body $payload -Headers $headers `
+              -ContentType 'application/json' -ErrorAction Stop
+            Write-Host "Webhook fired successfully."
+            Write-Host ($response | ConvertTo-Json -Depth 3)
+          } catch {
+            $status = $_.Exception.Response.StatusCode.value__
+            Write-Host "::error::Webhook returned HTTP $status"
+            Write-Host $_.ErrorDetails.Message
+            exit 1
+          }

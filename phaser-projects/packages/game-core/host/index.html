@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>edu-play Activity Host</title>
+		<style>
+			html,
+			body,
+			#game-root {
+				width: 100%;
+				height: 100%;
+				margin: 0;
+			}
+
+			body {
+				background: #151923;
+				font-family: system-ui, sans-serif;
+			}
+
+			.host-message {
+				min-height: 100%;
+				display: grid;
+				place-content: center;
+				gap: 1rem;
+				color: #f7f7fb;
+				text-align: center;
+			}
+
+			.host-message nav {
+				display: flex;
+				gap: 1rem;
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+
+			.host-message a {
+				color: #8fd3ff;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="game-root"></div>
+		<script type="module" src="/main.ts"></script>
+	</body>
+</html>

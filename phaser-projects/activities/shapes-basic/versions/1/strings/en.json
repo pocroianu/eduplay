@@ -1,0 +1,10 @@
+{
+  "instruction": "Trace the shape!",
+  "meta": { "title": "Trace Basic Shapes" },
+  "items": {
+    "item.circle": "Circle",
+    "item.square": "Square",
+    "item.triangle": "Triangle",
+    "item.star": "Star"
+  }
+}

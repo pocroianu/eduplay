@@ -1,0 +1,9 @@
+{
+  "meta": { "title": "Animal Sounds 1" },
+  "rounds": {
+    "r1": { "prompt": "Which one is the dog?" },
+    "r2": { "prompt": "Which one is the cat?" },
+    "r3": { "prompt": "Which one is the cow?" },
+    "r4": { "prompt": "Which one is the sheep?" }
+  }
+}

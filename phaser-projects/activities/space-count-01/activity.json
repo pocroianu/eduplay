@@ -1,0 +1,9 @@
+{
+  "activityId": "space-count-01",
+  "version": 1,
+  "renderer": {
+    "id": "counting-game",
+    "version": "^1.0.0"
+  },
+  "gameId": "space-count-01"
+}

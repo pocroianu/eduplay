@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Button palettes — side-by-side</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: #f0eee9; font-family: var(--ss-font-sans); }
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="ButtonMatrix.jsx"></script>
+
+<script type="text/babel">
+// ---------- Four palettes ---------------------------------------
+// Each defines: primary, the surface tones for primary states
+// (hover = a touch darker, active = darker still, focus = ring color),
+// plus success / danger families. The neutral/text tokens stay shared.
+const PALETTES = [
+  {
+    name: 'EduPlay Purple',
+    sub: 'Current — saturated purple spine',
+    swatches: ['#0E7C8C', '#2F7A2F', '#D63B3B', '#FFB400'],
+    primary:   { base:'#0E7C8C', hover:'#522595', active:'#3D1B73', focus:'rgba(95,47,168,0.30)', fg:'#fff' },
+    secondary: { base:'#fff',    hover:'#EAF6F8', active:'#E5D9F4', focus:'rgba(95,47,168,0.30)', fg:'#0E7C8C', border:'#0E7C8C' },
+    ghost:     { base:'transparent', hover:'#EAF6F8', active:'#E5D9F4', focus:'rgba(95,47,168,0.30)', fg:'#0E7C8C' },
+    success:   { base:'#2F7A2F', hover:'#005A0C', active:'#1F4A1F', focus:'rgba(0,102,15,0.30)', fg:'#fff' },
+    danger:    { base:'#D63B3B', hover:'#C40D3C', active:'#A30B33', focus:'rgba(234,0,68,0.32)', fg:'#fff' },
+  },
+  {
+    name: 'Coral Sunset',
+    sub: 'Warm coral primary, plum accent',
+    swatches: ['#EE5A47', '#7B2D8E', '#0F8F6A', '#FFD166'],
+    primary:   { base:'#EE5A47', hover:'#D94834', active:'#B83624', focus:'rgba(238,90,71,0.32)', fg:'#fff' },
+    secondary: { base:'#fff',    hover:'#FFEDE9', active:'#FFD9D2', focus:'rgba(238,90,71,0.32)', fg:'#B83624', border:'#EE5A47' },
+    ghost:     { base:'transparent', hover:'#FFEDE9', active:'#FFD9D2', focus:'rgba(238,90,71,0.32)', fg:'#B83624' },
+    success:   { base:'#0F8F6A', hover:'#0B7F5D', active:'#0A6D50', focus:'rgba(15,143,106,0.30)', fg:'#fff' },
+    danger:    { base:'#7B2D8E', hover:'#69247A', active:'#561C66', focus:'rgba(123,45,142,0.30)', fg:'#fff' },
+  },
+  {
+    name: 'Ocean Teal',
+    sub: 'Cool teal primary, deep navy accent',
+    swatches: ['#0E7C8C', '#1F3A5F', '#3E8E2F', '#FFB400'],
+    primary:   { base:'#0E7C8C', hover:'#0B6A77', active:'#085763', focus:'rgba(14,124,140,0.30)', fg:'#fff' },
+    secondary: { base:'#fff',    hover:'#E1F2F5', active:'#C8E6EB', focus:'rgba(14,124,140,0.30)', fg:'#0B6A77', border:'#0E7C8C' },
+    ghost:     { base:'transparent', hover:'#E1F2F5', active:'#C8E6EB', focus:'rgba(14,124,140,0.30)', fg:'#0B6A77' },
+    success:   { base:'#3E8E2F', hover:'#347A28', active:'#2B6722', focus:'rgba(62,142,47,0.30)', fg:'#fff' },
+    danger:    { base:'#D63B3B', hover:'#B82E2E', active:'#962525', focus:'rgba(214,59,59,0.32)', fg:'#fff' },
+  },
+  {
+    name: 'Meadow Olive',
+    sub: 'Earthy olive primary, mustard accent',
+    swatches: ['#4F6B2A', '#9A4F1A', '#0F8F6A', '#E8B142'],
+    primary:   { base:'#4F6B2A', hover:'#445C24', active:'#374C1D', focus:'rgba(79,107,42,0.30)', fg:'#fff' },
+    secondary: { base:'#fff',    hover:'#EFF3E2', active:'#DDE7C5', focus:'rgba(79,107,42,0.30)', fg:'#374C1D', border:'#4F6B2A' },
+    ghost:     { base:'transparent', hover:'#EFF3E2', active:'#DDE7C5', focus:'rgba(79,107,42,0.30)', fg:'#374C1D' },
+    success:   { base:'#0F8F6A', hover:'#0B7F5D', active:'#0A6D50', focus:'rgba(15,143,106,0.30)', fg:'#fff' },
+    danger:    { base:'#B83C3C', hover:'#9E3030', active:'#822626', focus:'rgba(184,60,60,0.32)', fg:'#fff' },
+  },
+];
+
+function App() {
+  return (
+    <DesignCanvas>
+      <DCSection
+        id="button-palettes"
+        title="Button systems — palette comparison"
+        subtitle="Five button kinds × five interaction states × four palettes. Hover the live-state column to feel the real transitions."
+      >
+        {PALETTES.map((p, i) => (
+          <DCArtboard key={p.name}
+            id={'p-' + i}
+            label={p.name}
+            width={760} height={780}>
+            <ButtonMatrix palette={p} />
+          </DCArtboard>
+        ))}
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+</script>
+</body>
+</html>

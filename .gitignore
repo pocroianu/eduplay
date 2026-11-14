@@ -1,0 +1,6 @@
+# Local workspace IDE metadata
+/.idea/
+
+# Temporary captures and account-bearing design references
+/edu-play-core/.tmp/
+/edu-play-core/src/shared/components/ui/seesaw-design-system/project/uploads/

@@ -1,0 +1,675 @@
+{
+  "version": "2.0.0",
+  "baseUrl": "assets",
+  "sharedGroups": {
+    "core-mascots": {
+      "images": [
+        "guapen",
+        "FufuSuperDino"
+      ],
+      "audio": [],
+      "spritesheets": []
+    }
+  },
+  "games": {
+    "fruits-01": {
+      "sharedGroups": [
+        "core-mascots"
+      ],
+      "manifest": {
+        "images": [
+          "apple",
+          "banana",
+          "carrot",
+          "bird",
+          "cat",
+          "frog",
+          "ax",
+          "hat",
+          "umbrella"
+        ],
+        "audio": [
+          "question1",
+          "question2",
+          "question3"
+        ],
+        "spritesheets": []
+      }
+    },
+    "animals-01": {
+      "sharedGroups": [
+        "core-mascots"
+      ],
+      "manifest": {
+        "images": [
+          "cat",
+          "bird",
+          "frog",
+          "elephant",
+          "koala",
+          "pig",
+          "lion",
+          "tiger",
+          "goat",
+          "butterfly",
+          "bee",
+          "spider",
+          "shark",
+          "goldfish",
+          "crab"
+        ],
+        "audio": [],
+        "spritesheets": []
+      }
+    },
+    "colors-01": {
+      "sharedGroups": [
+        "core-mascots"
+      ],
+      "manifest": {
+        "images": [
+          "apple",
+          "banana",
+          "carrot",
+          "leaf",
+          "frog",
+          "pig",
+          "sun",
+          "water"
+        ],
+        "audio": [],
+        "spritesheets": []
+      }
+    },
+    "food-01": {
+      "sharedGroups": [
+        "core-mascots"
+      ],
+      "manifest": {
+        "images": [
+          "pizza",
+          "cake",
+          "bread",
+          "pie",
+          "cookie",
+          "carrot",
+          "banana",
+          "apple",
+          "egg",
+          "cereal",
+          "lollipop"
+        ],
+        "audio": [],
+        "spritesheets": []
+      }
+    },
+    "objects-01": {
+      "sharedGroups": [
+        "core-mascots"
+      ],
+      "manifest": {
+        "images": [
+          "umbrella",
+          "hat",
+          "jacket",
+          "key",
+          "brush",
+          "bottle",
+          "bed",
+          "ladder",
+          "mat",
+          "kite",
+          "rocket",
+          "bird",
+          "sun"
+        ],
+        "audio": [],
+        "spritesheets": []
+      }
+    },
+    "nature-01": {
+      "sharedGroups": [
+        "core-mascots"
+      ],
+      "manifest": {
+        "images": [
+          "sun",
+          "water",
+          "leaf",
+          "log",
+          "ocean",
+          "beach",
+          "garden",
+          "cabin",
+          "city"
+        ],
+        "audio": [],
+        "spritesheets": []
+      }
+    }
+  },
+  "pinnedAssets": {
+    "apple": {
+      "type": "image",
+      "assetId": "sha256-0a827d9b4661d0a949ed5edd796de47170fdc3e1923aee592e70c40de2a29f28",
+      "sha256": "0a827d9b4661d0a949ed5edd796de47170fdc3e1923aee592e70c40de2a29f28",
+      "path": "/assets/library/images/apple.png"
+    },
+    "ax": {
+      "type": "image",
+      "assetId": "sha256-1e9cc9bafc6f7c29ef361f7bfdf5782e5c24c02bb1592844e15030b7eb0573b9",
+      "sha256": "1e9cc9bafc6f7c29ef361f7bfdf5782e5c24c02bb1592844e15030b7eb0573b9",
+      "path": "/assets/library/images/ax.png"
+    },
+    "banana": {
+      "type": "image",
+      "assetId": "sha256-e1e2b50ef86de8a6bc34475cf8018a6ea19d35b24dccd801daf54eddef85d94b",
+      "sha256": "e1e2b50ef86de8a6bc34475cf8018a6ea19d35b24dccd801daf54eddef85d94b",
+      "path": "/assets/library/images/banana.png"
+    },
+    "bat": {
+      "type": "image",
+      "assetId": "sha256-09fda8e99fd631bb4a8e11340e6109d77a2e017400efe0804b2a719a3a0014a9",
+      "sha256": "09fda8e99fd631bb4a8e11340e6109d77a2e017400efe0804b2a719a3a0014a9",
+      "path": "/assets/library/images/bat.png"
+    },
+    "beach": {
+      "type": "image",
+      "assetId": "sha256-56193a7c51bb73815486a3a201911da2b2c07c4095070258e3fff4a0c3bbc1be",
+      "sha256": "56193a7c51bb73815486a3a201911da2b2c07c4095070258e3fff4a0c3bbc1be",
+      "path": "/assets/library/images/beach.png"
+    },
+    "bed": {
+      "type": "image",
+      "assetId": "sha256-ebf419c56342f1ea33ed7a232ed4aa304d890b07adaf1a3845004f4090b38f39",
+      "sha256": "ebf419c56342f1ea33ed7a232ed4aa304d890b07adaf1a3845004f4090b38f39",
+      "path": "/assets/library/images/bed.png"
+    },
+    "bee": {
+      "type": "image",
+      "assetId": "sha256-5fc03e143f44ed22fcfd7b5cf6b26ded6b646791fd68bc60aab3e667e735540b",
+      "sha256": "5fc03e143f44ed22fcfd7b5cf6b26ded6b646791fd68bc60aab3e667e735540b",
+      "path": "/assets/library/images/bee.png"
+    },
+    "bird": {
+      "type": "image",
+      "assetId": "sha256-1e87d81e1c52514f2a28b76b123b8b256674dce2eef774bf1fdb93121a051ec6",
+      "sha256": "1e87d81e1c52514f2a28b76b123b8b256674dce2eef774bf1fdb93121a051ec6",
+      "path": "/assets/library/images/bird.png"
+    },
+    "bottle": {
+      "type": "image",
+      "assetId": "sha256-a2abdcedf4090b729715918dd026ae3a436563284304610343a0ee320288fd08",
+      "sha256": "a2abdcedf4090b729715918dd026ae3a436563284304610343a0ee320288fd08",
+      "path": "/assets/library/images/bottle.png"
+    },
+    "bread": {
+      "type": "image",
+      "assetId": "sha256-a7c6df3609a9556eff1c4b82742c8936b5bbee13b133a0310a86d43d58fa0bd5",
+      "sha256": "a7c6df3609a9556eff1c4b82742c8936b5bbee13b133a0310a86d43d58fa0bd5",
+      "path": "/assets/library/images/bread.png"
+    },
+    "brush": {
+      "type": "image",
+      "assetId": "sha256-feee23f492e23ad2d94b8c6f11a9992859426b6765a9e45283ddebaac6f54ae5",
+      "sha256": "feee23f492e23ad2d94b8c6f11a9992859426b6765a9e45283ddebaac6f54ae5",
+      "path": "/assets/library/images/brush.png"
+    },
+    "butterfly": {
+      "type": "image",
+      "assetId": "sha256-6b2a4cad821ea232574a111e74e63cf38dc886ec70586c0f82de70bc813d61ed",
+      "sha256": "6b2a4cad821ea232574a111e74e63cf38dc886ec70586c0f82de70bc813d61ed",
+      "path": "/assets/library/images/butterfly.png"
+    },
+    "cabin": {
+      "type": "image",
+      "assetId": "sha256-d3203e0d4181bcb7dcdfb20a5725698d159d78c642343ddbd540114f4205290a",
+      "sha256": "d3203e0d4181bcb7dcdfb20a5725698d159d78c642343ddbd540114f4205290a",
+      "path": "/assets/library/images/cabin.png"
+    },
+    "cake": {
+      "type": "image",
+      "assetId": "sha256-69686b00629242b8b6f9ce7886cfb5840ec8a317007a8686db1c28d991c3c948",
+      "sha256": "69686b00629242b8b6f9ce7886cfb5840ec8a317007a8686db1c28d991c3c948",
+      "path": "/assets/library/images/cake.png"
+    },
+    "carrot": {
+      "type": "image",
+      "assetId": "sha256-22bcda9ec32f95dbe715efbeded30169af08ed8633921f8103bd8156ec1ed76c",
+      "sha256": "22bcda9ec32f95dbe715efbeded30169af08ed8633921f8103bd8156ec1ed76c",
+      "path": "/assets/library/images/carrot.png"
+    },
+    "cat": {
+      "type": "image",
+      "assetId": "sha256-46e0730d9c8aaaa2d49410b330361111c58b01ed9e18ea252bb563c34d320a20",
+      "sha256": "46e0730d9c8aaaa2d49410b330361111c58b01ed9e18ea252bb563c34d320a20",
+      "path": "/assets/library/images/cat.png"
+    },
+    "cereal": {
+      "type": "image",
+      "assetId": "sha256-916688b096f1d57098c11d54b54b523545372268629587e84dcdad7c9106aced",
+      "sha256": "916688b096f1d57098c11d54b54b523545372268629587e84dcdad7c9106aced",
+      "path": "/assets/library/images/cereal.png"
+    },
+    "city": {
+      "type": "image",
+      "assetId": "sha256-faf05003a867c0d8ab45c068567686e5f983831485238d723a58d4aa4633551c",
+      "sha256": "faf05003a867c0d8ab45c068567686e5f983831485238d723a58d4aa4633551c",
+      "path": "/assets/library/images/city.png"
+    },
+    "cookie": {
+      "type": "image",
+      "assetId": "sha256-43e502e746df5b2b665cfbc2a8c5a048ae1ac9cff3be06ada689788a08d4aa4e",
+      "sha256": "43e502e746df5b2b665cfbc2a8c5a048ae1ac9cff3be06ada689788a08d4aa4e",
+      "path": "/assets/library/images/cookie.png"
+    },
+    "crab": {
+      "type": "image",
+      "assetId": "sha256-975566873a557b8eddc5921ef7a2d7276a1545b77f0d4327196718749c0af033",
+      "sha256": "975566873a557b8eddc5921ef7a2d7276a1545b77f0d4327196718749c0af033",
+      "path": "/assets/library/images/crab.png"
+    },
+    "dig": {
+      "type": "image",
+      "assetId": "sha256-3067ba1a1f33839fa7bf995ab021cbb5a5a1e5eaf17ef6e3d49d90312cbdc63a",
+      "sha256": "3067ba1a1f33839fa7bf995ab021cbb5a5a1e5eaf17ef6e3d49d90312cbdc63a",
+      "path": "/assets/library/images/dig.png"
+    },
+    "doctor": {
+      "type": "image",
+      "assetId": "sha256-a74bc495be3e0e36f25b01d192881ec41fc08476b0de004dabed459665d7b532",
+      "sha256": "a74bc495be3e0e36f25b01d192881ec41fc08476b0de004dabed459665d7b532",
+      "path": "/assets/library/images/doctor.png"
+    },
+    "eel": {
+      "type": "image",
+      "assetId": "sha256-46a0d83ca09fa630a6e4be6914727650a407582dcaa2a57aae2129b90c11bea0",
+      "sha256": "46a0d83ca09fa630a6e4be6914727650a407582dcaa2a57aae2129b90c11bea0",
+      "path": "/assets/library/images/eel.png"
+    },
+    "egg": {
+      "type": "image",
+      "assetId": "sha256-c061baec63f476f90ae9b9711a85c17ad64345ae0cff8d8357bf57f623552af8",
+      "sha256": "c061baec63f476f90ae9b9711a85c17ad64345ae0cff8d8357bf57f623552af8",
+      "path": "/assets/library/images/egg.png"
+    },
+    "elephant": {
+      "type": "image",
+      "assetId": "sha256-e5e0a4eb02cca12c807d92cd465cd86079556662a38eb24b98718b039607e0bd",
+      "sha256": "e5e0a4eb02cca12c807d92cd465cd86079556662a38eb24b98718b039607e0bd",
+      "path": "/assets/library/images/elephant.png"
+    },
+    "eyes": {
+      "type": "image",
+      "assetId": "sha256-a4cad909756f3347e72dc69b0f26adbdfacd3f2ff5a5a7a88fe3645ed2fd5168",
+      "sha256": "a4cad909756f3347e72dc69b0f26adbdfacd3f2ff5a5a7a88fe3645ed2fd5168",
+      "path": "/assets/library/images/eyes.png"
+    },
+    "family": {
+      "type": "image",
+      "assetId": "sha256-5b46e3b7321515f1962adf051f5e242c987118944ae3fd4d18451ed4fdda51b2",
+      "sha256": "5b46e3b7321515f1962adf051f5e242c987118944ae3fd4d18451ed4fdda51b2",
+      "path": "/assets/library/images/family.png"
+    },
+    "frog": {
+      "type": "image",
+      "assetId": "sha256-b7de066062210092f094e4770b35c1f5308d75faa077b437f24ea8993b87f616",
+      "sha256": "b7de066062210092f094e4770b35c1f5308d75faa077b437f24ea8993b87f616",
+      "path": "/assets/library/images/frog.png"
+    },
+    "FufuSuperDino": {
+      "type": "image",
+      "assetId": "sha256-25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "sha256": "25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "path": "/assets/library/images/FufuSuperDino.png"
+    },
+    "full": {
+      "type": "image",
+      "assetId": "sha256-4c36560f21055b11e857a7807143d9b4f78880f1013cbcdc0ad4727e7413420e",
+      "sha256": "4c36560f21055b11e857a7807143d9b4f78880f1013cbcdc0ad4727e7413420e",
+      "path": "/assets/library/images/full.png"
+    },
+    "fur": {
+      "type": "image",
+      "assetId": "sha256-8a00894f7bc0b078e3495ec2453bcd8ac2171a804b2557dba917338f88215415",
+      "sha256": "8a00894f7bc0b078e3495ec2453bcd8ac2171a804b2557dba917338f88215415",
+      "path": "/assets/library/images/fur.png"
+    },
+    "garden": {
+      "type": "image",
+      "assetId": "sha256-2f038d3bcf62aed28c866660bd50c8d3112efb7d24c31efd19df40295bf58ccc",
+      "sha256": "2f038d3bcf62aed28c866660bd50c8d3112efb7d24c31efd19df40295bf58ccc",
+      "path": "/assets/library/images/garden.png"
+    },
+    "goat": {
+      "type": "image",
+      "assetId": "sha256-1e9195d50705b6d13425a5955dd6cd35420be234494e2fbb1810a1809209aadd",
+      "sha256": "1e9195d50705b6d13425a5955dd6cd35420be234494e2fbb1810a1809209aadd",
+      "path": "/assets/library/images/goat.png"
+    },
+    "goldfish": {
+      "type": "image",
+      "assetId": "sha256-4eff2e7bc786b923f5efff7de1758ef243aa8ad6f0774376fd3feadf71442c71",
+      "sha256": "4eff2e7bc786b923f5efff7de1758ef243aa8ad6f0774376fd3feadf71442c71",
+      "path": "/assets/library/images/goldfish.png"
+    },
+    "guapen": {
+      "type": "image",
+      "assetId": "sha256-260a68c55e92c97d78bdf97b331b781f9fde63f2b12bb203fb4bbac0cdf525fe",
+      "sha256": "260a68c55e92c97d78bdf97b331b781f9fde63f2b12bb203fb4bbac0cdf525fe",
+      "path": "/assets/library/images/guapen.png"
+    },
+    "gum": {
+      "type": "image",
+      "assetId": "sha256-7107f3fdf268f10d21fe3cf42e398e0e4c098a0fefa40f948b09991f5ad80554",
+      "sha256": "7107f3fdf268f10d21fe3cf42e398e0e4c098a0fefa40f948b09991f5ad80554",
+      "path": "/assets/library/images/gum.png"
+    },
+    "hair": {
+      "type": "image",
+      "assetId": "sha256-89c205e7a3bbe457a8520c9fce2894fc5f577c3bb10ceac13e66b9d0a3f71b80",
+      "sha256": "89c205e7a3bbe457a8520c9fce2894fc5f577c3bb10ceac13e66b9d0a3f71b80",
+      "path": "/assets/library/images/hair.png"
+    },
+    "hat": {
+      "type": "image",
+      "assetId": "sha256-4aab83e028e49fd63cf6bfa0c082b846af31d49137116aa43288721235736cf1",
+      "sha256": "4aab83e028e49fd63cf6bfa0c082b846af31d49137116aa43288721235736cf1",
+      "path": "/assets/library/images/hat.png"
+    },
+    "jacket": {
+      "type": "image",
+      "assetId": "sha256-d4e2f00f9ef205b7cede52184ee0aead8a2a692014a9220fa330e13756c82d6b",
+      "sha256": "d4e2f00f9ef205b7cede52184ee0aead8a2a692014a9220fa330e13756c82d6b",
+      "path": "/assets/library/images/jacket.png"
+    },
+    "jar": {
+      "type": "image",
+      "assetId": "sha256-818735a4b32d136ec7a4e067d315ce83713df2019d11986f4c27797c0319614e",
+      "sha256": "818735a4b32d136ec7a4e067d315ce83713df2019d11986f4c27797c0319614e",
+      "path": "/assets/library/images/jar.png"
+    },
+    "jump": {
+      "type": "image",
+      "assetId": "sha256-28700a0562fd61cc41392f75240e0eb0fc64f7a4faada4af2d615268f4c06cca",
+      "sha256": "28700a0562fd61cc41392f75240e0eb0fc64f7a4faada4af2d615268f4c06cca",
+      "path": "/assets/library/images/jump.png"
+    },
+    "key": {
+      "type": "image",
+      "assetId": "sha256-ea01021b5c2f7e33263425586e2296f546df20aebb8bcbb1db6469b8cedfd0d5",
+      "sha256": "ea01021b5c2f7e33263425586e2296f546df20aebb8bcbb1db6469b8cedfd0d5",
+      "path": "/assets/library/images/key.png"
+    },
+    "kite": {
+      "type": "image",
+      "assetId": "sha256-4750a578c1ac2cf1fee816c7398a869648ceb891c5a5535fe5fdf9f8581f8c47",
+      "sha256": "4750a578c1ac2cf1fee816c7398a869648ceb891c5a5535fe5fdf9f8581f8c47",
+      "path": "/assets/library/images/kite.png"
+    },
+    "koala": {
+      "type": "image",
+      "assetId": "sha256-9c1c62c020ff1749b082bc6b8bdffa43fb6a1116c3cfec3af5609bc11de49038",
+      "sha256": "9c1c62c020ff1749b082bc6b8bdffa43fb6a1116c3cfec3af5609bc11de49038",
+      "path": "/assets/library/images/koala.png"
+    },
+    "ladder": {
+      "type": "image",
+      "assetId": "sha256-93bed61f88bda6dcbb1a5c37f4ef0f01a6e5e19794ed1e0d267805679fc9fc74",
+      "sha256": "93bed61f88bda6dcbb1a5c37f4ef0f01a6e5e19794ed1e0d267805679fc9fc74",
+      "path": "/assets/library/images/ladder.png"
+    },
+    "leaf": {
+      "type": "image",
+      "assetId": "sha256-0eee09d528c99789fc19ad1d8806c6f0e1c74390a3edc0787b9772494c15a8eb",
+      "sha256": "0eee09d528c99789fc19ad1d8806c6f0e1c74390a3edc0787b9772494c15a8eb",
+      "path": "/assets/library/images/leaf.png"
+    },
+    "lion": {
+      "type": "image",
+      "assetId": "sha256-7bc655bfaf5d0ecb50b3bc8c7d222f122adedc41f1c108875957d39529069251",
+      "sha256": "7bc655bfaf5d0ecb50b3bc8c7d222f122adedc41f1c108875957d39529069251",
+      "path": "/assets/library/images/lion.png"
+    },
+    "log": {
+      "type": "image",
+      "assetId": "sha256-a7d74a53d304f103c35049cd2dd6fc9c72a9a6a826881cd57b877c8dd1e0f974",
+      "sha256": "a7d74a53d304f103c35049cd2dd6fc9c72a9a6a826881cd57b877c8dd1e0f974",
+      "path": "/assets/library/images/log.png"
+    },
+    "lollipop": {
+      "type": "image",
+      "assetId": "sha256-5ddb7013b7a3c5b79dca46c1584ef7e24160731e123bd339926749768025017a",
+      "sha256": "5ddb7013b7a3c5b79dca46c1584ef7e24160731e123bd339926749768025017a",
+      "path": "/assets/library/images/lollipop.png"
+    },
+    "market": {
+      "type": "image",
+      "assetId": "sha256-0ce7b77703cf60c85649f4c463978b14b091ec4fb711dbc269b7f4794c6dae8b",
+      "sha256": "0ce7b77703cf60c85649f4c463978b14b091ec4fb711dbc269b7f4794c6dae8b",
+      "path": "/assets/library/images/market.png"
+    },
+    "mat": {
+      "type": "image",
+      "assetId": "sha256-e6e9db5b31228d655709ba37b83da6e4796ffe8a15d43c14b1740420e740a667",
+      "sha256": "e6e9db5b31228d655709ba37b83da6e4796ffe8a15d43c14b1740420e740a667",
+      "path": "/assets/library/images/mat.png"
+    },
+    "mittens": {
+      "type": "image",
+      "assetId": "sha256-80e3ece24bbdc2c25565526e291c2dad72d066ef6e97aff7fba26fd766b4f69e",
+      "sha256": "80e3ece24bbdc2c25565526e291c2dad72d066ef6e97aff7fba26fd766b4f69e",
+      "path": "/assets/library/images/mittens.png"
+    },
+    "museum": {
+      "type": "image",
+      "assetId": "sha256-9cb77d3fc5b7475b57bbc892408dedc07d1b2c050652fb6b5b08b487b3c63ee2",
+      "sha256": "9cb77d3fc5b7475b57bbc892408dedc07d1b2c050652fb6b5b08b487b3c63ee2",
+      "path": "/assets/library/images/museum.png"
+    },
+    "note": {
+      "type": "image",
+      "assetId": "sha256-90e5438e8cd5af6c5c77ae5554470be2941319a47707f3e1ec3c91c2454dee3e",
+      "sha256": "90e5438e8cd5af6c5c77ae5554470be2941319a47707f3e1ec3c91c2454dee3e",
+      "path": "/assets/library/images/note.png"
+    },
+    "nurse": {
+      "type": "image",
+      "assetId": "sha256-fc6d5dfd0ef7f569e1d687aa9eb162e418510dc36cfeadc487e2812c7adfb599",
+      "sha256": "fc6d5dfd0ef7f569e1d687aa9eb162e418510dc36cfeadc487e2812c7adfb599",
+      "path": "/assets/library/images/nurse.png"
+    },
+    "ocean": {
+      "type": "image",
+      "assetId": "sha256-ed99cbb14deb5322dd3a7e2c623fd8d4b3ec68e844339f1ade08a3c2a6dcae7e",
+      "sha256": "ed99cbb14deb5322dd3a7e2c623fd8d4b3ec68e844339f1ade08a3c2a6dcae7e",
+      "path": "/assets/library/images/ocean.png"
+    },
+    "ox": {
+      "type": "image",
+      "assetId": "sha256-6e8cb8fa01add99672f0a66b288b0bdc2b57f6ac147e6c35e44b1de6dab17998",
+      "sha256": "6e8cb8fa01add99672f0a66b288b0bdc2b57f6ac147e6c35e44b1de6dab17998",
+      "path": "/assets/library/images/ox.png"
+    },
+    "pat": {
+      "type": "image",
+      "assetId": "sha256-9c167571aa5a3ea9e02059ade88ddbe6f9d88f860f535591b87a1c43c8d86e56",
+      "sha256": "9c167571aa5a3ea9e02059ade88ddbe6f9d88f860f535591b87a1c43c8d86e56",
+      "path": "/assets/library/images/pat.png"
+    },
+    "pie": {
+      "type": "image",
+      "assetId": "sha256-52da20270c05594f60906665f3f694bfbd994049f0eeeadb3447aeeced534825",
+      "sha256": "52da20270c05594f60906665f3f694bfbd994049f0eeeadb3447aeeced534825",
+      "path": "/assets/library/images/pie.png"
+    },
+    "pig": {
+      "type": "image",
+      "assetId": "sha256-b73bc4e09f97974ac3e160385ff259a198e265632508b5dc223f35050b59a821",
+      "sha256": "b73bc4e09f97974ac3e160385ff259a198e265632508b5dc223f35050b59a821",
+      "path": "/assets/library/images/pig.png"
+    },
+    "pin": {
+      "type": "image",
+      "assetId": "sha256-8a71a1e7f71fa3ca81f8c1f8ebb7dc91a93647c376cc394b98a9e166f17a7bb0",
+      "sha256": "8a71a1e7f71fa3ca81f8c1f8ebb7dc91a93647c376cc394b98a9e166f17a7bb0",
+      "path": "/assets/library/images/pin.png"
+    },
+    "pizza": {
+      "type": "image",
+      "assetId": "sha256-7b864c547888b578132058eb97a84b740d7ac5f180d7c4a889c470d03184c49d",
+      "sha256": "7b864c547888b578132058eb97a84b740d7ac5f180d7c4a889c470d03184c49d",
+      "path": "/assets/library/images/pizza.png"
+    },
+    "placeholder-owl": {
+      "type": "image",
+      "assetId": "sha256-25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "sha256": "25239c3330b0da72c2460a56c9fbc701c6286ea9ab4f0eacfbd68d67f718a146",
+      "path": "/assets/library/images/placeholder-owl.png"
+    },
+    "play": {
+      "type": "image",
+      "assetId": "sha256-09bccfb9b38c4f511033592a0dc276971954c94e9eef0fb270774076e267e91a",
+      "sha256": "09bccfb9b38c4f511033592a0dc276971954c94e9eef0fb270774076e267e91a",
+      "path": "/assets/library/images/play.png"
+    },
+    "pop": {
+      "type": "image",
+      "assetId": "sha256-0377f34d65c6c16a627783d1fa05554667b81218987e14d9c0b7d1d4554cc7e5",
+      "sha256": "0377f34d65c6c16a627783d1fa05554667b81218987e14d9c0b7d1d4554cc7e5",
+      "path": "/assets/library/images/pop.png"
+    },
+    "question1": {
+      "type": "audio",
+      "assetId": "sha256-a76888f554c8eadd320f588754c13b94777cf042c7247e495e55cc3ac17a9dc4",
+      "sha256": "a76888f554c8eadd320f588754c13b94777cf042c7247e495e55cc3ac17a9dc4",
+      "path": "/assets/library/audio/question1.mp3"
+    },
+    "question2": {
+      "type": "audio",
+      "assetId": "sha256-f027f2840bdbf6dc4b5b31c80824affd84c31bbb45895a3589e67f465a4720f3",
+      "sha256": "f027f2840bdbf6dc4b5b31c80824affd84c31bbb45895a3589e67f465a4720f3",
+      "path": "/assets/library/audio/question2.mp3"
+    },
+    "question3": {
+      "type": "audio",
+      "assetId": "sha256-9e858978f4e73372bbe53a1d50f82ec7b3fbb7937f10ce66ae9b6a9b93fc3816",
+      "sha256": "9e858978f4e73372bbe53a1d50f82ec7b3fbb7937f10ce66ae9b6a9b93fc3816",
+      "path": "/assets/library/audio/question3.mp3"
+    },
+    "read": {
+      "type": "image",
+      "assetId": "sha256-85e8c1cb9c477f3f70d6ef460ac477acf21ce52771e0dbcff60514a1368760af",
+      "sha256": "85e8c1cb9c477f3f70d6ef460ac477acf21ce52771e0dbcff60514a1368760af",
+      "path": "/assets/library/images/read.png"
+    },
+    "rocket": {
+      "type": "image",
+      "assetId": "sha256-042720c097698a964b1464a2749711dd5340624ac5a575c529b07c6774593380",
+      "sha256": "042720c097698a964b1464a2749711dd5340624ac5a575c529b07c6774593380",
+      "path": "/assets/library/images/rocket.png"
+    },
+    "run": {
+      "type": "image",
+      "assetId": "sha256-58e11966fbdea96eb4d404ffabbfd64a091dced620cabe1b79abff4a9eaa1096",
+      "sha256": "58e11966fbdea96eb4d404ffabbfd64a091dced620cabe1b79abff4a9eaa1096",
+      "path": "/assets/library/images/run.png"
+    },
+    "shark": {
+      "type": "image",
+      "assetId": "sha256-e26dfb58ec70e6f2b95eba3abb31c3fd5bcb4edbc43890d0009850edfa9c78e3",
+      "sha256": "e26dfb58ec70e6f2b95eba3abb31c3fd5bcb4edbc43890d0009850edfa9c78e3",
+      "path": "/assets/library/images/shark.png"
+    },
+    "shirt": {
+      "type": "image",
+      "assetId": "sha256-0cceaded51c30ef40aa5890c55f7e151167ce0f64b99464b386b4506b03cdf6b",
+      "sha256": "0cceaded51c30ef40aa5890c55f7e151167ce0f64b99464b386b4506b03cdf6b",
+      "path": "/assets/library/images/shirt.png"
+    },
+    "side": {
+      "type": "image",
+      "assetId": "sha256-13f3e651e2709880167b66520bd504f41ded256488156b2714699e4af8e6eb20",
+      "sha256": "13f3e651e2709880167b66520bd504f41ded256488156b2714699e4af8e6eb20",
+      "path": "/assets/library/images/side.png"
+    },
+    "socks": {
+      "type": "image",
+      "assetId": "sha256-8fdba7ac89f44107c2d077e1a28012a64cf9ec635ca54442fd2ce2b00b33f65e",
+      "sha256": "8fdba7ac89f44107c2d077e1a28012a64cf9ec635ca54442fd2ce2b00b33f65e",
+      "path": "/assets/library/images/socks.png"
+    },
+    "spider": {
+      "type": "image",
+      "assetId": "sha256-dfbfa0d017034ee69a08129ae7e09daf58950958de7f4badd039cddb79f40923",
+      "sha256": "dfbfa0d017034ee69a08129ae7e09daf58950958de7f4badd039cddb79f40923",
+      "path": "/assets/library/images/spider.png"
+    },
+    "sun": {
+      "type": "image",
+      "assetId": "sha256-c4ba4a0fed0dbd344711c646ed47a36ddaa505b25d2b485938a15398a170df9f",
+      "sha256": "c4ba4a0fed0dbd344711c646ed47a36ddaa505b25d2b485938a15398a170df9f",
+      "path": "/assets/library/images/sun.png"
+    },
+    "swim": {
+      "type": "image",
+      "assetId": "sha256-0e4498cbfe9891aec474c4e64b235f9798e874f28df3ea6ba56cbe641778439b",
+      "sha256": "0e4498cbfe9891aec474c4e64b235f9798e874f28df3ea6ba56cbe641778439b",
+      "path": "/assets/library/images/swim.png"
+    },
+    "teacher": {
+      "type": "image",
+      "assetId": "sha256-715613d4f72723b8f41c973553f653bac76fa16fd86990ffee7418d31a4c800a",
+      "sha256": "715613d4f72723b8f41c973553f653bac76fa16fd86990ffee7418d31a4c800a",
+      "path": "/assets/library/images/teacher.png"
+    },
+    "tiger": {
+      "type": "image",
+      "assetId": "sha256-6c6a6b7da5d6b8845ab7cd7ab12bdb89d84d59e8e3a3e9ba853a07a84f7b9685",
+      "sha256": "6c6a6b7da5d6b8845ab7cd7ab12bdb89d84d59e8e3a3e9ba853a07a84f7b9685",
+      "path": "/assets/library/images/tiger.png"
+    },
+    "towel": {
+      "type": "image",
+      "assetId": "sha256-b71ddef05e2814adae3ad921b0693f04f00b7c39409e052ee69f69d48f6408e8",
+      "sha256": "b71ddef05e2814adae3ad921b0693f04f00b7c39409e052ee69f69d48f6408e8",
+      "path": "/assets/library/images/towel.png"
+    },
+    "umbrella": {
+      "type": "image",
+      "assetId": "sha256-aceb47ef430c65a9174effd4260538984f7501c5d3ca0f38302a36bccd6bff49",
+      "sha256": "aceb47ef430c65a9174effd4260538984f7501c5d3ca0f38302a36bccd6bff49",
+      "path": "/assets/library/images/umbrella.png"
+    },
+    "up": {
+      "type": "image",
+      "assetId": "sha256-3edd1e631f5e71fc3527909a47c7c66e0a8b9a240b2c99e5e3553f1a7671797e",
+      "sha256": "3edd1e631f5e71fc3527909a47c7c66e0a8b9a240b2c99e5e3553f1a7671797e",
+      "path": "/assets/library/images/up.png"
+    },
+    "vegetables": {
+      "type": "image",
+      "assetId": "sha256-30868130674ea04433820d4d324085d5eb6bc2893204d4903e13c352fdf44854",
+      "sha256": "30868130674ea04433820d4d324085d5eb6bc2893204d4903e13c352fdf44854",
+      "path": "/assets/library/images/vegetables.png"
+    },
+    "water": {
+      "type": "image",
+      "assetId": "sha256-36bf49e27edb4c85450cd5773dad55c1f30a082303a65ac92337fba7d57f41a4",
+      "sha256": "36bf49e27edb4c85450cd5773dad55c1f30a082303a65ac92337fba7d57f41a4",
+      "path": "/assets/library/images/water.png"
+    },
+    "woman": {
+      "type": "image",
+      "assetId": "sha256-e4c8c96500bd42f6dba0dd1a772b099a73574bc5b197481d55e3c0237cf9572e",
+      "sha256": "e4c8c96500bd42f6dba0dd1a772b099a73574bc5b197481d55e3c0237cf9572e",
+      "path": "/assets/library/images/woman.png"
+    },
+    "zipper": {
+      "type": "image",
+      "assetId": "sha256-169e3e4f64d18d885f161630fe8ba62f0b031f60d55271349c286a945b65d437",
+      "sha256": "169e3e4f64d18d885f161630fe8ba62f0b031f60d55271349c286a945b65d437",
+      "path": "/assets/library/images/zipper.png"
+    }
+  }
+}

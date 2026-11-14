@@ -1,0 +1,34 @@
+{
+	"meta": {
+		"title": "Explorator al Naturii",
+		"description": "Descoperă minunile naturii!"
+	},
+	"questions": {
+		"q1": {
+			"question": "Ce ne dă lumină în timpul zilei?"
+		},
+		"q2": {
+			"question": "Ce crește pe copaci?"
+		},
+		"q3": {
+			"question": "Ce bem pentru a rămâne sănătoși?"
+		},
+		"q4": {
+			"question": "Unde cresc florile?"
+		},
+		"q5": {
+			"question": "Care este marea întindere de apă sărată?"
+		}
+	},
+	"choices": {
+		"sun": "Soare",
+		"water": "Apă",
+		"leaf": "Frunză",
+		"log": "Buștean",
+		"ocean": "Ocean",
+		"beach": "Plajă",
+		"garden": "Grădină",
+		"cabin": "Cabană",
+		"city": "Oraș"
+	}
+}

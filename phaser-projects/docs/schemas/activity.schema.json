@@ -1,0 +1,49 @@
+{
+  "$ref": "#/definitions/activity",
+  "definitions": {
+    "activity": {
+      "type": "object",
+      "properties": {
+        "activityId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "integer",
+          "exclusiveMinimum": 0
+        },
+        "renderer": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "version": {
+              "type": "string",
+              "pattern": "^[~^]?\\d+\\.\\d+\\.\\d+$"
+            }
+          },
+          "required": [
+            "id",
+            "version"
+          ],
+          "additionalProperties": false
+        },
+        "gameId": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "activityId",
+        "version",
+        "renderer",
+        "gameId"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "Activity metadata"
+}

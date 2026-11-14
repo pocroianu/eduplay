@@ -1,0 +1,13 @@
+{
+  "meta": { "title": "Sunetele Animalelor" },
+  "instruction": "Repetă secvența",
+  "watchPrompt": "Ascultă și privește",
+  "repeatPrompt": "Acum tu!",
+  "progressTemplate": "Runda {current} din {total} • Lungime {length}",
+  "pads": {
+    "dog":  { "label": "câine" },
+    "cat":  { "label": "pisică" },
+    "cow":  { "label": "vacă" },
+    "duck": { "label": "rață" }
+  }
+}

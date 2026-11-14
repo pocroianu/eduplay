@@ -1,0 +1,9 @@
+{
+  "activityId": "forest-count-01",
+  "version": 1,
+  "renderer": {
+    "id": "counting-game",
+    "version": "^1.0.0"
+  },
+  "gameId": "forest-count-01"
+}

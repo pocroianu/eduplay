@@ -1,0 +1,128 @@
+{
+  "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
+  "entry": [
+    "src/index.{ts,tsx,js,jsx}",
+    "src/main.{ts,tsx,js,jsx}"
+  ],
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  },
+  "ignorePatterns": [
+    ".storybook/**"
+  ],
+  "duplicates": {
+    // Hide pair-only clones; focus on widespread copy-paste
+    // worth refactoring. Lower to 2 to report every duplicate pair.
+    "minOccurrences": 3
+    // Common additions (uncomment to enable):
+    // "ignore": [
+    //   "**/lib/**",          // for repos that publish transpiled output to lib/
+    //   "**/legacy/**",       // for repos with legacy-build artifacts
+    //   "**/__generated__/**", // Relay, GraphQL Code Generator
+    //   "**/generated/**"     // OpenAPI, Protobuf codegen
+    // ]
+  },
+  "rules": {
+    "unused-dependencies": "warn"
+  },
+  "ignoreExports": [
+    {
+      "file": "src/features/portfolio/types/index.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/shared/lib/storage/artifact-signed-url.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/lib/api/pagination.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/lib/api/response.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/activities/queries/get-activity-instance.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/activities/queries/index.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/games/queries/getGames.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/games/queries/index.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/portfolio/queries/get-artifact-by-id.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/portfolio/queries/index.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/parent-portal/queries/get-child-consents.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/parent-portal/queries/index.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/parent-portal/queries/get-child-progress-summary.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/family-feed/queries/get-family-feed.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/family-feed/queries/index.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/parent-portal/queries/get-linked-children.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/parent-portal/queries/get-notifications.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/learning-paths/queries/get-path-detail.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/learning-paths/queries/index.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/learning-paths/queries/get-paths-for-teacher.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/parent-portal/queries/get-recent-activity.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/portfolio/queries/get-signed-urls-for-artifacts.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/activities/queries/get-student-activities.ts",
+      "exports": ["*"]
+    },
+    {
+      "file": "src/features/parent-portal/queries/get-unread-notification-count.ts",
+      "exports": ["*"]
+    }
+  ]
+}

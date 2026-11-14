@@ -1,0 +1,21 @@
+{
+  "meta": {
+    "gameId": "numbers-7-to-12",
+    "version": "1.0.0",
+    "totalSteps": 1,
+    "gameType": "sequence",
+    "themeName": "ocean",
+    "pointsPerItem": 10,
+    "shuffleItems": true,
+    "supportedLanguages": ["en", "ro"]
+  },
+  "items": [
+    { "id": "i7",  "labelKey": "item.7",  "position": 1 },
+    { "id": "i8",  "labelKey": "item.8",  "position": 2 },
+    { "id": "i9",  "labelKey": "item.9",  "position": 3 },
+    { "id": "i10", "labelKey": "item.10", "position": 4 },
+    { "id": "i11", "labelKey": "item.11", "position": 5 },
+    { "id": "i12", "labelKey": "item.12", "position": 6 }
+  ],
+  "questions": []
+}

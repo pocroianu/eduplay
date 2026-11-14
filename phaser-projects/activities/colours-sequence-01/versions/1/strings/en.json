@@ -1,0 +1,13 @@
+{
+  "meta": { "title": "Colour Sequence" },
+  "instruction": "Repeat the sequence",
+  "watchPrompt": "Watch",
+  "repeatPrompt": "Your turn!",
+  "progressTemplate": "Round {current} of {total} • Length {length}",
+  "pads": {
+    "red":    { "label": "red" },
+    "blue":   { "label": "blue" },
+    "yellow": { "label": "yellow" },
+    "green":  { "label": "green" }
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "loading": "Se încarcă...",
+  "error": "Eroare",
+  "success": "Succes",
+  "save": "Salvează",
+  "cancel": "Anulează",
+  "delete": "Șterge",
+  "edit": "Editează",
+  "create": "Creează",
+  "back": "Înapoi",
+  "next": "Următorul",
+  "previous": "Anterior",
+  "search": "Caută",
+  "filter": "Filtrează",
+  "all": "Toate",
+  "none": "Niciunul",
+  "yes": "Da",
+  "no": "Nu",
+  "close": "Închide",
+  "confirm": "Confirmă",
+  "retry": "Încearcă din nou",
+  "fields": {
+    "password": {
+      "show": "Arată parola",
+      "hide": "Ascunde parola"
+    }
+  },
+  "language": {
+    "label": "Limbă",
+    "switcher": "Schimbă limba",
+    "ro": "Română",
+    "en": "Engleză"
+  },
+  "nav": {
+    "teacher": {
+      "dashboard": "Panou",
+      "classes": "Clasele mele",
+      "activities": "Activități",
+      "librariesExplore": "Biblioteci",
+      "library": "Biblioteca mea",
+      "paths": "Parcursuri"
+    }
+  },
+  "roles": {
+    "teacher": "Profesor",
+    "parent": "Părinte",
+    "student": "Elev",
+    "admin": "Administrator"
+  },
+  "shell": {
+    "accountFallback": "Cont",
+    "navbarAriaLabel": "Antet pagină",
+    "notifications": "Notificări",
+    "trophy": "Premii",
+    "pageTitles": {
+      "teacher": "Panou",
+      "teacherClasses": "Clasele mele",
+      "teacherStudents": "Elevi",
+      "teacherActivities": "Activități",
+      "teacherLibrariesExplore": "Biblioteci",
+      "teacherLibrary": "Biblioteca mea",
+      "teacherAssignments": "Teme",
+      "teacherPaths": "Parcursuri de învățare",
+      "teacherPortfolio": "Portofoliu",
+      "teacherGames": "Jocuri",
+      "teacherLanguage": "Setări limbă",
+      "teacherHelp": "Ajutor",
+      "teacherScan": "Scanare",
+      "teacherTrial": "Probă",
+      "teacherAccountSettings": "Setări cont",
+      "teacherAccountSchool": "Școala mea",
+      "teacherAccountDevice": "Informații dispozitiv",
+      "parent": "Acasă părinte",
+      "parentChildren": "Copiii mei",
+      "parentActivities": "Activități",
+      "parentNotifications": "Notificări",
+      "admin": "Administrare",
+      "adminUsers": "Utilizatori",
+      "adminActivities": "Conținut",
+      "adminFlags": "Feature flags",
+      "adminAudit": "Jurnal audit",
+      "adminPrivacy": "Confidențialitate",
+      "teacherWelcome": "Bun venit, {{name}}"
+    },
+    "sidebar": {
+      "collapse": "Restrânge navigarea",
+      "expand": "Extinde navigarea",
+      "accountMenuButton": "Deschide meniul contului",
+      "accountMenuTitle": "Meniu cont",
+      "accountSettings": "Setări cont",
+      "mySchool": "Școala mea",
+      "deviceInformation": "Informații dispozitiv",
+      "signOut": "Deconectare",
+      "addAccount": "Adaugă cont",
+      "languageSettings": "Selectează limba",
+      "languageSettingsShort": "Setări",
+      "help": "Ajutor",
+      "scan": "Scanare",
+      "trial": "Probă",
+      "addClass": "Adaugă clasă"
+    },
+    "createMenu": {
+      "button": "Deschide meniul de creare",
+      "title": "Creează",
+      "postToJournal": "Alege clasa pentru postare",
+      "assignActivity": "Atribuie o activitate",
+      "createActivity": "Creează activitate",
+      "generateActivity": "Generează activitate"
+    }
+  }
+}

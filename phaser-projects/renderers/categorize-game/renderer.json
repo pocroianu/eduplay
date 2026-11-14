@@ -1,0 +1,7 @@
+{
+  "rendererId": "categorize-game",
+  "version": "1.0.0",
+  "defaultGameId": "animals-habitat-01",
+  "entry": "src/template.ts",
+  "configGameType": "categorize"
+}

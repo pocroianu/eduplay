@@ -1,0 +1,117 @@
+.content {
+  background: transparent;
+  color: var(--color-on-surface);
+  overflow: visible;
+}
+
+.content[role='dialog'] {
+  background: var(--color-surface-container-lowest);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-popover);
+  overflow: hidden;
+}
+
+.body {
+  padding: 0;
+}
+
+.header {
+  padding: 14px 12px 10px;
+}
+
+.row {
+  --menu-row-color: var(--color-on-surface);
+  --menu-row-hover-bg: var(--color-surface-container);
+
+  align-items: center;
+  color: var(--menu-row-color);
+  display: flex;
+  min-height: 40px;
+  padding: 0 14px;
+  text-align: left;
+  transition:
+    background-color 160ms var(--ease-out),
+    color 160ms var(--ease-out);
+  width: 100%;
+}
+
+.row:hover {
+  background-color: var(--menu-row-hover-bg);
+}
+
+.row:active .rowContent {
+  transform: translateX(2px) scale(0.99);
+}
+
+.row[data-tone='danger'] {
+  --menu-row-color: var(--color-error);
+  --menu-row-hover-bg: color-mix(in oklab, var(--color-error) 10%, transparent);
+}
+
+.rowContent {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  min-width: 0;
+  transform: translateX(0);
+  transition: transform 160ms var(--ease-out);
+}
+
+.row:hover .rowContent,
+.row:focus-visible .rowContent {
+  transform: translateX(3px);
+}
+
+.icon {
+  color: var(--menu-row-color);
+  display: inline-flex;
+  flex: 0 0 auto;
+  transform: scale(1);
+  transform-origin: center;
+  transition:
+    color 160ms var(--ease-out),
+    transform 160ms var(--ease-out);
+}
+
+.row:hover .icon,
+.row:focus-visible .icon {
+  transform: scale(1.06);
+}
+
+.label {
+  color: var(--menu-row-color);
+  min-width: 0;
+  transition: color 160ms var(--ease-out);
+}
+
+@media (max-width: 47.99em) {
+  .header {
+    padding: 18px 16px 14px;
+  }
+
+  .row {
+    min-height: 48px;
+    padding: 0 18px;
+  }
+
+  .rowContent {
+    gap: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .row,
+  .rowContent,
+  .icon,
+  .label {
+    transition-duration: 1ms;
+  }
+
+  .row:hover .rowContent,
+  .row:focus-visible .rowContent,
+  .row:active .rowContent,
+  .row:hover .icon,
+  .row:focus-visible .icon {
+    transform: none;
+  }
+}

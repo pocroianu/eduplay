@@ -1,0 +1,23 @@
+{
+  "meta": {
+    "gameId": "farm-count-01",
+    "version": "1.0.0",
+    "totalSteps": 5,
+    "gameType": "counting",
+    "themeName": "nature",
+    "pointsPerRound": 10,
+    "roundDelay": 900,
+    "supportedLanguages": ["ro", "en"],
+    "defaultShape": "circle",
+    "defaultFillColor": 16758605,
+    "defaultStrokeColor": 15028480
+  },
+  "rounds": [
+    { "id": "r1", "count": 2 },
+    { "id": "r2", "count": 4 },
+    { "id": "r3", "count": 1 },
+    { "id": "r4", "count": 5 },
+    { "id": "r5", "count": 3 }
+  ],
+  "questions": []
+}
