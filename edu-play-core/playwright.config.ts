@@ -33,8 +33,8 @@ export default defineConfig({
   // Retry on CI only
   retries: process.env.CI ? 2 : 0,
 
-  // Opt out of parallel tests on CI (Supabase connections may be limited)
-  workers: process.env.CI ? 1 : 1,
+  // Keep database-backed tests serial locally and in CI.
+  workers: 1,
 
   // Reporter to use
   reporter: process.env.CI
@@ -69,7 +69,8 @@ export default defineConfig({
   // Output directory for test artifacts
   outputDir: "test-results",
 
-  // Projects for different browsers
+  // Chromium is the supported browser gate. Add other projects alongside
+  // working fixtures and CI browser installation when expanding the matrix.
   projects: [
     // Desktop browsers
     {
@@ -80,43 +81,6 @@ export default defineConfig({
         viewport: { width: 1280, height: 720 },
       },
     },
-    // {
-    //   name: 'firefox',
-    //   use: {
-    //     ...devices['Desktop Firefox'],
-    //     viewport: { width: 1280, height: 720 },
-    //   },
-    // },
-    // {
-    //   name: 'webkit',
-    //   use: {
-    //     ...devices['Desktop Safari'],
-    //     viewport: { width: 1280, height: 720 },
-    //   },
-    // },
-
-    // // Mobile browsers (important for student UI with touch targets)
-    // {
-    //   name: 'mobile-chrome',
-    //   use: {
-    //     ...devices['Pixel 5'],
-    //     // Student UI requires larger touch targets (64x64px min)
-    //   },
-    // },
-    // {
-    //   name: 'mobile-safari',
-    //   use: {
-    //     ...devices['iPhone 12'],
-    //   },
-    // },
-
-    // // Tablet (good middle ground for testing responsive)
-    // {
-    //   name: 'tablet',
-    //   use: {
-    //     ...devices['iPad (gen 7)'],
-    //   },
-    // },
   ],
 
   // Configure web server for local testing

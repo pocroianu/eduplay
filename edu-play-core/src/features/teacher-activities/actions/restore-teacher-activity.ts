@@ -37,8 +37,3 @@ export async function restoreTeacherActivity(activityId: string): Promise<Restor
 
   return { success: true, data: { activityId: restoredId } }
 }
-
-async function restoreTeacherActivityFromForm(formData: FormData): Promise<void> {
-  const activityId = String(formData.get('activityId') ?? '')
-  await restoreTeacherActivity(activityId)
-}

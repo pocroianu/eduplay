@@ -87,7 +87,7 @@ npm run verify:agent      # Default local agent gate
 
 ## Database
 
-Key tables: `profiles`, `classes`, `students`, `games`, `game_progress`, `assignments`
+Key tables: `profiles`, `classes`, `students`, `activities`, `activity_versions`, `activity_progress`, `assignments`
 
 ```bash
 # Studio GUI: http://localhost:54423
@@ -96,7 +96,7 @@ Key tables: `profiles`, `classes`, `students`, `games`, `game_progress`, `assign
 
 ## Game Development
 
-Games use Phaser 3 in iframes, communicating via `postMessage`. See [public/games/README.md](./public/games/README.md).
+Games use Phaser 4 on a shared Vite Activity host, embedded in iframes and communicating via `postMessage`. Renderer bundles are deployed to Supabase Storage and served through the platform's renderer proxy. See [public/games/README.md](./public/games/README.md).
 
 ## API
 
@@ -106,11 +106,11 @@ REST API available at `/api/v1/`. All endpoints return `{ data, error, meta }`.
 # Health check
 curl http://localhost:3000/api/v1/health
 
-# List games (requires auth cookie)
-curl http://localhost:3000/api/v1/games?page=1&perPage=10
+# List activities (requires auth cookie)
+curl http://localhost:3000/api/v1/activities
 ```
 
-Key endpoints: `/api/v1/games`, `/api/v1/classes`, `/api/v1/students`, `/api/v1/assignments`, `/api/v1/progress`. See [docs/api.md](./docs/api.md) and [ARCHITECTURE.md](./ARCHITECTURE.md#api-layer) for API details.
+Key endpoints: `/api/v1/activities`, `/api/v1/classes`, `/api/v1/students`, `/api/v1/assignments`, `/api/v1/progress`. The old `/api/v1/games` endpoint returns HTTP 410. See [docs/api.md](./docs/api.md) and [ARCHITECTURE.md](./ARCHITECTURE.md#api-layer) for API details.
 
 ## Environment Variables
 
@@ -133,8 +133,12 @@ Use `env.example` only when you intentionally want to point the app at a differe
 
 ```bash
 npm run build && npm run start    # Production
-docker build -t eduplay .         # Docker
 ```
+
+The root Docker files are retained for ongoing deployment work, but the
+production Dockerfile does not yet match the required Node version and Next.js
+output configuration. Validate and repair that path before using it for a
+release. The deprecated duplicate `docker-setup/` tree has been removed.
 
 ## Troubleshooting
 
@@ -149,6 +153,6 @@ docker build -t eduplay .         # Docker
 
 - [AGENTS.md](./AGENTS.md) - Agent workflow and development conventions
 - [ARCHITECTURE.md](./ARCHITECTURE.md) - System design and feature ownership
-- [DESIGN.md](./DESIGN.md) - Duo design system and UI rules
-- [REQUIREMENTS.md](./REQUIREMENTS.md) - Product requirements
+- [DESIGN.md](./DESIGN.md) - EduPlay design system and UI rules
+- [docs/prd/](./docs/prd/) - Available product requirements documents
 - [public/games/README.md](./public/games/README.md) - Game integration guide

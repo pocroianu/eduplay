@@ -4,7 +4,6 @@ import i18next, { type i18n as I18nInstance } from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
 import {
-  DEFAULT_LANGUAGE,
   FALLBACK_LANGUAGE,
   NAMESPACES,
   type Language,

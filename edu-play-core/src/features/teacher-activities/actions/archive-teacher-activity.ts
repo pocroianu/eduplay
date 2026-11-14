@@ -37,8 +37,3 @@ export async function archiveTeacherActivity(activityId: string): Promise<Archiv
 
   return { success: true, data: { activityId: archivedId } }
 }
-
-async function archiveTeacherActivityFromForm(formData: FormData): Promise<void> {
-  const activityId = String(formData.get('activityId') ?? '')
-  await archiveTeacherActivity(activityId)
-}

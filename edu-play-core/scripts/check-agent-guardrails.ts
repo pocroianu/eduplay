@@ -910,12 +910,13 @@ function collectDiffEntries(
 ): void {
   const nameStatus = gitCommand([
     'diff',
+    '--relative',
     '--name-status',
     '--diff-filter=ACMRD',
     ...diffTargetArgs,
   ]);
   const changedLines = parseChangedLines(
-    gitCommand(['diff', '--unified=0', '--no-ext-diff', '--diff-filter=ACMR', ...diffTargetArgs])
+    gitCommand(['diff', '--relative', '--unified=0', '--no-ext-diff', '--diff-filter=ACMR', ...diffTargetArgs])
   );
 
   parseNameStatus(nameStatus).forEach((entry) => {

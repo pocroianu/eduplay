@@ -1,7 +1,6 @@
 import 'server-only';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
-import { requireAuth } from '@/lib/api/auth';
 
 export const CHILD_ARTIFACTS_BUCKET = 'child-artifacts';
 export const DEFAULT_ARTIFACT_SIGNED_URL_TTL_SECONDS = 60 * 5;
@@ -115,17 +114,4 @@ export async function resolveArtifactSignedUrl({
     path: row.storage_path,
     expiresIn,
   };
-}
-
-async function getArtifactSignedUrl(
-  artifactId: string,
-  expiresIn: number = DEFAULT_ARTIFACT_SIGNED_URL_TTL_SECONDS,
-): Promise<SignedUrlOutcome> {
-  const { user, profile, supabase } = await requireAuth();
-  return resolveArtifactSignedUrl({
-    artifactId,
-    expiresIn,
-    supabase,
-    caller: { userId: user.id, role: profile.role },
-  });
 }

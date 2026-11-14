@@ -168,5 +168,4 @@ export { Vulpita } from './Vulpita';
 export type { VulpitaProps, VulpitaMood, VulpitaBandana } from './Vulpita';
 export { RewardModal } from './RewardModal';
 export type { RewardModalProps, RewardItem, RewardTone } from './RewardModal';
-export type { DuoSkeletonProps } from './DuoSkeleton';
 export type { DuoTooltipProps } from './DuoTooltip';

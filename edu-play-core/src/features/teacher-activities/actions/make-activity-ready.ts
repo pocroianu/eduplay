@@ -110,8 +110,3 @@ export async function makeActivityReady(activityId: string): Promise<MakeActivit
     return { success: false, error: getErrorMessage(error) }
   }
 }
-
-async function makeActivityReadyFromForm(formData: FormData): Promise<void> {
-  const activityId = String(formData.get('activityId') ?? '')
-  await makeActivityReady(activityId)
-}

@@ -45,7 +45,6 @@ describe('Popup', () => {
   it('calls onClose on backdrop click', () => {
     const onClose = vi.fn();
     render(<Popup open onClose={onClose} title="Test" />);
-    const backdrop = screen.getAllByRole('button', { name: /închide/i })[1] ?? screen.getByRole('button', { name: /închide/i });
     // The backdrop is the button with tabIndex -1
     const buttons = screen.getAllByRole('button', { hidden: true });
     const backdropBtn = buttons.find((b) => b.getAttribute('tabindex') === '-1');

@@ -36,8 +36,3 @@ export async function duplicateTeacherActivity(activityId: string): Promise<Dupl
 
   return { success: true, data: { activityId: duplicatedId } }
 }
-
-async function duplicateTeacherActivityFromForm(formData: FormData): Promise<void> {
-  const activityId = String(formData.get('activityId') ?? '')
-  await duplicateTeacherActivity(activityId)
-}

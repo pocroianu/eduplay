@@ -61,12 +61,3 @@ export async function reviewActivitySubmission(input: unknown): Promise<ReviewAc
   revalidatePath(ROUTES.TEACHER.ACTIVITIES)
   return { success: true }
 }
-
-async function reviewActivitySubmissionFromForm(formData: FormData): Promise<void> {
-  await reviewActivitySubmission({
-    submissionId: String(formData.get('submissionId') ?? ''),
-    decision: String(formData.get('decision') ?? ''),
-    feedback: String(formData.get('feedback') ?? ''),
-    familyComment: String(formData.get('familyComment') ?? ''),
-  })
-}
