@@ -8,8 +8,6 @@ export const listAuditLogQuerySchema = z.object({
   to: z.string().datetime().optional(),
 });
 
-export type ListAuditLogQuery = z.infer<typeof listAuditLogQuerySchema>;
-
 /**
  * Public API entity shape for an `audit_log` row (camelCase, after
  * `camelCaseKeys`).

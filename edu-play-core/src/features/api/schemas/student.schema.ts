@@ -20,9 +20,6 @@ export const listStudentsQuerySchema = z.object({
   perPage: z.coerce.number().int().min(1).max(100).optional(),
 });
 
-export type CreateStudentInput = z.infer<typeof createStudentSchema>;
-export type UpdateStudentInput = z.infer<typeof updateStudentSchema>;
-
 /**
  * Public API entity shape for a student row (camelCase, after `camelCaseKeys`).
  *

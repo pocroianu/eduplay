@@ -17,9 +17,6 @@ export const updateClassSchema = z.object({
   isActive: z.boolean().optional(),
 });
 
-export type CreateClassInput = z.infer<typeof createClassSchema>;
-export type UpdateClassInput = z.infer<typeof updateClassSchema>;
-
 /**
  * Public API entity shape for a class row (camelCase, after `camelCaseKeys`).
  *

@@ -11,8 +11,8 @@
 **Prerequisites:** Node.js 24.12.0, Docker Desktop, Git
 
 ```bash
-git clone <repository-url>
-cd edu-play-core
+git clone https://github.com/pocroianu/eduplay.git
+cd eduplay/edu-play-core
 npm ci
 npm run dev:full          # Starts Supabase + Next.js and auto-writes .env.local
 ```
@@ -138,7 +138,7 @@ npm run build && npm run start    # Production
 The root Docker files are retained for ongoing deployment work, but the
 production Dockerfile does not yet match the required Node version and Next.js
 output configuration. Validate and repair that path before using it for a
-release. The deprecated duplicate `docker-setup/` tree has been removed.
+release.
 
 ## Troubleshooting
 

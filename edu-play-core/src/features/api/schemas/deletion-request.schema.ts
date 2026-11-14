@@ -7,5 +7,3 @@ export const createDeletionRequestSchema = z.object({
     .max(500, 'Reason must be at most 500 characters')
     .optional(),
 });
-
-export type CreateDeletionRequestInput = z.infer<typeof createDeletionRequestSchema>;

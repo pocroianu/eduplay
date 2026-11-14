@@ -23,5 +23,3 @@ export const listListenTapWordListsQuerySchema = z.object({
 });
 
 export type ListenTapWordEntry = z.infer<typeof listenTapWordEntrySchema>;
-export type CreateListenTapWordListInput = z.infer<typeof createListenTapWordListSchema>;
-export type UpdateListenTapWordListInput = z.infer<typeof updateListenTapWordListSchema>;

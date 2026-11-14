@@ -27,9 +27,14 @@ Renderers are package-less modules under `renderers/`. Legacy per-template webpa
 ### Build and test
 ```bash
 npm run build:all
+npm run lint
 npm run test:game-core
 npm run test:e2e
 ```
+
+`npm run lint` runs lint scripts declared by workspaces. Currently only
+`@edu-play/ai-content` has a lint configuration; renderer and shared runtime
+lint coverage is still pending.
 
 ## 🛠️ Tech Stack
 
