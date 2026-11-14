@@ -11,10 +11,10 @@ npm run test:e2e:smoke    # Focused Chromium smoke suite
 npm run test:e2e:report   # Open the last HTML report
 ```
 
-`npm run test:e2e:smoke` covers representative teacher, student, parent, admin,
-assignment launch, and game/play paths through existing specs. Use it for fast
-browser confidence before full E2E when changing shared routing, auth, shells,
-or agent-facing guardrails.
+Only Chromium is currently configured. The smoke command selects teacher,
+student, parent, admin, and assignment specs, but successful login and several
+assignment scenarios remain skipped pending deterministic fixtures. A passing
+smoke run does not yet verify the full authenticated assignment lifecycle.
 
 ## Artifacts
 

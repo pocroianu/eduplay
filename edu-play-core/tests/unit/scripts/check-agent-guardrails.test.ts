@@ -1,4 +1,8 @@
 import { describe, expect, it } from 'vitest';
+import { execFileSync } from 'node:child_process';
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import path from 'node:path';
 
 import {
   checkFiles,
@@ -801,6 +805,45 @@ describe('shouldRunTypesDrift', () => {
 });
 
 describe('getChangedEntries', () => {
+  it('scopes tracked and untracked changes to a project nested inside a Git repository', () => {
+    const repository = mkdtempSync(path.join(tmpdir(), 'eduplay-guardrails-'));
+    const project = path.join(repository, 'edu-play-core');
+    const runGit = (args: string[], cwd = repository) =>
+      execFileSync('git', args, { cwd, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+
+    try {
+      mkdirSync(path.join(project, 'src'), { recursive: true });
+      mkdirSync(path.join(repository, 'phaser-projects'), { recursive: true });
+      writeFileSync(path.join(project, 'src/example.ts'), 'export const value = 1;\n');
+      writeFileSync(path.join(repository, 'phaser-projects/example.ts'), 'export const value = 1;\n');
+      runGit(['init', '--quiet']);
+      runGit(['add', '.']);
+      runGit(['-c', 'user.name=Test', '-c', 'user.email=test@example.com', '-c', 'commit.gpgsign=false', 'commit', '--quiet', '-m', 'baseline']);
+
+      writeFileSync(path.join(project, 'src/example.ts'), 'export const value = 2;\n');
+      writeFileSync(path.join(project, 'src/untracked.ts'), 'export const local = true;\n');
+      writeFileSync(path.join(repository, 'phaser-projects/example.ts'), 'export const value = 2;\n');
+      mkdirSync(path.join(project, 'supabase/migrations'), { recursive: true });
+      writeFileSync(path.join(project, 'supabase/migrations/20261114000000_example.sql'), '-- example\n');
+      runGit(['add', 'supabase/migrations'], project);
+
+      const entries = getChangedEntries({
+        git: (args) => runGit(args, project),
+        env: { AGENT_GUARDRAILS_BASE: 'HEAD' },
+      });
+
+      expect(entries.map((entry) => entry.path).sort()).toEqual([
+        'src/example.ts',
+        'src/untracked.ts',
+        'supabase/migrations/20261114000000_example.sql',
+      ]);
+      expect(entries.find((entry) => entry.path === 'src/example.ts')?.changedLines).toEqual(new Set([1]));
+      expect(shouldRunTypesDrift(entries)).toBe(true);
+    } finally {
+      rmSync(repository, { recursive: true, force: true });
+    }
+  });
+
   it('uses another available base when origin/main is absent', () => {
     const calls: string[][] = [];
     const entries = getChangedEntries({

@@ -1,6 +1,6 @@
 # ARCHITECTURE.md — EduPlay System Design
 
-> This document describes the architecture of the EduPlay platform across both repositories. It is the reference for understanding how components fit together, how data flows, and where to make changes for a given concern.
+> This document describes the architecture of the EduPlay platform across both project directories. It is the reference for understanding how components fit together, how data flows, and where to make changes for a given concern.
 
 ---
 
@@ -23,14 +23,14 @@
 
 ## System Overview
 
-EduPlay is an educational gaming platform for Romanian children (ages 3–12). The platform has two concerns that are deliberately separated into distinct repositories:
+EduPlay is an educational gaming platform for Romanian children (ages 3–12). The platform has two concerns that are separated into adjacent project directories in this repository:
 
 | Concern | Repository | Technology |
 |---------|-----------|-----------|
 | Web platform (shell, auth, management, progress) | `edu-play-core` | Next.js 16 + Supabase |
-| Educational games | `phaser-projects` | Phaser 3 + TypeScript + Webpack |
+| Educational games | `phaser-projects` | Phaser 4 + TypeScript + Vite |
 
-Games are built as standalone browser bundles in `phaser-projects` and deployed into `edu-play-core/public/games/`. The web platform embeds games in iframes and communicates with them via the **postMessage protocol** (see [Game Integration Protocol](#game-integration-protocol)).
+Games are built through the shared Activity host in `phaser-projects`, deployed to Supabase Storage, and served through the platform renderer proxy. `public/games/` retains legacy same-origin hosting support. The web platform embeds games in iframes and communicates with them via the **postMessage protocol** (see [Game Integration Protocol](#game-integration-protocol)).
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -45,7 +45,7 @@ Games are built as standalone browser bundles in `phaser-projects` and deployed 
 │  │                              │                        │   │
 │  │                    ┌─────────────────┐                │   │
 │  │                    │  Game iframe    │                │   │
-│  │                    │  (Phaser 3)     │                │   │
+│  │                    │  (Phaser 4)     │                │   │
 │  │                    │  /games/...     │                │   │
 │  │                    └─────────────────┘                │   │
 │  └──────────────────────────────────────────────────────┘   │
@@ -60,30 +60,18 @@ Games are built as standalone browser bundles in `phaser-projects` and deployed 
 
 ## Repository Map
 
-```
-eduplay-org/
-├── edu-play-core/          # Web platform (this repo)
-│   ├── src/
-│   │   ├── app/            # Next.js App Router — routes only
-│   │   ├── features/       # Domain modules
-│   │   ├── shared/         # Shared utilities and primitives
-│   │   └── config/         # App configuration
-│   ├── supabase/           # Database migrations and config
-│   └── public/games/       # Deployed game bundles (built from phaser-projects)
-│
-└── phaser-projects/        # Game engine monorepo
-    ├── packages/
-    │   ├── game-core/      # Shared game runtime (managers, events)
-    │   ├── validation/     # Config validation (Zod)
-    │   ├── game-editor/    # Phaser Editor integration
-    │   └── ai-content/     # AI-assisted content tooling
-    └── templates/
-        ├── multiple-choice/
-        ├── matching-game/
-        ├── memory-game/
-        ├── tracing-game/
-        ├── sequence-order/
-        └── categorize-game/
+```text
+eduplay/
+├── edu-play-core/          # Web platform
+│   ├── src/                # Routes, feature modules, shared UI and utilities
+│   ├── packages/activity-protocol/
+│   ├── supabase/           # Database migrations and local configuration
+│   └── public/games/       # Legacy hosting and mock game
+└── phaser-projects/        # Game workspace
+    ├── packages/           # game-core, game-editor, phaser-ui, validation, ai-content
+    ├── renderers/          # Package-less renderer plugins and metadata
+    ├── activities/         # Versioned activity manifests and content
+    └── tools/config-editor/
 ```
 
 ---
@@ -197,7 +185,7 @@ future `features/player` extraction. New Activity behavior belongs in
 
 ### Monorepo Structure
 
-`phaser-projects` uses npm workspaces. Each game template is an independent workspace under `templates/`.
+`phaser-projects` uses npm workspaces. Shared libraries and tools are npm workspaces; renderers under `renderers/` are package-less plugins discovered by the single Activity host.
 
 ### Shared Packages
 
@@ -226,37 +214,34 @@ Managers (singletons, accessed via getInstance()):
 
 ### Configuration-Driven Content
 
-Game content is never hardcoded. Each game instance is defined by:
+Playable content is versioned under `activities/`:
 
-```
-templates/multiple-choice/static/configs/
-├── catalog.json        # Game manifest: id, title, metadata
-├── fruits-01.json      # Game config: questions, options, theme
-└── ...
-```
-
-i18n files live alongside configs:
-```
-templates/multiple-choice/static/i18n/
-├── en.json
-└── ro.json
+```text
+activities/fruits-01/
+├── activity.json          # Activity identity and renderer/version requirement
+└── versions/1/
+    ├── config.json        # Content and gameplay settings
+    ├── strings/           # Localized content
+    └── assets/            # Activity assets where applicable
 ```
 
-The `ConfigLoader` singleton fetches these at runtime via `?game=fruits-01&lang=ro`.
+The shared host discovers `activities/*/activity.json` and
+`renderers/*/renderer.json`. Start it with `npm run start:activities`, then open
+`/activities/fruits-01` or a renderer preview under `/templates/<renderer>/`.
 
-### Adding a New Game Variant
+### Adding Activity Content
 
-1. Copy a config JSON from an existing variant.
-2. Update `catalog.json` to include the new entry.
-3. Build: `npm run build:multiple-choice`.
-4. Deploy to `edu-play-core/public/games/` via `npm run deploy:games` from `edu-play-core`.
-5. Register the game in the `games` table via Supabase Studio or migration.
+1. Add an Activity manifest and versioned configuration matching its renderer.
+2. Validate with `npm run validate:all-configs` in `phaser-projects`.
+3. Preview through the shared Activity host.
+4. Import local demo content and renderer assets through the platform seed flow.
+   Production publication must preserve Activity/version/assignment identity.
 
 ---
 
 ## Game Integration Protocol
 
-This is a **formal API boundary** between `phaser-projects` and `edu-play-core`. Changes require coordinated PRs in both repos.
+This is a **formal API boundary** between `phaser-projects` and `edu-play-core`. Changes must coordinate the shell and game workspace in the same PR.
 
 ### Executable Contract
 
@@ -312,15 +297,22 @@ The shell (`GameEmbed.tsx`) **always validates `event.origin`** before trusting 
 
 Game-reported scores are **not authoritative for high-stakes scenarios** — the server must validate them independently.
 
-### Deploying Game Builds
+### Building and Syncing Renderer Assets
+
+The supported single-host build lives in `phaser-projects`:
 
 ```bash
-# In edu-play-core
-npm run deploy:games           # Deploy specific games
-npm run deploy:games:all       # Build + deploy all games with assets
+npm run build:host --workspace=@edu-play/game-core
 ```
 
-This copies built bundles from `phaser-projects` into `public/games/`.
+For local demo setup, `npm run seed` in `edu-play-core` imports Activities and
+builds/uploads the host through `scripts/seed/renderer-sync.ts`. That flow uses
+the renderer-proxy base path required when hosting under the platform. It writes
+demo data and is not a production deployment command.
+
+The old per-template `deploy:games` commands were removed: they referenced the
+deleted template registry/build scripts and the retired `games` storage bucket.
+A standalone production publication command is still required.
 
 ---
 
@@ -356,35 +348,16 @@ parent_children       — Parent ↔ student relationships
 ├── parent_id (FK profiles)
 └── student_id (FK students)
 
-games                 — Game catalog
-├── id
-├── title
-├── game_type (multiple-choice | matching | memory | ...)
-├── config_path
-└── published (bool)
-
-activities            — Authoring layer: a named, published instance of a
-                        Phaser template bound to a specific config. The
-                        `/play/[activityId]` route and the teacher/admin
-                        authoring flows read from here. See "activities vs
-                        games" below.
-├── id
-├── template           — which Phaser template (multiple-choice, matching-game,
-│                        memory-game, categorize-game, sequence-order,
-│                        tracing-game). Enum'd in activity.schema.ts.
-├── game_id (text)     — the config id inside that template
-│                        (e.g. "fruits-01"). NOT a FK to `games`; it matches
-│                        the JSON config filename under the template's
-│                        `static/configs/` directory.
+activities            — Canonical authored content and renderer selection
+├── id, template       — template references an activity_types definition
 ├── title, description, thumbnail_url
-├── default_lang       — 'en' | 'ro'
-├── default_theme
-├── category, subject, tags[], skills[]
-├── difficulty         — 'easy' | 'medium' | 'hard'
-├── target_age_min, target_age_max, estimated_duration, question_count
-├── is_published       — RLS: non-admins only see published rows
-├── created_by (FK profiles)
-└── UNIQUE(template, game_id)
+├── config_data, config_schema_version
+├── status, visibility_scope, is_published
+└── created_by
+
+activity_versions     — Immutable published/ready snapshots
+├── id, activity_id, version_number
+└── config_data and renderer/config metadata
 
 child_artifacts       — Student-uploaded content (drawings, photos, audio, video)
 ├── id
@@ -414,54 +387,23 @@ audit_log             — Append-only log for child-artifact state changes
     Queryable by admins (full) and teachers (scoped to their classes).
 
 assignments           — Teacher-created Activity obligations
-├── id
-├── teacher_id
-├── student_id / class_id
-├── activity_id         — canonical target when mapped to Activities
-├── version_id          — required pinned Activity Version for Activity targets
-│                         (nullable only for legacy/unmapped rows)
-├── game_id             — legacy compatibility target
-├── due_date
-└── status
+├── id, teacher_id, student_id / class_id
+├── activity_id        — required canonical Activity target
+├── version_id         — required immutable version pin
+└── due_date, status
 
 activity_progress     — Canonical learner progress per Activity
-├── id
-├── student_id
-├── activity_id
-├── last_version_id     — most recently played Activity Version, not identity
-├── legacy_game_id      — temporary compatibility pointer
-├── score
-├── time_spent
-└── completed_at
-
-game_progress         — Legacy progress per Game, compatibility only
-├── id
-├── student_id
-├── game_id
-├── score
-├── time_spent
-└── completed_at
-
-Activity-targeting assignments must pin an Activity Version so later edits do
-not change what a learner was assigned. Nullable `version_id` storage exists
-only for legacy/unmapped rows during migration.
-
-Migration constraint: while dashboards, reports, rewards, and exports still
-read `game_progress`, Activity progress writes must dual-write to
-`game_progress` whenever a `legacy_game_id` is known. `activity_progress`
-remains the canonical source of truth for new Activity-domain behavior.
-
-Learning Paths remain legacy Game-keyed during this migration. Activity
-completion advances a Learning Path only when a `legacy_game_id` is known.
-Activity-native path steps require a separate migration and should not be folded
-into the Activity Progress migration.
-
-Read migration stance: learner-facing dashboards, teacher summaries, parent
-activity, rewards, family feed, missions, profile stats, and data export read
-`activity_progress`. Legacy Game catalog routes and the deprecated `gameId`
-progress API may still touch `game_progress` as a compatibility surface until
-`/games/[gameId]` is retired.
+├── id, student_id, activity_id
+├── last_version_id    — most recently played version; not progress identity
+└── score, attempts, status, time_spent, last_played_at
 ```
+
+The Activity-only cutover migration (`20260518000000_activity_only_cutover.sql`)
+dropped `games`, `game_progress`, legacy game pointers, and the games storage
+bucket. It requires assignments to pin both Activity and Activity Version.
+Learning paths target Activity templates. Historical migrations describe earlier
+states; use the full migration chain and generated database types for the current
+schema. Some presentation types still use Game-shaped names for Activity data.
 
 ### Row Level Security (RLS)
 
@@ -604,25 +546,22 @@ pagination because the audit table is append-only and grows quickly.
 
 ### activities vs games (content model)
 
-There are two parallel content models and they are **not** interchangeable:
+The current learning model is Activity-based:
 
-- **`games` table + `/api/v1/games`** — the legacy catalog. Each row has a
-  `game_url` that the shell iframes directly (same-origin or Supabase
-  Storage). `game_progress` rows reference `games.id`. This is what the
-  current student dashboard, teacher assignments, and score reporting
-  revolve around.
-- **`activities` table + `/api/v1/activities`** — the authoring layer on top
-  of the Phaser monorepo. Each row names a `template` (one of six Phaser
-  templates) plus a `game_id` config (a JSON filename inside that
-  template's `static/configs/`). The `/play/[activityId]` route reads an
-  activity, builds a URL with `?game=<config>&lang=<xx>&theme=<...>` and
-  renders it through `GamePageContent` / `GameEmbed`. This is the path new
-  content goes through.
+- **`activities` + `activity_versions`** own authoring, configuration, renderer
+  selection, and published content. New launches use `/play/[activityId]` and
+  the shared iframe host through the renderer proxy.
+- **`assignments` + `activity_progress`** own Activity assignment and
+  learner progress. Teacher dashboard queries and summaries read Activity
+  progress; new code should use the canonical Activity model.
+- **Legacy Game names** remain in some presentation types and compatibility
+  routes. The `games` and `game_progress` tables were dropped by the Activity-only
+  cutover; `/api/v1/games` returns HTTP 410 and points callers at Activities.
 
-When adding a new content abstraction, extend one of these — do **not**
-create a third table. The long-term direction is consolidation (tracked
-on the roadmap); until then, treat activities as the authoring plane and
-games as the tracking plane.
+Renderer metadata lives in `renderers/*/renderer.json` and playable activity
+metadata in `activities/*/activity.json` in the game workspace. Do not restore
+per-template `static/configs` discovery or separate Webpack servers. Remaining
+legacy integration boundaries are documented in the database migration section.
 
 ### Pattern: Every Route Handler
 
@@ -630,7 +569,7 @@ games as the tracking plane.
 import { handleRoute, requireRole, parseBody, ApiError } from '@/lib/api';
 
 export const POST = handleRoute(async (req) => {
-  const user = await requireRole(req, 'teacher');
+  const { user, supabase } = await requireRole('teacher');
   const body = await parseBody(req, mySchema);
   // ... do work ...
   return { data: result };
@@ -750,7 +689,7 @@ npm run dev:full     # Starts: Supabase (Docker) + Next.js dev server
                      # Auto-writes .env.local with Supabase keys
 
 # phaser-projects
-npm run start:multiple-choice   # Webpack dev server for a template
+npm run start:activities       # Shared Vite Activity host on port 5173
 ```
 
 ### Docker
@@ -760,7 +699,7 @@ npm run start:multiple-choice   # Webpack dev server for a template
 
 ### Environment Variables
 
-Copy `.env.example` to `.env.local`. The dev script auto-populates Supabase keys when using `npm run dev:full`.
+The dev script auto-populates `.env.local` when using `npm run dev:full`. For manual overrides, copy `env.example` to `.env.local`.
 
 Key variables:
 ```

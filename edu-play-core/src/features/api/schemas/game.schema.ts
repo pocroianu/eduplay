@@ -25,14 +25,6 @@ export const createGameSchema = z.object({
 
 export const updateGameSchema = createGameSchema.partial();
 
-const listGamesQuerySchema = z.object({
-  category: z.enum(gameCategories).optional(),
-  difficulty: z.coerce.number().int().min(1).max(5).optional(),
-  published: z.enum(['true', 'false']).optional(),
-  page: z.coerce.number().int().min(1).optional(),
-  perPage: z.coerce.number().int().min(1).max(100).optional(),
-});
-
 export type CreateGameInput = z.infer<typeof createGameSchema>;
 export type UpdateGameInput = z.infer<typeof updateGameSchema>;
 
@@ -42,23 +34,22 @@ export type UpdateGameInput = z.infer<typeof updateGameSchema>;
  * This is intentionally permissive on dimensions we do not want to enforce at
  * read time — `category` is a free string (the DB has no CHECK constraint),
  * `learningObjectives` is `unknown` (jsonb), and timestamps are ISO strings.
- * We validate types and presence to catch drift, not value bounds.
+ * Runtime row validation belongs at the query boundary; this is a type-only
+ * contract for consumers of the legacy catalog API.
  */
-const gameRowSchema = z.object({
-  id: z.string().uuid(),
-  title: z.string(),
-  description: z.string().nullable(),
-  gameUrl: z.string(),
-  thumbnailUrl: z.string().nullable(),
-  category: z.string().nullable(),
-  difficultyLevel: z.number().int().nullable(),
-  targetAgeMin: z.number().int().nullable(),
-  targetAgeMax: z.number().int().nullable(),
-  estimatedDuration: z.number().int().nullable(),
-  learningObjectives: z.unknown().nullable(),
-  isPublished: z.boolean().nullable(),
-  createdAt: z.string().nullable(),
-  updatedAt: z.string().nullable(),
-});
-
-export type GameRow = z.infer<typeof gameRowSchema>;
+export interface GameRow {
+  id: string;
+  title: string;
+  description: string | null;
+  gameUrl: string;
+  thumbnailUrl: string | null;
+  category: string | null;
+  difficultyLevel: number | null;
+  targetAgeMin: number | null;
+  targetAgeMax: number | null;
+  estimatedDuration: number | null;
+  learningObjectives: unknown;
+  isPublished: boolean | null;
+  createdAt: string | null;
+  updatedAt: string | null;
+}

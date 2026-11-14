@@ -18,7 +18,6 @@ const FILES = [
   'src/features/games/components/PreGameCover.tsx',
   'src/features/games/components/ActionStrip.tsx',
   'src/features/games/components/CategoryBanner.tsx',
-  'src/features/games/components/PromotionalCard.tsx',
   'src/shared/components/ui/kit/Card.tsx',
   'src/shared/components/ui/kit/StatCard.tsx',
 ] as const;
@@ -66,7 +65,6 @@ describe('player chrome', () => {
       'src/features/games/components/CoachFAB.tsx',
       'src/features/games/components/GameLibraryHero.tsx',
       'src/features/games/components/LessonDrawer.tsx',
-      'src/features/games/components/PromotionalCard.tsx',
     ];
 
     expect(findSourceLines(controlFiles, /<button|motion\.button/)).toEqual([]);

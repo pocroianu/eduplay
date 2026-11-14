@@ -2,14 +2,6 @@ import { z } from 'zod';
 
 const ROLE_VALUES = ['teacher', 'parent', 'student', 'admin'] as const;
 const USER_STATUS_VALUES = ['active', 'suspended'] as const;
-const FLAG_EVENT_ACTION_VALUES = [
-  'created',
-  'enabled',
-  'disabled',
-  'targeting_changed',
-  'description_changed',
-  'deleted',
-] as const;
 
 const FLAG_NAME_RE = /^[a-z][a-z0-9_]*$/;
 
@@ -47,17 +39,15 @@ export const updateAdminUserSchema = z
 
 export type UpdateAdminUserInput = z.infer<typeof updateAdminUserSchema>;
 
-const adminUserSummarySchema = z.object({
-  id: z.string().uuid(),
-  email: z.string().email().nullable(),
-  fullName: z.string(),
-  role: z.enum(ROLE_VALUES),
-  status: z.enum(USER_STATUS_VALUES),
-  lastSignInAt: z.string().datetime().nullable(),
-  createdAt: z.string().datetime(),
-});
-
-export type AdminUserSummary = z.infer<typeof adminUserSummarySchema>;
+export interface AdminUserSummary {
+  id: string;
+  email: string | null;
+  fullName: string;
+  role: (typeof ROLE_VALUES)[number];
+  status: (typeof USER_STATUS_VALUES)[number];
+  lastSignInAt: string | null;
+  createdAt: string;
+}
 
 export const resetCredentialsResponseSchema = z.object({
   channel: z.enum(['email', 'pin']),
@@ -107,30 +97,26 @@ export const updateFeatureFlagSchema = z
 
 export type UpdateFeatureFlagInput = z.infer<typeof updateFeatureFlagSchema>;
 
-const featureFlagSchema = z.object({
-  name: featureFlagNameSchema,
-  description: z.string().nullable(),
-  enabled: z.boolean(),
-  targeting: targetingSchema,
-  createdBy: z.string().uuid().nullable(),
-  updatedBy: z.string().uuid().nullable(),
-  createdAt: z.string().datetime(),
-  updatedAt: z.string().datetime(),
-});
+export interface FeatureFlag {
+  name: string;
+  description: string | null;
+  enabled: boolean;
+  targeting: TargetingRules;
+  createdBy: string | null;
+  updatedBy: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
 
-export type FeatureFlag = z.infer<typeof featureFlagSchema>;
-
-const featureFlagEventSchema = z.object({
-  id: z.string().uuid(),
-  flagName: featureFlagNameSchema,
-  actorId: z.string().uuid().nullable(),
-  action: z.enum(FLAG_EVENT_ACTION_VALUES),
-  before: z.unknown().nullable(),
-  after: z.unknown().nullable(),
-  createdAt: z.string().datetime(),
-});
-
-export type FeatureFlagEvent = z.infer<typeof featureFlagEventSchema>;
+export interface FeatureFlagEvent {
+  id: string;
+  flagName: string;
+  actorId: string | null;
+  action: 'created' | 'enabled' | 'disabled' | 'targeting_changed' | 'description_changed' | 'deleted';
+  before: unknown;
+  after: unknown;
+  createdAt: string;
+}
 
 // ---------------------------------------------------------------------------
 // /api/v1/admin/audit
@@ -148,19 +134,17 @@ export const listAdminAuditQuerySchema = z.object({
 
 export type ListAdminAuditQuery = z.infer<typeof listAdminAuditQuerySchema>;
 
-const adminAuditEntrySchema = z.object({
-  id: z.string(),
-  actorId: z.string().uuid().nullable(),
-  action: z.string().nullable(),
-  resourceType: z.string().nullable(),
-  resourceId: z.string().nullable(),
-  before: z.unknown().nullable(),
-  after: z.unknown().nullable(),
-  visibility: z.string().nullable(),
-  createdAt: z.string().datetime(),
-});
-
-export type AdminAuditEntry = z.infer<typeof adminAuditEntrySchema>;
+export interface AdminAuditEntry {
+  id: string;
+  actorId: string | null;
+  action: string | null;
+  resourceType: string | null;
+  resourceId: string | null;
+  before: unknown;
+  after: unknown;
+  visibility: string | null;
+  createdAt: string;
+}
 
 // ---------------------------------------------------------------------------
 // DB row schemas — validate Supabase rows after `camelCaseKeys`
@@ -302,6 +286,4 @@ export type AuditLogRow = z.infer<typeof auditLogRowSchema>;
 
 export const ADMIN_AUDIT_CSV_ROW_LIMIT = 10_000;
 
-const FLAG_EVENT_ACTIONS = FLAG_EVENT_ACTION_VALUES;
-const ADMIN_USER_STATUSES = USER_STATUS_VALUES;
 export const ADMIN_USER_ROLES = ROLE_VALUES;

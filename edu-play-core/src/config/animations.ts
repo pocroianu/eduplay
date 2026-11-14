@@ -33,13 +33,6 @@ export const buttonHover: Variants = {
   },
 };
 
-const wobble: Variants = {
-  hover: {
-    rotate: [-2, 2, -2, 2, 0],
-    transition: { duration: 0.4 },
-  },
-};
-
 // Floating animation (continuous)
 export const float: Variants = {
   initial: {},
@@ -50,20 +43,6 @@ export const float: Variants = {
       duration: 3,
       ease: 'easeInOut',
     },
-  },
-};
-
-// PIN dot animation
-const pinDotFill: Variants = {
-  empty: {
-    opacity: 0.72,
-    backgroundColor: 'var(--color-surface-container)',
-    transition: transitions.smooth,
-  },
-  filled: {
-    opacity: 1,
-    backgroundColor: 'var(--color-tertiary-container)',
-    transition: transitions.smooth,
   },
 };
 
@@ -100,19 +79,6 @@ export const slideIn: Variants = {
   exit: { x: 100, opacity: 0, transition: transitions.smooth },
 };
 
-// Celebration animation
-const celebration: Variants = {
-  initial: { opacity: 0, y: 12 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.3,
-      ease: [0.4, 0, 0.2, 1],
-    },
-  },
-};
-
 // List item stagger animation
 export const staggerContainer: Variants = {
   initial: {},
@@ -125,25 +91,6 @@ export const staggerContainer: Variants = {
 
 export const staggerItem: Variants = {
   initial: { opacity: 0, y: 20 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: transitions.smooth,
-  },
-};
-
-// Subtle mascot breathing loop without scale.
-const breathe: Variants = {
-  initial: { y: 0 },
-  animate: {
-    y: [-1, 1, -1],
-    transition: { repeat: Infinity, duration: 2, ease: 'easeInOut' },
-  },
-};
-
-// Reward reveal animation
-const rewardReveal: Variants = {
-  initial: { opacity: 0, y: 12 },
   animate: {
     opacity: 1,
     y: 0,

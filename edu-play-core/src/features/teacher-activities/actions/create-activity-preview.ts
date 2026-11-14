@@ -54,8 +54,3 @@ export async function createTeacherActivityPreview(activityId: string): Promise<
 
   redirect(`/play/${activity.id}?previewId=${encodeURIComponent(preview.previewId)}`)
 }
-
-async function createTeacherActivityPreviewFromForm(formData: FormData): Promise<void> {
-  const activityId = String(formData.get('activityId') ?? '')
-  await createTeacherActivityPreview(activityId)
-}
