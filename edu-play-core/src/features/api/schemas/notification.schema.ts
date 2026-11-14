@@ -31,5 +31,3 @@ export const notificationRowSchema = z.object({
   createdAt: z.string().nullable(),
   students: notificationStudentJoinSchema.nullable().optional(),
 });
-
-export type NotificationRow = z.infer<typeof notificationRowSchema>;

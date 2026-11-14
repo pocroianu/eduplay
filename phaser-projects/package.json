@@ -24,7 +24,7 @@
     "validate:config": "npm run validate-config --workspace=@edu-play/validation --",
     "migrate:activity-assets": "node scripts/migrate-activity-assets-to-library.mjs",
     "import:activity-package": "node scripts/import-activity-package.mjs",
-    "lint": "echo 'Add linting here'",
+    "lint": "npm run lint --workspaces --if-present",
     "test": "npm run test:e2e",
     "test:validation": "npm test --workspace=@edu-play/validation",
     "test:config-validation": "node --test scripts/__tests__/*.test.mjs",
@@ -61,6 +61,7 @@
     "@types/node": "^22.0.0",
     "dockerfile-language-server-nodejs": "0.15.0",
     "glob": "13.0.3",
+    "ts-node": "10.9.2",
     "typescript-language-server": "5.3.0",
     "vscode-langservers-extracted": "4.10.0",
     "yaml-language-server": "1.23.0"

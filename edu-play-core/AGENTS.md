@@ -16,10 +16,10 @@ docs or call out the drift in the PR.
 | Architecture, feature ownership, data flow | `ARCHITECTURE.md` |
 | Design system, tokens, UI implementation rules | `DESIGN.md` |
 | Branches, commits, reviews, merge process | `CONTRIBUTING.md` |
-| Product requirements | `REQUIREMENTS.md` |
+| Product requirements | Available feature PRDs in `docs/prd/` |
 | API request/response details | `docs/api.md` |
 | Game iframe protocol | `public/games/README.md` |
-| Privacy, DPIA, data processors | `docs/privacy/` |
+| Privacy, DPIA, data processors | Documentation missing; restore before production readiness claims |
 | CI implementation | `Jenkinsfile` and `.github/workflows/README.md` |
 
 `CLAUDE.md` is a compatibility shim that points here. Do not add new canonical
