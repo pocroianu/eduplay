@@ -1,6 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { DrawingCanvasRenderer } from '../DrawingCanvasRenderer';
+vi.mock('../../../submission/native-submission-actions', () => ({ recoverNativeActivity: vi.fn(async () => []) }));
 
 vi.mock('../actions', () => ({
   submitDrawingArtifact: vi.fn().mockResolvedValue({
@@ -150,7 +151,7 @@ describe('<DrawingCanvasRenderer />', () => {
     );
   });
 
-  it('ignores extra pointerdown events while a stroke is already active', () => {
+  it('ignores extra pointerdown events while a stroke is already active', async () => {
     render(
       <DrawingCanvasRenderer
         instanceId={INSTANCE_ID}
@@ -174,6 +175,7 @@ describe('<DrawingCanvasRenderer />', () => {
       },
     });
 
+    await waitFor(() => expect(canvas).toHaveAttribute('aria-busy', 'false'));
     fireEvent.pointerDown(canvas, {
       pointerId: 1,
       clientX: 24,

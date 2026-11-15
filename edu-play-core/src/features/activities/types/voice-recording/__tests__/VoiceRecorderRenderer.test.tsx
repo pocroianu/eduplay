@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { VoiceRecorderRenderer } from '../VoiceRecorderRenderer';
+vi.mock('../../../submission/native-submission-actions', () => ({ recoverNativeActivity: vi.fn(async () => []) }));
 
 type Listener = (event: Event) => void | Promise<void>;
 
@@ -95,6 +96,7 @@ describe('<VoiceRecorderRenderer /> cleanup', () => {
     } as unknown as MediaStream;
 
     const { unmount } = renderRecorder();
+    await waitFor(() => expect(screen.getByRole('button', { name: /pornește înregistrarea/i })).toBeEnabled());
 
     fireEvent.click(
       screen.getByRole('button', { name: /pornește înregistrarea/i }),
@@ -119,6 +121,7 @@ describe('<VoiceRecorderRenderer /> cleanup', () => {
     });
 
     const { unmount } = renderRecorder();
+    await waitFor(() => expect(screen.getByRole('button', { name: /pornește înregistrarea/i })).toBeEnabled());
 
     fireEvent.click(
       screen.getByRole('button', { name: /pornește înregistrarea/i }),

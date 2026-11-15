@@ -6,11 +6,10 @@ import { EmptyState, SectionHeader } from '@/shared/components/ui/kit';
 import { Icon } from '@/shared/components/ui/Icon';
 import {
   getArtifactsForChild,
+  withArtifactMedia,
   groupArtifactsByMonth,
 } from '@/features/portfolio/server';
 import { TeacherPortfolioCard } from '@/features/portfolio';
-import { CHILD_ARTIFACTS_BUCKET } from '@/shared/lib/storage/artifact-signed-url';
-import type { Artifact } from '@/features/portfolio';
 
 const SIGNED_URL_TTL_SECONDS = 60 * 5;
 
@@ -66,7 +65,8 @@ export default async function ParentChildPortfolioPage({
     childId,
     role: 'parent',
   });
-  const artifactsWithUrls = await mintMediaUrls(supabase, artifacts);
+  const artifactsWithUrls = await withArtifactMedia(supabase, artifacts, SIGNED_URL_TTL_SECONDS);
+  const mediaById = new Map(artifactsWithUrls.map(row => [row.id, row.mediaUrl]));
   const monthGroups = groupArtifactsByMonth(artifactsWithUrls);
 
   return (
@@ -122,7 +122,7 @@ export default async function ParentChildPortfolioPage({
                           artifact={artifact}
                           studentUsername={childData.username}
                           className={null}
-                          mediaUrl={getMediaUrl(artifact)}
+                          mediaUrl={mediaById.get(artifact.id) ?? null}
                           readOnly
                         />
                       </li>
@@ -135,30 +135,5 @@ export default async function ParentChildPortfolioPage({
         </div>
       </div>
     </div>
-  );
-}
-
-interface ArtifactWithMediaUrl extends Artifact {
-  mediaUrl: string | null;
-}
-
-function getMediaUrl(artifact: Artifact): string | null {
-  return (artifact as ArtifactWithMediaUrl).mediaUrl ?? null;
-}
-
-async function mintMediaUrls(
-  supabase: Awaited<ReturnType<typeof createClient>>,
-  artifacts: Artifact[],
-): Promise<ArtifactWithMediaUrl[]> {
-  return Promise.all(
-    artifacts.map(async (artifact): Promise<ArtifactWithMediaUrl> => {
-      const { data, error } = await supabase.storage
-        .from(CHILD_ARTIFACTS_BUCKET)
-        .createSignedUrl(artifact.storagePath, SIGNED_URL_TTL_SECONDS);
-      if (error || !data?.signedUrl) {
-        return { ...artifact, mediaUrl: null };
-      }
-      return { ...artifact, mediaUrl: data.signedUrl };
-    }),
   );
 }

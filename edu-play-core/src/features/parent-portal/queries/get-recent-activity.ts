@@ -1,8 +1,5 @@
 import { createClient } from '@/lib/supabase/server';
-import {
-  CHILD_ARTIFACTS_BUCKET,
-  DEFAULT_ARTIFACT_SIGNED_URL_TTL_SECONDS,
-} from '@/shared/lib/storage/artifact-signed-url';
+import { withArtifactMedia } from '@/features/portfolio/server';
 import type {
   ActivityItem,
   ArtifactActivityItem,
@@ -147,26 +144,12 @@ async function getRecentPublishedArtifacts(
 
   // Sign thumbnails for image-type artifacts only — keeps the per-render
   // storage cost bounded (10 items max, drawings/photos only).
-  const thumbnails = await Promise.all(
-    rows.map(async (row) => {
-      if (!IMAGE_ARTIFACT_TYPES.has(row.artifact_type)) return null;
-      try {
-        const { data: signed, error } = await supabase.storage
-          .from(CHILD_ARTIFACTS_BUCKET)
-          .createSignedUrl(
-            row.storage_path,
-            DEFAULT_ARTIFACT_SIGNED_URL_TTL_SECONDS,
-          );
-        if (error || !signed?.signedUrl) return null;
-        return signed.signedUrl;
-      } catch (err) {
-        console.warn('Failed to sign artifact thumbnail', err);
-        return null;
-      }
-    }),
-  );
+  const signed = await withArtifactMedia(supabase, rows
+    .filter(row => IMAGE_ARTIFACT_TYPES.has(row.artifact_type))
+    .map(row => ({ id: row.id, storagePath: row.storage_path })));
+  const thumbnails = new Map(signed.map(row => [row.id, row.mediaUrl]));
 
-  return rows.map((row, idx) => {
+  return rows.map((row) => {
     const student = students.get(row.student_id);
     return {
       kind: 'artifact' as const,
@@ -177,7 +160,7 @@ async function getRecentPublishedArtifacts(
       artifactTitle: row.title ?? null,
       artifactType: row.artifact_type,
       storagePath: row.storage_path,
-      thumbnailUrl: thumbnails[idx] ?? null,
+      thumbnailUrl: thumbnails.get(row.id) ?? null,
       timestamp: row.reviewed_at ?? '',
     };
   });

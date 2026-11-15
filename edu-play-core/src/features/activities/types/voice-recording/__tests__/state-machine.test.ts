@@ -26,6 +26,21 @@ function reduce(events: Parameters<typeof voiceReducer>[1][]): VoiceState {
 }
 
 describe('voiceReducer', () => {
+  it('begins another deliberate submission only after saved work', () => {
+    const submitted: VoiceState = {
+      stage: 'submitted',
+      take: sampleTake,
+      elapsedMs: 0,
+      errorMessage: null,
+    };
+    expect(voiceReducer(submitted, { type: 'new_submission' })).toEqual(
+      initialVoiceState,
+    );
+    const uncertain: VoiceState = { ...submitted, stage: 'submit_error' };
+    expect(voiceReducer(uncertain, { type: 'new_submission' })).toEqual(
+      uncertain,
+    );
+  });
   it('walks idle → requesting → recording → review → submitting → submitted', () => {
     const final = reduce([
       { type: 'start_pressed' },

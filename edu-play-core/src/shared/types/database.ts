@@ -1331,6 +1331,85 @@ export type Database = {
           },
         ]
       }
+      native_activity_submission_targets: {
+        Row: {
+          settled: boolean
+          step_id: string
+          submission_id: string
+        }
+        Insert: {
+          settled?: boolean
+          step_id: string
+          submission_id: string
+        }
+        Update: {
+          settled?: boolean
+          step_id?: string
+          submission_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "native_activity_submission_targets_step_id_fkey"
+            columns: ["step_id"]
+            isOneToOne: false
+            referencedRelation: "learning_path_steps"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "native_activity_submission_targets_submission_id_fkey"
+            columns: ["submission_id"]
+            isOneToOne: false
+            referencedRelation: "native_activity_submissions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      native_activity_submissions: {
+        Row: {
+          artifact_id: string
+          created_at: string
+          id: string
+          instance_id: string
+          student_id: string
+        }
+        Insert: {
+          artifact_id: string
+          created_at?: string
+          id: string
+          instance_id: string
+          student_id: string
+        }
+        Update: {
+          artifact_id?: string
+          created_at?: string
+          id?: string
+          instance_id?: string
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "native_activity_submissions_artifact_id_fkey"
+            columns: ["artifact_id"]
+            isOneToOne: false
+            referencedRelation: "child_artifacts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "native_activity_submissions_instance_id_fkey"
+            columns: ["instance_id"]
+            isOneToOne: false
+            referencedRelation: "activity_instances"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "native_activity_submissions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       parent_children: {
         Row: {
           created_at: string | null
@@ -1783,6 +1862,29 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      accept_native_activity_submission: {
+        Args: {
+          p_duration_ms?: number
+          p_instance_id: string
+          p_storage_path: string
+          p_student_id: string
+          p_submission_id: string
+          p_type_id: string
+        }
+        Returns: {
+          artifact_id: string
+          created_at: string
+          id: string
+          instance_id: string
+          student_id: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "native_activity_submissions"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
       activity_version_shares_with_family: {
         Args: { p_version_id: string }
         Returns: boolean
@@ -2037,6 +2139,10 @@ export type Database = {
       restore_teacher_activity_atomically: {
         Args: { p_activity_id: string; p_actor_id: string }
         Returns: Json
+      }
+      retry_native_activity_progress: {
+        Args: { p_student_id: string; p_submission_id: string }
+        Returns: undefined
       }
       revert_activity_atomically: {
         Args: {
