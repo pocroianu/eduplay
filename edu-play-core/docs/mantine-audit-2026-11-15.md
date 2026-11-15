@@ -25,7 +25,9 @@ npm run audit:mantine
 npm run audit:mantine -- --check
 ```
 
-The second command exits unsuccessfully if a visible native control is found.
+The second command exits unsuccessfully if a visible native control or a custom
+semantic widget is found. It also inspects ARIA roles on native elements, so
+a dialog or progress indicator cannot pass just because its file imports Mantine.
 Native hidden form inputs are exempt. The snapshot is
 [`mantine-audit-2026-11-15.json`](./mantine-audit-2026-11-15.json).
 
@@ -34,19 +36,19 @@ Native hidden form inputs are exempt. The snapshot is
 | Measure | Before | After |
 | --- | ---: | ---: |
 | Production TSX files | 390 | 391 |
-| Direct Mantine imports | 69 (17.7%) | 109 (27.9%) |
+| Direct Mantine imports | 69 (17.7%) | 115 (29.4%) |
 | Shared kit TSX files with direct Mantine imports | 11 / 48 | 39 / 49 |
 
 The new file is `MantineBoundary`, which supplies the EduPlay theme when a
 component is mounted outside the app provider. It reuses an existing provider
 instead of nesting or replacing its theme.
 
-After the sweep, 181 additional TSX files depend on Mantine through local
-components: 290 of 391 files have a direct or indirect dependency. The other
-101 files include static layouts, routing/server composition, context helpers,
+After the sweep, 176 additional TSX files depend on Mantine through local
+components: 291 of 391 files have a direct or indirect dependency. The other
+100 files include static layouts, routing/server composition, context helpers,
 and artwork. Adding a redundant import to these files would not improve UI.
 
-**Visible native control findings after migration: zero.**
+**Visible native control and custom semantic widget findings after migration: zero.**
 
 ## Migrated component families
 
@@ -61,6 +63,10 @@ and artwork. Adding a redundant import to these files would not improve UI.
 | Tooltip and toast | Tooltip, Notification | Hover/focus trigger behavior, live regions, dismissal and timer cleanup |
 | Tables and segmented choices | Table, UnstyledButton | Responsive mobile cards, sort behavior, row semantics, existing pressed-button semantics |
 | Drawing toolbar and lesson controls | Radio.Card, UnstyledButton, TextInput | Canvas behavior, answer validation, 64px child targets, arrow-key radio selection |
+
+The final semantic sweep also migrated LessonDrawer, PathAssignmentDialog,
+settings switches, password strength, report bars, system health, student XP,
+and teacher/student progress indicators.
 
 Teacher/admin forms, reports, learning-path builders and progress matrices,
 family selection, student preferences, language selection, and upload controls
@@ -114,7 +120,7 @@ existing pinned version. Form-state libraries and domain logic were preserved.
 
 ## Validation
 
-`npm run verify:agent` passes: 304 test files and 1,944 tests, TypeScript,
+`npm run verify:agent` passes: 306 test files and 1,940 tests, TypeScript,
 lint with one existing image warning, and agent guardrails. The production
 build passes. Focused regression checks cover controls, provider inheritance,
 drawing radio keyboard selection, lesson submission, popup navigation, table

@@ -3,15 +3,15 @@
   "methodology": "Static imports and local runtime dependencies, resolving named barrel exports; indirect means a file depends on Mantine-backed code, not that every element it renders is Mantine. Not a bundle-size or runtime-visibility measure.",
   "totals": {
     "tsxFiles": 391,
-    "directTsx": 109,
-    "indirectTsx": 181,
-    "independentTsx": 101
+    "directTsx": 115,
+    "indirectTsx": 176,
+    "independentTsx": 100
   },
   "areas": {
     "app routes": {
       "files": 190,
-      "direct": 12,
-      "indirect": 104
+      "direct": 13,
+      "indirect": 103
     },
     "other": {
       "files": 20,
@@ -25,12 +25,12 @@
     },
     "features/admin": {
       "files": 18,
-      "direct": 7,
-      "indirect": 10
+      "direct": 8,
+      "indirect": 9
     },
     "features/auth": {
       "files": 16,
-      "direct": 6,
+      "direct": 7,
       "indirect": 6
     },
     "features/family-feed": {
@@ -40,8 +40,8 @@
     },
     "features/games": {
       "files": 23,
-      "direct": 5,
-      "indirect": 15
+      "direct": 6,
+      "indirect": 14
     },
     "features/learning-map": {
       "files": 1,
@@ -90,8 +90,8 @@
     },
     "features/teacher-dashboard": {
       "files": 20,
-      "direct": 11,
-      "indirect": 8
+      "direct": 13,
+      "indirect": 6
     },
     "shared UI kit": {
       "files": 49,
@@ -109,6 +109,7 @@
       "app/(dashboard)/student/loading.tsx",
       "app/(dashboard)/student/map/loading.tsx",
       "app/(dashboard)/teacher/classes/[classId]/settings/[section]/page.tsx",
+      "app/(dashboard)/teacher/classes/[classId]/settings/page.tsx",
       "app/(dashboard)/teacher/classes/new/page.tsx",
       "app/(dashboard)/teacher/language/page.tsx",
       "app/layout.tsx",
@@ -121,15 +122,18 @@
       "features/admin/components/AdminSearchInput.tsx",
       "features/admin/components/AdminUsersTable.tsx",
       "features/admin/components/FilterBar.tsx",
+      "features/admin/components/overview/AdminSystemHealth.tsx",
       "features/auth/components/auth-button.tsx",
       "features/auth/components/auth-inline-link.tsx",
       "features/auth/components/auth-input.tsx",
       "features/auth/components/forgot-password-form.tsx",
+      "features/auth/components/password-strength-indicator.tsx",
       "features/auth/components/reset-password-error.tsx",
       "features/auth/components/student-pin-pad.tsx",
       "features/family-feed/components/child-selector.tsx",
       "features/games/components/CategoryFilter.tsx",
       "features/games/components/GameChromeButton.tsx",
+      "features/games/components/LessonDrawer.tsx",
       "features/games/components/ParentGamesPageContent.tsx",
       "features/games/components/TeacherGameCard.tsx",
       "features/games/components/TeacherGamesPageContent.tsx",
@@ -162,6 +166,8 @@
       "features/teacher-dashboard/components/ClassDetailContent.tsx",
       "features/teacher-dashboard/components/ClassesPageContent.tsx",
       "features/teacher-dashboard/components/RewardsLeaderboardPanel.tsx",
+      "features/teacher-dashboard/components/StudentDetailContent.tsx",
+      "features/teacher-dashboard/components/StudentsPageContent.tsx",
       "features/teacher-dashboard/components/TeacherActivityComposer.tsx",
       "features/teacher-dashboard/components/TeacherActivityPicker.tsx",
       "features/teacher-dashboard/components/TeacherDashboardContent.tsx",
@@ -231,5 +237,6 @@
     "shared/components/ui/kit/SectionHeader.tsx",
     "shared/components/ui/kit/Vulpita.tsx"
   ],
-  "rawVisibleControls": []
+  "rawVisibleControls": [],
+  "customSemanticWidgets": []
 }

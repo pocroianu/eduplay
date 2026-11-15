@@ -1,3 +1,4 @@
+import { Switch } from '@mantine/core'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { getClassDetailData, type ClassDetailData } from '@/features/teacher-dashboard/server'
@@ -5,7 +6,7 @@ import { I18nProvider } from '@/lib/i18n/I18nProvider'
 import type { Language } from '@/lib/i18n/config'
 import { getServerLanguage, getServerTranslation, preloadNamespaces } from '@/lib/i18n/server'
 import { Icon } from '@/shared/components/ui/Icon'
-import { Button, Card, Pill } from '@/shared/components/ui/kit'
+import { Button, Card, MantineBoundary, Pill } from '@/shared/components/ui/kit'
 import { ROUTES } from '@/shared/lib/constants'
 
 
@@ -356,14 +357,8 @@ function SettingsSwitchRow({
         <span className="block truncate text-sm font-semibold text-on-surface">{label}</span>
         <span className="block truncate text-xs text-on-surface-variant">{value}</span>
       </span>
-      <span
-        role="switch"
-        aria-checked="false"
-        aria-disabled="true"
-        className="relative inline-flex h-7 w-12 shrink-0 items-center rounded-full border border-outline-variant bg-surface-container"
-      >
-        <span className="ml-1 h-5 w-5 rounded-full bg-outline" />
-      </span>
+      <MantineBoundary><Switch disabled checked={false} aria-label={label}
+        aria-checked={false} aria-disabled="true" className="shrink-0" /></MantineBoundary>
     </div>
   )
 }

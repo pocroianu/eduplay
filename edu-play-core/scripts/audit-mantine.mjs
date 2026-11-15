@@ -120,6 +120,7 @@ const direct = new Set();
 const dependencies = new Map();
 const packages = new Map();
 const rawControls = [];
+const customSemanticWidgets = [];
 for (const [filename, source] of sources) {
   const edges = new Set();
   for (const node of source.statements) {
@@ -161,6 +162,42 @@ for (const [filename, source] of sources) {
   function visit(node) {
     if (ts.isJsxOpeningElement(node) || ts.isJsxSelfClosingElement(node)) {
       const tag = node.tagName.getText(source);
+      const role = node.attributes.properties.find(
+        (attribute) =>
+          ts.isJsxAttribute(attribute) &&
+          attribute.name.text === "role" &&
+          attribute.initializer &&
+          ts.isStringLiteral(attribute.initializer),
+      );
+      const widgetRoles = [
+        "button",
+        "checkbox",
+        "combobox",
+        "dialog",
+        "alertdialog",
+        "listbox",
+        "menu",
+        "progressbar",
+        "radio",
+        "slider",
+        "switch",
+        "tablist",
+        "tooltip",
+      ];
+      if (
+        /^[a-z]/.test(tag) &&
+        role &&
+        widgetRoles.includes(role.initializer.text)
+      ) {
+        customSemanticWidgets.push({
+          file: relative(filename),
+          line:
+            source.getLineAndCharacterOfPosition(node.getStart(source)).line +
+            1,
+          tag,
+          role: role.initializer.text,
+        });
+      }
       if (
         [
           "button",
@@ -252,12 +289,16 @@ console.log(
         )
         .map(relative),
       rawVisibleControls: rawControls,
+      customSemanticWidgets,
     },
     null,
     2,
   ),
 );
 
-if (process.argv.includes("--check") && rawControls.length > 0) {
+if (
+  process.argv.includes("--check") &&
+  (rawControls.length > 0 || customSemanticWidgets.length > 0)
+) {
   process.exitCode = 1;
 }

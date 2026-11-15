@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
-import { TextInput } from '@mantine/core'
+import { Switch, TextInput } from '@mantine/core'
 import { getClassDetailData, type ClassDetailData, type ClassDetailStudent } from '@/features/teacher-dashboard/server'
 import { I18nProvider } from '@/lib/i18n/I18nProvider'
 import type { Language } from '@/lib/i18n/config'
@@ -639,17 +639,8 @@ function ReadonlySwitch({
         <p className="text-sm font-semibold text-on-surface">{label}</p>
         {description && <p className="mt-1 text-sm leading-6 text-on-surface-variant">{description}</p>}
       </div>
-      <span
-        role="switch"
-        aria-label={label}
-        aria-checked={checked}
-        aria-disabled="true"
-        className={`relative h-6 w-11 shrink-0 rounded-full border ${checked ? 'border-primary bg-primary' : 'border-outline bg-surface-container'}`}
-      >
-        <span
-          className={`absolute top-1 h-4 w-4 rounded-full bg-surface-container-lowest ${checked ? 'right-1' : 'left-1'}`}
-        />
-      </span>
+      <MantineBoundary><Switch disabled checked={checked} aria-label={label}
+        aria-checked={checked} aria-disabled="true" className="shrink-0" /></MantineBoundary>
     </div>
   )
 }

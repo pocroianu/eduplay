@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Table } from '@mantine/core'
+import { Progress, Table } from '@mantine/core'
 import { Button, MantineBoundary } from '@/shared/components/ui/kit'
 import {
   BarChart,
@@ -133,19 +133,16 @@ function performanceLabel(avg: number): { text: string; className: string } {
 const REPORT_TONES = [
   {
     textClass: 'text-primary',
-    barClass: 'bg-primary',
     fill: 'var(--mantine-color-violet-6, var(--color-primary))',
     softClass: 'bg-primary/10 text-primary',
   },
   {
     textClass: 'text-gold-deep',
-    barClass: 'bg-gold',
     fill: 'var(--mantine-color-yellow-6, var(--color-gold))',
     softClass: 'bg-gold/10 text-gold-deep',
   },
   {
     textClass: 'text-primary-dim',
-    barClass: 'bg-primary-dim',
     fill: 'var(--mantine-color-violet-4, var(--color-primary-dim))',
     softClass: 'bg-primary-dim/10 text-primary-dim',
   },
@@ -280,14 +277,10 @@ function SubjectProgressSection({
               <span>{s.subject}</span>
               <span className={tone.textClass}>{s.score}%</span>
             </div>
-            <div className="h-4 w-full bg-surface-container rounded-full overflow-hidden">
-              <motion.div
-                className={`h-full rounded-full ${tone.barClass}`}
-                initial={{ width: 0 }}
-                animate={{ width: `${s.score}%` }}
-                transition={{ duration: 0.8, ease: 'easeOut' }}
-              />
-            </div>
+            <MantineBoundary>
+              <Progress value={Math.max(0, Math.min(100, s.score))}
+                color={tone.fill} size={16} aria-label={`${s.subject}: ${s.score}%`} />
+            </MantineBoundary>
           </div>
           )
         })}
