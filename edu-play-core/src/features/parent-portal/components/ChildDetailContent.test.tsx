@@ -17,7 +17,7 @@ vi.mock('./game-progress-list', () => ({
 function renderChildDetail() {
   return render(
     <MantineProvider>
-      <ChildDetailContent
+      <ChildDetailContent streakDays={0}
         profile={{
           id: 'parent-1',
           full_name: 'Părinte Test',

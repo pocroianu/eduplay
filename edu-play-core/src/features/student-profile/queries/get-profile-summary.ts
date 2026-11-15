@@ -1,6 +1,7 @@
 import 'server-only';
 
 import { cache } from 'react';
+import { getActivityProgress, summarizeActivityProgress, getActivityStreak } from '@/features/activities/server';
 import { createClient } from '@/lib/supabase/server';
 import { getAgeBand, type AgeBand } from '@/shared/lib/utils/age';
 
@@ -38,25 +39,20 @@ async function getProfileSummaryUncached(): Promise<StudentProfileSummary | null
 
   if (!profile || profile.role !== 'student') return null;
 
-  const [{ data: student }, { data: progress }] = await Promise.all([
+  const [{ data: student }, progress, streakDays] = await Promise.all([
     supabase.from('students').select('username').eq('id', user.id).maybeSingle(),
-    supabase
-      .from('activity_progress')
-      .select('status, score, last_played_at, completed_at')
-      .eq('student_id', user.id),
+    getActivityProgress(supabase, user.id),
+    getActivityStreak(supabase, user.id),
   ]);
 
   const entries = progress ?? [];
-  const completedCount = entries.filter((entry) => entry.status === 'completed').length;
+  const completedCount = summarizeActivityProgress(entries).completedCount;
   const starsEarned = entries.reduce(
     (acc, entry) => acc + Math.floor((entry.score ?? 0) / 20),
     0,
   );
   const bestScore = entries.reduce((acc, entry) => Math.max(acc, entry.score ?? 0), 0);
   const level = Math.max(1, Math.floor(starsEarned / STARS_PER_LEVEL) + 1);
-
-  // Streak: count distinct calendar days with activity ending today / yesterday.
-  const streakDays = computeStreak(entries.map((entry) => entry.last_played_at ?? entry.completed_at ?? null));
 
   return {
     id: profile.id,
@@ -74,31 +70,6 @@ async function getProfileSummaryUncached(): Promise<StudentProfileSummary | null
       level,
     },
   };
-}
-
-function computeStreak(timestamps: Array<string | null>): number {
-  const days = new Set<string>();
-  for (const ts of timestamps) {
-    if (!ts) continue;
-    const day = new Date(ts).toISOString().slice(0, 10);
-    days.add(day);
-  }
-  if (days.size === 0) return 0;
-
-  const today = new Date();
-  today.setUTCHours(0, 0, 0, 0);
-  let streak = 0;
-  let cursor = today;
-  // allow most recent day to be yesterday
-  if (!days.has(cursor.toISOString().slice(0, 10))) {
-    cursor = new Date(cursor.getTime() - 86_400_000);
-    if (!days.has(cursor.toISOString().slice(0, 10))) return 0;
-  }
-  while (days.has(cursor.toISOString().slice(0, 10))) {
-    streak += 1;
-    cursor = new Date(cursor.getTime() - 86_400_000);
-  }
-  return streak;
 }
 
 export const getStudentProfileSummary = cache(getProfileSummaryUncached);

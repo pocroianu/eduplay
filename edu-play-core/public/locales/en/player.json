@@ -94,5 +94,11 @@
     "title": "Almost ready!",
     "subtitle": "This game is still being prepared. Vulpița is getting it ready with care.",
     "coachQuote": "\"In the meantime, pick another game from the collection — there are many adventures waiting for you!\""
+  },
+  "saving": {
+    "pending": "Saving your progress…",
+    "saved": "Progress saved!",
+    "error": "Your progress could not be saved. Try again before leaving.",
+    "retry": "Try saving again"
   }
 }

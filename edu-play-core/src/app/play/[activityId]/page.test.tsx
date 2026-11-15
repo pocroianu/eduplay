@@ -3,7 +3,6 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const createAdminClientMock = vi.fn();
 const createClientMock = vi.fn();
-const getPreviewSessionOrThrowMock = vi.fn<(...args: unknown[]) => Promise<unknown>>();
 
 vi.mock('@/lib/supabase/server', () => ({
   createAdminClient: () => createAdminClientMock(),
@@ -16,11 +15,6 @@ vi.mock('@/features/games', () => ({
 
 vi.mock('@/features/activities', () => ({
   FreeResponsePlayContent: vi.fn(() => null),
-}));
-
-vi.mock('@/features/activities/server', () => ({
-  getPreviewSessionOrThrow: (...args: unknown[]) =>
-    getPreviewSessionOrThrowMock(...args),
 }));
 
 vi.mock('next/navigation', () => ({
@@ -192,32 +186,9 @@ describe('/play/[activityId] preview session handling', () => {
     vi.resetModules();
     vi.clearAllMocks();
     createAdminClientMock.mockReset();
+    createAdminClientMock.mockImplementation(() => createClientMock());
     process.env.CMS_PREVIEW_TOKEN_SECRET = 'test-secret';
-    getPreviewSessionOrThrowMock.mockImplementation(
-      async (...args: unknown[]) => {
-        const [supabase, input] = args as [
-          ReturnType<typeof makeSupabase>,
-          { previewId: string; activityId: string; actorId: string },
-        ];
-        const { data, error } = await supabase
-          .from('activity_preview_sessions')
-          .select('*')
-          .eq('id', input.previewId)
-          .eq('activity_id', input.activityId)
-          .eq('created_by', input.actorId)
-          .single();
 
-        if (error || !data) throw new Error('preview not found');
-        return {
-          id: data.id,
-          activityId: data.activity_id,
-          typeId: data.type_id,
-          configData: data.config_data,
-          createdBy: data.created_by,
-          expiresAt: data.expires_at,
-        };
-      },
-    );
   });
 
   it('allows an admin with a valid preview session to render draft config through a scoped config URL', async () => {

@@ -100,10 +100,6 @@ export type CreatePathInput = z.infer<typeof createPathInputSchema>;
 export const addStepInputSchema = z
   .object({
     pathId: uuid('ID-ul parcursului este invalid'),
-    stepOrder: z
-      .number()
-      .int('Ordinea pasului trebuie să fie un număr întreg')
-      .min(0, 'Ordinea pasului nu poate fi negativă'),
     kind: z.enum(LEARNING_PATH_STEP_KINDS),
     title: z
       .string()

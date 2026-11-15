@@ -1,6 +1,8 @@
 // Activities Feature - Server-Only Exports
 // Only import from this file in Server Components, Server Actions, and
 // Route Handlers. NEVER import from this file in Client Components.
+export { getActivityStreak } from './progress/get-activity-streak';
+export { resolveActivityLaunch } from './server/resolve-activity-launch';
 
 export { getActivityInstance, getStudentActivities } from './queries';
 export {
@@ -42,3 +44,6 @@ export type {
   ActivityAssignmentTarget,
   ActivityVersionPin,
 } from './server/assignment-version-pin';
+
+export { getActivityProgress } from './progress/get-activity-progress';
+export { summarizeActivityProgress } from './progress/activity-progress';

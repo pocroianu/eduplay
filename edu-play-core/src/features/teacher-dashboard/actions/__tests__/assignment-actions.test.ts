@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { resolveLatestPublishedActivityAssignmentTarget } from '@/features/activities/server'
 import { createClient } from '@/lib/supabase/server'
+import { createTeacherAssignment } from '../../assignments/create-assignment'
 import { createAssignment } from '../assignment-actions'
 
 vi.mock('@/lib/supabase/server', () => ({
@@ -53,7 +54,8 @@ class Query {
   insert(payload: Row | Row[]) {
     const rows = Array.isArray(payload) ? payload : [payload]
     this.insertedRows = rows.map((row, index) => ({
-      id: row.id ?? `assignment-${index + 1}`,
+      id: row.id ?? `90000000-0000-4000-8000-00000000000${index + 1}`,
+      created_at: null, updated_at: null,
       ...row,
     }))
     this.store[this.table].push(...this.insertedRows)
@@ -84,8 +86,8 @@ class Query {
 
 function makeSupabase(overrides: Partial<Store> = {}) {
   const store: Store = {
-    profiles: [{ id: 'teacher-1', role: 'teacher' }],
-    classes: [{ id: CLASS_ID, teacher_id: 'teacher-1' }],
+    profiles: [{ id: '88888888-8888-4888-8888-888888888888', role: 'teacher' }],
+    classes: [{ id: CLASS_ID, teacher_id: '88888888-8888-4888-8888-888888888888' }],
     students: [
       { id: STUDENT_ONE_ID, class_id: CLASS_ID },
       { id: STUDENT_TWO_ID, class_id: CLASS_ID },
@@ -96,8 +98,9 @@ function makeSupabase(overrides: Partial<Store> = {}) {
 
   return {
     store,
+    rpc: vi.fn().mockResolvedValue({ data: null, error: null }),
     auth: {
-      getUser: vi.fn().mockResolvedValue({ data: { user: { id: 'teacher-1' } } }),
+      getUser: vi.fn().mockResolvedValue({ data: { user: { id: '88888888-8888-4888-8888-888888888888' } } }),
     },
     from: (table: string) => new Query(store, table),
   }
@@ -128,12 +131,12 @@ describe('createAssignment', () => {
 
     expect(result).toEqual({
       success: true,
-      data: { id: 'assignment-1', ids: ['assignment-1', 'assignment-2'] },
+      data: { id: '90000000-0000-4000-8000-000000000001', ids: ['90000000-0000-4000-8000-000000000001', '90000000-0000-4000-8000-000000000002'] },
     })
     expect(resolveTargetMock).toHaveBeenCalledWith(expect.anything(), ACTIVITY_ID)
     expect(supabase.store.assignments).toEqual([
       expect.objectContaining({
-        teacher_id: 'teacher-1',
+        teacher_id: '88888888-8888-4888-8888-888888888888',
         activity_id: ACTIVITY_ID,
         version_id: VERSION_ID,
         class_id: null,
@@ -142,7 +145,7 @@ describe('createAssignment', () => {
         is_mandatory: true,
       }),
       expect.objectContaining({
-        teacher_id: 'teacher-1',
+        teacher_id: '88888888-8888-4888-8888-888888888888',
         activity_id: ACTIVITY_ID,
         version_id: VERSION_ID,
         class_id: null,
@@ -176,3 +179,30 @@ describe('createAssignment', () => {
     })
   })
 })
+
+
+it('shared workflow rejects foreign students before inserting Assignments', async () => {
+  const client = makeSupabase({ students: [] });
+  await expect(createTeacherAssignment(client as never, '88888888-8888-4888-8888-888888888888', {
+    activityId: ACTIVITY_ID, studentIds: [STUDENT_ONE_ID], isMandatory: false,
+  })).rejects.toMatchObject({ code: 'FORBIDDEN' });
+  expect(client.store.assignments).toHaveLength(0);
+});
+it('shared workflow rejects an Activity without a published version before writing', async () => {
+  const client = makeSupabase();
+  resolveTargetMock.mockResolvedValue(null);
+  await expect(createTeacherAssignment(client as never, '88888888-8888-4888-8888-888888888888', {
+    activityId: ACTIVITY_ID, classId: CLASS_ID, isMandatory: false,
+  })).rejects.toMatchObject({ code: 'NOT_FOUND' });
+  expect(client.store.assignments).toHaveLength(0);
+});
+it('notifies each target parent after commit and preserves success if notification fails', async () => {
+  const client = makeSupabase();
+  createClientMock.mockResolvedValue(client as never);
+  client.rpc.mockResolvedValue({ data: null, error: { message: 'offline' } });
+  const result = await createAssignment({ activityId: ACTIVITY_ID, classId: CLASS_ID });
+  expect(result.success).toBe(true);
+  expect(client.store.assignments).toHaveLength(1);
+  expect(client.rpc).toHaveBeenCalledTimes(2);
+  expect(client.rpc).toHaveBeenCalledWith('notify_linked_parents', expect.objectContaining({ p_student_id: STUDENT_ONE_ID }));
+});

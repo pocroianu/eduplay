@@ -82,7 +82,7 @@ describe("GameEmbed host controls", () => {
           type: "GAME_COMPLETE",
           score: 80,
           totalSets: 10,
-          timeSpent: 45,
+          timeSpent: 0,
           reason: "completed",
         },
       }),
@@ -91,7 +91,7 @@ describe("GameEmbed host controls", () => {
     await waitFor(() => {
       expect(onComplete).toHaveBeenCalledWith({
         score: 80,
-        timeSpent: 45,
+        timeSpent: 0,
         starRating: 2,
         totalSets: 10,
       });
@@ -119,7 +119,7 @@ describe("GameEmbed host controls", () => {
           type: "GAME_COMPLETE",
           score: 90,
           totalSets: 10,
-          timeSpent: 50,
+          timeSpent: 0,
           reason: "completed",
           screenshotDataUrl: "data:image/jpeg;base64,aGVsbG8=",
         },
@@ -129,7 +129,7 @@ describe("GameEmbed host controls", () => {
     await waitFor(() => {
       expect(onComplete).toHaveBeenCalledWith({
         score: 90,
-        timeSpent: 50,
+        timeSpent: 0,
         starRating: 3,
         totalSets: 10,
       });

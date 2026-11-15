@@ -58,6 +58,11 @@ function fakeOverrideSupabase(
   };
 
   return {
+    rpc: vi.fn((name: string, payload: Record<string, unknown>) => {
+      capture.table = name;
+      capture.payload = payload;
+      return { maybeSingle: vi.fn(async () => upsertRes) };
+    }),
     from: vi.fn((table: string) => {
       if (table === "students") {
         const builder: Record<string, unknown> = {};
@@ -74,23 +79,6 @@ function fakeOverrideSupabase(
         builder.limit = vi.fn(() => Promise.resolve(assignmentRes));
         return builder;
       }
-      if (table === "student_path_progress") {
-        const builder: Record<string, unknown> = {};
-        builder.upsert = vi.fn(
-          (
-            payload: Record<string, unknown>,
-            upsertOptions: Record<string, unknown>,
-          ) => {
-            capture.table = table;
-            capture.payload = payload;
-            capture.options = upsertOptions;
-            return builder;
-          },
-        );
-        builder.select = vi.fn(() => builder);
-        builder.maybeSingle = vi.fn(() => Promise.resolve(upsertRes));
-        return builder;
-      }
       throw new Error(`unexpected table ${table}`);
     }),
   };
@@ -103,7 +91,7 @@ beforeEach(() => {
 });
 
 describe("overrideProgress", () => {
-  it("sets completed_at on a completed override", async () => {
+  it("delegates completion to the atomic transition", async () => {
     const capture: UpsertCapture = {};
     const supabase = fakeOverrideSupabase(
       { data: PROGRESS_ROW, error: null },
@@ -122,12 +110,19 @@ describe("overrideProgress", () => {
     });
 
     expect(result.success).toBe(true);
-    expect(capture.payload?.status).toBe("completed");
-    expect(typeof capture.payload?.completed_at).toBe("string");
-    expect(capture.options).toEqual({ onConflict: "student_id,path_id" });
+    expect(capture.payload?.p_status).toBe("completed");
+    expect(capture.table).toBe("override_learning_path_progress");
+    expect(capture.payload).toEqual({
+      p_student_id: STUDENT_ID,
+      p_path_id: PATH_ID,
+      p_status: "completed",
+      p_current_step_id: null,
+    });
+    expect(revalidatePathMock).toHaveBeenCalledWith("/teacher");
+    expect(result.data?.progress.status).toBe("completed");
   });
 
-  it("clears completed_at when reopening to in_progress", async () => {
+  it("requests deliberate reopening at the selected step", async () => {
     const capture: UpsertCapture = {};
     const supabase = fakeOverrideSupabase(
       {
@@ -150,12 +145,11 @@ describe("overrideProgress", () => {
     });
 
     expect(result.success).toBe(true);
-    expect(capture.payload?.status).toBe("in_progress");
-    expect(capture.payload).toHaveProperty("completed_at", null);
-    expect(capture.payload).toHaveProperty("last_completed_step_id", null);
+    expect(capture.payload?.p_status).toBe("in_progress");
+    expect(capture.payload).toHaveProperty("p_current_step_id", STEP_ID);
   });
 
-  it("clears completed_at when overriding away from completed", async () => {
+  it("requests overridden status without choosing a step", async () => {
     const capture: UpsertCapture = {};
     const supabase = fakeOverrideSupabase(
       {
@@ -176,7 +170,7 @@ describe("overrideProgress", () => {
       status: "overridden",
     });
 
-    expect(capture.payload).toHaveProperty("completed_at", null);
+    expect(capture.payload).toHaveProperty("p_status", "overridden");
   });
 
   it("returns a friendly validation error for invalid input", async () => {
@@ -265,6 +259,6 @@ describe("overrideProgress", () => {
 
     expect(result.success).toBe(true);
     expect(createAdminClientMock).toHaveBeenCalledTimes(1);
-    expect(capture.payload?.student_id).toBe(STUDENT_ID);
+    expect(capture.payload?.p_student_id).toBe(STUDENT_ID);
   });
 });

@@ -7,6 +7,15 @@ const versionId = '55555555-5555-4555-8555-555555555555';
 const gameId = '33333333-3333-4333-8333-333333333333';
 
 describe('recordProgressSchema', () => {
+  it('requires the complete cumulative session contract while retaining legacy deltas', () => {
+    const session = { activityId, sessionId: studentId, sequence: 1, timeSpent: 5, status: 'in_progress' };
+    expect(recordProgressSchema.safeParse(session).success).toBe(true);
+    expect(recordProgressSchema.safeParse({ ...session, sequence: undefined }).success).toBe(false);
+    expect(recordProgressSchema.safeParse({ ...session, timeSpent: undefined }).success).toBe(false);
+    expect(recordProgressSchema.safeParse({ ...session, status: 'not_started' }).success).toBe(false);
+    expect(recordProgressSchema.safeParse({ activityId, sequence: 1 }).success).toBe(false);
+    expect(recordProgressSchema.safeParse({ activityId, timeSpent: 5 }).success).toBe(true);
+  });
   it('accepts canonical Activity progress input', () => {
     const result = recordProgressSchema.safeParse({
       studentId,

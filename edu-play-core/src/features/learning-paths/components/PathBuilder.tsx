@@ -99,7 +99,6 @@ export function PathBuilder({
     startTransition(async () => {
       const result = await addStep({
         pathId: path.id,
-        stepOrder: steps.length,
         kind: 'activity_template',
         title,
         description: description.trim() ? description : null,

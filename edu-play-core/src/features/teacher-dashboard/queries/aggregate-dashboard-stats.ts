@@ -1,3 +1,4 @@
+import { summarizeActivityProgress } from '@/features/activities/server'
 import type { StudentRow, ProfileRow, ProgressRow, GameRow } from './types'
 import { CATEGORY_LABELS, CATEGORY_COLORS } from './types'
 import { formatDateShort, formatWeekday } from '@/lib/i18n/formatters'
@@ -41,15 +42,12 @@ export function buildStudentSummaries(
     .map((student) => {
       const studentProfile = profileMap.get(student.id)
       const entries = progressByStudent.get(student.id) || []
-      const completedGames = entries.filter((e) => e.status === 'completed').length
-      const inProgressGames = entries.filter((e) => e.status === 'in_progress').length
-      const averageScore =
-        entries.length > 0
-          ? Math.round(entries.reduce((sum, e) => sum + (e.score || 0), 0) / entries.length)
-          : 0
-
+      const summary = summarizeActivityProgress(entries.map((entry) => ({
+        ...entry, activity_id: entry.game_id, time_spent: null,
+      })))
       const categoryScores = new Map<string, { total: number; count: number }>()
       for (const entry of entries) {
+        if (entry.status !== 'completed' || entry.score === null) continue;
         const game = gameMap.get(entry.game_id)
         const category = game?.category
         if (!category) continue
@@ -71,10 +69,10 @@ export function buildStudentSummaries(
         name: studentProfile?.full_name || student.username,
         avatarUrl: studentProfile?.avatar_url || null,
         className: classNameMap.get(student.class_id ?? '') || null,
-        completedGames,
-        inProgressGames,
+        completedGames: summary.completedCount,
+        inProgressGames: summary.inProgressCount,
         totalGames: entries.length,
-        averageScore,
+        averageScore: summary.averageScore,
         lastActivityAt: entries[0]?.last_played_at || null,
         focusArea: weakestCategory
           ? CATEGORY_LABELS[weakestCategory.category] || weakestCategory.category
@@ -172,6 +170,7 @@ export function buildSubjectSnapshot(
   const categoryBuckets = new Map<string, { total: number; count: number }>()
 
   for (const item of progressRows) {
+    if (item.status !== 'completed' || item.score === null) continue;
     const game = gameMap.get(item.game_id)
     if (game?.category) {
       const bucket = categoryBuckets.get(game.category) || { total: 0, count: 0 }

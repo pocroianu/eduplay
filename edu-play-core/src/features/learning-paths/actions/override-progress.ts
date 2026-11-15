@@ -6,7 +6,6 @@ import { ROUTES } from "@/shared/lib/constants";
 import { overrideProgressInputSchema } from "../schemas";
 import type { ActionResult, StudentPathProgress } from "../types";
 import {
-  STUDENT_PATH_PROGRESS_SELECT,
   mapStudentPathProgressRow,
   type StudentPathProgressRowSnake,
 } from "../queries/types";
@@ -18,10 +17,8 @@ import { requireTeacher } from "./internal/require-teacher";
  * to manually flip a row to `completed` after an in-person assessment, or
  * to `overridden` to mark the path as no longer applicable to the student.
  *
- * Implementation note: an UPDATE is the wrong primitive here because no
- * progress row may exist yet (student has been assigned but never opened
- * the path). UPSERT keyed on the
- * `(student_id, path_id)` UNIQUE constraint installed in the migration.
+ * SQL serializes overrides with advancement, including initial progress.
+ * Existing teacher/Assignment checks keep the action's friendly error messages.
  */
 export async function overrideProgress(
   input: unknown,
@@ -38,8 +35,6 @@ export async function overrideProgress(
   if (!auth.ok) return auth.error;
 
   const { ctx } = auth;
-  const now = new Date().toISOString();
-  const completed = parsed.data.status === "completed";
   const studentLookupClient =
     ctx.profile.role === "admin" ? createAdminClient() : ctx.supabase;
 
@@ -86,22 +81,12 @@ export async function overrideProgress(
   }
 
   const { data, error } = await ctx.supabase
-    .from("student_path_progress")
-    .upsert(
-      {
-        student_id: parsed.data.studentId,
-        path_id: parsed.data.pathId,
-        status: parsed.data.status,
-        current_step_id: parsed.data.currentStepId ?? null,
-        ...(completed ? {} : { last_completed_step_id: null }),
-        // Always send the column so reopening a completed row clears the
-        // stale timestamp instead of leaving "completed at X" attached to
-        // an in_progress / overridden row (CTO review of PR #144).
-        completed_at: completed ? now : null,
-      },
-      { onConflict: "student_id,path_id" },
-    )
-    .select(STUDENT_PATH_PROGRESS_SELECT)
+    .rpc("override_learning_path_progress", {
+      p_student_id: parsed.data.studentId,
+      p_path_id: parsed.data.pathId,
+      p_status: parsed.data.status,
+      p_current_step_id: parsed.data.currentStepId ?? null,
+    })
     .maybeSingle();
 
   if (error || !data) {

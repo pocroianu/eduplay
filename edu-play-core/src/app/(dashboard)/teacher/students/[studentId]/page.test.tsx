@@ -66,6 +66,11 @@ const supabase = {
     getUser: () => authGetUserMock(),
   },
   from: vi.fn((table: string) => {
+    if (table === 'activity_days') {
+      const days = { select: () => days, eq: () => days, order: () => days,
+        range: async () => ({ data: [], error: null }) };
+      return days;
+    }
     if (table === 'profiles') return profilesBuilder;
     if (table === 'students') return studentsBuilder;
     if (table === 'classes') return classesBuilder;

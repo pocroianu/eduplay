@@ -130,7 +130,6 @@ describe('PathBuilder', () => {
     await waitFor(() => expect(addStepMock).toHaveBeenCalledTimes(1));
     expect(addStepMock).toHaveBeenCalledWith({
       pathId: '11111111-1111-4111-8111-111111111111',
-      stepOrder: 0,
       kind: 'activity_template',
       title: 'Primul pas',
       description: null,

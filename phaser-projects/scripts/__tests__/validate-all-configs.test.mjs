@@ -53,10 +53,9 @@ test("validate-all-configs reports selected-game missing asset pins", () => {
     }
   }));
 
-  const result = spawnSync("npm run validate:all-configs --silent -- --root " + JSON.stringify(fixtureRoot), {
+  const result = spawnSync(process.execPath, [resolve(repoRoot, "node_modules/ts-node/dist/bin.js"), resolve(repoRoot, "scripts/validate-all-configs.ts"), "--root", fixtureRoot], {
     cwd: repoRoot,
-    encoding: "utf8",
-    shell: true
+    encoding: "utf8"
   });
 
   const output = `${result.stdout}\n${result.stderr}`;
@@ -90,10 +89,9 @@ test("validate-all-configs reports invalid Activity config JSON without crashing
     }
   }));
 
-  const result = spawnSync("npm run validate:all-configs --silent -- --root " + JSON.stringify(fixtureRoot), {
+  const result = spawnSync(process.execPath, [resolve(repoRoot, "node_modules/ts-node/dist/bin.js"), resolve(repoRoot, "scripts/validate-all-configs.ts"), "--root", fixtureRoot], {
     cwd: repoRoot,
-    encoding: "utf8",
-    shell: true
+    encoding: "utf8"
   });
 
   const output = `${result.stdout}\n${result.stderr}`;
@@ -102,4 +100,35 @@ test("validate-all-configs reports invalid Activity config JSON without crashing
   assert.match(output, /broken-activity[\\/]versions[\\/]1[\\/]config\.json/);
   assert.match(output, /VALIDATION SUMMARY/);
   assert.doesNotMatch(output, /SyntaxError:|at JSON\.parse/);
+});
+
+
+test("validate-all-configs rejects an invalid older version while the selected version is valid", () => {
+  const fixtureRoot = mkdtempSync(join(tmpdir(), "validate-old-version-"));
+  const activityRoot = join(fixtureRoot, "activities/older-invalid");
+  mkdirSync(activityRoot, { recursive: true });
+  writeFileSync(join(activityRoot, "activity.json"), JSON.stringify({
+    activityId: "older-invalid", version: 2, renderer: { id: "multiple-choice", version: "^1.0.0" }, gameId: "older-invalid"
+  }));
+  for (const version of [1, 2]) {
+    const root = join(activityRoot, "versions", String(version));
+    mkdirSync(join(root, "strings"), { recursive: true });
+    writeFileSync(join(root, "config.json"), JSON.stringify(version === 1 ? {} : {
+      meta: { gameId: "older-invalid", gameType: "multipleChoice", version: "1.0.0", totalSteps: 1, supportedLanguages: ["en"] },
+      questions: [{ id: "q1", questionKey: "q1", choices: [
+        { type: "image", value: "a", isCorrect: true }, { type: "image", value: "b", isCorrect: false }
+      ] }]
+    }));
+    writeFileSync(join(root, "strings/en.json"), JSON.stringify({ meta: { title: "Fixture" } }));
+    writeFileSync(join(root, "assets.json"), JSON.stringify({
+      version: "2.0.0", baseUrl: "/assets/library", pinnedAssets: {},
+      games: { "older-invalid": { manifest: { images: [], audio: [], spritesheets: [] } } }
+    }));
+  }
+  const result = spawnSync(process.execPath, [
+    resolve(repoRoot, "node_modules/ts-node/dist/bin.js"), resolve(repoRoot, "scripts/validate-all-configs.ts"), "--root", fixtureRoot
+  ], { cwd: repoRoot, encoding: "utf8" });
+  assert.notEqual(result.status, 0);
+  assert.match(result.stdout + result.stderr, /older-invalid[\\/]versions[\\/]1[\\/]config.json/);
+  assert.match(result.stdout, /PASS.*versions[\\/]2[\\/]config.json/);
 });

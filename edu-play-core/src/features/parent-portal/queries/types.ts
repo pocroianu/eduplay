@@ -20,7 +20,7 @@ export interface ProgressSummary {
   completedGames: number;
   /** Count of games with status 'in_progress' */
   inProgressGames: number;
-  /** Average score across all scored entries (rounded to 1 decimal) */
+  /** Average score across completed, scored Activities (rounded to 1 decimal) */
   averageScore: number;
   /** Total play time in minutes */
   totalPlayTime: number;

@@ -5,7 +5,6 @@ import { ROUTES } from "@/shared/lib/constants";
 import { pathIdSchema } from "../schemas";
 import type { ActionResult, LearningPath } from "../types";
 import {
-  LEARNING_PATH_SELECT,
   mapLearningPathRow,
   type LearningPathRowSnake,
 } from "../queries/types";
@@ -35,45 +34,19 @@ export async function publishPath(
 
   const { ctx } = auth;
 
-  const { data: stepRows, error: stepError } = await ctx.supabase
-    .from("learning_path_steps")
-    .select("id")
-    .eq("path_id", parsed.data.pathId)
-    .limit(1);
-
-  if (stepError) {
-    return {
-      success: false,
-      error: "Nu am putut publica parcursul. Încearcă din nou.",
-    };
-  }
-
-  if (!stepRows || stepRows.length === 0) {
-    return {
-      success: false,
-      error: "Adaugă cel puțin un pas înainte să publici parcursul",
-    };
-  }
-
   const { data, error } = await ctx.supabase
-    .from("learning_paths")
-    .update({ status: "published" })
-    .eq("id", parsed.data.pathId)
-    .eq("status", "draft")
-    .select(LEARNING_PATH_SELECT)
-    .maybeSingle();
+    .rpc('publish_learning_path', { p_path_id: parsed.data.pathId })
+    .single();
 
-  if (error) {
-    return {
-      success: false,
-      error: "Nu am putut publica parcursul. Încearcă din nou.",
+  if (error || !data) {
+    const messages: Record<string, string> = {
+      learning_path_empty: 'Adaugă cel puțin un pas înainte să publici parcursul',
+      learning_path_not_found: 'Parcursul nu a fost găsit sau nu mai este în lucru',
+      learning_path_not_draft: 'Parcursul nu a fost găsit sau nu mai este în lucru',
     };
-  }
-
-  if (!data) {
     return {
       success: false,
-      error: "Parcursul nu a fost găsit sau nu mai este în lucru",
+      error: messages[error?.message ?? ''] ?? 'Nu am putut publica parcursul. Încearcă din nou.',
     };
   }
 

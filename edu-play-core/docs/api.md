@@ -223,19 +223,45 @@ for schema validation failures.
 
 ### `GET /api/v1/progress`
 
-Role-scoped learner progress list. New Activity-native callers filter with
-`activityId`; `gameId` remains supported only for legacy `game_progress`
-rows. Optional filters: `studentId`, `activityId`, `gameId`, `status`,
+Role-scoped learner progress list. Activity-native callers filter with
+`activityId`. Optional filters: `studentId`, `activityId`, `status`,
 `page`, `perPage`.
 
 Activity rows include `activityId`, `lastVersionId`, optional
 `legacyGameId`, `status`, `score`, `timeSpent`, `attempts`, timestamps,
 `data`, and optional joined `activities` metadata.
 
+### Teacher Activity draft saving
+
+Teacher create/edit actions use `save_teacher_activity_draft` to save a private
+free-response draft's content and ordered live resources together. Failed saves
+leave the previous draft intact. The operation verifies the authenticated teacher,
+ownership, editable state and Activity type eligibility, and shares the Activity
+row lock with ready snapshots. Ready Activities and versioned resources remain
+immutable.
+
+### Assignment creation
+
+Teacher forms and `POST /api/v1/assignments` use the same roster checks,
+published Activity Version selection, target fanout and Assignment persistence.
+Both notify linked parents after a successful write. Notification failure does
+not undo the saved Assignment or report it as a failed creation.
+
+### `GET /api/v1/activity-submissions?assignmentId=uuid`
+
+Student-only, read-only reconciliation of the authenticated learner's submission
+for that Assignment. Returns the current submission or `null`, with private,
+non-cacheable responses. It never starts a draft or changes a submission.
+
+Free-response submission coordination distinguishes rejected writes from unknown
+commit outcomes. It awaits cleanup after known failures and reports failed
+cleanup. An uncertain commit retains its exact response and media while the page
+is open, reads the authoritative submission, and retries without new media uploads.
+Submitted/approved work locks the editor. Unresolved commits never delete media.
+
 ### `POST /api/v1/progress`
 
-Records progress. Canonical payload uses `activityId`; `gameId` is
-deprecated legacy input. Students record their own progress. Teachers must
+Records progress using `activityId`; `gameId` is rejected. Students record their own progress. Teachers must
 include `studentId` for a roster student.
 
 ```json
@@ -243,6 +269,8 @@ include `studentId` for a roster student.
   "activityId": "uuid",
   "versionId": "uuid",
   "assignmentId": "uuid",
+  "sessionId": "uuid",
+  "sequence": 1,
   "status": "in_progress",
   "score": 80,
   "timeSpent": 30,
@@ -252,9 +280,20 @@ include `studentId` for a roster student.
 
 `versionId` records the last Activity Version played. When `assignmentId`
 is provided, the assignment must target the same `activityId` and pinned
-version. Legacy `{ "gameId": "uuid" }` still writes `game_progress`; when
-that game maps to a published Activity, the API also writes canonical
-`activity_progress` for migration compatibility.
+version.
+
+With `sessionId`, `sequence` and `timeSpent` are required. `timeSpent` is the
+cumulative active seconds for that play session, excluding loading and pauses.
+Use increasing positive sequence numbers. Retrying the same snapshot is safe;
+older snapshots and any progress after that session's completion are ignored.
+A restart uses a new session identifier. Attempts count play sessions rather
+than individual snapshots. Results may be shown before acknowledgement, but
+failed saves must remain visible and retryable.
+
+Without `sessionId`, existing callers retain their additive `timeSpent` contract.
+Saved learner progress also records a distinct activity day in Europe/Bucharest.
+Teacher adjustments do not create learner activity days. Streak history before
+the activity-day migration may be incomplete.
 
 ### `GET /api/v1/activities/:id/config`
 

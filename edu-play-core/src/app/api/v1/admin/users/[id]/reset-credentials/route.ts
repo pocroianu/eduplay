@@ -6,8 +6,9 @@ import {
   success,
 } from '@/lib/api';
 import { createAdminClient } from '@/lib/supabase/server';
+import { studentPinToAuthPassword } from '@/features/auth/server';
 import { recordAdminAction } from '@/lib/admin/audit';
-import { resetCredentialsResponseSchema } from '@/features/admin/api/schemas';
+import { resetCredentialsResponseSchema } from '@/features/admin/server';
 import { z } from 'zod';
 
 interface UserContext {
@@ -51,7 +52,7 @@ export const POST = handleRoute(async (_req, context) => {
     const newPin = generateRandomPin();
     const { error: updateError } = await adminClient.auth.admin.updateUserById(
       userId,
-      { password: newPin },
+      { password: studentPinToAuthPassword(newPin) },
     );
     if (updateError) {
       throw new ApiError('INTERNAL_ERROR', updateError.message);

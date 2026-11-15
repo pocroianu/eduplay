@@ -144,15 +144,14 @@ describe('addStepInputSchema', () => {
     expect(result.success).toBe(false);
   });
 
-  it('rejects a negative stepOrder', () => {
+  it('accepts an append without caller-supplied ordering', () => {
     const result = addStepInputSchema.safeParse({
-      pathId: UUID_A,
-      stepOrder: -1,
+      pathId: '11111111-1111-4111-8111-111111111111',
       kind: 'activity_template',
-      title: 'Pasul -1',
+      title: 'Pasul 1',
       targetActivityType: 'drawing-canvas',
     });
-    expect(result.success).toBe(false);
+    expect(result.success).toBe(true);
   });
 });
 

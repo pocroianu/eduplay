@@ -11,9 +11,14 @@ import type { CategoryTheme } from "./getCategoryTheme";
 import type { GameCompleteResult } from "@/features/games/types/game.types";
 import { reducedFade } from "./reduced-motion";
 
+import type { ActivityPlaySession, ProgressSaveStatus } from '../player/activity-play-session';
+
 export type GamePhase = "intro" | "playing" | "complete";
 
 interface GameStageProps {
+  session?: ActivityPlaySession;
+  saveStatus?: ProgressSaveStatus;
+  onRetrySave?: () => void;
   theme: CategoryTheme;
   backUrl: string;
   gameUrl: string | null;
@@ -45,6 +50,7 @@ interface GameStageProps {
 }
 
 export function GameStage({
+  session, saveStatus, onRetrySave,
   theme,
   backUrl,
   gameUrl,
@@ -129,6 +135,7 @@ export function GameStage({
             exit="exit"
           >
             <GameEmbed
+              session={session}
               gameUrl={gameUrl}
               playerName={playerName}
               studentId={studentId}
@@ -173,6 +180,8 @@ export function GameStage({
             exit="exit"
           >
             <ResultsCard
+              saveStatus={saveStatus}
+              onRetrySave={onRetrySave}
               result={result}
               attempts={attempts}
               onRetry={onRetry}

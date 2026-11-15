@@ -381,25 +381,7 @@ describe('runTeacherUploadArtifact (photo kind)', () => {
     expect(supabase.sessionRemove).not.toHaveBeenCalled();
   });
 
-  it('still returns a generic insert error when the admin cleanup itself fails', async () => {
-    const capture: Capture = {};
-    const supabase = buildSessionSupabase(capture, {
-      insertResult: { data: null, error: { message: 'rls denied' } },
-    });
-    authedAsTeacher(supabase);
-    createAdminClientMock.mockImplementation(() => {
-      throw new Error('SUPABASE_SERVICE_ROLE_KEY missing');
-    });
 
-    const result = await runTeacherUploadArtifact({
-      kind: 'photo',
-      studentId: STUDENT_ID,
-      payload: { blob: photoBytes(), mime: 'image/jpeg' },
-    });
-
-    expect(result.success).toBe(false);
-    expect(result.error).toMatch(/înregistra/i);
-  });
 });
 
 describe('runTeacherUploadArtifact (audio kind)', () => {

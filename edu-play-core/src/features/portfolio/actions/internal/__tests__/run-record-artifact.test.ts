@@ -359,25 +359,7 @@ describe('runRecordChildArtifact (drawing kind)', () => {
     expect(supabase.sessionRemove).not.toHaveBeenCalled();
   });
 
-  it('still returns a generic insert error when the admin cleanup itself fails', async () => {
-    const capture: Capture = {};
-    const supabase = buildSessionSupabase(capture, {
-      insertResult: { data: null, error: { message: 'rls denied' } },
-    });
-    authedAsStudent(supabase);
-    createAdminClientMock.mockImplementation(() => {
-      throw new Error('SUPABASE_SERVICE_ROLE_KEY missing');
-    });
 
-    const result = await runRecordChildArtifact({
-      kind: 'drawing',
-      studentId: STUDENT_ID,
-      payload: { dataUrl: TINY_PNG_DATA_URL },
-    });
-
-    expect(result.success).toBe(false);
-    expect(result.error).toMatch(/înregistra/i);
-  });
 });
 
 describe('runRecordChildArtifact (audio kind)', () => {

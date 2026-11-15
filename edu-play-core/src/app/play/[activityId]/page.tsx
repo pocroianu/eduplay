@@ -1,9 +1,10 @@
 import { createAdminClient, createClient } from "@/lib/supabase/server";
+import { ApiError } from "@/lib/api";
 import { redirect, notFound } from "next/navigation";
 import { ROUTES } from "@/shared/lib/constants";
 import { FreeResponsePlayContent } from "@/features/activities";
 import { GamePageContent } from "@/features/games";
-import { getPreviewSessionOrThrow } from "@/features/activities/server";
+import { resolveActivityLaunch } from "@/features/activities/server";
 
 type SupabaseClient = Awaited<ReturnType<typeof createClient>>;
 
@@ -82,66 +83,18 @@ export default async function PlayPage({
     redirect(ROUTES.AUTH.LOGIN);
   }
 
-  const previewSession = previewId
-    ? await (async () => {
-        if (profile.role !== "admin" && profile.role !== "teacher") {
-          notFound();
-        }
-        try {
-          return await getPreviewSessionOrThrow(supabase, {
-            previewId,
-            activityId,
-            actorId: user.id,
-          });
-        } catch {
-          notFound();
-        }
-      })()
-    : null;
-
-  const pinnedAssignment =
-    !previewSession && assignmentId
-      ? (
-          await supabase
-            .from("assignments")
-            .select("id, activity_id, version_id, teacher_id")
-            .eq("id", assignmentId)
-            .single()
-        ).data
-      : null;
-
-  if (
-    !previewSession &&
-    assignmentId &&
-    (!pinnedAssignment?.version_id ||
-      pinnedAssignment.activity_id !== activityId)
-  ) {
-    notFound();
-  }
-
-  const activityClient = pinnedAssignment ? createAdminClient() : supabase;
-  const activityQuery = activityClient
-    .from("activities")
-    .select("*")
-    .eq("id", activityId);
-
-  if (!previewSession) {
-    activityQuery.eq("is_published", true);
-  }
-
-  const { data: activity } = await activityQuery.single();
-
-  if (!activity) {
-    notFound();
-  }
-
-  if (
-    pinnedAssignment &&
-    activity.visibility_scope === "private" &&
-    pinnedAssignment.teacher_id !== activity.created_by
-  ) {
-    notFound();
-  }
+  const snapshot = await resolveActivityLaunch(
+    supabase,
+    createAdminClient,
+    activityId,
+    previewId
+      ? { mode: "preview", previewId, actorId: user.id, role: profile.role }
+      : { mode: "published", assignmentId },
+  ).catch((error: unknown) => {
+    if (error instanceof ApiError) notFound();
+    throw error;
+  });
+  const { activity, typeId: activityTypeId, versionId } = snapshot;
 
   // Build renderer URL with non-identity query param overrides. Activity
   // content is loaded by the renderer through the exact same-origin configUrl.
@@ -154,51 +107,14 @@ export default async function PlayPage({
     urlParams.set("muted", query.muted);
   }
 
-  const publishedVersion = previewSession
-    ? null
-    : pinnedAssignment?.version_id
-      ? (
-          await createAdminClient()
-            .from("activity_versions")
-            .select("id, activity_id, activity_type_id, config_data")
-            .eq("activity_id", activityId)
-            .eq("id", pinnedAssignment.version_id)
-            .single()
-        ).data
-      : (
-          await supabase
-            .from("activity_versions")
-            .select("id, activity_id, activity_type_id, config_data")
-            .eq("activity_id", activityId)
-            .order("version_number", { ascending: false })
-            .limit(1)
-            .single()
-        ).data;
-
-  if (!previewSession && !publishedVersion) {
-    notFound();
-  }
-
-  if (
-    pinnedAssignment &&
-    publishedVersion &&
-    publishedVersion.activity_id !== activityId
-  ) {
-    notFound();
-  }
-
-  const activityTypeId =
-    previewSession?.typeId ?? publishedVersion!.activity_type_id;
-  const resources = await getLinkResources(
-    supabase,
-    activityId,
-    previewSession ? null : publishedVersion!.id,
-  );
-  const { data: activityType } = await supabase
-    .from("activity_types")
-    .select("renderer_key, renderer_kind")
-    .eq("type_id", activityTypeId)
-    .single();
+  const [resources, { data: activityType }] = await Promise.all([
+    getLinkResources(supabase, activityId, versionId),
+    supabase
+      .from("activity_types")
+      .select("renderer_key, renderer_kind")
+      .eq("type_id", activityTypeId)
+      .single(),
+  ]);
 
   if (!activityType) {
     notFound();
@@ -206,16 +122,16 @@ export default async function PlayPage({
 
   const rendererKey = activityType.renderer_key;
   const configParams = new URLSearchParams();
-  const configUrl = previewSession
-    ? (() => {
-        configParams.set("previewId", previewId!);
-        return `/api/v1/activities/${activityId}/preview/config?${configParams.toString()}`;
-      })()
-    : (() => {
-        configParams.set("versionId", publishedVersion!.id);
-        if (assignmentId) configParams.set("assignmentId", assignmentId);
-        return `/api/v1/activities/${activityId}/config?${configParams.toString()}`;
-      })();
+  let configUrl: string;
+  if (previewId) {
+    configParams.set("previewId", previewId);
+    configUrl = `/api/v1/activities/${activityId}/preview/config?${configParams.toString()}`;
+  } else {
+    if (!versionId) notFound();
+    configParams.set("versionId", versionId);
+    if (assignmentId) configParams.set("assignmentId", assignmentId);
+    configUrl = `/api/v1/activities/${activityId}/config?${configParams.toString()}`;
+  }
 
   const backUrl =
     profile.role === "admin"
@@ -227,7 +143,7 @@ export default async function PlayPage({
           : ROUTES.STUDENT.DASHBOARD;
 
   const initialSubmission =
-    !previewSession && assignmentId && profile.role === "student"
+    !previewId && assignmentId && profile.role === "student"
       ? (
           await supabase
             .from("activity_submissions")
@@ -248,14 +164,11 @@ export default async function PlayPage({
       <FreeResponsePlayContent
         title={activity.title}
         backUrl={backUrl}
-        mode={previewSession ? "preview" : "play"}
-        config={addResourcesToConfig(
-          previewSession?.configData ?? publishedVersion?.config_data ?? {},
-          resources,
-        )}
-        activityId={previewSession ? undefined : activityId}
-        versionId={previewSession ? undefined : publishedVersion!.id}
-        assignmentId={previewSession ? undefined : assignmentId}
+        mode={previewId ? "preview" : "play"}
+        config={addResourcesToConfig(snapshot.config, resources)}
+        activityId={previewId ? undefined : activityId}
+        versionId={versionId ?? undefined}
+        assignmentId={previewId ? undefined : assignmentId}
         initialSubmission={
           initialSubmission
             ? {
@@ -300,9 +213,9 @@ export default async function PlayPage({
       }}
       progress={null}
       backUrl={backUrl}
-      activityId={previewSession ? undefined : activityId}
-      versionId={previewSession ? undefined : publishedVersion!.id}
-      assignmentId={previewSession ? undefined : assignmentId}
+      activityId={previewId ? undefined : activityId}
+      versionId={versionId ?? undefined}
+      assignmentId={previewId ? undefined : assignmentId}
       configUrl={configUrl}
       studentId={profile.role === "student" ? user.id : undefined}
       playerName={playerName}

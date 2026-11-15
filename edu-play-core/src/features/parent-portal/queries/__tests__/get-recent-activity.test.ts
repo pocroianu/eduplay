@@ -180,3 +180,34 @@ describe('getRecentActivity', () => {
     expect(out[0]?.timestamp).toBe('2026-05-08T08:00:00Z');
   });
 });
+
+it('keeps the selected child history when a sibling has more than twenty newer entries', async () => {
+  const sibling = 'cccccccc-cccc-4ccc-8ccc-cccccccccccc';
+  const links = [STUDENT_ID, sibling].map((id) => ({
+    parent_id: PARENT_ID, student_id: id, status: 'active',
+    students: { id, username: id, avatar_url: null },
+  }));
+  const olderChildEntry = { student_id: STUDENT_ID, activity_id: 'child-activity', score: 80, status: 'completed', last_played_at: '2026-11-01', activities: { id: 'child-activity', title: 'Child history', category: 'math' } };
+  const progress = [
+    ...Array.from({ length: 21 }, (_, index) => ({ ...olderChildEntry, student_id: sibling, activity_id: `sibling-${index}`, last_played_at: '2026-11-15' })),
+    olderChildEntry,
+  ];
+  createClientMock.mockResolvedValue({
+    from(table: string) {
+      let rows: Array<Record<string, unknown>> = table === 'parent_children' ? [...links] : table === 'activity_progress' ? [...progress] : [];
+      const query = {
+        select() { return query; },
+        eq(column: string, value: unknown) { rows = rows.filter((row) => row[column] === value); return query; },
+        in(column: string, values: unknown[]) { rows = rows.filter((row) => values.includes(row[column])); return query; },
+        not() { return query; },
+        order() { return query; },
+        limit(count: number) { return Promise.resolve({ data: rows.slice(0, count), error: null }); },
+        then(resolve: (value: unknown) => unknown) { return Promise.resolve({ data: rows, error: null }).then(resolve); },
+      };
+      return query;
+    },
+  });
+  const result = await getRecentActivity(PARENT_ID, 20, STUDENT_ID);
+  expect(result).toHaveLength(1);
+  expect(result[0]).toMatchObject({ studentId: STUDENT_ID, gameTitle: 'Child history' });
+});

@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointerEvent, type RefObject } from 'react'
 
 import { Button, TextareaField } from '@/shared/components/ui/kit'
-import { cleanupFreeResponseArtifacts, recordFreeResponseArtifact } from '../actions/record-free-response-artifact'
+import { createBrowserFreeResponseSubmission, recordSubmission } from '../submission/submission-transport'
+import type { SubmissionOutcome } from '../submission/free-response-submission'
 
 interface FreeResponseConfig {
   prompt?: unknown
@@ -166,6 +167,7 @@ function isEditingLocked({
   isPreview: boolean
   locked: boolean
   status: 'idle' | 'saving' | 'submitted' | 'error'
+  problem?: SubmissionOutcome['kind'] | null
 }) {
   return (!isPreview && !canPersist) || locked || status === 'saving'
 }
@@ -223,26 +225,6 @@ function readBackup(key: string | null): DraftBackup | null {
   } catch {
     return null
   }
-}
-
-async function recordSubmission(input: {
-  intent: 'start' | 'submit'
-  assignmentId: string
-  activityId: string
-  versionId: string
-  response: Record<string, unknown>
-}) {
-  const response = await fetch('/api/v1/activity-submissions', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(input),
-  })
-
-  if (!response.ok) {
-    throw new Error('Nu am putut salva răspunsul.')
-  }
-
-  return response.json() as Promise<{ data?: { status?: SubmissionStatus; latestResponse?: unknown } }>
 }
 
 function pointFromEvent(canvas: HTMLCanvasElement, event: ReactPointerEvent<HTMLCanvasElement>): DrawingPoint {
@@ -303,98 +285,6 @@ function resolveRecorderMime() {
     { mime: 'audio/ogg' as const, recorderType: 'audio/ogg;codecs=opus' },
   ]
   return candidates.find((candidate) => MediaRecorder.isTypeSupported(candidate.recorderType)) ?? null
-}
-
-async function blobToBytes(blob: Blob) {
-  if (typeof blob.arrayBuffer === 'function') {
-    return new Uint8Array(await blob.arrayBuffer())
-  }
-
-  return new Promise<Uint8Array>((resolve, reject) => {
-    const reader = new FileReader()
-    reader.onerror = () => reject(reader.error ?? new Error('Nu am putut citi înregistrarea.'))
-    reader.onload = () => resolve(new Uint8Array(reader.result as ArrayBuffer))
-    reader.readAsArrayBuffer(blob)
-  })
-}
-
-interface SubmissionResponseInput {
-  activityId: string
-  assignmentId: string
-  versionId: string
-  text: string
-  strokes: DrawingStroke[]
-  drawingDataUrl: string | null | undefined
-  voiceBlob: Blob | null
-  voiceMime: VoiceMime | null
-  voiceDurationMs: number | null
-  hasTextResponse: boolean
-  hasDrawingResponse: boolean
-  retainExistingVoice: boolean
-}
-
-async function appendDrawingResponse(
-  input: SubmissionResponseInput,
-  response: Record<string, unknown>,
-  artifacts: string[],
-) {
-  if (!input.drawingDataUrl) throw new Error('missing drawing preview')
-  const result = await recordFreeResponseArtifact({
-    kind: 'drawing',
-    assignmentId: input.assignmentId,
-    activityId: input.activityId,
-    versionId: input.versionId,
-    dataUrl: input.drawingDataUrl,
-    drawingState: { strokes: input.strokes },
-  })
-  if (!result.success) throw new Error(result.error)
-  artifacts.push(result.data.artifactId)
-  response.drawing = {
-    artifactId: result.data.artifactId,
-    state: { strokes: input.strokes },
-  }
-}
-
-async function appendVoiceResponse(
-  input: SubmissionResponseInput,
-  response: Record<string, unknown>,
-  artifacts: string[],
-) {
-  if (!input.voiceBlob || !input.voiceMime) {
-    if (input.retainExistingVoice) response.voice = { retained: true }
-    return
-  }
-
-  const result = await recordFreeResponseArtifact({
-    kind: 'audio',
-    assignmentId: input.assignmentId,
-    activityId: input.activityId,
-    versionId: input.versionId,
-    blob: await blobToBytes(input.voiceBlob),
-    mime: input.voiceMime,
-    durationMs: input.voiceDurationMs ?? undefined,
-  })
-  if (!result.success) throw new Error(result.error)
-  artifacts.push(result.data.artifactId)
-  response.voice = {
-    artifactId: result.data.artifactId,
-    mime: input.voiceMime,
-    durationMs: input.voiceDurationMs,
-  }
-}
-
-async function buildSubmissionResponse(
-  input: SubmissionResponseInput,
-  artifacts: string[],
-) {
-  const response: Record<string, unknown> = {}
-
-  if (input.hasTextResponse) response.text = input.text.trim()
-  if (input.hasDrawingResponse) await appendDrawingResponse(input, response, artifacts)
-  await appendVoiceResponse(input, response, artifacts)
-  if (artifacts.length > 0) response.artifacts = artifacts
-
-  return response
 }
 
 function FreeResponseHeader({ backUrl, isPreview }: { backUrl: string; isPreview: boolean }) {
@@ -747,6 +637,7 @@ function ResponseToolsSection({
 }
 
 function StatusMessages({
+  problem,
   canPersist,
   isPreview,
   status,
@@ -754,7 +645,11 @@ function StatusMessages({
   canPersist: boolean
   isPreview: boolean
   status: 'idle' | 'saving' | 'submitted' | 'error'
+  problem?: SubmissionOutcome['kind'] | null
 }) {
+  let errorMessage = 'Nu am putut salva răspunsul. Încearcă din nou.'
+  if (problem === 'uncertain') errorMessage = 'Nu am putut confirma trimiterea. Încearcă din nou; păstrăm răspunsul.'
+  if (problem === 'cleanup-failed') errorMessage = 'Pregătim răspunsul pentru o nouă încercare. Apasă din nou Trimite.'
   return (
     <>
       {isPreview ? (
@@ -770,13 +665,13 @@ function StatusMessages({
       ) : null}
 
       {status === 'error' ? (
-        <p className="rounded-2xl bg-error-soft px-4 py-3 text-base font-semibold text-error">
-          Nu am putut salva răspunsul. Încearcă din nou.
+        <p role="alert" className="rounded-2xl bg-error-soft px-4 py-3 text-base font-semibold text-error">
+          {errorMessage}
         </p>
       ) : null}
 
       {status === 'submitted' ? (
-        <p className="rounded-2xl bg-primary-soft px-4 py-3 text-base font-semibold text-primary-deep">
+        <p role="status" className="rounded-2xl bg-primary-soft px-4 py-3 text-base font-semibold text-primary-deep">
           Răspuns trimis! Profesorul îl poate verifica acum.
         </p>
       ) : null}
@@ -812,6 +707,8 @@ export function FreeResponsePlayContent({
   assignmentId,
   initialSubmission,
 }: FreeResponsePlayContentProps) {
+  const submission = useMemo(() => createBrowserFreeResponseSubmission({ activityId, versionId, assignmentId }), [activityId, versionId, assignmentId])
+  const [submissionProblem, setSubmissionProblem] = useState<SubmissionOutcome['kind'] | null>(null)
   const normalized = useMemo(() => normalizeConfig(config), [config])
   const isPreview = mode === 'preview'
   const canPersist = canPersistSubmission(isPreview, activityId, versionId, assignmentId)
@@ -842,7 +739,7 @@ export function FreeResponsePlayContent({
   const recordingStartedAtRef = useRef<number | null>(null)
 
   const locked = status === 'submitted'
-  const editingDisabled = isEditingLocked({ canPersist, isPreview, locked, status })
+  const editingDisabled = (submissionProblem === 'uncertain' || submissionProblem === 'cleanup-failed') || isEditingLocked({ canPersist, isPreview, locked, status })
   const hasTextResponse = text.trim().length > 0
   const hasDrawingResponse = strokes.length > 0
   const hasVoiceResponse = Boolean(voiceBlob) || initialResponse.hasVoice
@@ -1002,38 +899,22 @@ export function FreeResponsePlayContent({
     const target = { activityId: activityId!, versionId: versionId!, assignmentId: assignmentId! }
 
     setStatus('saving')
-    const artifacts: string[] = []
-    try {
-      const response = await buildSubmissionResponse(
-        {
-          activityId: target.activityId,
-          assignmentId: target.assignmentId,
-          versionId: target.versionId,
-          text,
-          strokes,
-          drawingDataUrl: canvasRef.current?.toDataURL('image/png') ?? drawingPreviewUrl,
-          voiceBlob,
-          voiceMime,
-          voiceDurationMs,
-          hasTextResponse,
-          hasDrawingResponse,
-          retainExistingVoice: initialResponse.hasVoice,
-        },
-        artifacts,
-      )
-      await recordSubmission({
-        intent: 'submit',
-        assignmentId: target.assignmentId,
-        activityId: target.activityId,
-        versionId: target.versionId,
-        response,
-      })
-      if (draftKey) window.localStorage.removeItem(draftKey)
-      setStatus('submitted')
-    } catch {
-      if (artifacts.length > 0) {
-        void cleanupFreeResponseArtifacts({ assignmentId: target.assignmentId, artifactIds: artifacts })
+    const outcome = await submission.submit({
+      ...target, text, strokes, drawingDataUrl: drawingPreviewUrl,
+      voiceBlob, voiceMime, voiceDurationMs, hasTextResponse, hasDrawingResponse,
+      retainExistingVoice: initialResponse.hasVoice,
+    })
+    setSubmissionProblem(outcome.kind)
+    if (outcome.kind === 'submitted' || outcome.kind === 'locked') {
+      if (outcome.kind === 'locked') {
+        const latest = parseLatestResponse(outcome.latestResponse)
+        setText(latest.text)
+        setStrokes(latest.strokes)
       }
+      // A local storage failure must never compensate a committed submission.
+      try { if (draftKey) window.localStorage.removeItem(draftKey) } catch { /* Server result is authoritative. */ }
+      setStatus('submitted')
+    } else {
       setStatus('error')
     }
   }
@@ -1072,7 +953,7 @@ export function FreeResponsePlayContent({
           voiceState={voiceState}
           voiceUrl={voiceUrl}
         />
-        <StatusMessages canPersist={canPersist} isPreview={isPreview} status={status} />
+        <StatusMessages problem={submissionProblem} canPersist={canPersist} isPreview={isPreview} status={status} />
         <SubmitBar
           disabled={submitDisabled}
           isSaving={status === 'saving'}

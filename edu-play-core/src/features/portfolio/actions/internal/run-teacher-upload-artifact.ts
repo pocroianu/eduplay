@@ -3,7 +3,7 @@
 
 import 'server-only';
 import { ApiError, requireRole } from '@/lib/api';
-import { createAdminClient } from '@/lib/supabase/server';
+import { persistDraftArtifact } from './persist-draft-artifact';
 import type {
   AudioMimeType,
   PhotoMimeType,
@@ -11,9 +11,6 @@ import type {
 } from '../../schemas';
 import { MAX_AUDIO_BYTES, MAX_PHOTO_BYTES } from '../../schemas';
 import type { ActionResult, ArtifactType } from '../../types';
-import { ARTIFACT_SELECT } from '../../queries/types';
-
-const STORAGE_BUCKET = 'child-artifacts';
 
 const PHOTO_EXTENSION_BY_MIME: Record<PhotoMimeType, string> = {
   'image/jpeg': 'jpg',
@@ -164,70 +161,25 @@ export async function runTeacherUploadArtifact(
 
   const artifactClassId = studentRow.class_id;
 
-  // Pre-generate the artifact id so the storage path is stable before we
-  // touch the DB. If the upload fails we abort without a dangling row; if
-  // the insert fails the orphan blob is cleaned with the admin client below.
-  // Keep the path scheme matching the student-side runner: storage RLS keys
-  // off `(storage.foldername(name))[1]` so the first folder MUST be the
-  // student id.
-  const artifactId = crypto.randomUUID();
-  const storagePath = `${input.studentId}/${artifactId}.${decoded.extension}`;
-
-  const upload = await supabase.storage
-    .from(STORAGE_BUCKET)
-    .upload(storagePath, decoded.bytes, {
-      contentType: decoded.contentType,
-      cacheControl: '3600',
-      upsert: false,
-    });
-
-  if (upload.error) {
-    return {
-      success: false,
-      error:
+  const result = await persistDraftArtifact(supabase, {
+    ...decoded,
+    studentId: input.studentId,
+    classId: artifactClassId,
+    title: input.title?.trim() || null,
+  });
+  if (!result.success) {
+    let error = 'Nu am putut înregistra artefactul';
+    if (result.stage === 'upload') {
+      error =
         input.kind === 'photo'
           ? 'Nu am putut salva fotografia'
-          : 'Nu am putut salva înregistrarea audio',
-    };
-  }
-
-  const { data, error } = await supabase
-    .from('child_artifacts')
-    .insert({
-      id: artifactId,
-      student_id: input.studentId,
-      class_id: artifactClassId,
-      title: input.title?.trim() || null,
-      artifact_type: decoded.artifactType,
-      storage_path: storagePath,
-      visibility: 'draft',
-    })
-    .select(ARTIFACT_SELECT)
-    .maybeSingle();
-
-  if (error || !data) {
-    // Storage RLS only grants DELETE to teachers/admins for objects under
-    // their class students, so the teacher session COULD sweep its own
-    // orphan blob — but using the admin client mirrors the student path
-    // and keeps cleanup robust even if an RLS edge case denies the
-    // teacher DELETE.
-    try {
-      await createAdminClient()
-        .storage.from(STORAGE_BUCKET)
-        .remove([storagePath]);
-    } catch {
-      // Cleanup is best-effort; missing service-role env (e.g. in unit
-      // tests that don't exercise this branch) must not surface to the
-      // user.
+          : 'Nu am putut salva înregistrarea audio';
     }
-    return {
-      success: false,
-      error: 'Nu am putut înregistra artefactul',
-    };
+    return { success: false, error };
   }
 
   return {
     success: true,
-    data: { artifactId: data.id },
+    data: { artifactId: result.artifactId },
   };
 }

@@ -3,16 +3,11 @@
 
 import 'server-only';
 import { ApiError, requireRole } from '@/lib/api';
-import { createAdminClient } from '@/lib/supabase/server';
-import type {
-  AudioMimeType,
-  RecordChildArtifactInput,
-} from '../../schemas';
+import { persistDraftArtifact } from './persist-draft-artifact';
+import type { AudioMimeType, RecordChildArtifactInput } from '../../schemas';
 import { MAX_AUDIO_BYTES, MAX_SCREENSHOT_BYTES } from '../../schemas';
 import type { ActionResult, ArtifactType } from '../../types';
-import { ARTIFACT_SELECT } from '../../queries/types';
 
-const STORAGE_BUCKET = 'child-artifacts';
 const PNG_DATA_URL_PREFIX = 'data:image/png;base64,';
 const PNG_CONTENT_TYPE = 'image/png';
 
@@ -32,7 +27,6 @@ const AUDIO_EXTENSION_BY_MIME: Record<AudioMimeType, string> = {
 export interface RecordChildArtifactData {
   artifactId: string;
 }
-
 
 interface DecodedPayload {
   bytes: Uint8Array;
@@ -191,8 +185,7 @@ export async function runRecordChildArtifact(
   ) {
     return {
       success: false,
-      error:
-        'Avem nevoie de acordul părintelui pentru înregistrări audio',
+      error: 'Avem nevoie de acordul părintelui pentru înregistrări audio',
     };
   }
 
@@ -201,68 +194,28 @@ export async function runRecordChildArtifact(
   // class. Document this as expected, not an error.
   const artifactClassId = studentRow?.class_id ?? null;
 
-  // Pre-generate the artifact id so the storage path is stable before we
-  // touch the DB. If the upload fails we abort without a dangling row; if
-  // the insert fails the orphan blob is cleaned with the admin client below.
-  const artifactId = crypto.randomUUID();
-  const storagePath = `${input.studentId}/${artifactId}.${decoded.extension}`;
-
-  const upload = await supabase.storage
-    .from(STORAGE_BUCKET)
-    .upload(storagePath, decoded.bytes, {
-      contentType: decoded.contentType,
-      cacheControl: '3600',
-      upsert: false,
-    });
-
-  if (upload.error) {
-    return {
-      success: false,
-      error:
+  const result = await persistDraftArtifact(supabase, {
+    ...decoded,
+    studentId: input.studentId,
+    classId: artifactClassId,
+    metadata: {
+      ...(input.sourceRef ? { sourceRef: input.sourceRef } : {}),
+      ...(input.metadata ?? {}),
+    },
+  });
+  if (!result.success) {
+    let error = 'Nu am putut înregistra artefactul';
+    if (result.stage === 'upload') {
+      error =
         input.kind === 'drawing'
           ? 'Nu am putut salva captura de ecran'
-          : 'Nu am putut salva înregistrarea audio',
-    };
-  }
-
-  const { data, error } = await supabase
-    .from('child_artifacts')
-    .insert({
-      id: artifactId,
-      student_id: input.studentId,
-      class_id: artifactClassId,
-      artifact_type: decoded.artifactType,
-      storage_path: storagePath,
-      visibility: 'draft',
-      metadata: {
-        ...(input.sourceRef ? { sourceRef: input.sourceRef } : {}),
-        ...(input.metadata ?? {}),
-      },
-    })
-    .select(ARTIFACT_SELECT)
-    .maybeSingle();
-
-  if (error || !data) {
-    // Storage RLS only grants DELETE to teachers/admins, so the student
-    // session can't sweep its own orphan blob. Use the admin (service-role)
-    // client for cleanup, scoped strictly to this single key. Failure is
-    // non-fatal — we still surface the original insert error to the caller.
-    try {
-      await createAdminClient()
-        .storage.from(STORAGE_BUCKET)
-        .remove([storagePath]);
-    } catch {
-      // Cleanup is best-effort; missing service-role env (e.g. in unit tests
-      // that don't exercise this branch) must not surface to the user.
+          : 'Nu am putut salva înregistrarea audio';
     }
-    return {
-      success: false,
-      error: 'Nu am putut înregistra artefactul',
-    };
+    return { success: false, error };
   }
 
   return {
     success: true,
-    data: { artifactId: data.id },
+    data: { artifactId: result.artifactId },
   };
 }

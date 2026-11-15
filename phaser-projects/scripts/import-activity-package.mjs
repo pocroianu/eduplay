@@ -1,168 +1,90 @@
 #!/usr/bin/env node
-import { createRequire } from "node:module";
-import {
-  cpSync,
-  existsSync,
-  mkdirSync,
-  readdirSync,
-  readFileSync,
-  rmSync,
-  statSync,
-  writeFileSync,
-} from "node:fs";
-import { createHash } from "node:crypto";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { dirname, join, resolve, relative, isAbsolute } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import activityPackages from './lib/activity-package.cjs';
 
-const require = createRequire(import.meta.url);
-
-function loadValidationSchemas() {
-  try {
-    const validation = require("@edu-play/validation");
-    if (validation.activityAssetRegistrySchema && validation.activityMetadataSchema && validation.validateActivityAssetPins) {
-      return validation;
-    }
-  } catch {
-    // Fall through to source import for fresh checkouts without built validation dist.
-  }
-
-  require("ts-node/register");
-  return require(resolve(dirname(fileURLToPath(import.meta.url)), "../packages/validation/src"));
-}
-
-const {
-  activityAssetRegistrySchema,
-  activityMetadataSchema,
-  validateActivityAssetPins,
-} = loadValidationSchemas();
+const { readActivityPackage, assertValidActivityPackage } = activityPackages;
 
 export function importActivityPackage(options) {
   const packageRoot = resolve(options.packageRoot);
-  const repoRoot = resolve(options.repoRoot ?? resolve(dirname(fileURLToPath(import.meta.url)), ".."));
+  const repoRoot = resolve(options.repoRoot ?? resolve(dirname(fileURLToPath(import.meta.url)), '..'));
   const overwrite = options.overwrite === true;
-
-  const activityPath = join(packageRoot, "activity.json");
-  const activityResult = activityMetadataSchema.safeParse(readJson(activityPath));
-  if (!activityResult.success) {
-    throw new Error(`Invalid activity metadata in ${activityPath}: ${formatZodError(activityResult.error)}`);
-  }
-
-  const activity = activityResult.data;
-  assertSafeActivityId(activity.activityId, "activityId");
-  assertSafeActivityId(activity.gameId, "gameId");
-  const versionDir = join(packageRoot, "versions", String(activity.version));
-  if (!existsSync(versionDir) || !statSync(versionDir).isDirectory()) {
-    throw new Error(`Missing Activity package version content: ${activity.activityId}@${activity.version}`);
-  }
-
-  const configPath = join(versionDir, "config.json");
-  if (!existsSync(configPath)) {
-    throw new Error(`Missing Activity package config: ${activity.activityId}@${activity.version} config.json`);
-  }
-
-  validateConfigFile(configPath, activity);
-  validateStringFiles(join(versionDir, "strings"), activity);
-
-  const assetsPath = join(versionDir, "assets.json");
-  const assetsResult = activityAssetRegistrySchema.safeParse(readJson(assetsPath));
-  if (!assetsResult.success) {
-    throw new Error(`Invalid Activity package asset manifest for ${activity.activityId}@${activity.version}: ${formatZodError(assetsResult.error)}`);
-  }
-
-  const pinResult = validateActivityAssetPins(assetsResult.data, activity.gameId);
-  if (!pinResult.success) {
-    throw new Error(`Invalid Activity package asset manifest for ${activity.activityId}@${activity.version}: ${pinResult.errors.join("; ")}`);
-  }
-
-  const activityDest = join(repoRoot, "activities", activity.activityId);
-  const versionDest = join(activityDest, "versions", String(activity.version));
+  const result = assertValidActivityPackage(readActivityPackage(packageRoot, packageRoot), 'Invalid Activity package');
+  const activity = result.activity;
+  const selected = result.versions.find(entry => entry.version === activity.version);
+  const activityDest = join(repoRoot, 'activities', activity.activityId);
+  const versionDest = join(activityDest, 'versions', String(activity.version));
   if (existsSync(versionDest) && !overwrite) {
     throw new Error(`Activity version already exists: ${activity.activityId}@${activity.version}`);
   }
 
-  copyPinnedLibraryAssets({ packageRoot, repoRoot, registry: assetsResult.data, overwrite });
-
-  if (overwrite && existsSync(versionDest)) {
-    rmSync(versionDest, { recursive: true, force: true });
+  const pins = new Map();
+  for (const pin of selected.pins) {
+    const existingPin = pins.get(pin.relativePath);
+    if (existingPin && existingPin.sha256 !== pin.sha256) {
+      throw new Error(`Conflicting pins for ${pin.relativePath}`);
+    }
+    pins.set(pin.relativePath, pin);
   }
+  const writes = [];
+  for (const pin of pins.values()) {
+    const destination = join(repoRoot, pin.relativePath);
+    if (existsSync(destination)) {
+      const digest = createHash('sha256').update(readFileSync(destination)).digest('hex');
+      if (digest === pin.sha256) continue;
+      if (!overwrite) throw new Error(`Asset library conflict for ${pin.relativePath}`);
+    }
+    writes.push({ source: pin.source, destination });
+  }
+  writes.push({ source: selected.root, destination: versionDest });
+  writes.push({ content: JSON.stringify(activity, null, 2) + '\n', destination: join(activityDest, 'activity.json') });
 
-  mkdirSync(join(activityDest, "versions"), { recursive: true });
-  writeFileSync(join(activityDest, "activity.json"), `${JSON.stringify(activity, null, 2)}\n`);
-  cpSync(versionDir, versionDest, { recursive: true });
-
+  mkdirSync(repoRoot, { recursive: true });
+  const staging = mkdtempSync(join(repoRoot, '.activity-import-'));
+  const applied = [];
+  try {
+    // Finish all copies before touching any published destination.
+    writes.forEach((write, index) => {
+      write.staged = join(staging, String(index));
+      write.backup = join(staging, `backup-${index}`);
+      if (write.source) cpSync(write.source, write.staged, { recursive: true });
+      else writeFileSync(write.staged, write.content);
+    });
+    for (const write of writes) {
+      const target = relative(repoRoot, resolve(write.destination));
+      if (target.startsWith('..') || isAbsolute(target)) throw new Error('Import destination escapes repository');
+      mkdirSync(dirname(write.destination), { recursive: true });
+      write.hadOriginal = existsSync(write.destination);
+      if (write.hadOriginal) renameSync(write.destination, write.backup);
+      applied.push(write);
+      renameSync(write.staged, write.destination);
+    }
+  } catch (error) {
+    // Leave recovery files intact if rollback itself cannot finish.
+    try {
+      for (const write of applied.reverse()) {
+        rmSync(write.destination, { recursive: true, force: true });
+        if (write.hadOriginal) renameSync(write.backup, write.destination);
+      }
+    } catch (rollbackError) {
+      throw new AggregateError([error, rollbackError], `Import rollback failed; recovery files: ${staging}`);
+    }
+    rmSync(staging, { recursive: true, force: true });
+    throw error;
+  }
+  try {
+    rmSync(staging, { recursive: true, force: true });
+  } catch {
+    console.warn(`Activity import completed; staging cleanup required: ${staging}`);
+  }
   return {
     activityId: activity.activityId,
     version: activity.version,
-    activityPath: join(activityDest, "activity.json"),
+    activityPath: join(activityDest, 'activity.json'),
     versionPath: versionDest,
   };
-}
-
-function assertSafeActivityId(value, label) {
-  if (!/^[a-z0-9][a-z0-9._-]*$/i.test(value)) {
-    throw new Error(`Invalid Activity package ${label}: expected a safe slug, got ${value}`);
-  }
-}
-
-function validateConfigFile(configPath, activity) {
-  const { parseGameConfig } = loadValidationSchemas();
-  const result = parseGameConfig(readJson(configPath));
-  if (!result.success) {
-    throw new Error(`Invalid Activity package config for ${activity.activityId}@${activity.version}: ${formatZodError(result.error)}`);
-  }
-}
-
-function validateStringFiles(stringsDir, activity) {
-  const { gameStringsSchema } = loadValidationSchemas();
-  if (!existsSync(stringsDir)) return;
-
-  for (const entry of readdirSync(stringsDir, { withFileTypes: true })) {
-    if (!entry.isFile() || !entry.name.endsWith(".json")) continue;
-    const stringPath = join(stringsDir, entry.name);
-    const result = gameStringsSchema.safeParse(readJson(stringPath));
-    if (!result.success) {
-      throw new Error(`Invalid Activity package strings for ${activity.activityId}@${activity.version} ${entry.name}: ${formatZodError(result.error)}`);
-    }
-  }
-}
-
-function copyPinnedLibraryAssets({ packageRoot, repoRoot, registry, overwrite }) {
-  for (const pin of Object.values(registry.pinnedAssets ?? {})) {
-    const relativeLibraryPath = pin.path.replace(/^\//, "");
-    const sourcePath = join(packageRoot, relativeLibraryPath);
-    if (!existsSync(sourcePath)) {
-      throw new Error(`Missing pinned asset file in Activity package: ${pin.path}`);
-    }
-
-    const actualSha = sha256File(sourcePath);
-    if (actualSha !== pin.sha256) {
-      throw new Error(`Pinned asset hash mismatch for ${pin.path}: expected ${pin.sha256}, got ${actualSha}`);
-    }
-
-    const destPath = join(repoRoot, relativeLibraryPath);
-    if (existsSync(destPath)) {
-      const existingSha = sha256File(destPath);
-      if (existingSha !== pin.sha256 && !overwrite) {
-        throw new Error(`Asset library conflict for ${pin.path}: existing sha256 ${existingSha}, package sha256 ${pin.sha256}`);
-      }
-      if (existingSha === pin.sha256) continue;
-    }
-
-    mkdirSync(dirname(destPath), { recursive: true });
-    cpSync(sourcePath, destPath);
-  }
-}
-
-function readJson(filePath) {
-  return JSON.parse(readFileSync(filePath, "utf8"));
-}
-
-function sha256File(filePath) {
-  return createHash("sha256").update(readFileSync(filePath)).digest("hex");
-}
-
-function formatZodError(error) {
-  return JSON.stringify(error.format());
 }
 
 function parseCliArgs(argv) {

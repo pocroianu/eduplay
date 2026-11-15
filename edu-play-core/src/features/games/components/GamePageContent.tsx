@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { useActivityPlaySession } from '../player/use-activity-play-session';
 import { ROUTES } from "@/shared/lib/constants";
 import { CategoryBanner } from "./CategoryBanner";
 import { GameStage, type GamePhase } from "./GameStage";
@@ -49,6 +50,12 @@ export function GamePageContent({
   const { t } = useTranslation("player");
   const [result, setResult] = useState<GameCompleteResult | null>(null);
   const [playSession, setPlaySession] = useState(0);
+  const session = useActivityPlaySession({ studentId, activityId, versionId, assignmentId }, playSession);
+  const saveStatus = useSyncExternalStore(
+    session.subscribe,
+    () => session.getSnapshot().saveStatus,
+    () => session.getSnapshot().saveStatus,
+  );
   const [phase, setPhase] = useState<GamePhase>(
     game.game_url ? "intro" : "intro",
   );
@@ -101,32 +108,36 @@ export function GamePageContent({
   }, []);
 
   const handleRetry = useCallback(() => {
+    session.exit();
     setResult(null);
     setLoadError(false);
     setPlaySession((n) => n + 1);
     setPhase("playing");
-  }, []);
+  }, [session]);
 
   const handleRetryLoad = useCallback(() => {
+    session.exit();
     setLoadError(false);
     setPlaySession((n) => n + 1);
-  }, []);
+  }, [session]);
 
   const handleLoadError = useCallback(() => {
+    session.pause(true);
     setLoadError(true);
-  }, []);
+  }, [session]);
 
   const navigateBack = useCallback(() => {
+    session.exit();
     router.push(backUrl);
-  }, [router, backUrl]);
+  }, [router, backUrl, session]);
 
   const handleBackTap = useCallback(() => {
-    if (phase === "playing" && !result) {
+    if ((phase === "playing" && !result) || saveStatus === "saving" || saveStatus === "error") {
       setShowExitConfirm(true);
       return;
     }
     navigateBack();
-  }, [phase, result, navigateBack]);
+  }, [phase, result, navigateBack, saveStatus]);
 
   const handleExitConfirmStay = useCallback(() => {
     setShowExitConfirm(false);
@@ -160,6 +171,9 @@ export function GamePageContent({
 
       <div className="flex-1 flex flex-col gap-3 py-3 min-h-0">
         <GameStage
+          session={session}
+          saveStatus={saveStatus}
+          onRetrySave={session.retrySave}
           theme={theme}
           backUrl={backUrl}
           gameUrl={game.game_url}

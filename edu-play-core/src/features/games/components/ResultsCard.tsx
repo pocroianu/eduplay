@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { fadeInUp, staggerContainer, staggerItem } from "@/config/animations";
 import { formatDuration } from "@/lib/i18n/formatters";
 import { Button } from "@/shared/components/ui/kit";
+import { ProgressSaveNotice } from './ProgressSaveNotice';
 import { Icon } from "@/shared/components/ui/Icon";
 import type { GameCompleteResult } from "@/features/games/types/game.types";
 import {
@@ -14,7 +15,11 @@ import {
   reducedStaggerItem,
 } from "./reduced-motion";
 
+import type { ProgressSaveStatus } from '../player/activity-play-session';
+
 interface ResultsCardProps {
+  saveStatus?: ProgressSaveStatus;
+  onRetrySave?: () => void;
   result: GameCompleteResult;
   attempts: number;
   onRetry: () => void;
@@ -25,6 +30,7 @@ const RING_RADIUS = 40;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
 export function ResultsCard({
+  saveStatus = "idle", onRetrySave,
   result,
   attempts,
   onRetry,
@@ -32,6 +38,7 @@ export function ResultsCard({
 }: ResultsCardProps) {
   const { t } = useTranslation("player");
   const reduceMotion = useReducedMotion();
+  const unsaved = saveStatus === "saving" || saveStatus === "error";
   const safeScore = Math.max(0, Math.min(100, result.score));
   const dashOffset =
     RING_CIRCUMFERENCE - (RING_CIRCUMFERENCE * safeScore) / 100;
@@ -153,6 +160,8 @@ export function ResultsCard({
         </motion.div>
       </motion.div>
 
+      <ProgressSaveNotice status={saveStatus} onRetry={onRetrySave} showSuccess />
+
       {/* Encouragement */}
       <p
         className="text-sm italic text-on-surface-variant max-w-[260px]"
@@ -168,6 +177,7 @@ export function ResultsCard({
           tone="cream"
           size="lg"
           onClick={onRetry}
+          disabled={unsaved}
           className="flex-1"
           aria-label={t("actions.playAgain")}
         >
@@ -180,6 +190,7 @@ export function ResultsCard({
             tone="lime"
             size="lg"
             href={continueHref}
+            disabled={unsaved}
             className="flex-1"
             aria-label={t("actions.continue")}
           >

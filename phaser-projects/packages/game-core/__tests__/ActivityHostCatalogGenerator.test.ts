@@ -62,6 +62,16 @@ describe('activity host catalog generator', () => {
 		expect(catalogSource).toContain("rendererId: 'multiple-choice',\n\t\t\tdefaultGameId: 'fruits-01',\n\t\t\tbasePath: '/activities/fruits-01/versions/2'");
 	});
 
+    it('rejects an invalid older immutable config even when the selected version is valid', () => {
+        const repoRoot = createCatalogFixture();
+        writeRenderer(repoRoot);
+        writeActivity(repoRoot, 'fruits-01', { version: 2 });
+        writeActivityVersionContent(repoRoot, 'fruits-01', 1);
+        writeActivityVersionContent(repoRoot, 'fruits-01', 2);
+        writeFileSync(join(repoRoot, 'activities/fruits-01/versions/1/config.json'), '{}');
+        expect(() => generateActivityHostFiles({ repoRoot })).toThrow('Invalid activity config for fruits-01@1');
+    });
+
 	it('rejects duplicate activity versions across activity folders', () => {
 		const repoRoot = createCatalogFixture();
 		writeRenderer(repoRoot);
@@ -172,7 +182,14 @@ function writeActivityVersionContent(
 ): void {
 	const versionDir = join(repoRoot, 'activities', activityId, 'versions', String(version));
 	mkdirSync(versionDir, { recursive: true });
-	writeFileSync(join(versionDir, 'config.json'), '{}');
+	writeFileSync(join(versionDir, 'config.json'), JSON.stringify({
+        meta: { gameId: overrides.gameId ?? activityId, version: '1.0.0', gameType: 'multipleChoice', totalSteps: 1, supportedLanguages: ['en'] },
+        questions: [{ id: 'q1', questionKey: 'q1', choices: [
+            { type: 'image', value: 'a', isCorrect: true }, { type: 'image', value: 'b', isCorrect: false },
+        ] }],
+    }));
+    mkdirSync(join(versionDir, 'strings'), { recursive: true });
+    writeFileSync(join(versionDir, 'strings/en.json'), JSON.stringify({ meta: { title: 'Fixture' } }));
 	writeFileSync(join(versionDir, 'assets.json'), JSON.stringify(overrides.assets ?? {
 		version: '2.0.0',
 		baseUrl: 'assets',

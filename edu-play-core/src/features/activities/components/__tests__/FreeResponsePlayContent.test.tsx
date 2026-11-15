@@ -250,34 +250,27 @@ describe('<FreeResponsePlayContent />', () => {
     expect(submissionBody.response.drawing.state.strokes).toHaveLength(1)
   })
 
-  it('cleans up uploaded artifacts when final submission fails', async () => {
-    vi.spyOn(globalThis, 'fetch')
-      .mockResolvedValueOnce({ ok: true, json: async () => ({ data: { id: 'submission-id' } }) } as Response)
-      .mockResolvedValueOnce({ ok: false, json: async () => ({ error: { message: 'failed' } }) } as Response)
-
-    render(
-      <FreeResponsePlayContent
-        title="Povestea mea"
-        backUrl="/student"
-        mode="play"
-        config={{ ...config, allowedTools: { text: false, drawing: true, voice: false } }}
-        activityId={activityId}
-        versionId={versionId}
-        assignmentId={assignmentId}
-      />,
-    )
-
-    await userEvent.click(screen.getByRole('button', { name: /desenează/i }))
-    const canvas = screen.getByLabelText(/spațiu de desen/i)
-    fireEvent.pointerDown(canvas, { pointerId: 1, clientX: 10, clientY: 10 })
-    fireEvent.pointerUp(canvas, { pointerId: 1, clientX: 20, clientY: 20 })
+  it('locks capture after an uncertain submit and reconciles on retry without another submit', async () => {
+    const fetchMock = vi.spyOn(globalThis, 'fetch')
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ data: { status: 'draft' } }) } as Response)
+      .mockRejectedValueOnce(new TypeError('response lost'))
+      .mockResolvedValueOnce({ ok: false, status: 503 } as Response)
+      .mockResolvedValueOnce({ ok: true, json: async () => ({ data: { status: 'submitted', latestResponse: { text: 'Saved answer' } } }) } as Response)
+    render(<FreeResponsePlayContent title="Test" backUrl="/student" mode="play"
+      config={{ ...config, allowedTools: { text: true, drawing: false, voice: false } }}
+      activityId={activityId} versionId={versionId} assignmentId={assignmentId} />)
+    await userEvent.click(screen.getByRole('button', { name: /adaugă text/i }))
+    await waitFor(() => expect(screen.getByRole('textbox', { name: /răspuns text/i })).toBeEnabled())
+    await userEvent.type(screen.getByRole('textbox', { name: /răspuns text/i }), 'Saved answer')
     await userEvent.click(screen.getByRole('button', { name: /trimite/i }))
-
-    await waitFor(() => expect(cleanupFreeResponseArtifacts).toHaveBeenCalledWith({
-      assignmentId,
-      artifactIds: ['77777777-7777-4777-8777-777777777777'],
-    }))
-    expect(await screen.findByText(/nu am putut salva răspunsul/i)).toBeInTheDocument()
+    expect(await screen.findByRole('alert')).toHaveTextContent(/nu am putut confirma/i)
+    expect(screen.getByRole('textbox', { name: /răspuns text/i })).toBeDisabled()
+    expect(cleanupFreeResponseArtifacts).not.toHaveBeenCalled()
+    await userEvent.click(screen.getByRole('button', { name: /trimite/i }))
+    expect(await screen.findByText(/răspuns trimis/i)).toBeInTheDocument()
+    expect(fetchMock).toHaveBeenCalledTimes(4)
+    expect(fetchMock.mock.calls[3][0]).toContain('assignmentId=')
+    expect(fetchMock.mock.calls[3][1]?.method).toBeUndefined()
   })
 
   it('restores local text and drawing drafts and locks editing after submitted work exists', async () => {

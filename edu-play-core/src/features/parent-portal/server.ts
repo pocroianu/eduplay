@@ -24,3 +24,5 @@ export {
 
 // Types
 export type { GenerateInviteCodeInput, LinkChildInput } from './schemas';
+
+export { getChildDetailData } from './queries/get-child-detail-data';

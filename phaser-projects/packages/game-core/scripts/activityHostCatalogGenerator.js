@@ -1,24 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-const {
-    activityAssetRegistrySchema,
-    activityMetadataSchema,
-    validateActivityAssetPins
-} = loadValidationSchemas();
-
-function loadValidationSchemas() {
-    try {
-        const validation = require('@edu-play/validation');
-        if (validation.activityAssetRegistrySchema && validation.activityMetadataSchema && validation.validateActivityAssetPins) {
-            return validation;
-        }
-    } catch {
-        // Fall through to source import for fresh checkouts without built validation dist.
-    }
-
-    require('ts-node/register');
-    return require(path.resolve(__dirname, '../../validation/src'));
-}
+const { readActivityPackage, assertValidActivityPackage } = require('../../../scripts/lib/activity-package.cjs');
 
 function generateActivityHostFiles(options = {}) {
     const repoRoot = path.resolve(options.repoRoot ?? path.resolve(__dirname, '../../..'));
@@ -113,52 +95,12 @@ function discoverActivities(activityRoot) {
 }
 
 function readActivityVersions(activityRoot, folderName) {
-    const activityPath = path.join(activityRoot, folderName, 'activity.json');
-    const activityResult = activityMetadataSchema.safeParse(readJson(activityPath));
-    if (!activityResult.success) {
-        throw new Error(`Invalid activity metadata in ${activityPath}: ${formatZodError(activityResult.error)}`);
-    }
-
-    const activity = activityResult.data;
-    const versionsRoot = path.join(activityRoot, folderName, 'versions');
-    const selectedVersionDir = path.join(versionsRoot, String(activity.version));
-    if (!fs.existsSync(selectedVersionDir)) {
-        throw new Error(`Missing activity version content: ${activity.activityId}@${activity.version}`);
-    }
-
-    return fs.readdirSync(versionsRoot, { withFileTypes: true })
-        .filter((entry) => entry.isDirectory() && /^\d+$/.test(entry.name) && Number(entry.name) > 0)
-        .map((entry) => readActivityVersion(activity, folderName, versionsRoot, Number(entry.name)));
-}
-
-function readActivityVersion(activity, folderName, versionsRoot, version) {
-    const versionDir = path.join(versionsRoot, String(version));
-
-    const configPath = path.join(versionDir, 'config.json');
-    if (!fs.existsSync(configPath)) {
-        throw new Error(`Missing activity config: ${activity.activityId}@${version} config.json`);
-    }
-
-    const assetsPath = path.join(versionDir, 'assets.json');
-    if (!fs.existsSync(assetsPath)) {
-        throw new Error(`Missing activity asset manifest: ${activity.activityId}@${version} assets.json`);
-    }
-
-    const assetsResult = activityAssetRegistrySchema.safeParse(readJson(assetsPath));
-    if (!assetsResult.success) {
-        throw new Error(`Invalid activity asset manifest for ${activity.activityId}@${version}: ${formatZodError(assetsResult.error)}`);
-    }
-
-    const pinResult = validateActivityAssetPins(assetsResult.data, activity.gameId);
-    if (!pinResult.success) {
-        throw new Error(`Invalid activity asset manifest for ${activity.activityId}@${version}: ${pinResult.errors.join('; ')}`);
-    }
-
-    return {
-        ...activity,
+    const result = assertValidActivityPackage(readActivityPackage(path.join(activityRoot, folderName), path.dirname(activityRoot)));
+    return result.versions.map(({ version }) => ({
+        ...result.activity,
         version,
-        basePath: `/activities/${encodePathSegment(activity.activityId)}/versions/${version}`,
-    };
+        basePath: `/activities/${encodePathSegment(result.activity.activityId)}/versions/${version}`,
+    }));
 }
 
 function validateCatalog({ renderers, activities }) {

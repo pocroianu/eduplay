@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo, useSyncExternalStore } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useTranslation } from "react-i18next";
 import { fadeIn, fadeInUp } from "@/config/animations";
@@ -9,11 +9,12 @@ import { Button, Card } from "@/shared/components/ui/kit";
 import type { GameCompleteResult } from "@/features/games/types/game.types";
 import { recordActivityArtifact } from "@/features/portfolio";
 import {
-  parseGameToHostMessage,
   resolveTrustedGameOrigin,
-  type GameCompleteMessage,
   type GameControlAction,
 } from "@edu-play/activity-protocol";
+import type { ActivityPlaySession } from '../player/activity-play-session';
+import { useActivityPlaySession } from '../player/use-activity-play-session';
+import { ProgressSaveNotice } from './ProgressSaveNotice';
 import { ActivityNavbar } from "./ActivityNavbar";
 import { reducedFade } from "./reduced-motion";
 import { withConfigUrl } from "./with-config-url";
@@ -49,35 +50,8 @@ function getTrustedOrigin(gameUrl: string): string {
   return resolveTrustedGameOrigin(gameUrl, window.location.origin);
 }
 
-function scoreToStars(score: number): number {
-  return Math.max(1, Math.min(3, Math.round((score / 100) * 3)));
-}
-
-export function getProgressTimeDelta(
-  lastSavedSeconds: number,
-  currentSeconds: number,
-): number {
-  return Math.max(0, currentSeconds - lastSavedSeconds);
-}
-
-interface GameEvent {
-  type: "GAME_EVENT";
-  event:
-    | "game_started"
-    | "level_completed"
-    | "game_completed"
-    | "score_update"
-    | "game_paused";
-  data: {
-    score?: number;
-    timeSpent?: number;
-    mistakes?: number;
-    level?: number;
-    completed?: boolean;
-  };
-}
-
 interface GameEmbedProps {
+  session?: ActivityPlaySession;
   gameUrl: string;
   studentId?: string;
   isMuted?: boolean;
@@ -103,6 +77,7 @@ interface GameEmbedProps {
 }
 
 export function GameEmbed({
+  session: providedSession,
   gameUrl,
   studentId,
   activityId,
@@ -120,17 +95,11 @@ export function GameEmbed({
   const { t } = useTranslation("player");
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [gameReady, setGameReady] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const [repeatEnabled, setRepeatEnabled] = useState(false);
-  const [score, setScore] = useState(0);
-  const [timeSpent, setTimeSpent] = useState(0);
-  const [, setProgress] = useState(0);
-  const [currentSet, setCurrentSet] = useState(0);
-  const [totalSets, setTotalSets] = useState(0);
-  const startTimeRef = useRef<number | null>(null);
-  const lastSavedTimeRef = useRef(0);
+  const fallbackSession = useActivityPlaySession({ studentId, activityId, versionId, assignmentId });
+  const session = providedSession ?? fallbackSession;
+  const sessionState = useSyncExternalStore(session.subscribe, session.getSnapshot, session.getSnapshot);
+  const { ready: gameReady, paused: isPaused, repeatEnabled, timeSpent, currentSet, totalSets } = sessionState;
+  const isLoading = !gameReady;
   const resolvedUrl = useMemo(() => resolveGameUrl(gameUrl), [gameUrl]);
   const iframeSrc = useMemo(
     () => withConfigUrl(resolvedUrl, configUrl),
@@ -139,11 +108,6 @@ export function GameEmbed({
   const reduceMotion = useReducedMotion();
   const fadeVariants = reduceMotion ? reducedFade : fadeIn;
 
-  useEffect(() => {
-    if (startTimeRef.current === null) {
-      startTimeRef.current = Date.now();
-    }
-  }, []);
   // Watchdog: if the game iframe never emits ACTIVITY_READY within 20s, treat as load error.
   useEffect(() => {
     if (gameReady) return;
@@ -155,217 +119,31 @@ export function GameEmbed({
     return () => clearTimeout(timer);
   }, [gameReady, onLoadError]);
 
-  const saveProgress = useCallback(
-    async (
-      status: "in_progress" | "completed",
-      currentScore: number,
-      currentTime: number,
-      starRating?: number,
-    ) => {
-      if (!studentId || !activityId) return;
-
-      try {
-        const previousSavedTime = lastSavedTimeRef.current;
-        const timeDelta = getProgressTimeDelta(previousSavedTime, currentTime);
-        const response = await fetch("/api/v1/progress", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            studentId,
-            activityId,
-            ...(versionId ? { versionId } : {}),
-            ...(assignmentId ? { assignmentId } : {}),
-            status,
-            score: currentScore,
-            timeSpent: timeDelta,
-            ...(starRating !== undefined ? { data: { starRating } } : {}),
-          }),
-        });
-        if (!response.ok) {
-          throw new Error(`Progress save failed: ${response.status}`);
-        }
-        lastSavedTimeRef.current = Math.max(previousSavedTime, currentTime);
-      } catch (error) {
-        console.error("Error saving progress:", error);
-      }
-    },
-    [studentId, activityId, versionId, assignmentId],
-  );
-  const handleGameComplete = useCallback(
-    (completeData: GameCompleteMessage) => {
-      const finalTime =
-        completeData.timeSpent ||
-        Math.floor((Date.now() - (startTimeRef.current ?? Date.now())) / 1000);
-      const finalScore = completeData.score;
-      setTimeSpent(finalTime);
-      setScore(finalScore);
-      setTotalSets(completeData.totalSets);
-      setProgress(1);
-      setIsPaused(false);
-      saveProgress("completed", finalScore, finalTime, completeData.starRating);
-
-      // EDU-273: hand any captured canvas screenshot off to the portfolio
-      // module as a draft artifact. Origin is already validated above; the
-      // server action re-validates the dataURL shape and size, and RLS
-      // ensures only the authenticated student can write under their path.
-      // This is fire-and-forget — Activity progress must never block on it.
-      if (
-        studentId &&
-        activityId &&
-        typeof completeData.screenshotDataUrl === "string" &&
-        completeData.screenshotDataUrl.startsWith("data:image/png;base64,")
-      ) {
-        recordActivityArtifact({
-          studentId,
-          activityId,
-          ...(versionId ? { versionId } : {}),
-          ...(assignmentId ? { assignmentId } : {}),
-          screenshotDataUrl: completeData.screenshotDataUrl,
-          score: finalScore,
-        })
-          .then((result) => {
-            if (!result.success) {
-              console.error(
-                "Failed to record activity artifact:",
-                result.error,
-              );
-            }
-          })
-          .catch((err) => {
-            console.error("Error recording activity artifact:", err);
-          });
-      }
-
-      if (onComplete) {
-        onComplete({
-          score: finalScore,
-          timeSpent: finalTime,
-          starRating: completeData.starRating ?? scoreToStars(finalScore),
-          totalSets: completeData.totalSets,
-        });
-      }
-    },
-    [saveProgress, studentId, activityId, versionId, assignmentId, onComplete],
-  );
-
   useEffect(() => {
     const trustedOrigin = getTrustedOrigin(resolvedUrl);
-
     const handleMessage = (event: MessageEvent) => {
-      if (event.origin !== trustedOrigin) {
-        return;
+      if (event.origin !== trustedOrigin) return;
+      if (event.source && event.source !== iframeRef.current?.contentWindow) return;
+      const completion = session.receive(event.data);
+      if (!completion) return;
+      if (studentId && activityId && completion.screenshotDataUrl?.startsWith('data:image/png;base64,')) {
+        void recordActivityArtifact({
+          studentId, activityId, versionId, assignmentId,
+          screenshotDataUrl: completion.screenshotDataUrl, score: completion.score,
+        }).then(result => {
+          if (!result.success) console.error('Failed to record activity artifact');
+        }).catch(() => console.error('Failed to record activity artifact'));
       }
-
-      const messageType = event.data?.type;
-
-      if (
-        messageType === "ACTIVITY_READY" ||
-        messageType === "PROGRESS_UPDATE" ||
-        messageType === "GAME_COMPLETE"
-      ) {
-        const parsedMessage = parseGameToHostMessage(event.data);
-        if (!parsedMessage.success) {
-          return;
-        }
-
-        const protocolMessage = parsedMessage.data;
-
-        if (protocolMessage.type === "ACTIVITY_READY") {
-          setRepeatEnabled(
-            Boolean(protocolMessage.capabilities?.repeatInstruction),
-          );
-          setGameReady(true);
-          setIsLoading(false);
-          return;
-        }
-
-        if (protocolMessage.type === "PROGRESS_UPDATE") {
-          setCurrentSet(protocolMessage.currentSet);
-          setTotalSets(protocolMessage.totalSets);
-          setProgress(protocolMessage.progress);
-
-          const progressScore = Math.round(protocolMessage.progress * 100);
-          setScore(progressScore);
-
-          const currentTime = Math.floor(
-            (Date.now() - (startTimeRef.current ?? Date.now())) / 1000,
-          );
-          saveProgress("in_progress", progressScore, currentTime);
-          return;
-        }
-
-        handleGameComplete(protocolMessage);
-        return;
-      }
-
-      if (messageType !== "GAME_EVENT") return;
-
-      const gameEvent = event.data as GameEvent;
-
-      switch (gameEvent.event) {
-        case "game_started":
-          startTimeRef.current = Date.now();
-          saveProgress("in_progress", 0, 0);
-          break;
-
-        case "score_update":
-          if (gameEvent.data.score !== undefined) {
-            setScore(gameEvent.data.score);
-          }
-          break;
-
-        case "level_completed": {
-          const currentTimeLevelComplete = Math.floor(
-            (Date.now() - (startTimeRef.current ?? Date.now())) / 1000,
-          );
-          setTimeSpent(currentTimeLevelComplete);
-          saveProgress(
-            "in_progress",
-            gameEvent.data.score || score,
-            currentTimeLevelComplete,
-          );
-          break;
-        }
-
-        case "game_completed": {
-          const finalTimeLegacy = Math.floor(
-            (Date.now() - (startTimeRef.current ?? Date.now())) / 1000,
-          );
-          const finalScoreLegacy = gameEvent.data.score || score;
-          setTimeSpent(finalTimeLegacy);
-          setScore(finalScoreLegacy);
-          saveProgress("completed", finalScoreLegacy, finalTimeLegacy);
-
-          if (onComplete) {
-            onComplete({
-              score: finalScoreLegacy,
-              timeSpent: finalTimeLegacy,
-              starRating: scoreToStars(finalScoreLegacy),
-              totalSets: 0,
-            });
-          }
-          break;
-        }
-
-        case "game_paused":
-          setIsPaused(true);
-          break;
-      }
+      const result = session.getSnapshot().result;
+      if (result) onComplete?.(result);
     };
-
-    window.addEventListener("message", handleMessage);
-    return () => window.removeEventListener("message", handleMessage);
-  }, [score, saveProgress, onComplete, resolvedUrl, handleGameComplete]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isPaused && startTimeRef.current !== null) {
-        setTimeSpent(Math.floor((Date.now() - startTimeRef.current) / 1000));
-      }
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [isPaused]);
+    window.addEventListener('message', handleMessage);
+    const interval = setInterval(session.tick, 1000);
+    return () => {
+      window.removeEventListener('message', handleMessage);
+      clearInterval(interval);
+    };
+  }, [session, resolvedUrl, studentId, activityId, versionId, assignmentId, onComplete]);
 
   const sendControl = useCallback(
     (action: Exclude<GameControlAction, "restart">) => {
@@ -389,7 +167,7 @@ export function GameEmbed({
 
   const togglePause = () => {
     const next = !isPaused;
-    setIsPaused(next);
+    session.pause(next);
     sendControl(next ? "pause" : "resume");
   };
 
@@ -399,7 +177,7 @@ export function GameEmbed({
   };
 
   const handleRestart = () => {
-    setIsPaused(false);
+    session.exit();
     onRestart?.();
   };
 
@@ -497,6 +275,8 @@ export function GameEmbed({
           title={t("iframe.title")}
         />
       </div>
+
+      <ProgressSaveNotice status={sessionState.saveStatus} onRetry={session.retrySave} />
 
       {gameReady && !isLoading && (
         <ActivityNavbar

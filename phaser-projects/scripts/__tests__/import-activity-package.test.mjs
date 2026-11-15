@@ -1,13 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtempSync, mkdirSync, writeFileSync, existsSync, readFileSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, existsSync, readFileSync, rmSync, readdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createHash } from "node:crypto";
 
 import { importActivityPackage } from "../import-activity-package.mjs";
 
-test("imports a reviewable Activity package into repo activities and asset library", () => {
+function createPackageFixture() {
   const repoRoot = mkdtempSync(join(tmpdir(), "activity-import-repo-"));
   const packageRoot = mkdtempSync(join(tmpdir(), "activity-package-"));
   const image = Buffer.from("image-bytes");
@@ -67,6 +67,11 @@ test("imports a reviewable Activity package into repo activities and asset libra
     }
   }));
 
+  return { packageRoot, repoRoot };
+}
+
+test("imports a reviewable Activity package into repo activities and asset library", () => {
+  const { packageRoot, repoRoot } = createPackageFixture();
   const result = importActivityPackage({ packageRoot, repoRoot });
 
   assert.equal(result.activityId, "generated-fruits-01");
@@ -75,4 +80,29 @@ test("imports a reviewable Activity package into repo activities and asset libra
   assert.equal(existsSync(join(repoRoot, "activities", "generated-fruits-01", "versions", "1", "config.json")), true);
   assert.equal(existsSync(join(repoRoot, "assets", "library", "images", "apple.png")), true);
   assert.deepEqual(JSON.parse(readFileSync(join(repoRoot, "activities", "generated-fruits-01", "versions", "1", "assets.json"), "utf8")).games["generated-fruits-01"].manifest.images, ["apple", "banana"]);
+});
+
+
+test("a missing later pin leaves the library and existing metadata unchanged", (t) => {
+  const { packageRoot, repoRoot } = createPackageFixture();
+  t.after(() => { rmSync(packageRoot, { recursive: true, force: true }); rmSync(repoRoot, { recursive: true, force: true }); });
+  rmSync(join(packageRoot, "assets/library/images/banana.png"));
+  assert.throws(() => importActivityPackage({ packageRoot, repoRoot }), /banana.png/);
+  assert.equal(existsSync(join(repoRoot, "assets/library/images/apple.png")), false);
+  assert.equal(existsSync(join(repoRoot, "activities/generated-fruits-01/activity.json")), false);
+});
+
+test("publication failure restores an overwritten library asset", (t) => {
+  const { packageRoot, repoRoot } = createPackageFixture();
+  t.after(() => { rmSync(packageRoot, { recursive: true, force: true }); rmSync(repoRoot, { recursive: true, force: true }); });
+  mkdirSync(join(repoRoot, "assets/library/images"), { recursive: true });
+  const apple = join(repoRoot, "assets/library/images/apple.png");
+  writeFileSync(apple, "published-original");
+  // This obstructs publication only after the staged library writes are applied.
+  mkdirSync(join(repoRoot, "activities/generated-fruits-01"), { recursive: true });
+  writeFileSync(join(repoRoot, "activities/generated-fruits-01/versions"), "blocked");
+  assert.throws(() => importActivityPackage({ packageRoot, repoRoot, overwrite: true }));
+  assert.equal(readFileSync(apple, "utf8"), "published-original");
+  assert.equal(existsSync(join(repoRoot, "assets/library/images/banana.png")), false);
+  assert.equal(readdirSync(repoRoot).some(name => name.startsWith(".activity-import-")), false);
 });

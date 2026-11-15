@@ -1,3 +1,4 @@
+import type { Json } from '@/shared/types/database';
 import {
   handleRoute,
   requireAuth,
@@ -101,6 +102,21 @@ async function upsertActivityProgress(
     now: string;
   },
 ) {
+  if (input.body.sessionId) {
+    const { data, error } = await supabase.rpc('record_activity_play_session', {
+      p_student_id: input.studentId,
+      p_activity_id: input.activityId,
+      p_version_id: input.lastVersionId ?? undefined,
+      p_session_id: input.body.sessionId,
+      p_sequence: input.body.sequence!,
+      p_elapsed_seconds: input.body.timeSpent!,
+      p_status: input.body.status,
+      p_score: input.body.score,
+      p_data: input.body.data as Json | undefined,
+    });
+    if (error) throw new ApiError('INTERNAL_ERROR', 'Unable to save Activity progress');
+    return data;
+  }
   const { data: existing, error: fetchErr } = await supabase
     .from('activity_progress')
     .select('*')

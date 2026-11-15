@@ -99,12 +99,13 @@ export async function cleanupFreeResponseArtifacts(input: unknown): Promise<{ su
   if (!user) return { success: false }
 
   const admin = createAdminClient()
-  const { data: artifacts } = await admin
+  const { data: artifacts, error: artifactsError } = await admin
     .from('child_artifacts')
     .select('id, storage_path, metadata')
     .eq('student_id', user.id)
     .eq('visibility', 'draft')
     .in('id', parsed.data.artifactIds)
+  if (artifactsError) return { success: false }
 
   const ownedArtifacts = (artifacts ?? []).filter((artifact) => {
     const metadata = (artifact.metadata ?? {}) as Record<string, unknown>
@@ -118,15 +119,16 @@ export async function cleanupFreeResponseArtifacts(input: unknown): Promise<{ su
     .filter((path): path is string => typeof path === 'string' && path.length > 0)
 
   if (storagePaths.length > 0) {
-    await admin.storage.from('child-artifacts').remove(storagePaths)
+    const { error } = await admin.storage.from('child-artifacts').remove(storagePaths)
+    if (error) return { success: false }
   }
 
-  await admin
+  const { error: deleteError } = await admin
     .from('child_artifacts')
     .delete()
     .in('id', ownedArtifacts.map((artifact) => artifact.id))
 
-  return { success: true }
+  return { success: !deleteError }
 }
 
 async function validateFreeResponseTool(versionId: string, tool: ToolName): Promise<RecordFreeResponseArtifactResult | { success: true }> {

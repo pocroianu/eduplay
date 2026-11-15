@@ -32,12 +32,15 @@ interface ActivityLite {
 async function getLinkedStudentLookup(
   supabase: SupabaseClient,
   parentId: string,
+  studentId?: string,
 ): Promise<Map<string, StudentLite>> {
-  const { data: linkedChildren, error: childrenError } = await supabase
+  const query = supabase
     .from('parent_children')
     .select('student_id, students ( id, username, avatar_url )')
     .eq('parent_id', parentId)
     .eq('status', 'active');
+  if (studentId) query.eq('student_id', studentId);
+  const { data: linkedChildren, error: childrenError } = await query;
 
   if (childrenError) {
     console.error('Error fetching linked children for activity:', childrenError);
@@ -194,16 +197,18 @@ async function getRecentPublishedArtifacts(
  * children linked to the caller via parent_children.
  *
  * @param parentId - The authenticated parent's profile ID
+ * @param studentId - Optional linked child; scoped before either stream is limited
  * @param limit - Maximum number of activity items to return (default: 10)
  * @returns Array of merged feed items (Activity Progress + artifacts)
  */
 export async function getRecentActivity(
   parentId: string,
   limit: number = 10,
+  studentId?: string,
 ): Promise<ActivityItem[]> {
   try {
     const supabase = await createClient();
-    const students = await getLinkedStudentLookup(supabase, parentId);
+    const students = await getLinkedStudentLookup(supabase, parentId, studentId);
 
     if (students.size === 0) return [];
 

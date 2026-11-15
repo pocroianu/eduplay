@@ -47,6 +47,7 @@ interface StudentDetailContentProps {
     totalGames: number;
     averageScore: number;
     totalTime: number;
+    streakDays: number;
   };
   progress: GameProgress[];
 }
@@ -209,43 +210,6 @@ function getLevelLabel(score: number) {
   return "În curs...";
 }
 
-function calculateStreak(progress: GameProgress[]) {
-  if (progress.length === 0) return 0;
-
-  const days = new Set<string>();
-  for (const item of progress) {
-    if (!item.last_played_at) continue;
-    const date = new Date(item.last_played_at);
-    days.add(
-      `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`,
-    );
-  }
-
-  if (days.size === 0) return 0;
-
-  const sortedDays = [...days].sort().reverse();
-  const today = new Date();
-  const yesterday = new Date(today);
-  yesterday.setDate(today.getDate() - 1);
-  const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
-  const yesterdayKey = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, "0")}-${String(yesterday.getDate()).padStart(2, "0")}`;
-
-  if (sortedDays[0] !== todayKey && sortedDays[0] !== yesterdayKey) {
-    return 0;
-  }
-
-  let streak = 0;
-  let cursor = new Date(`${sortedDays[0]}T00:00:00`);
-  while (true) {
-    const key = `${cursor.getFullYear()}-${String(cursor.getMonth() + 1).padStart(2, "0")}-${String(cursor.getDate()).padStart(2, "0")}`;
-    if (!days.has(key)) break;
-    streak += 1;
-    cursor = new Date(cursor.getTime() - 86_400_000);
-  }
-
-  return streak;
-}
-
 function buildSubjectMetrics(progress: GameProgress[]): SubjectMetric[] {
   const categoryMap = progress.reduce<
     Record<string, { scoreTotal: number; count: number; timeMinutes: number }>
@@ -406,7 +370,7 @@ export function StudentDetailContent({
     stats.totalGames > 0
       ? Math.round((stats.completedGames / stats.totalGames) * 100)
       : 0;
-  const streak = calculateStreak(progress);
+  const streak = stats.streakDays;
   const performanceLabel = getPerformanceLabel(stats.averageScore);
   const subjectMetrics = buildSubjectMetrics(progress);
   const skillCards = buildSkillCards(

@@ -29,17 +29,21 @@ vi.mock('@/features/parent-portal', () => ({
 const getChildProgressSummaryMock = vi.fn();
 const getRecentActivityMock = vi.fn();
 const getChildConsentsMock = vi.fn();
-vi.mock('@/features/parent-portal/server', () => ({
-  getChildProgressSummary: (...args: unknown[]) =>
-    getChildProgressSummaryMock(...args),
+vi.mock('@/features/parent-portal/server', async () => ({
+  getChildDetailData: (await import('@/features/parent-portal/queries/get-child-detail-data')).getChildDetailData,
+}));
+vi.mock('@/features/parent-portal/queries/get-child-progress-summary', () => ({
+  getChildProgressSummary: (...args: unknown[]) => getChildProgressSummaryMock(...args),
+}));
+vi.mock('@/features/parent-portal/queries/get-recent-activity', () => ({
   getRecentActivity: (...args: unknown[]) => getRecentActivityMock(...args),
+}));
+vi.mock('@/features/parent-portal/queries/get-child-consents', () => ({
   getChildConsents: (...args: unknown[]) => getChildConsentsMock(...args),
 }));
-
 const getChildrenGamesProgressMock = vi.fn();
 vi.mock('@/features/games/server', () => ({
-  getChildrenGamesProgress: (...args: unknown[]) =>
-    getChildrenGamesProgressMock(...args),
+  getGamesWithProgress: (...args: unknown[]) => getChildrenGamesProgressMock(...args),
 }));
 
 const authGetUserMock = vi.fn();
@@ -70,6 +74,11 @@ const supabase = {
     getUser: () => authGetUserMock(),
   },
   from: vi.fn((table: string) => {
+    if (table === 'activity_days') {
+      const days = { select: () => days, eq: () => days, order: () => days,
+        range: async () => ({ data: [], error: null }) };
+      return days;
+    }
     if (table === 'profiles') return profilesBuilder;
     if (table === 'parent_children') return parentChildrenBuilder;
     if (table === 'students') return studentsBuilder;
@@ -157,4 +166,17 @@ describe('/parent/children/[id] page', () => {
     );
     expect(screen.queryByRole('button', { name: /vezi portofoliul/i })).toBeNull();
   });
+  it('scopes reads to the selected authorized child', async () => {
+    await ChildDetailPage({ params: Promise.resolve({ id: 'child-1' }) });
+    expect(getRecentActivityMock).toHaveBeenCalledWith('parent-1', 20, 'child-1');
+    expect(getChildrenGamesProgressMock).toHaveBeenCalledWith('child-1');
+  });
+
+  it('rejects an inactive or missing parent-child link before progress reads', async () => {
+    parentChildrenSingleMock.mockResolvedValue({ data: null });
+    await expect(ChildDetailPage({ params: Promise.resolve({ id: 'child-1' }) })).rejects.toThrow('NEXT_REDIRECT');
+    expect(getRecentActivityMock).not.toHaveBeenCalled();
+    expect(getChildrenGamesProgressMock).not.toHaveBeenCalled();
+  });
+
 });

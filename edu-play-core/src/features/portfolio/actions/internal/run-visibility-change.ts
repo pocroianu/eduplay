@@ -3,12 +3,13 @@
 // exposed as a public RPC endpoint.
 
 import 'server-only';
+import type { SupabaseClient } from '@supabase/supabase-js';
+import type { Database } from '@/shared/types/database';
 import { revalidatePath } from 'next/cache';
 import { ApiError, requireRole } from '@/lib/api';
 import type { SetArtifactVisibilityInput } from '../../schemas';
-import type { ActionResult, Artifact, ArtifactVisibility } from '../../types';
+import type { ActionResult, Artifact } from '../../types';
 import {
-  ARTIFACT_SELECT,
   mapArtifactRow,
   type ArtifactRow,
 } from '../../queries/types';
@@ -18,21 +19,13 @@ export interface VisibilityChangeData {
   artifact: Artifact;
 }
 
-const VISIBILITIES_THAT_RECORD_REVIEW: ArtifactVisibility[] = [
-  'family_visible',
-  'internal_teacher_only',
-  'archived',
-];
-
 export async function runVisibilityChange(
   input: SetArtifactVisibilityInput,
 ): Promise<ActionResult<VisibilityChangeData>> {
-  let supabase;
-  let actorId: string;
+  let supabase: SupabaseClient<Database>;
   try {
     const ctx = await requireRole('teacher', 'admin');
     supabase = ctx.supabase;
-    actorId = ctx.user.id;
   } catch (err) {
     if (err instanceof ApiError) {
       return {
@@ -46,38 +39,11 @@ export async function runVisibilityChange(
     throw err;
   }
 
-  // Pre-read the prior visibility so the notification fan-out can gate on
-  // the actual draft → family_visible transition. Without this, an idempotent
-  // re-publish (retry, double-tap, two browser tabs) would spam every linked
-  // parent with a duplicate `artifact_published` notification. RLS may hide
-  // this row from the caller — when it does we treat the artifact as
-  // "not previously published" so a subsequent successful UPDATE still gets
-  // its first-time notification.
-  const { data: priorRow } = await supabase
-    .from('child_artifacts')
-    .select('visibility')
-    .eq('id', input.id)
-    .maybeSingle();
-  const wasAlreadyPublished =
-    (priorRow as { visibility: ArtifactVisibility } | null)?.visibility ===
-    'family_visible';
-
-  const update: {
-    visibility: ArtifactVisibility;
-    reviewed_by?: string;
-    reviewed_at?: string;
-  } = { visibility: input.visibility };
-
-  if (VISIBILITIES_THAT_RECORD_REVIEW.includes(input.visibility)) {
-    update.reviewed_by = actorId;
-    update.reviewed_at = new Date().toISOString();
-  }
-
   const { data, error } = await supabase
-    .from('child_artifacts')
-    .update(update)
-    .eq('id', input.id)
-    .select(ARTIFACT_SELECT)
+    .rpc('change_artifact_visibility', {
+      p_artifact_id: input.id,
+      p_visibility: input.visibility,
+    })
     .maybeSingle();
 
   if (error) {
@@ -94,12 +60,12 @@ export async function runVisibilityChange(
     };
   }
 
-  const row = data as ArtifactRow;
+  const row = data.artifact as unknown as ArtifactRow;
 
   // Fan out `artifact_published` notifications only on a real transition into
   // the family feed. Errors inside notifyArtifactPublished are logged but do
   // not break the publish contract.
-  if (input.visibility === 'family_visible' && !wasAlreadyPublished) {
+  if (data.became_family_visible) {
     await notifyArtifactPublished({
       supabase,
       artifact: {

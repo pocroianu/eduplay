@@ -123,6 +123,29 @@ export type Database = {
           },
         ]
       }
+      activity_days: {
+        Row: {
+          active_day: string
+          student_id: string
+        }
+        Insert: {
+          active_day: string
+          student_id: string
+        }
+        Update: {
+          active_day?: string
+          student_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_days_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       activity_instances: {
         Row: {
           assigned_to: string
@@ -187,6 +210,58 @@ export type Database = {
             columns: ["source_learning_path_step_id"]
             isOneToOne: false
             referencedRelation: "learning_path_steps"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      activity_play_sessions: {
+        Row: {
+          activity_id: string
+          completed: boolean
+          elapsed_seconds: number
+          id: string
+          sequence: number
+          student_id: string
+          version_id: string | null
+        }
+        Insert: {
+          activity_id: string
+          completed?: boolean
+          elapsed_seconds?: number
+          id: string
+          sequence?: number
+          student_id: string
+          version_id?: string | null
+        }
+        Update: {
+          activity_id?: string
+          completed?: boolean
+          elapsed_seconds?: number
+          id?: string
+          sequence?: number
+          student_id?: string
+          version_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "activity_play_sessions_activity_id_fkey"
+            columns: ["activity_id"]
+            isOneToOne: false
+            referencedRelation: "activities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activity_play_sessions_student_id_fkey"
+            columns: ["student_id"]
+            isOneToOne: false
+            referencedRelation: "students"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "activity_play_sessions_version_id_fkey"
+            columns: ["version_id"]
+            isOneToOne: false
+            referencedRelation: "activity_versions"
             referencedColumns: ["id"]
           },
         ]
@@ -1712,9 +1787,50 @@ export type Database = {
         Args: { p_version_id: string }
         Returns: boolean
       }
+      advance_learning_path_progress: {
+        Args: {
+          p_completed_step_id: string
+          p_path_id: string
+          p_student_id: string
+        }
+        Returns: undefined
+      }
+      append_learning_path_step: {
+        Args: {
+          p_activity_type: string
+          p_config?: Json
+          p_description?: string
+          p_path_id: string
+          p_title: string
+        }
+        Returns: {
+          created_at: string
+          description: string | null
+          id: string
+          kind: string
+          path_id: string
+          step_order: number
+          target_activity_config: Json
+          target_activity_type: string | null
+          title: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "learning_path_steps"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
       archive_teacher_activity_atomically: {
         Args: { p_activity_id: string; p_actor_id: string }
         Returns: Json
+      }
+      change_artifact_visibility: {
+        Args: { p_artifact_id: string; p_visibility: string }
+        Returns: {
+          artifact: Json
+          became_family_visible: boolean
+        }[]
       }
       create_activity_version_atomically: {
         Args: {
@@ -1786,6 +1902,31 @@ export type Database = {
         }
         Returns: undefined
       }
+      override_learning_path_progress: {
+        Args: {
+          p_current_step_id?: string
+          p_path_id: string
+          p_status: string
+          p_student_id: string
+        }
+        Returns: {
+          completed_at: string | null
+          current_step_id: string | null
+          id: string
+          last_completed_step_id: string | null
+          path_id: string
+          started_at: string | null
+          status: string
+          student_id: string
+          updated_at: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "student_path_progress"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
       publish_activity_atomically: {
         Args: {
           p_activity_id: string
@@ -1798,6 +1939,61 @@ export type Database = {
           p_config_schema_version: number
         }
         Returns: Json
+      }
+      publish_learning_path: {
+        Args: { p_path_id: string }
+        Returns: {
+          age_max: number | null
+          age_min: number | null
+          created_at: string
+          created_by: string
+          description: string | null
+          id: string
+          owner_kind: string
+          status: string
+          title: string
+          updated_at: string
+        }[]
+        SetofOptions: {
+          from: "*"
+          to: "learning_paths"
+          isOneToOne: false
+          isSetofReturn: true
+        }
+      }
+      record_activity_play_session: {
+        Args: {
+          p_activity_id: string
+          p_data?: Json
+          p_elapsed_seconds: number
+          p_score?: number
+          p_sequence: number
+          p_session_id: string
+          p_status: string
+          p_student_id: string
+          p_version_id?: string
+        }
+        Returns: {
+          activity_id: string
+          attempts: number | null
+          completed_at: string | null
+          created_at: string | null
+          data: Json | null
+          id: string
+          last_played_at: string | null
+          last_version_id: string | null
+          score: number | null
+          status: string | null
+          student_id: string
+          time_spent: number | null
+          updated_at: string | null
+        }
+        SetofOptions: {
+          from: "*"
+          to: "activity_progress"
+          isOneToOne: true
+          isSetofReturn: false
+        }
       }
       record_activity_submission: {
         Args: {
@@ -1885,6 +2081,10 @@ export type Database = {
           isOneToOne: true
           isSetofReturn: false
         }
+      }
+      save_teacher_activity_draft: {
+        Args: { p_activity_id?: string; p_draft: Json }
+        Returns: string
       }
       set_child_consent: {
         Args: { p_child_id: string; p_consent_key: string; p_value: boolean }

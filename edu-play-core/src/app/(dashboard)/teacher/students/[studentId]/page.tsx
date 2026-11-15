@@ -1,3 +1,4 @@
+import { getActivityProgress, summarizeActivityProgress, getActivityStreak } from '@/features/activities/server'
 import { createClient } from '@/lib/supabase/server'
 import { redirect, notFound } from 'next/navigation'
 import { StudentDetailContent } from '@/features/teacher-dashboard'
@@ -65,32 +66,21 @@ export default async function StudentDetailPage({
     }
   }
 
-  // Get canonical Activity Progress
-  const { data: progress } = await supabase
-    .from('activity_progress')
-    .select(`
-      *,
-      activities:activity_id (title, category, difficulty)
-    `)
-    .eq('student_id', studentId)
-    .order('last_played_at', { ascending: false })
+  const progress = await getActivityProgress(supabase, studentId)
+
+  const streakDays = await getActivityStreak(supabase, studentId)
 
   const profileData = studentProfile as { full_name: string; email: string; avatar_url: string | null } | null
   const classData = classInfo as { id: string; name: string } | null
 
-  const completedGames = progress?.filter(p => p.status === 'completed').length || 0
-  const totalGames = progress?.length || 0
-  const averageScore = progress?.length
-    ? Math.round(progress.reduce((acc, p) => acc + (p.score || 0), 0) / progress.length)
-    : 0
-  const totalTime = progress?.reduce((acc, p) => acc + (p.time_spent || 0), 0) || 0
+  const summary = summarizeActivityProgress(progress)
 
   const formattedProgress = (progress || []).map(p => ({
     id: p.id,
-    status: p.status,
+    status: p.status ?? 'not_started',
     score: p.score,
     time_spent: p.time_spent,
-    attempts: p.attempts,
+    attempts: p.attempts ?? 0,
     last_played_at: p.last_played_at,
     games: p.activities
       ? {
@@ -119,10 +109,11 @@ export default async function StudentDetailPage({
           className: classData?.name || null,
         }}
         stats={{
-          completedGames,
-          totalGames,
-          averageScore,
-          totalTime,
+          completedGames: summary.completedCount,
+          totalGames: summary.activityCount,
+          averageScore: summary.averageScore,
+          totalTime: summary.totalSeconds,
+          streakDays,
         }}
         progress={formattedProgress}
       />

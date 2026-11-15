@@ -1,3 +1,4 @@
+export { createTeacherAssignment } from './assignments/create-assignment'
 import { createClient } from '@/lib/supabase/server'
 import type { TeacherDashboardContentProps } from './components/TeacherDashboardContent'
 import {

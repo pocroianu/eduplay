@@ -1,9 +1,11 @@
+import { z } from 'zod'
 import {
   ApiError,
   camelCaseKeys,
   handleRoute,
   parseBody,
   parseRow,
+  parseQuery,
   requireAuth,
   success,
 } from '@/lib/api'
@@ -87,4 +89,17 @@ export const POST = handleRoute(async (req) => {
   }
 
   return success(parseSubmission(data as SubmissionRow))
+})
+
+// Read-only reconciliation after an ambiguous submit response. Never starts or edits a draft.
+export const GET = handleRoute(async (req) => {
+  const ctx = await requireAuth()
+  if (ctx.profile.role !== 'student') throw ApiError.forbidden('Only students can read their submission here')
+  const query = parseQuery(new URL(req.url).searchParams, z.object({ assignmentId: z.string().uuid() }))
+  const { data, error } = await ctx.supabase.from('activity_submissions').select('*')
+    .eq('assignment_id', query.assignmentId).eq('student_id', ctx.user.id).maybeSingle()
+  if (error) throw new ApiError('INTERNAL_ERROR', 'Could not read submission')
+  const response = success(data ? parseSubmission(data as SubmissionRow) : null)
+  response.headers.set('Cache-Control', 'private, no-store')
+  return response
 })

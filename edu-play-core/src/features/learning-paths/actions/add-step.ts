@@ -1,31 +1,17 @@
 'use server';
 
+import type { Json } from '@/shared/types/database';
 import { revalidatePath } from 'next/cache';
 import { ROUTES } from '@/shared/lib/constants';
 import { addStepInputSchema } from '../schemas';
 import type { ActionResult, LearningPathStep } from '../types';
 import {
-  LEARNING_PATH_STEP_SELECT,
   mapLearningPathStepRow,
   type LearningPathStepRowSnake,
 } from '../queries/types';
 import { requireTeacher } from './internal/require-teacher';
 
-/**
- * Appends an Activity-template step to an existing path. Legacy game-targeted
- * steps were removed by the Activity-only cutover.
- *
- * Step ordering is the caller's responsibility — the path-builder UI
- * (EDU-31.C) computes the next `step_order` from the current list. This
- * action does not auto-shift sibling rows.
- *
- * Published / archived paths are immutable: students may have in-flight
- * `student_path_progress.completed` rows whose meaning depends on a
- * frozen step list. Mutating a published path turns "completed" into a
- * lie. RLS doesn't enforce this — it lets the owner write any step row
- * for any of their paths regardless of `learning_paths.status` — so we
- * gate it here (CTO follow-up triage of PR #144, EDU-309).
- */
+// Draft validation and append ordering belong to the database transaction.
 export async function addStep(
   input: unknown,
 ): Promise<ActionResult<{ step: LearningPathStep }>> {
@@ -42,68 +28,25 @@ export async function addStep(
 
   const { ctx } = auth;
 
-  const { data: pathRow, error: pathError } = await ctx.supabase
-    .from('learning_paths')
-    .select('status')
-    .eq('id', parsed.data.pathId)
-    .maybeSingle();
-
-  if (pathError) {
-    return {
-      success: false,
-      error: 'Nu am putut adăuga pasul. Încearcă din nou.',
-    };
-  }
-
-  if (!pathRow) {
-    return { success: false, error: 'Parcursul nu există' };
-  }
-
-  if (pathRow.status !== 'draft') {
-    return {
-      success: false,
-      error: 'Nu poți adăuga pași la un parcurs publicat sau arhivat',
-    };
-  }
-
-  const { data: activityTypeRow, error: activityTypeError } = await ctx.supabase
-    .from('activity_types')
-    .select('type_id')
-    .eq('type_id', parsed.data.targetActivityType)
-    .maybeSingle();
-
-  if (activityTypeError) {
-    return {
-      success: false,
-      error: 'Nu am putut adăuga pasul. Încearcă din nou.',
-    };
-  }
-
-  if (!activityTypeRow) {
-    return { success: false, error: 'Tipul de activitate ales nu există' };
-  }
-
   const { data, error } = await ctx.supabase
-    .from('learning_path_steps')
-    .insert({
-      path_id: parsed.data.pathId,
-      step_order: parsed.data.stepOrder,
-      kind: 'activity_template',
-      target_activity_type: parsed.data.targetActivityType,
-      target_activity_config:
-        parsed.data.targetActivityConfig === undefined
-          ? {}
-          : parsed.data.targetActivityConfig,
-      title: parsed.data.title,
-      description: parsed.data.description ?? null,
+    .rpc('append_learning_path_step', {
+      p_path_id: parsed.data.pathId,
+      p_title: parsed.data.title,
+      p_activity_type: parsed.data.targetActivityType,
+      p_config: (parsed.data.targetActivityConfig ?? {}) as Json,
+      p_description: parsed.data.description ?? undefined,
     })
-    .select(LEARNING_PATH_STEP_SELECT)
-    .maybeSingle();
+    .single();
 
   if (error || !data) {
+    const messages: Record<string, string> = {
+      learning_path_not_found: 'Parcursul nu există',
+      learning_path_not_draft: 'Nu poți adăuga pași la un parcurs publicat sau arhivat',
+      activity_type_not_found: 'Tipul de activitate ales nu există',
+    };
     return {
       success: false,
-      error: 'Nu am putut adăuga pasul. Încearcă din nou.',
+      error: messages[error?.message ?? ''] ?? 'Nu am putut adăuga pasul. Încearcă din nou.',
     };
   }
 

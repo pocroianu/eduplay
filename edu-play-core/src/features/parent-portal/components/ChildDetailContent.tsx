@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { Tabs } from '@mantine/core';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -62,48 +62,7 @@ interface ChildDetailContentProps {
   gamesWithProgress: GameWithProgress[];
   recentActivity: ActivityItemForFeed[];
   consents: ConsentMap;
-}
-
-function calculateStreak(activities: ActivityItemForFeed[]): number {
-  if (activities.length === 0) return 0;
-
-  const activityDays = new Set<string>();
-  for (const activity of activities) {
-    if (!activity.timestamp) continue;
-    const date = new Date(activity.timestamp);
-    const dayKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-    activityDays.add(dayKey);
-  }
-
-  if (activityDays.size === 0) return 0;
-
-  const sortedDays = Array.from(activityDays).sort().reverse();
-
-  const today = new Date();
-  const todayKey = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-
-  const yesterday = new Date(today.getTime() - 86_400_000);
-  const yesterdayKey = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, '0')}-${String(yesterday.getDate()).padStart(2, '0')}`;
-
-  const mostRecentDay = sortedDays[0];
-  if (mostRecentDay !== todayKey && mostRecentDay !== yesterdayKey) {
-    return 0;
-  }
-
-  let streak = 0;
-  let currentDate = new Date(mostRecentDay + 'T00:00:00');
-
-  while (true) {
-    const currentKey = `${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`;
-    if (activityDays.has(currentKey)) {
-      streak++;
-      currentDate = new Date(currentDate.getTime() - 86_400_000);
-    } else {
-      break;
-    }
-  }
-
-  return streak;
+  streakDays: number;
 }
 
 function formatMemberSince(isoDate: string): string {
@@ -151,8 +110,9 @@ export function ChildDetailContent({
   gamesWithProgress,
   recentActivity,
   consents,
+  streakDays,
 }: ChildDetailContentProps) {
-  const streak = useMemo(() => calculateStreak(recentActivity), [recentActivity]);
+  const streak = streakDays;
 
   const [activeTab, setActiveTab] = useState<ChildDetailTabValue>('progress');
   const activeTabDefinition =
