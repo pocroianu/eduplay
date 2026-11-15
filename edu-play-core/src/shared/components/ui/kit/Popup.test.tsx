@@ -37,7 +37,7 @@ describe('Popup', () => {
     const onClose = vi.fn();
     render(<Popup open onClose={onClose} title="Test" />);
     act(() => {
-      fireEvent.keyDown(window, { key: 'Escape' });
+      fireEvent.keyDown(screen.getByRole('dialog'), { key: 'Escape' });
     });
     expect(onClose).toHaveBeenCalledTimes(1);
   });
@@ -45,13 +45,10 @@ describe('Popup', () => {
   it('calls onClose on backdrop click', () => {
     const onClose = vi.fn();
     render(<Popup open onClose={onClose} title="Test" />);
-    // The backdrop is the button with tabIndex -1
-    const buttons = screen.getAllByRole('button', { hidden: true });
-    const backdropBtn = buttons.find((b) => b.getAttribute('tabindex') === '-1');
-    if (backdropBtn) {
-      fireEvent.click(backdropBtn);
-      expect(onClose).toHaveBeenCalled();
-    }
+    const backdrop = document.querySelector('.mantine-Modal-overlay');
+    expect(backdrop).not.toBeNull();
+    fireEvent.click(backdrop!);
+    expect(onClose).toHaveBeenCalled();
   });
 
   it('renders panel variant with panel classes', () => {
@@ -76,7 +73,7 @@ describe('Popup', () => {
   it('hides close button when showClose is false', () => {
     render(<Popup open onClose={() => undefined} title="No close" showClose={false} />);
     // Only the backdrop button should exist, not a visible close icon
-    const buttons = screen.getAllByRole('button', { hidden: true });
+    const buttons = screen.queryAllByRole('button', { hidden: true });
     const visibleClose = buttons.find(
       (b) => b.getAttribute('aria-label') === 'Închide' && b.getAttribute('tabindex') !== '-1',
     );
@@ -97,6 +94,10 @@ describe('PopupSection', () => {
 });
 
 describe('PopupRow', () => {
+  it('renders href rows as links', () => {
+    render(<PopupRow label="Profil" href="/profil" />);
+    expect(screen.getByRole('link', { name: /profil/i })).toHaveAttribute('href', '/profil');
+  });
   it('renders a non-interactive row', () => {
     render(<PopupRow label="Nume" value="Geani" />);
     expect(screen.getByText('Nume')).toBeInTheDocument();

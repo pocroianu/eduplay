@@ -38,9 +38,9 @@ describe('StatBlock', () => {
   })
 
   it('exposes the focus-within ring so keyboard users see focus state', () => {
-    const { container } = render(
+    render(
       <StatBlock label="L" value={1} icon="X" />,
     )
-    expect(container.firstElementChild).toHaveClass('focus-within:ring-2')
+    expect(screen.getByText("L").parentElement?.parentElement).toHaveClass('focus-within:ring-2')
   })
 })

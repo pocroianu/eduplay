@@ -17,7 +17,7 @@ export class ParentNotificationsPage extends BasePage {
   constructor(page: Page) {
     super(page);
 
-    this.heading = page.getByRole('heading', {
+    this.heading = page.getByRole('main').getByRole('heading', {
       level: 1,
       name: /^notificări$/i,
     });

@@ -165,7 +165,7 @@ describe('LearningMap', () => {
     expect(screen.queryByRole('link', { name: /începe jocul/i })).not.toBeInTheDocument();
   });
 
-  it('renders the empty map as a quiet Seesaw card without the decorative path', () => {
+  it('renders the empty map as a quiet EduPlay card without the decorative path', () => {
     const { container } = renderWithMantine(
       <LearningMap
         profile={{ full_name: 'Ana Elev' }}

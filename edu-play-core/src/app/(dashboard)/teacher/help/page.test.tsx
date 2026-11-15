@@ -37,7 +37,7 @@ vi.mock('@/lib/i18n/server', () => ({
     'utility.help.subtitle': 'Teacher Resources',
     'utility.help.resourcesTitle': 'Teacher Resources',
     'utility.help.viewAll': 'View All',
-    'utility.help.spotlight.title': 'Seesaw Spotlight',
+    'utility.help.spotlight.title': 'EduPlay Spotlight',
     'utility.help.spotlight.type': 'Video',
     'utility.help.learningCentral.title': 'Learning Central',
     'utility.help.learningCentral.type': 'Website',
@@ -60,10 +60,9 @@ vi.mock('@/lib/i18n/server', () => ({
     'shell.sidebar.accountSettings': 'Account Settings',
     'shell.sidebar.mySchool': 'My School',
     'shell.sidebar.deviceInformation': 'Device Information',
-    'shell.sidebar.trial': 'Seesaw Plus',
+    'shell.sidebar.trial': 'EduPlay Plus',
   }[key] ?? key),
 }));
-
 
 import TeacherHelpPage from './page';
 

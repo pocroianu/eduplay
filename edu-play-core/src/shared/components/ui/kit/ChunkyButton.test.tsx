@@ -26,7 +26,7 @@ describe('ChunkyButton', () => {
     expect(screen.getByRole('button', { name: /btn/i })).toHaveClass(expectedClass);
   });
 
-  it('uses Seesaw-style flat chrome instead of tonal chunky borders', () => {
+  it('uses EduPlay flat chrome instead of tonal chunky borders', () => {
     render(<ChunkyButton>Btn</ChunkyButton>);
     const button = screen.getByRole('button', { name: /btn/i });
 

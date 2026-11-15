@@ -1,12 +1,11 @@
 'use client';
 
+import { MantineBoundary } from '@/shared/components/ui/kit';
 import {
   Button as MantineButton,
-  MantineContext,
-  MantineProvider,
   type ButtonProps as MantineButtonProps,
 } from '@mantine/core';
-import { useContext, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { cn } from '@/shared/lib/utils/cn';
 
 interface AuthButtonProps
@@ -28,7 +27,6 @@ export function AuthButton({
   ...props
 }: AuthButtonProps) {
   const isDisabled = disabled || isPending;
-  const mantineContext = useContext(MantineContext);
 
   const rootClassName = cn(
     variant === 'primary'
@@ -52,5 +50,5 @@ export function AuthButton({
     </MantineButton>
   );
 
-  return mantineContext ? button : <MantineProvider>{button}</MantineProvider>;
+  return <MantineBoundary>{button}</MantineBoundary>;
 }

@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Button, PinDotRow, Numpad } from "@/shared/components/ui/kit";
+import { Modal, UnstyledButton } from "@mantine/core";
+import { Button, MantineBoundary, PinDotRow, Numpad } from "@/shared/components/ui/kit";
 import { Icon } from "@/shared/components/ui/Icon";
 import { cn } from "@/shared/lib/utils/cn";
 import { changePinAction } from "../actions/change-pin";
@@ -37,24 +38,19 @@ export function ChangePinDialog({
   onCancel,
   onSuccess,
 }: ChangePinDialogProps) {
-  useEffect(() => {
-    if (!open) return;
-    const handleKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        onCancel();
-      }
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [open, onCancel]);
-
   return (
-    <AnimatePresence>
-      {open ? (
-        <ChangePinDialogBody onCancel={onCancel} onSuccess={onSuccess} />
-      ) : null}
-    </AnimatePresence>
+    <MantineBoundary>
+      <Modal.Root opened={open} onClose={onCancel} size="30rem">
+        <Modal.Overlay />
+        <Modal.Content aria-label="PIN">
+          <Modal.Body p={0}>
+            <AnimatePresence>
+          {open ? <ChangePinDialogBody onCancel={onCancel} onSuccess={onSuccess} /> : null}
+        </AnimatePresence>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal.Root>
+    </MantineBoundary>
   );
 }
 
@@ -144,30 +140,9 @@ function ChangePinDialogBody({
 
   return (
     <motion.div
-      key="change-pin"
-      className="fixed inset-0 z-50 flex items-end md:items-center justify-center"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={titleId}
-      initial={reduceMotion ? false : { opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={
-        reduceMotion
-          ? { duration: 0 }
-          : { duration: 0.2, ease: [0.4, 0, 0.2, 1] }
-      }
-    >
-      <button
-        type="button"
-        aria-label="Închide"
-        className="absolute inset-0 bg-on-surface/20"
-        onClick={onCancel}
-      />
-      <motion.div
         className={cn(
-          "relative flex max-h-[92vh] w-full flex-col overflow-hidden border border-outline-variant md:w-[480px]",
-          "rounded-t-md bg-surface-container-lowest shadow-soft-sm md:rounded-md",
+          "flex max-h-[92vh] w-full flex-col overflow-hidden border border-outline-variant",
+          "bg-surface-container-lowest shadow-soft-sm",
         )}
         initial={reduceMotion ? { opacity: 0 } : { y: 16, opacity: 0 }}
         animate={reduceMotion ? { opacity: 1 } : { y: 0, opacity: 1 }}
@@ -179,14 +154,14 @@ function ChangePinDialogBody({
         }
       >
         <header className="flex shrink-0 items-center gap-3 border-b border-outline-variant px-5 py-4 md:px-6">
-          <button
+          <UnstyledButton
             type="button"
             onClick={onCancel}
             aria-label="Închide"
             className="inline-flex size-16 shrink-0 items-center justify-center rounded-md border border-outline-variant bg-surface-container-lowest text-on-surface-variant transition-colors ease-press hover:bg-surface-container hover:text-on-surface"
           >
             <Icon name="X" size={20} />
-          </button>
+          </UnstyledButton>
           <div className="min-w-0 flex-1">
             <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-on-surface-variant">
               Pasul {stepIndex + 1} din {ORDER.length}
@@ -243,6 +218,5 @@ function ChangePinDialogBody({
           </Button>
         </footer>
       </motion.div>
-    </motion.div>
   );
 }

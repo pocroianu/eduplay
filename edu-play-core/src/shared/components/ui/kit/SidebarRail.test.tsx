@@ -17,7 +17,7 @@ const navItems = [
 ] as const;
 
 describe('SidebarRail', () => {
-  it('renders Seesaw-style sidebar sections and active navigation', () => {
+  it('renders EduPlay sidebar sections and active navigation', () => {
     renderSidebar(
       <SidebarRail
         brandLabel="EduPlay"

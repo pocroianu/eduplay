@@ -52,7 +52,8 @@ afterEach(() => {
 });
 
 // Mock Next.js router
-vi.mock('next/navigation', () => ({
+vi.mock('next/navigation', async () => ({
+  unstable_rethrow: (await vi.importActual<typeof import('next/navigation')>('next/navigation')).unstable_rethrow,
   useRouter: () => ({
     push: vi.fn(),
     replace: vi.fn(),

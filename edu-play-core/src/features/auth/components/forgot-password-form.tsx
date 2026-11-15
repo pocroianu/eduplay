@@ -1,7 +1,7 @@
 'use client';
 
-import { Button as MantineButton, MantineContext, MantineProvider } from '@mantine/core';
-import { useContext, useState, useTransition, type ReactNode } from 'react';
+import { Button as MantineButton } from '@mantine/core';
+import { useState, useTransition } from 'react';
 import NextLink from 'next/link';
 import { useForm, type UseFormRegisterReturn, type UseFormReturn } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -12,7 +12,7 @@ import {
   type ForgotPasswordFormData,
 } from '../schemas/forgot-password.schema';
 import { requestPasswordReset } from '../actions/request-password-reset';
-import { TextField } from '@/shared/components/ui/kit';
+import { MantineBoundary, TextField } from '@/shared/components/ui/kit';
 import { ROUTES } from '@/shared/lib/constants/routes';
 import { Icon } from '@/shared/components/ui/Icon';
 
@@ -40,7 +40,6 @@ export function ForgotPasswordForm() {
   const [serverError, setServerError] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const emailParam = searchParams.get('email');
-  const mantineContext = useContext(MantineContext);
   const { isPending, onSubmit } = useForgotPasswordSubmit({
     setIsSuccess,
     setServerError,
@@ -70,7 +69,7 @@ export function ForgotPasswordForm() {
     />
   );
 
-  return withOptionalMantineProvider(content, Boolean(mantineContext));
+  return <MantineBoundary>{content}</MantineBoundary>;
 }
 
 function useForgotPasswordSubmit({
@@ -117,10 +116,6 @@ function handleResetRequestResult(
   }
 
   options.setServerError(result.error ?? options.fallbackError);
-}
-
-function withOptionalMantineProvider(content: ReactNode, hasProvider: boolean) {
-  return hasProvider ? content : <MantineProvider>{content}</MantineProvider>;
 }
 
 function ForgotPasswordRequestForm({

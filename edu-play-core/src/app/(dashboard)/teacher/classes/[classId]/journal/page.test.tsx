@@ -137,7 +137,7 @@ describe('/teacher/classes/[classId]/journal', () => {
     expect(notFoundMock).toHaveBeenCalled()
   })
 
-  it('renders the protected journal tab with Seesaw-style roster data and route links', async () => {
+  it('renders the protected journal tab with EduPlay roster data and route links', async () => {
     getClassDetailDataMock.mockResolvedValue(classDetailData)
 
     render(

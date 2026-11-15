@@ -14,7 +14,7 @@ describe('AuthButton', () => {
     expect(source).not.toContain('<motion.button');
   });
 
-  it('uses flat Seesaw primary tokens for the primary variant', () => {
+  it('uses flat EduPlay primary tokens for the primary variant', () => {
     render(<AuthButton>Autentificare</AuthButton>);
     const button = screen.getByRole('button', { name: /autentificare/i });
     const className = button.getAttribute('class') ?? '';
@@ -38,7 +38,7 @@ describe('AuthButton', () => {
 
   });
 
-  it('uses rectangular Seesaw field chrome for auth inputs', () => {
+  it('uses rectangular EduPlay field chrome for auth inputs', () => {
     const { container } = render(<AuthInput icon="Envelope" label="Email" />);
 
     const input = container.querySelector('input');

@@ -1,13 +1,12 @@
 'use client';
 
+import { MantineBoundary } from '@/shared/components/ui/kit';
 import {
   Anchor,
-  MantineContext,
-  MantineProvider,
   type AnchorProps,
 } from '@mantine/core';
 import NextLink from 'next/link';
-import { useContext, type ReactNode } from 'react';
+import { type ReactNode } from 'react';
 import { cn } from '@/shared/lib/utils/cn';
 
 export interface AuthInlineLinkProps
@@ -23,7 +22,6 @@ export function AuthInlineLink({
   className,
   ...props
 }: AuthInlineLinkProps) {
-  const mantineContext = useContext(MantineContext);
   const link = (
     <Anchor
       component={NextLink}
@@ -40,5 +38,5 @@ export function AuthInlineLink({
     </Anchor>
   );
 
-  return mantineContext ? link : <MantineProvider>{link}</MantineProvider>;
+  return <MantineBoundary>{link}</MantineBoundary>;
 }

@@ -21,7 +21,7 @@ const BLOCKED_ANALYTICS_PACKAGES = [
 
 const ARBITRARY_RADIUS_REGEX = String.raw`rounded(-(?:t|b|l|r|tl|tr|bl|br|s|e|ss|se|es|ee))?-\[\d+(\.\d+)?(px|rem)\]`;
 const ARBITRARY_RADIUS_MESSAGE =
-  "Use Seesaw/EduPlay radius tokens (rounded-xs|sm|md|lg|xl|pill|kid-card|kid-button) — see DESIGN.md. Arbitrary rounded-[Npx] / rounded-[Nrem] values are banned.";
+  "Use EduPlay radius tokens (rounded-xs|sm|md|lg|xl|pill|kid-card|kid-button) — see DESIGN.md. Arbitrary rounded-[Npx] / rounded-[Nrem] values are banned.";
 const BLOCKED_ANALYTICS_MESSAGE =
   "Third-party analytics are banned in child-accessible routes (PRIVACY.md §8). Children's data must never reach external trackers.";
 

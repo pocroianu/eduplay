@@ -51,9 +51,8 @@ const resources = {
   },
 } as const
 
-
 describe('/teacher/classes/new', () => {
-  it('renders the Seesaw create class flow with i18n copy', () => {
+  it('renders the EduPlay create class flow with i18n copy', () => {
     render(
       <MantineProvider>
         <I18nProvider lang="en" resources={resources}>

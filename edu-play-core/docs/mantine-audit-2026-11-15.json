@@ -1,0 +1,235 @@
+{
+  "scope": "src production TS/TSX; tests, stories, declarations, test helpers and archived prototypes excluded",
+  "methodology": "Static imports and local runtime dependencies, resolving named barrel exports; indirect means a file depends on Mantine-backed code, not that every element it renders is Mantine. Not a bundle-size or runtime-visibility measure.",
+  "totals": {
+    "tsxFiles": 391,
+    "directTsx": 109,
+    "indirectTsx": 181,
+    "independentTsx": 101
+  },
+  "areas": {
+    "app routes": {
+      "files": 190,
+      "direct": 12,
+      "indirect": 104
+    },
+    "other": {
+      "files": 20,
+      "direct": 3,
+      "indirect": 10
+    },
+    "features/activities": {
+      "files": 5,
+      "direct": 1,
+      "indirect": 4
+    },
+    "features/admin": {
+      "files": 18,
+      "direct": 7,
+      "indirect": 10
+    },
+    "features/auth": {
+      "files": 16,
+      "direct": 6,
+      "indirect": 6
+    },
+    "features/family-feed": {
+      "files": 3,
+      "direct": 1,
+      "indirect": 1
+    },
+    "features/games": {
+      "files": 23,
+      "direct": 5,
+      "indirect": 15
+    },
+    "features/learning-map": {
+      "files": 1,
+      "direct": 1,
+      "indirect": 0
+    },
+    "features/learning-paths": {
+      "files": 6,
+      "direct": 5,
+      "indirect": 1
+    },
+    "features/lessons": {
+      "files": 1,
+      "direct": 1,
+      "indirect": 0
+    },
+    "features/parent-portal": {
+      "files": 10,
+      "direct": 7,
+      "indirect": 3
+    },
+    "features/portfolio": {
+      "files": 5,
+      "direct": 2,
+      "indirect": 3
+    },
+    "features/reports": {
+      "files": 1,
+      "direct": 1,
+      "indirect": 0
+    },
+    "features/student-dashboard": {
+      "files": 9,
+      "direct": 1,
+      "indirect": 6
+    },
+    "features/student-profile": {
+      "files": 4,
+      "direct": 3,
+      "indirect": 0
+    },
+    "features/teacher-activities": {
+      "files": 10,
+      "direct": 3,
+      "indirect": 7
+    },
+    "features/teacher-dashboard": {
+      "files": 20,
+      "direct": 11,
+      "indirect": 8
+    },
+    "shared UI kit": {
+      "files": 49,
+      "direct": 39,
+      "indirect": 3
+    }
+  },
+  "packages": {
+    "@mantine/core": [
+      "app/(auth)/login/page.tsx",
+      "app/(dashboard)/DashboardErrorPanel.tsx",
+      "app/(dashboard)/parent/link-child/error.tsx",
+      "app/(dashboard)/student/activities/loading.tsx",
+      "app/(dashboard)/student/games/loading.tsx",
+      "app/(dashboard)/student/loading.tsx",
+      "app/(dashboard)/student/map/loading.tsx",
+      "app/(dashboard)/teacher/classes/[classId]/settings/[section]/page.tsx",
+      "app/(dashboard)/teacher/classes/new/page.tsx",
+      "app/(dashboard)/teacher/language/page.tsx",
+      "app/layout.tsx",
+      "app/play/[activityId]/loading.tsx",
+      "features/activities/types/drawing-canvas/DrawingCanvasRenderer.tsx",
+      "features/admin/components/AdminActivitiesTable.tsx",
+      "features/admin/components/AdminActivityEditor.tsx",
+      "features/admin/components/AdminAuditTable.tsx",
+      "features/admin/components/AdminGamesTable.tsx",
+      "features/admin/components/AdminSearchInput.tsx",
+      "features/admin/components/AdminUsersTable.tsx",
+      "features/admin/components/FilterBar.tsx",
+      "features/auth/components/auth-button.tsx",
+      "features/auth/components/auth-inline-link.tsx",
+      "features/auth/components/auth-input.tsx",
+      "features/auth/components/forgot-password-form.tsx",
+      "features/auth/components/reset-password-error.tsx",
+      "features/auth/components/student-pin-pad.tsx",
+      "features/family-feed/components/child-selector.tsx",
+      "features/games/components/CategoryFilter.tsx",
+      "features/games/components/GameChromeButton.tsx",
+      "features/games/components/ParentGamesPageContent.tsx",
+      "features/games/components/TeacherGameCard.tsx",
+      "features/games/components/TeacherGamesPageContent.tsx",
+      "features/learning-map/components/LearningMap.tsx",
+      "features/learning-paths/components/ClassPathProgressMatrix.tsx",
+      "features/learning-paths/components/PathAssignmentDialog.tsx",
+      "features/learning-paths/components/PathBuilder.tsx",
+      "features/learning-paths/components/ProgressOverrideControl.tsx",
+      "features/learning-paths/components/TeacherPathCreateForm.tsx",
+      "features/lessons/components/InteractiveLesson.tsx",
+      "features/parent-portal/components/ChildConsentSection.tsx",
+      "features/parent-portal/components/ChildDetailContent.tsx",
+      "features/parent-portal/components/activity-feed.tsx",
+      "features/parent-portal/components/invite-code-generator.tsx",
+      "features/parent-portal/components/notification-bell.tsx",
+      "features/parent-portal/components/notification-dropdown.tsx",
+      "features/parent-portal/components/notification-list.tsx",
+      "features/portfolio/components/TeacherPortfolioFilters.tsx",
+      "features/portfolio/components/TeacherUploadModal.tsx",
+      "features/reports/components/StudentReport.tsx",
+      "features/student-dashboard/components/quest-map/QuestNode.tsx",
+      "features/student-profile/components/AvatarPickerDialog.tsx",
+      "features/student-profile/components/ChangePinDialog.tsx",
+      "features/student-profile/components/StudentProfileContent.tsx",
+      "features/teacher-activities/components/ActivityActionButton.tsx",
+      "features/teacher-activities/components/TeacherActivitiesHub.tsx",
+      "features/teacher-activities/components/TeacherReviewQueue.tsx",
+      "features/teacher-dashboard/components/AssignmentComposer.tsx",
+      "features/teacher-dashboard/components/AssignmentsPageContent.tsx",
+      "features/teacher-dashboard/components/ClassDetailContent.tsx",
+      "features/teacher-dashboard/components/ClassesPageContent.tsx",
+      "features/teacher-dashboard/components/RewardsLeaderboardPanel.tsx",
+      "features/teacher-dashboard/components/TeacherActivityComposer.tsx",
+      "features/teacher-dashboard/components/TeacherActivityPicker.tsx",
+      "features/teacher-dashboard/components/TeacherDashboardContent.tsx",
+      "features/teacher-dashboard/components/TeacherLibrariesExploreContent.tsx",
+      "features/teacher-dashboard/components/TeacherLibraryContent.tsx",
+      "features/teacher-dashboard/components/TeacherLibraryDiscoveryContent.tsx",
+      "shared/components/layout/AccountMenuModal.tsx",
+      "shared/components/layout/SideNavBar.tsx",
+      "shared/components/layout/TopAppBar.tsx",
+      "shared/components/ui/kit/ActionMenu.tsx",
+      "shared/components/ui/kit/ActivityCard.tsx",
+      "shared/components/ui/kit/AuthShell.tsx",
+      "shared/components/ui/kit/Badge.tsx",
+      "shared/components/ui/kit/Button.tsx",
+      "shared/components/ui/kit/Card.tsx",
+      "shared/components/ui/kit/CardButton.tsx",
+      "shared/components/ui/kit/Checkbox.tsx",
+      "shared/components/ui/kit/ChunkyButton.tsx",
+      "shared/components/ui/kit/ConfirmDialog.tsx",
+      "shared/components/ui/kit/Container.tsx",
+      "shared/components/ui/kit/DataTable.tsx",
+      "shared/components/ui/kit/DuoAvatar.tsx",
+      "shared/components/ui/kit/DuoCard.tsx",
+      "shared/components/ui/kit/DuoProgress.tsx",
+      "shared/components/ui/kit/DuoTooltip.tsx",
+      "shared/components/ui/kit/FeatureActionCard.tsx",
+      "shared/components/ui/kit/FilterChipGroup.tsx",
+      "shared/components/ui/kit/FilterSelect.tsx",
+      "shared/components/ui/kit/HeroBanner.tsx",
+      "shared/components/ui/kit/InsightPanel.tsx",
+      "shared/components/ui/kit/InteractiveSurface.tsx",
+      "shared/components/ui/kit/KidTextField.tsx",
+      "shared/components/ui/kit/LibraryActivityCard.tsx",
+      "shared/components/ui/kit/LibraryExploreCard.tsx",
+      "shared/components/ui/kit/MantineBoundary.tsx",
+      "shared/components/ui/kit/Pill.tsx",
+      "shared/components/ui/kit/PillBadge.tsx",
+      "shared/components/ui/kit/Popup.tsx",
+      "shared/components/ui/kit/RewardModal.tsx",
+      "shared/components/ui/kit/SegmentedTabs.tsx",
+      "shared/components/ui/kit/SidebarRail.tsx",
+      "shared/components/ui/kit/StatBlock.tsx",
+      "shared/components/ui/kit/StatCard.tsx",
+      "shared/components/ui/kit/SubjectPill.tsx",
+      "shared/components/ui/kit/TextField.tsx",
+      "shared/components/ui/kit/TextareaField.tsx",
+      "shared/components/ui/kit/Toast.tsx",
+      "shared/components/ui/kit/ToolbarRow.tsx",
+      "shared/theme/mantine-theme.ts"
+    ],
+    "@mantine/form": [
+      "app/(dashboard)/teacher/classes/new/page.tsx",
+      "features/learning-paths/components/TeacherPathCreateForm.tsx",
+      "features/teacher-dashboard/components/AssignmentComposer.tsx",
+      "features/teacher-dashboard/components/TeacherActivityComposer.tsx"
+    ],
+    "@mantine/core/styles.css": [
+      "app/layout.tsx"
+    ]
+  },
+  "kitWithoutMantineDependency": [
+    "shared/components/ui/kit/BackgroundGlyph.tsx",
+    "shared/components/ui/kit/EmptyState.tsx",
+    "shared/components/ui/kit/PageHeader.tsx",
+    "shared/components/ui/kit/PinDotRow.tsx",
+    "shared/components/ui/kit/RewardGlyph.tsx",
+    "shared/components/ui/kit/SectionHeader.tsx",
+    "shared/components/ui/kit/Vulpita.tsx"
+  ],
+  "rawVisibleControls": []
+}

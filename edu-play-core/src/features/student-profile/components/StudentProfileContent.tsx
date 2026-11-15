@@ -3,10 +3,12 @@
 import { useMemo, useState, useTransition } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { Radio, Switch } from '@mantine/core';
 import {
   Button,
   Card,
   ConfirmDialog,
+  MantineBoundary,
   ToastProvider,
   useToast,
 } from '@/shared/components/ui/kit';
@@ -45,9 +47,11 @@ const FALLBACK_AVATAR = '/avatars/preset-01.svg';
 
 export function StudentProfileContent(props: StudentProfileContentProps) {
   return (
-    <ToastProvider>
-      <StudentProfileBody {...props} />
-    </ToastProvider>
+    <MantineBoundary>
+      <ToastProvider>
+        <StudentProfileBody {...props} />
+      </ToastProvider>
+    </MantineBoundary>
   );
 }
 
@@ -379,38 +383,15 @@ function ToggleRow({
         <p className="text-[18px] font-semibold text-on-surface">{label}</p>
         <p className="text-sm text-on-surface-variant mt-0.5">{description}</p>
       </div>
-      <button
-        type="button"
-        role="switch"
-        aria-checked={checked}
+      <Switch
         aria-label={label}
+        checked={checked}
         disabled={disabled}
-        onClick={() => onCheckedChange(!checked)}
+        onChange={(event) => onCheckedChange(event.currentTarget.checked)}
         data-testid={testId}
-        className={cn(
-          'relative flex h-16 w-20 shrink-0 items-center justify-center rounded-xl transition-colors duration-150',
-          'outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
-          disabled && 'opacity-60 cursor-not-allowed',
-        )}
-      >
-        <span
-          aria-hidden
-          className={cn(
-            'relative h-7 w-12 rounded-md border border-outline-variant transition-colors duration-150',
-            checked ? 'bg-primary' : 'bg-surface-container',
-          )}
-        >
-          <span
-            className={cn(
-              'absolute left-1 top-1 flex h-5 w-5 items-center justify-center rounded-sm bg-surface-container-lowest text-on-surface shadow-soft-sm',
-              'transition-transform duration-150',
-              checked ? 'translate-x-5' : 'translate-x-0',
-            )}
-          >
-            <Icon name={checked ? 'Check' : 'X'} size={12} />
-          </span>
-        </span>
-      </button>
+        size="xl"
+        className="min-h-16 min-w-16 shrink-0"
+      />
     </div>
   );
 }
@@ -436,34 +417,40 @@ function ThemeRow({ value, onChange, disabled }: ThemeRowProps) {
           <p className="text-sm text-on-surface-variant mt-0.5">Cum arată culorile aplicației</p>
         </div>
       </div>
-      <div role="radiogroup" aria-label="Temă" className="grid grid-cols-3 gap-2">
+      <Radio.Group
+        name="student-theme"
+        value={value}
+        onChange={(next) => onChange(next as ThemeMode)}
+        aria-label="Temă"
+        className="grid grid-cols-3 gap-2"
+      >
         {THEME_OPTIONS.map((option) => {
           const isActive = option.value === value;
           return (
-            <button
+            <Radio
               key={option.value}
-              type="button"
-              role="radio"
-              aria-checked={isActive}
+              value={option.value}
               disabled={disabled}
-              onClick={() => onChange(option.value)}
-              data-testid={`theme-${option.value}`}
+              data-testid={option.value}
+              label={
+                <span className="flex min-h-16 flex-col items-center justify-center gap-2 text-sm font-bold">
+                  <Icon name={option.icon} size={24} />
+                  {option.label}
+                </span>
+              }
               className={cn(
-                'flex min-h-16 flex-col items-center justify-center gap-2 rounded-lg px-3 py-3',
-                'border transition-colors duration-150 outline-none',
-                'focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+                'w-full rounded-lg border px-3 py-3 transition-colors duration-150',
+                'focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2',
                 isActive
-                  ? 'bg-primary-container/40 border-primary text-on-primary-container'
-                  : 'bg-surface-container border-outline-variant text-on-surface hover:border-primary',
-                disabled && 'opacity-60 cursor-not-allowed',
+                  ? 'border-primary bg-primary-container/40 text-on-primary-container'
+                  : 'border-outline-variant bg-surface-container text-on-surface hover:border-primary',
+                disabled && 'opacity-60',
               )}
-            >
-              <Icon name={option.icon} size={24} />
-              <span className="text-sm font-bold">{option.label}</span>
-            </button>
+              classNames={{ body: 'flex items-center gap-2', label: 'flex-1 p-0' }}
+            />
           );
         })}
-      </div>
+      </Radio.Group>
     </div>
   );
 }

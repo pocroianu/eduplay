@@ -413,7 +413,7 @@ function TeacherLibrariesExploreChrome({
             selectedClassName={topbarClasses.libraryExploreTabSelected}
             icon={<SeesawLibraryIcon />}
           >
-            Biblioteca Seesaw
+            Biblioteca EduPlay
           </LibrarySourceTab>
           <LibrarySourceTab
             href={`${ROUTES.TEACHER.LIBRARIES_EXPLORE}?source=community`}

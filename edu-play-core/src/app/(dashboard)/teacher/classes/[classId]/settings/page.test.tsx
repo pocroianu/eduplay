@@ -162,7 +162,7 @@ describe('/teacher/classes/[classId]/settings', () => {
     expect(notFoundMock).toHaveBeenCalled()
   })
 
-  it('renders the Seesaw class settings home with i18n copy', async () => {
+  it('renders the EduPlay class settings home with i18n copy', async () => {
     getClassDetailDataMock.mockResolvedValue(classDetailData)
 
     render(

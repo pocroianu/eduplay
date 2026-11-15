@@ -17,7 +17,7 @@ describe('Card', () => {
     );
     expect(screen.getByText('Body')).toBeInTheDocument();
   });
-  it('uses Seesaw standard card chrome without scale-hover behavior', () => {
+  it('uses EduPlay standard card chrome without scale-hover behavior', () => {
     renderWithMantine(<Card>Standard card</Card>);
     const card = screen.getByText('Standard card').closest('div') as HTMLElement;
     expect(card).toHaveClass('mantine-Card-root');
@@ -43,7 +43,7 @@ describe('Card', () => {
     expect(screen.getByText('Content')).toBeInTheDocument();
   });
 
-  it('renders kid mode with Seesaw-style card chrome instead of depth shadows', () => {
+  it('renders kid mode with EduPlay card chrome instead of depth shadows', () => {
     renderWithMantine(
       <Card mode="kid" tone="lime" depth={6}>
         Kid card

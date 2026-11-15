@@ -87,7 +87,7 @@ export const error = {
   on:   c('#FFFFFF'),
 } as const;
 
-// Surfaces · Seesaw-soft off-white
+// Surfaces · soft off-white
 export const surface = {
   base:               c('#F7F9FB'),
   alt:                c('#EEF2F6'),

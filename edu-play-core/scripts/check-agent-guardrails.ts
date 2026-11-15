@@ -566,7 +566,7 @@ function checkRawUiTokens(file: FileSnapshot, violations: GuardrailViolation[]):
         violations,
         RAW_UI_TOKEN_RULE,
         lineNumberForLine(lines, index),
-        'Use EduPlay/Seesaw design tokens instead of raw hex colors or arbitrary bg/shadow/radius classes.'
+        'Use EduPlay design tokens instead of raw hex colors or arbitrary bg/shadow/radius classes.'
       );
     }
   });
@@ -593,7 +593,7 @@ function checkUiInteractionPatterns(file: FileSnapshot, violations: GuardrailVio
         violations,
         UI_SCALE_HOVER_RULE,
         lineNumberForLine(lines, index),
-        'Use EduPlay/Seesaw interaction tokens: cards/buttons may raise shadow or darken color, but production UI must not scale on hover.'
+        'Use EduPlay interaction tokens: cards/buttons may raise shadow or darken color, but production UI must not scale on hover.'
       );
     }
   });

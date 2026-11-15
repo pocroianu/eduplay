@@ -1,8 +1,8 @@
-# PRD: Teacher-created Seesaw-like Activities
+# PRD: Teacher-created reusable Activities
 
 ## Problem Statement
 
-Teachers need a simple way to create reusable classroom activities, similar to Seesaw, where students can respond freely with text, drawing, and voice. The current teacher create flow only creates one-off drawing/voice activity instances and does not support reusable drafts, versioning, mixed response submissions, review/revision workflows, or future interactive game authoring.
+Teachers need a simple way to create reusable classroom activities, similar to EduPlay, where students can respond freely with text, drawing, and voice. The current teacher create flow only creates one-off drawing/voice activity instances and does not support reusable drafts, versioning, mixed response submissions, review/revision workflows, or future interactive game authoring.
 
 ## Solution
 

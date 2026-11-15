@@ -18,9 +18,9 @@ export class ParentDashboardPage extends BasePage {
   constructor(page: Page) {
     super(page);
 
-    this.welcomeHeading = page.getByRole('heading', {
+    this.welcomeHeading = page.getByRole('main').getByRole('heading', {
       level: 1,
-      name: /bună/i,
+      name: 'Copiii mei',
     });
     this.notificationBell = page.getByRole('button', { name: /notificări/i });
     this.notificationDropdown = page.getByRole('heading', {

@@ -149,7 +149,7 @@ describe('/teacher/classes/[classId]/journal/new', () => {
     expect(notFoundMock).toHaveBeenCalled()
   })
 
-  it('renders the Seesaw post-to-journal picker with real roster context', async () => {
+  it('renders the EduPlay post-to-journal picker with real roster context', async () => {
     getClassDetailDataMock.mockResolvedValue(classDetailData)
 
     render(await NewJournalPostPage({ params: Promise.resolve({ classId: 'class-1' }) }))

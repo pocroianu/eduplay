@@ -224,7 +224,7 @@
         "studentOther": "{{count}} students",
         "emptyTitle": "No classes yet",
         "emptyFilteredTitle": "Classes appear here",
-        "emptyBody": "Create a class to see cards like the Seesaw Home page."
+        "emptyBody": "Create a class to see student activities and progress."
       },
       "resources": {
         "ariaLabel": "Teacher resources",
@@ -424,7 +424,7 @@
         "bulkArchive": "Bulk Archive Activities",
         "pullToRefresh": "Pull to refresh",
         "title": "Active Activities",
-        "description": "Active activities for {{name}}, shown in the Seesaw tab structure. Real actions stay in the existing flows.",
+        "description": "Active activities for {{name}}. Open an activity to view the available actions.",
         "assignedToAll": "Assigned to All Students and Groups",
         "completed": "Completed",
         "waitingForReview": "Waiting for Review",
@@ -461,7 +461,7 @@
         "itemRequest": "{{name}} wants to add an item.",
         "hoursAgo": "{{count}} hours ago",
         "daysAgo": "{{count}} days ago",
-        "weeklyDigest": "This Week in Seesaw in {{name}}"
+        "weeklyDigest": "This week in EduPlay for {{name}}"
       }
     }
   },
@@ -513,7 +513,7 @@
       "preview": "Preview"
     },
     "library": {
-      "seesawLibrary": "Seesaw Library",
+      "seesawLibrary": "EduPlay Library",
       "communityLibrary": "Community Library",
       "selectGrade": "Select grade",
       "language": "Language",
@@ -629,14 +629,14 @@
       "back": "Back to class",
       "headingEyebrow": "Students for Class",
       "heading": "Add Students to Class",
-      "description": "Page inspired by the Seesaw Add Students flow. Controls remain preview-only while real creation stays in the existing flow.",
+      "description": "Preview adding students to this class. Use the existing student creation flow to save changes.",
       "classActive": "Active class",
       "classArchived": "Archived class",
       "createReal": "Create Real Student",
       "addStudentsTitle": "Add Students to Class",
       "addStudentsDescription": "Add one name at a time or paste a list of names, one per line.",
       "pasteTitle": "Paste a list of student names",
-      "pasteDescription": "This panel mirrors the Seesaw paste flow; the list is not submitted automatically.",
+      "pasteDescription": "Paste a student list to preview it; the list is not submitted automatically.",
       "manualTitle": "Manual rows",
       "preview": "Preview",
       "moreLater": "You can always add more later.",
@@ -685,7 +685,7 @@
       "classActive": "Active class",
       "classArchived": "Archived class",
       "toolsTitle": "Choose Tool",
-      "toolsDescription": "Seesaw shows six clear entry points: Photo, Drawing, Video, Upload, Note, and Link.",
+      "toolsDescription": "Choose how to add student work: Photo, Drawing, Video, Upload, Note, and Link.",
       "contextTitle": "Journal Context",
       "contextDescription": "Real class data, no publishing actions.",
       "noPersistenceTitle": "No persistence",
@@ -700,7 +700,7 @@
       "upload": "Upload",
       "uploadDescription": "Attach work or an external resource.",
       "note": "Note",
-      "noteDescription": "Open the Seesaw-style text editor.",
+      "noteDescription": "Open the text editor.",
       "link": "Link",
       "linkDescription": "Add a web address for the family."
     },
@@ -708,7 +708,7 @@
       "back": "Back to tools",
       "headingLabel": "Type a Note",
       "heading": "Type a Note",
-      "description": "Seesaw-style editor for this class. Fields remain preview-only with no publishing.",
+      "description": "Write a note for this class. Fields remain preview-only with no publishing.",
       "draft": "Draft unavailable",
       "publish": "Publish unavailable",
       "editorTitle": "Journal Note",
@@ -759,7 +759,7 @@
       "title": "Reading Fluency",
       "description": "Students read and AI grades reading fluency"
     },
-    "instructions": "Turn an existing resource into an interactive Seesaw activity with auto-graded assessments and multimedia tools.",
+    "instructions": "Turn an existing resource into an interactive EduPlay activity with auto-graded assessments and multimedia tools.",
     "worksheet": "Worksheet",
     "quiz": "Quiz",
     "studyGuide": "Study Guide",
@@ -800,7 +800,7 @@
       "classes": "Classes",
       "currentClasses": "Current Classes",
       "addToClass": "Add to Class",
-      "premiumHeading": "SEESAW PREMIUM FEATURES",
+      "premiumHeading": "EDUPLAY PREMIUM FEATURES",
       "tryTrial": "Try Free for 60 Days",
       "previewPremium": "Preview Premium Features",
       "learnMore": "Learn More",
@@ -810,7 +810,7 @@
       "emailNotifications": "Email Notifications",
       "pushNotifications": "Push Notifications",
       "smsNotifications": "SMS notifications",
-      "tips": "Tips, tricks, and Seesaw updates",
+      "tips": "Tips, tricks, and EduPlay updates",
       "parentNotifications": "Parent notifications",
       "archives": "Journal archives",
       "downloadArchives": "Download Journal Archives",
@@ -871,7 +871,7 @@
       "resourcesTitle": "Teacher Resources",
       "viewAll": "View All",
       "spotlight": {
-        "title": "Seesaw Spotlight",
+        "title": "EduPlay Spotlight",
         "type": "Video"
       },
       "learningCentral": {

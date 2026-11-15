@@ -36,7 +36,7 @@ vi.mock('@/lib/i18n/server', () => ({
     'generateActivity.youtube.description': 'Embed a video and generate questions',
     'generateActivity.fluency.title': 'Reading Fluency',
     'generateActivity.fluency.description': 'Students read and AI grades reading fluency',
-    'generateActivity.instructions': 'Turn an existing resource into an interactive Seesaw activity with auto-graded assessments and multimedia tools.',
+    'generateActivity.instructions': 'Turn an existing resource into an interactive EduPlay activity with auto-graded assessments and multimedia tools.',
     'generateActivity.worksheet': 'Worksheet',
     'generateActivity.quiz': 'Quiz',
     'generateActivity.studyGuide': 'Study Guide',
@@ -47,7 +47,6 @@ vi.mock('@/lib/i18n/server', () => ({
     'generateActivity.next': 'Next',
   }[key] ?? key),
 }));
-
 
 function makeSupabase({ role = 'teacher', user = { id: 'teacher-1' } }: { role?: string | null; user?: { id: string } | null } = {}) {
   return {
@@ -70,7 +69,7 @@ beforeEach(() => {
 })
 
 describe('/teacher/activities/generate page', () => {
-  it('renders the protected Seesaw generate activity reference surface', async () => {
+  it('renders the protected EduPlay generate activity reference surface', async () => {
     const ui = await GenerateActivityPage()
     render(ui)
 
@@ -86,7 +85,7 @@ describe('/teacher/activities/generate page', () => {
     expect(screen.getByRole('button', { name: /Topic or Prompt\s*Enter a topic, learning goal or standard/i })).toBeDisabled()
     expect(screen.getByRole('button', { name: /YouTube Video\s*Embed a video and generate questions/i })).toBeDisabled()
     expect(screen.getByRole('button', { name: /Reading Fluency\s*Students read and AI grades reading fluency/i })).toBeDisabled()
-    expect(screen.getByText('Turn an existing resource into an interactive Seesaw activity with auto-graded assessments and multimedia tools.')).toBeInTheDocument()
+    expect(screen.getByText('Turn an existing resource into an interactive EduPlay activity with auto-graded assessments and multimedia tools.')).toBeInTheDocument()
 
     expect(screen.getByText('Worksheet')).toBeInTheDocument()
     expect(screen.getByText('Quiz')).toBeInTheDocument()

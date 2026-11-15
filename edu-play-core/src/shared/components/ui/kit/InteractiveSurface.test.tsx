@@ -7,7 +7,7 @@ import {
 } from './seesawInteraction';
 
 describe('InteractiveSurface', () => {
-  it('renders a link with Seesaw-style hover highlight and no lift transform', () => {
+  it('renders a link with EduPlay hover highlight and no lift transform', () => {
     render(
       <InteractiveSurface href="/teacher" aria-label="Open teacher home" className="p-4">
         <span>Teacher home</span>

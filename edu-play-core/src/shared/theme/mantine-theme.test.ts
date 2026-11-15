@@ -3,7 +3,18 @@ import { describe, expect, it } from 'vitest';
 import { eduPlayMantineTheme } from './mantine-theme';
 
 describe('eduPlayMantineTheme', () => {
-  it('uses live Seesaw purple as the primary Mantine shade', () => {
+  it('keeps selectors in CSS classes rather than unsupported inline styles', () => {
+    for (const name of ['Button', 'ActionIcon', 'Input']) {
+      const component = eduPlayMantineTheme.components?.[name];
+      expect(component?.classNames).toBeTruthy();
+      const styles = component?.styles as Record<string, Record<string, unknown>> | undefined;
+      for (const part of Object.values(styles ?? {})) {
+        expect(Object.keys(part).some((key) => key.startsWith('&'))).toBe(false);
+      }
+    }
+  });
+
+  it('uses the configured EduPlay purple as the primary Mantine shade', () => {
     const purple = eduPlayMantineTheme.colors?.purple;
 
     expect(eduPlayMantineTheme.primaryColor).toBe('purple');

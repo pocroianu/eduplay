@@ -18,7 +18,7 @@ beforeAll(() => {
 })
 
 describe('HomePage', () => {
-  it('renders Seesaw-inspired above-fold landing structure with Romanian copy', () => {
+  it('renders EduPlay above-fold landing structure with Romanian copy', () => {
     render(<HomePage />)
 
     expect(
@@ -72,7 +72,7 @@ describe('HomePage', () => {
     expect(screen.queryByRole('complementary')).not.toBeInTheDocument()
   })
 
-  it('orders landing sections like the Seesaw homepage flow', () => {
+  it('orders landing sections like the EduPlay homepage flow', () => {
     const { container } = render(<HomePage />)
 
     const text = container.textContent ?? ''

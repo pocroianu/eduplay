@@ -3,7 +3,7 @@ import { ROLE_NAV_CONFIG } from './navigation';
 import { ROUTES } from '@/shared/lib/constants';
 
 describe('ROLE_NAV_CONFIG', () => {
-  it('surfaces the Seesaw-inspired teacher workflows in navigation', () => {
+  it('surfaces the EduPlay teacher workflows in navigation', () => {
     expect(ROLE_NAV_CONFIG.teacher.items).toEqual([
       expect.objectContaining({
         label: 'Panou',

@@ -1,4 +1,5 @@
 import { createTheme, rem, type MantineColorsTuple } from '@mantine/core';
+import classes from './mantine-theme.module.css';
 
 const eduPlayPurple: MantineColorsTuple = [
   // Keep this tuple aligned with the canonical EduPlay Purple direction in
@@ -15,13 +16,6 @@ const eduPlayPurple: MantineColorsTuple = [
   '#330072',
   '#24104F',
 ];
-
-const interactiveFocusStyles = {
-  '&:focus-visible': {
-    outline: '2px solid var(--color-primary)',
-    outlineOffset: 2,
-  },
-} as const;
 
 export const eduPlayMantineTheme = createTheme({
   autoContrast: true,
@@ -55,7 +49,11 @@ export const eduPlayMantineTheme = createTheme({
     xl: 'var(--shadow-soft-lg)',
   },
   components: {
+    CloseButton: {
+      styles: { root: { minHeight: rem(44), minWidth: rem(44) } },
+    },
     Button: {
+      classNames: { root: classes.button },
       defaultProps: {
         radius: 'md',
       },
@@ -63,18 +61,11 @@ export const eduPlayMantineTheme = createTheme({
         root: {
           fontWeight: 600,
           minHeight: rem(44),
-          ...interactiveFocusStyles,
-          '&:where(:not([data-disabled])):hover': {
-            backgroundColor: 'var(--color-purple-deep)',
-          },
-          '&:where(:not([data-disabled])):active': {
-            backgroundColor: 'var(--color-purple-deep)',
-            transform: 'translateY(1px)',
-          },
         },
       },
     },
     ActionIcon: {
+      classNames: { root: classes.actionIcon },
       defaultProps: {
         radius: 'md',
       },
@@ -82,16 +73,6 @@ export const eduPlayMantineTheme = createTheme({
         root: {
           minHeight: rem(44),
           minWidth: rem(44),
-          ...interactiveFocusStyles,
-          '&:where(:not([data-disabled])):hover': {
-            backgroundColor: 'var(--color-purple-soft)',
-            color: 'var(--color-purple-deep)',
-          },
-          '&:where(:not([data-disabled])):active': {
-            backgroundColor: 'var(--color-purple-soft)',
-            color: 'var(--color-purple-deep)',
-            transform: 'translateY(1px)',
-          },
         },
       },
     },
@@ -109,16 +90,9 @@ export const eduPlayMantineTheme = createTheme({
       },
     },
     Input: {
+      classNames: { input: classes.input },
       defaultProps: {
         radius: 'md',
-      },
-      styles: {
-        input: {
-          '&:focus, &:focus-within': {
-            borderColor: 'var(--color-primary)',
-            boxShadow: '0 0 0 2px var(--color-purple-soft)',
-          },
-        },
       },
     },
     InputWrapper: {

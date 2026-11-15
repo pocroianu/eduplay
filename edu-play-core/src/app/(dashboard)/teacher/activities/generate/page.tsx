@@ -134,7 +134,7 @@ async function requireTeacher() {
 
 function ModeCard({ active, mode }: { active?: boolean; mode: Mode }) {
   return (
-    <button
+    <Button
       type="button"
       disabled
       aria-pressed={active}
@@ -149,7 +149,7 @@ function ModeCard({ active, mode }: { active?: boolean; mode: Mode }) {
       </span>
       <span className="mt-4 block text-base font-bold text-on-surface">{mode.title}</span>
       <span className="mt-2 block text-sm font-semibold leading-6 text-on-surface-variant">{mode.description}</span>
-    </button>
+    </Button>
   )
 }
 
@@ -202,14 +202,14 @@ export default async function GenerateActivityPage() {
               <p className="max-w-3xl text-base font-semibold leading-7 text-on-surface">{copy.instructions}</p>
               <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 {copy.outputTypes.map((label) => (
-                  <button
+                  <Button
                     key={label}
                     type="button"
                     disabled
                     className="rounded-lg border border-outline-variant bg-surface px-4 py-4 text-center text-sm font-bold text-on-surface disabled:cursor-not-allowed disabled:opacity-100"
                   >
                     {label}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>

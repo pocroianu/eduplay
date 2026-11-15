@@ -48,13 +48,13 @@ vi.mock('@/lib/i18n/server', () => ({
       'students.add.studentsTitle': 'Students',
       'students.add.familiesTitle': 'Families',
       'students.add.headingEyebrow': 'Students for Class',
-      'students.add.description': 'Page inspired by the Seesaw Add Students flow. Controls remain preview-only while real creation stays in the existing flow.',
+      'students.add.description': 'Preview adding students to this class. Use the existing student creation flow to save changes.',
       'students.add.classActive': 'Active class',
       'students.add.classArchived': 'Archived class',
       'students.add.createReal': 'Create Real Student',
       'students.add.addStudentsTitle': 'Add Students to Class',
       'students.add.addStudentsDescription': 'Add one name at a time or paste a list of names, one per line.',
-      'students.add.pasteDescription': 'This panel mirrors the Seesaw paste flow; the list is not submitted automatically.',
+      'students.add.pasteDescription': 'Paste a student list to preview it; the list is not submitted automatically.',
       'students.add.manualTitle': 'Manual rows',
       'students.add.preview': 'Preview',
       'students.add.studentsDescription': 'Preview of the real roster for this class.',
@@ -157,7 +157,7 @@ describe('/teacher/classes/[classId]/students/new', () => {
     expect(notFoundMock).toHaveBeenCalled()
   })
 
-  it('renders the Seesaw add-students flow with class roster data', async () => {
+  it('renders the EduPlay add-students flow with class roster data', async () => {
     getClassDetailDataMock.mockResolvedValue(classDetailData)
 
     render(await NewClassStudentPage({ params: Promise.resolve({ classId: 'class-1' }) }))

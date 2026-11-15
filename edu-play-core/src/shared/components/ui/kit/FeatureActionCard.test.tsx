@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { FeatureActionCard } from './FeatureActionCard';
 
 describe('FeatureActionCard', () => {
-  it('renders a Seesaw feature action card without scale-hover behavior', () => {
+  it('renders an EduPlay feature action card without scale-hover behavior', () => {
     render(
       <FeatureActionCard
         href="/teacher/journal/new"

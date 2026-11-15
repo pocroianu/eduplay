@@ -14,13 +14,13 @@ describe('Badge', () => {
         Live
       </Badge>,
     );
-    const badge = container.firstElementChild as HTMLElement;
+    const badge = container.querySelector('.mantine-Badge-root') as HTMLElement;
     expect(badge.style.border).toContain('2px');
   });
 
-  it('renders danger tone with Seesaw error-soft classes', () => {
+  it('renders danger tone with EduPlay error-soft classes', () => {
     render(<Badge tone="danger">Err</Badge>);
-    const badge = screen.getByText('Err');
+    const badge = screen.getByText('Err').closest('.mantine-Badge-root')!;
     expect(badge.className).toContain('bg-error-soft');
     expect(badge.className).toContain('text-error');
     expect(badge.className).not.toContain('text-coral-deep');

@@ -2,6 +2,7 @@
 
 import {
   useCallback,
+  useId,
   useEffect,
   useMemo,
   useReducer,
@@ -9,9 +10,10 @@ import {
   useState,
   type PointerEvent as ReactPointerEvent,
 } from 'react';
+import { Radio } from '@mantine/core';
 import { useRouter } from 'next/navigation';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Button, ConfirmDialog, RewardModal } from '@/shared/components/ui/kit';
+import { Button, ConfirmDialog, MantineBoundary, RewardModal } from '@/shared/components/ui/kit';
 import { Icon } from '@/shared/components/ui/Icon';
 import { ROUTES } from '@/shared/lib/constants/routes';
 import { cn } from '@/shared/lib/utils/cn';
@@ -401,7 +403,9 @@ function ToolBar({
   onSelectColor,
   disabled,
 }: ToolBarProps) {
+  const groupId = useId();
   return (
+    <MantineBoundary>
     <div className="flex flex-wrap items-center justify-center gap-4">
       <div
         role="radiogroup"
@@ -411,11 +415,12 @@ function ToolBar({
         {BRUSH_SIZES.map((size) => {
           const selected = size === currentSize;
           return (
-            <button
+            <Radio.Card unstyled
               key={size}
               type="button"
-              role="radio"
-              aria-checked={selected}
+              checked={selected}
+              name={groupId + "-brush"}
+              tabIndex={selected ? 0 : -1}
               aria-label={BRUSH_LABELS[size]}
               disabled={disabled}
               onClick={() => onSelectSize(size)}
@@ -434,7 +439,7 @@ function ToolBar({
                   backgroundColor: 'currentColor',
                 }}
               />
-            </button>
+            </Radio.Card>
           );
         })}
       </div>
@@ -447,11 +452,12 @@ function ToolBar({
         {PALETTE.map((swatch) => {
           const selected = swatch.id === currentColor;
           return (
-            <button
+            <Radio.Card unstyled
               key={swatch.id}
               type="button"
-              role="radio"
-              aria-checked={selected}
+              checked={selected}
+              name={groupId + "-color"}
+              tabIndex={selected ? 0 : -1}
               aria-label={`Culoare ${swatch.label}`}
               data-testid={`drawing-color-${swatch.id}`}
               disabled={disabled}
@@ -467,6 +473,7 @@ function ToolBar({
         })}
       </div>
     </div>
+    </MantineBoundary>
   );
 }
 

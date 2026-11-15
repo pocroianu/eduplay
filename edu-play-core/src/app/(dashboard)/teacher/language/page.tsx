@@ -1,3 +1,4 @@
+import { Radio } from '@mantine/core';
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { getServerLanguage, getServerTranslation } from '@/lib/i18n/server';
@@ -25,7 +26,6 @@ const LANGUAGE_SEEDS: LanguageSeed[] = [
   { id: 'ro', label: 'Română', sublabelKey: 'romanian', code: 'RO', tileClass: 'bg-blue-soft text-blue-deep' },
   { id: 'en', label: 'English', sublabelKey: 'english', code: 'EN', tileClass: 'bg-primary-soft text-primary-deep' },
 ];
-
 
 async function t(lang: Language, key: string) {
   return getServerTranslation(lang, 'teacher', key);
@@ -132,44 +132,27 @@ export default async function TeacherLanguagePage() {
             <fieldset className="mx-4 mb-4 max-h-[54vh] overflow-y-auto rounded-xl border border-outline-variant p-2">
               <legend className="sr-only">{available}</legend>
               <div className="flex flex-col gap-1" role="radiogroup" aria-label={available}>
-                {languages.map((language) => {
-                  const descriptionId = `language-${language.id}-description`;
-
-                  return (
-                    <label
-                      key={language.id}
-                      className="flex w-full cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-left text-on-surface transition-colors hover:bg-surface-container has-[:checked]:bg-primary-soft has-[:checked]:text-primary-deep"
-                    >
-                      <input
-                        type="radio"
-                        name="teacher-language"
-                        value={language.id}
-                        defaultChecked={language.selected}
-                        aria-describedby={descriptionId}
-                        className="peer sr-only"
-                      />
-                      <span
-                        aria-hidden
-                        className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-outline bg-surface-container-lowest peer-checked:border-primary peer-checked:bg-primary peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-primary"
-                      >
-                        <span className="hidden h-2 w-2 rounded-full bg-on-primary peer-checked:block" />
-                      </span>
-                      <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${language.tileClass}`}>
-                        {language.code ?? <Icon name="TextAa" size="sm" aria-hidden />}
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block text-sm font-semibold">{language.label}</span>
-                        <span id={descriptionId} className="block text-xs text-on-surface-variant">{language.sublabel}</span>
-                      </span>
-                      {language.selected ? (
-                        <span className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-primary-deep">
-                          <Icon name="Check" size="sm" weight="bold" aria-hidden />
-                          {current}
+                {languages.map((language) => (
+                  <Radio
+                    key={language.id}
+                    name="teacher-language"
+                    aria-label={language.label}
+                    value={language.id}
+                    defaultChecked={language.selected}
+                    description={language.sublabel}
+                    className="min-h-11 rounded-lg px-3 py-2.5 text-on-surface transition-colors hover:bg-surface-container has-[:checked]:bg-primary-soft has-[:checked]:text-primary-deep"
+                    styles={{ body: { alignItems: 'center' }, labelWrapper: { flex: 1 }, label: { cursor: 'pointer' } }}
+                    label={
+                      <span className="flex items-center gap-3">
+                        <span aria-hidden className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold ${language.tileClass}`}>
+                          {language.code ?? <Icon name="TextAa" size="sm" aria-hidden />}
                         </span>
-                      ) : null}
-                    </label>
-                  );
-                })}
+                        <span className="min-w-0 flex-1 text-sm font-semibold">{language.label}</span>
+                        {language.selected && <span className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-primary-deep"><Icon name="Check" size="sm" weight="bold" aria-hidden />{current}</span>}
+                      </span>
+                    }
+                  />
+                ))}
               </div>
             </fieldset>
 

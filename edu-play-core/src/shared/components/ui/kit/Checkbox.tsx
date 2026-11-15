@@ -1,8 +1,8 @@
 'use client';
 
+import { MantineBoundary } from './MantineBoundary';
 import {
   forwardRef,
-  useContext,
   useId,
   type InputHTMLAttributes,
   type ReactNode,
@@ -10,8 +10,6 @@ import {
 import {
   Box,
   Checkbox as MantineCheckbox,
-  MantineContext,
-  MantineProvider,
   Text,
 } from '@mantine/core';
 
@@ -29,7 +27,6 @@ export interface CheckboxProps
 
 export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
   ({ label, className, error, id, required, disabled, ...rest }, ref) => {
-    const mantineContext = useContext(MantineContext);
     const generatedId = useId();
     const inputId = id ?? generatedId;
     const errorId = `${inputId}-error`;
@@ -85,11 +82,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
       </Box>
     );
 
-    return mantineContext ? (
-      checkbox
-    ) : (
-      <MantineProvider>{checkbox}</MantineProvider>
-    );
+    return <MantineBoundary>{checkbox}</MantineBoundary>;
   },
 );
 

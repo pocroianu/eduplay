@@ -1,4 +1,5 @@
 import { formatDateTime } from '@/lib/i18n/formatters';
+import { Table } from '@mantine/core';
 import { ROUTES } from '@/shared/lib/constants/routes';
 import {
   ChunkyButton,
@@ -154,43 +155,43 @@ export function ClassPathProgressMatrix({
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full min-w-[1080px] border-separate border-spacing-0 text-left">
-                <caption className="sr-only">
+              <Table className="w-full min-w-[1080px] text-left">
+                <Table.Caption className="sr-only">
                   Progresul clasei pentru {result.path.title}
-                </caption>
-                <thead>
-                  <tr className="text-xs font-bold uppercase text-on-surface-muted">
-                    <th scope="col" className="border-b-2 border-outline-variant px-4 py-3">
+                </Table.Caption>
+                <Table.Thead>
+                  <Table.Tr className="text-xs font-bold uppercase text-on-surface-muted">
+                    <Table.Th scope="col" className="border-b-2 border-outline-variant px-4 py-3">
                       Elev
-                    </th>
-                    <th scope="col" className="border-b-2 border-outline-variant px-4 py-3">
+                    </Table.Th>
+                    <Table.Th scope="col" className="border-b-2 border-outline-variant px-4 py-3">
                       Status
-                    </th>
-                    <th scope="col" className="border-b-2 border-outline-variant px-4 py-3">
+                    </Table.Th>
+                    <Table.Th scope="col" className="border-b-2 border-outline-variant px-4 py-3">
                       Pas curent
-                    </th>
-                    <th scope="col" className="border-b-2 border-outline-variant px-4 py-3">
+                    </Table.Th>
+                    <Table.Th scope="col" className="border-b-2 border-outline-variant px-4 py-3">
                       Ultimul pas finalizat
-                    </th>
-                    <th scope="col" className="border-b-2 border-outline-variant px-4 py-3">
+                    </Table.Th>
+                    <Table.Th scope="col" className="border-b-2 border-outline-variant px-4 py-3">
                       Finalizat la
-                    </th>
-                    <th scope="col" className="border-b-2 border-outline-variant px-4 py-3">
+                    </Table.Th>
+                    <Table.Th scope="col" className="border-b-2 border-outline-variant px-4 py-3">
                       Acțiune
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
+                    </Table.Th>
+                  </Table.Tr>
+                </Table.Thead>
+                <Table.Tbody>
                   {rows.map((row) => {
                     const meta = statusMeta(row);
 
                     return (
-                      <tr
+                      <Table.Tr
                         key={row.student.studentId}
                         className="align-top"
                         data-testid={`class-path-progress-row-${row.student.studentId}`}
                       >
-                        <td className="border-b border-outline-variant px-4 py-4">
+                        <Table.Td className="border-b border-outline-variant px-4 py-4">
                           <div>
                             <p className="font-headline text-lg font-bold text-on-surface">
                               {displayName(row)}
@@ -199,20 +200,20 @@ export function ClassPathProgressMatrix({
                               @{row.student.username}
                             </p>
                           </div>
-                        </td>
-                        <td className="border-b border-outline-variant px-4 py-4">
+                        </Table.Td>
+                        <Table.Td className="border-b border-outline-variant px-4 py-4">
                           <Pill tone={meta.tone}>{meta.label}</Pill>
-                        </td>
-                        <td className="border-b border-outline-variant px-4 py-4 font-mono text-sm font-bold text-on-surface">
+                        </Table.Td>
+                        <Table.Td className="border-b border-outline-variant px-4 py-4 font-mono text-sm font-bold text-on-surface">
                           {stepLabel(row.progress?.currentStepId, stepLabels)}
-                        </td>
-                        <td className="border-b border-outline-variant px-4 py-4 font-mono text-sm font-bold text-on-surface">
+                        </Table.Td>
+                        <Table.Td className="border-b border-outline-variant px-4 py-4 font-mono text-sm font-bold text-on-surface">
                           {stepLabel(row.progress?.lastCompletedStepId, stepLabels)}
-                        </td>
-                        <td className="border-b border-outline-variant px-4 py-4 text-sm font-semibold text-on-surface-variant">
+                        </Table.Td>
+                        <Table.Td className="border-b border-outline-variant px-4 py-4 text-sm font-semibold text-on-surface-variant">
                           {completionLabel(row.progress?.completedAt)}
-                        </td>
-                        <td className="border-b border-outline-variant px-4 py-4">
+                        </Table.Td>
+                        <Table.Td className="border-b border-outline-variant px-4 py-4">
                           <ProgressOverrideControl
                             pathId={pathId}
                             studentId={row.student.studentId}
@@ -220,12 +221,12 @@ export function ClassPathProgressMatrix({
                             steps={steps}
                             currentStepId={row.progress?.currentStepId}
                           />
-                        </td>
-                      </tr>
+                        </Table.Td>
+                      </Table.Tr>
                     );
                   })}
-                </tbody>
-              </table>
+                </Table.Tbody>
+              </Table>
             </div>
           </DuoCard>
         )}

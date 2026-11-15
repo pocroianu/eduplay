@@ -6,7 +6,7 @@ import type { Language } from '@/lib/i18n/config';
 import { getServerLanguage, getServerTranslation } from '@/lib/i18n/server';
 import { createClient } from '@/lib/supabase/server';
 import { ROUTES } from '@/shared/lib/constants/routes';
-import { Card } from '@/shared/components/ui/kit';
+import { Button, Card } from '@/shared/components/ui/kit';
 import { Icon, type IconProps } from '@/shared/components/ui/Icon';
 
 type TeacherProfile = {
@@ -200,14 +200,16 @@ export default async function TeacherAccountDevicePage() {
               <p className="text-base font-semibold text-on-surface">{browserLine}</p>
             </div>
             <pre data-device-info className="max-h-52 overflow-auto rounded-lg border border-outline-variant bg-surface p-4 text-xs leading-relaxed text-on-surface-variant [overflow-wrap:anywhere] whitespace-pre-wrap">{userAgent}</pre>
-            <button
+            <Button
               type="button"
               data-copy-device-info
-              className="inline-flex min-h-9 w-fit items-center justify-center gap-2 rounded-lg bg-surface-container-lowest px-3 text-sm font-bold text-on-surface shadow-soft-sm transition-colors hover:bg-primary-soft hover:text-primary-deep focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              variant="secondary"
+              size="sm"
+              className="w-fit"
             >
               <Icon name="Copy" size="sm" aria-hidden />
               {copy.copy}
-            </button>
+            </Button>
           </div>
         </Card>
       </div>

@@ -21,7 +21,7 @@ describe('pathOwnsShell', () => {
       expect(pathOwnsShell(ROUTES.STUDENT.ACTIVITY_PLAY('instance-123'))).toBe(true)
     })
 
-    it('returns true for the teacher class workspace routes that own their Seesaw-style chrome', () => {
+    it('returns true for the teacher class workspace routes that own their EduPlay chrome', () => {
       expect(pathOwnsShell(ROUTES.TEACHER.CLASS('class-1'))).toBe(true)
       expect(pathOwnsShell(ROUTES.TEACHER.CLASS_JOURNAL('class-1'))).toBe(true)
       expect(pathOwnsShell(ROUTES.TEACHER.CLASS_ACTIVITIES('class-1'))).toBe(true)

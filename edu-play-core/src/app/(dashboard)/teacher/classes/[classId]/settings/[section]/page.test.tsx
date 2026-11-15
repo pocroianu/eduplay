@@ -129,7 +129,7 @@ describe('/teacher/classes/[classId]/settings/[section]', () => {
     expect(notFoundMock).toHaveBeenCalled()
   })
 
-  it('renders item editing like the Seesaw settings-item-editing reference flow', async () => {
+  it('renders item editing like the EduPlay settings-item-editing reference flow', async () => {
     getClassDetailDataMock.mockResolvedValue(classDetailData)
 
     render(
@@ -150,7 +150,7 @@ describe('/teacher/classes/[classId]/settings/[section]', () => {
     expect(screen.getAllByRole('switch')).toHaveLength(3)
   })
 
-  it('renders home learning codes like the Seesaw settings-home-learning-codes reference flow', async () => {
+  it('renders home learning codes like the EduPlay settings-home-learning-codes reference flow', async () => {
     getClassDetailDataMock.mockResolvedValue(classDetailData)
 
     render(
@@ -170,7 +170,7 @@ describe('/teacher/classes/[classId]/settings/[section]', () => {
     expect(screen.getByText('Andrei Popescu')).toBeInTheDocument()
   })
 
-  it('renders manage folders like the Seesaw settings-manage-folders reference flow', async () => {
+  it('renders manage folders like the EduPlay settings-manage-folders reference flow', async () => {
     getClassDetailDataMock.mockResolvedValue(classDetailData)
 
     render(
@@ -188,7 +188,7 @@ describe('/teacher/classes/[classId]/settings/[section]', () => {
     expect(screen.getByRole('switch', { name: /afișează pasul „adaugă în dosar”/i })).toHaveAttribute('aria-checked', 'true')
   })
 
-  it('renders student sign in mode like the Seesaw settings-student-sign-in-mode reference flow', async () => {
+  it('renders student sign in mode like the EduPlay settings-student-sign-in-mode reference flow', async () => {
     getClassDetailDataMock.mockResolvedValue(classDetailData)
 
     render(
@@ -209,7 +209,7 @@ describe('/teacher/classes/[classId]/settings/[section]', () => {
     ).toBeInTheDocument()
   })
 
-  it('renders show add to folder step like the Seesaw reference flow', async () => {
+  it('renders show add to folder step like the EduPlay reference flow', async () => {
     getClassDetailDataMock.mockResolvedValue(classDetailData)
 
     render(
@@ -224,7 +224,7 @@ describe('/teacher/classes/[classId]/settings/[section]', () => {
     expect(screen.getAllByText('Coduri elevi pentru învățare acasă').length).toBeGreaterThan(0)
   })
 
-  it('renders manage teachers like the Seesaw settings-manage-teachers reference flow', async () => {
+  it('renders manage teachers like the EduPlay settings-manage-teachers reference flow', async () => {
     getClassDetailDataMock.mockResolvedValue(classDetailData)
 
     render(
@@ -242,7 +242,7 @@ describe('/teacher/classes/[classId]/settings/[section]', () => {
     expect(screen.getByText('Profesori actuali')).toBeInTheDocument()
   })
 
-  it('renders student likes and comments like the Seesaw reference flow', async () => {
+  it('renders student likes and comments like the EduPlay reference flow', async () => {
     getClassDetailDataMock.mockResolvedValue(classDetailData)
 
     render(
@@ -259,7 +259,7 @@ describe('/teacher/classes/[classId]/settings/[section]', () => {
     expect(screen.getByText('Elevii pot publica pe blog')).toBeInTheDocument()
   })
 
-  it('renders manage students like the Seesaw settings-manage-students reference flow', async () => {
+  it('renders manage students like the EduPlay settings-manage-students reference flow', async () => {
     getClassDetailDataMock.mockResolvedValue(classDetailData)
 
     render(
@@ -276,7 +276,7 @@ describe('/teacher/classes/[classId]/settings/[section]', () => {
     expect(screen.getByText('Adaugă elevi')).toBeInTheDocument()
   })
 
-  it('renders manage student groups like the Seesaw settings-manage-student-groups reference flow', async () => {
+  it('renders manage student groups like the EduPlay settings-manage-student-groups reference flow', async () => {
     getClassDetailDataMock.mockResolvedValue(classDetailData)
 
     render(

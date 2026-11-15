@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { PageHeader } from './PageHeader';
 
 describe('PageHeader', () => {
-  it('renders a 72px white Seesaw-style page header with primary actions', () => {
+  it('renders a 72px white EduPlay page header with primary actions', () => {
     render(<PageHeader title="Bun venit" eyebrow="Panou profesor" action={<a href="/teacher/activities/create">Creează activitate</a>} />);
 
     const banner = screen.getByRole('banner', { name: /panou profesor/i });

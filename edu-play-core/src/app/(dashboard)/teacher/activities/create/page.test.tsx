@@ -30,7 +30,7 @@ beforeEach(() => {
 });
 
 describe('/teacher/activities/create page', () => {
-  it('renders the Seesaw workspace with the preserved authoring controls', async () => {
+  it('renders the EduPlay workspace with the preserved authoring controls', async () => {
     getCreateActivityWizardDataMock.mockResolvedValue({
       interactiveTypes: [
         {

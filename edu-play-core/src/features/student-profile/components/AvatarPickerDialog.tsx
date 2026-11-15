@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useId, useState } from "react";
+import { useId, useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { Button } from "@/shared/components/ui/kit";
+import { Modal, UnstyledButton } from "@mantine/core";
+import { Button, MantineBoundary } from "@/shared/components/ui/kit";
 import { Icon } from "@/shared/components/ui/Icon";
 import { cn } from "@/shared/lib/utils/cn";
 import { AVATAR_PRESETS } from "../schemas/avatar.schema";
@@ -23,30 +24,26 @@ export function AvatarPickerDialog({
   onSelect,
   busy = false,
 }: AvatarPickerDialogProps) {
-  // Esc handling lives at the wrapper so it's bound while the dialog is open.
-  useEffect(() => {
-    if (!open) return;
-    const handleKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        event.preventDefault();
-        onCancel();
-      }
-    };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [open, onCancel]);
-
   return (
-    <AnimatePresence>
-      {open ? (
-        <AvatarPickerDialogBody
-          currentAvatarUrl={currentAvatarUrl}
-          onCancel={onCancel}
-          onSelect={onSelect}
-          busy={busy}
-        />
-      ) : null}
-    </AnimatePresence>
+    <MantineBoundary>
+      <Modal.Root opened={open} onClose={onCancel} size="40rem">
+        <Modal.Overlay />
+        <Modal.Content aria-label="Avatar">
+          <Modal.Body p={0}>
+            <AnimatePresence>
+          {open ? (
+            <AvatarPickerDialogBody
+              currentAvatarUrl={currentAvatarUrl}
+              onCancel={onCancel}
+              onSelect={onSelect}
+              busy={busy}
+            />
+          ) : null}
+        </AnimatePresence>
+          </Modal.Body>
+        </Modal.Content>
+      </Modal.Root>
+    </MantineBoundary>
   );
 }
 
@@ -81,30 +78,9 @@ function AvatarPickerDialogBody({
 
   return (
     <motion.div
-      key="avatar-picker"
-      className="fixed inset-0 z-50 flex items-end md:items-center justify-center"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby={titleId}
-      initial={reduceMotion ? false : { opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={
-        reduceMotion
-          ? { duration: 0 }
-          : { duration: 0.2, ease: [0.4, 0, 0.2, 1] }
-      }
-    >
-      <button
-        type="button"
-        aria-label="Închide alegerea avatarului"
-        className="absolute inset-0 bg-ink/25"
-        onClick={onCancel}
-      />
-      <motion.div
         className={cn(
-          "relative flex max-h-[92vh] w-full flex-col overflow-hidden md:w-[640px]",
-          "rounded-t-2xl bg-surface-container-lowest shadow-modal md:rounded-2xl",
+          "flex max-h-[92vh] w-full flex-col overflow-hidden",
+          "bg-surface-container-lowest shadow-modal",
         )}
         initial={reduceMotion ? { opacity: 0 } : { y: 48, opacity: 0 }}
         animate={reduceMotion ? { opacity: 1 } : { y: 0, opacity: 1 }}
@@ -116,14 +92,14 @@ function AvatarPickerDialogBody({
         }
       >
         <header className="flex shrink-0 items-center gap-3 border-b border-outline-variant px-5 py-4 md:px-6">
-          <button
+          <UnstyledButton
             type="button"
             onClick={onCancel}
             aria-label="Închide"
             className="inline-flex size-16 shrink-0 items-center justify-center rounded-full text-on-surface-variant transition-colors ease-press hover:bg-primary-soft hover:text-primary"
           >
             <Icon name="X" size={20} />
-          </button>
+          </UnstyledButton>
           <div className="min-w-0 flex-1">
             <h2
               id={titleId}
@@ -142,7 +118,7 @@ function AvatarPickerDialogBody({
             {AVATAR_PRESETS.map((preset, index) => {
               const isSelected = preset === selected;
               return (
-                <button
+                <UnstyledButton
                   key={preset}
                   type="button"
                   aria-label={`Avatar ${index + 1}`}
@@ -171,7 +147,7 @@ function AvatarPickerDialogBody({
                       <Icon name="Check" size={18} weight="fill" />
                     </span>
                   ) : null}
-                </button>
+                </UnstyledButton>
               );
             })}
           </div>
@@ -200,6 +176,5 @@ function AvatarPickerDialogBody({
           </Button>
         </footer>
       </motion.div>
-    </motion.div>
   );
 }

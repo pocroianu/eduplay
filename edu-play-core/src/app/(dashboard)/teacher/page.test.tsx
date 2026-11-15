@@ -81,7 +81,7 @@ const resources = {
             studentOther: '{{count}} elevi',
             emptyTitle: 'Încă nu ai clase',
             emptyFilteredTitle: 'Clasele apar aici',
-            emptyBody: 'Creează o clasă ca să vezi carduri ca în pagina Home Seesaw.',
+            emptyBody: 'Creează o clasă ca să vezi activitățile și progresul elevilor.',
           },
           resources: {
             ariaLabel: 'Resurse pentru profesori',

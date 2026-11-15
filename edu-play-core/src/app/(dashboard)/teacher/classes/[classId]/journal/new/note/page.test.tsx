@@ -123,7 +123,7 @@ describe('/teacher/classes/[classId]/journal/new/note', () => {
     expect(notFoundMock).toHaveBeenCalled()
   })
 
-  it('renders a non-persistent Seesaw Type a Note editor with roster context', async () => {
+  it('renders a non-persistent EduPlay Type a Note editor with roster context', async () => {
     getClassDetailDataMock.mockResolvedValue(classDetailData)
 
     render(await NewJournalNotePage({ params: Promise.resolve({ classId: 'class-1' }) }))

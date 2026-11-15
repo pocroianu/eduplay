@@ -6,6 +6,7 @@ import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import {
   CloseButton,
   FileButton,
+  Modal,
   Select,
   TextInput,
   UnstyledButton,
@@ -14,6 +15,7 @@ import { Controller, useForm } from 'react-hook-form';
 import {
   Button,
   Card,
+  MantineBoundary,
   SegmentedTabs,
   useToast,
 } from '@/shared/components/ui/kit';
@@ -260,25 +262,13 @@ export function TeacherUploadModal({
   const rootError = errors.root?.message;
 
   return (
+    <MantineBoundary>
+    <Modal.Root opened onClose={onClose} size="72rem">
+    <Modal.Overlay />
+    <Modal.Content aria-label="Dovada">
+    <Modal.Body p={0}>
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-[60] flex items-end justify-center px-4 py-4 md:items-center"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={reduceMotion ? { duration: 0 } : { duration: 0.16, ease: [0.4, 0, 0.2, 1] }}
-      >
-        <button
-          type="button"
-          tabIndex={-1}
-          aria-label="Închide"
-          onClick={onClose}
-          className="absolute inset-0 cursor-default bg-ink/25"
-        />
-        <motion.div
           className="relative flex max-h-[94vh] w-full max-w-5xl flex-col overflow-hidden rounded-t-md border border-outline-variant bg-surface-container-lowest shadow-soft-sm md:rounded-md"
           initial={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 12 }}
           animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
@@ -481,9 +471,12 @@ export function TeacherUploadModal({
               </Button>
             </footer>
           </form>
-        </motion.div>
       </motion.div>
     </AnimatePresence>
+    </Modal.Body>
+    </Modal.Content>
+    </Modal.Root>
+    </MantineBoundary>
   );
 }
 

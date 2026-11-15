@@ -72,7 +72,7 @@ describe('/teacher/account/device', () => {
     expect(redirectMock).toHaveBeenCalledWith('/login');
   });
 
-  it('renders the Seesaw device information modal with i18n copy', async () => {
+  it('renders the EduPlay device information modal with i18n copy', async () => {
     supabaseGetUserMock.mockResolvedValue({ data: { user: { id: 'teacher-1' } } });
     profileSingleMock.mockResolvedValue({ data: { id: 'teacher-1', role: 'teacher' } });
 

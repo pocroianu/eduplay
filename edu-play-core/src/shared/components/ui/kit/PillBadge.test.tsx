@@ -19,29 +19,29 @@ describe('PillBadge', () => {
     const { container, rerender } = render(
       <PillBadge tone="primary">x</PillBadge>,
     )
-    expect(container.firstElementChild).toHaveClass('bg-primary-soft')
-    expect(container.firstElementChild).toHaveClass('text-primary-deep')
+    expect(container.querySelector('.mantine-Badge-root')).toHaveClass('bg-primary-soft')
+    expect(container.querySelector('.mantine-Badge-root')).toHaveClass('text-primary-deep')
 
     rerender(<PillBadge tone="tertiary">x</PillBadge>)
-    expect(container.firstElementChild).toHaveClass('bg-primary-soft')
-    expect(container.firstElementChild).toHaveClass('text-primary-deep')
+    expect(container.querySelector('.mantine-Badge-root')).toHaveClass('bg-primary-soft')
+    expect(container.querySelector('.mantine-Badge-root')).toHaveClass('text-primary-deep')
 
     rerender(<PillBadge tone="secondary">x</PillBadge>)
-    expect(container.firstElementChild).toHaveClass('bg-gold-soft')
-    expect(container.firstElementChild).toHaveClass('text-gold-deep')
+    expect(container.querySelector('.mantine-Badge-root')).toHaveClass('bg-gold-soft')
+    expect(container.querySelector('.mantine-Badge-root')).toHaveClass('text-gold-deep')
 
     rerender(<PillBadge tone="error">x</PillBadge>)
-    expect(container.firstElementChild).toHaveClass('bg-error-soft')
-    expect(container.firstElementChild).toHaveClass('text-coral-deep')
+    expect(container.querySelector('.mantine-Badge-root')).toHaveClass('bg-error-soft')
+    expect(container.querySelector('.mantine-Badge-root')).toHaveClass('text-coral-deep')
   })
 
   it('defaults to a neutral tone when none is given', () => {
     const { container } = render(<PillBadge>x</PillBadge>)
-    expect(container.firstElementChild).toHaveClass('bg-surface-container')
+    expect(container.querySelector('.mantine-Badge-root')).toHaveClass('bg-surface-container')
   })
 
   it('meets the 18px minimum body font rule', () => {
     const { container } = render(<PillBadge>x</PillBadge>)
-    expect(container.firstElementChild).toHaveClass('text-[18px]')
+    expect(container.querySelector('.mantine-Badge-root')).toHaveClass('text-[18px]')
   })
 })
