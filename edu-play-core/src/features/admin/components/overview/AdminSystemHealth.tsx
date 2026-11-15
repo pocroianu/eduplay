@@ -1,6 +1,9 @@
-import { Icon } from '@/shared/components/ui/Icon';
-import { Badge, Card } from '@/shared/components/ui/kit'
-import { ADMIN_OVERVIEW_PANELS } from '@/features/admin/copy/overview'
+"use client";
+
+import { Progress } from "@mantine/core";
+import { Icon } from "@/shared/components/ui/Icon";
+import { Badge, Card, MantineBoundary } from "@/shared/components/ui/kit";
+import { ADMIN_OVERVIEW_PANELS } from "@/features/admin/copy/overview";
 
 /**
  * Sidebar health card. The values shown are placeholders — wiring real
@@ -10,25 +13,29 @@ import { ADMIN_OVERVIEW_PANELS } from '@/features/admin/copy/overview'
  * green"; flip the props once a probe lands.
  */
 export interface AdminSystemHealthProps {
-  apiStatus?: 'healthy' | 'degraded' | 'down'
-  queueLabel?: string
-  storagePercent?: number
+  apiStatus?: "healthy" | "degraded" | "down";
+  queueLabel?: string;
+  storagePercent?: number;
 }
 
 export function AdminSystemHealth({
-  apiStatus = 'healthy',
-  queueLabel = '0 sarcini în coadă',
+  apiStatus = "healthy",
+  queueLabel = "0 sarcini în coadă",
   storagePercent = 32,
 }: AdminSystemHealthProps) {
-  const copy = ADMIN_OVERVIEW_PANELS.systemHealth
+  const copy = ADMIN_OVERVIEW_PANELS.systemHealth;
   const tone =
-    apiStatus === 'healthy' ? 'success' : apiStatus === 'degraded' ? 'warning' : 'danger'
+    apiStatus === "healthy"
+      ? "success"
+      : apiStatus === "degraded"
+        ? "warning"
+        : "danger";
   const badgeLabel =
-    apiStatus === 'healthy'
+    apiStatus === "healthy"
       ? copy.healthyBadge
-      : apiStatus === 'degraded'
+      : apiStatus === "degraded"
         ? copy.degradedBadge
-        : copy.downBadge
+        : copy.downBadge;
 
   return (
     <Card padding="md" className="flex flex-col gap-4">
@@ -64,21 +71,28 @@ export function AdminSystemHealth({
             </dt>
             <dd className="font-semibold text-on-surface">{storagePercent}%</dd>
           </div>
-          <div
-            role="progressbar"
-            aria-valuenow={storagePercent}
-            aria-valuemin={0}
-            aria-valuemax={100}
-            aria-label={copy.storageLabel}
-            className="h-2 rounded-full bg-surface-container overflow-hidden"
-          >
-            <div
-              className="h-full bg-primary transition-[width]"
-              style={{ width: `${Math.max(0, Math.min(100, storagePercent))}%` }}
-            />
-          </div>
+          <MantineBoundary>
+            <Progress.Root
+              unstyled
+              role="progressbar"
+              aria-valuenow={Math.max(0, Math.min(100, storagePercent))}
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-label={copy.storageLabel}
+              className="h-2 rounded-full bg-surface-container overflow-hidden"
+            >
+              <Progress.Section
+                value={Math.max(0, Math.min(100, storagePercent))}
+                withAria={false}
+                className="h-full bg-primary transition-[width]"
+                style={{
+                  width: `${Math.max(0, Math.min(100, storagePercent))}%`,
+                }}
+              />
+            </Progress.Root>
+          </MantineBoundary>
         </div>
       </dl>
     </Card>
-  )
+  );
 }

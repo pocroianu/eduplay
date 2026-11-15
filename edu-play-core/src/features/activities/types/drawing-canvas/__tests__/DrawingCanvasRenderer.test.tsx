@@ -12,6 +12,20 @@ vi.mock('../actions', () => ({
 const INSTANCE_ID = '550e8400-e29b-41d4-a716-446655440000';
 
 describe('<DrawingCanvasRenderer />', () => {
+  it('supports arrow-key selection in the brush radio group', () => {
+    render(<DrawingCanvasRenderer instanceId={INSTANCE_ID}
+      config={{ mode: 'freeform', backgroundColor: 'white' }}
+      onComplete={vi.fn()} onCancel={vi.fn()} />);
+    const brushes = screen.getAllByRole('radio', { name: /pensulă/i });
+    const selectedIndex = brushes.findIndex((brush) => brush.getAttribute('aria-checked') === 'true');
+    const next = brushes[(selectedIndex + 1) % brushes.length];
+    brushes[selectedIndex].focus();
+    fireEvent.keyDown(brushes[selectedIndex], { key: 'ArrowRight', code: 'ArrowRight' });
+    expect(next).toHaveFocus();
+    expect(next).toHaveAttribute('aria-checked', 'true');
+    expect(next).toHaveAttribute('tabindex', '0');
+  });
+
   it('renders the toolbar with three brush sizes and six color swatches', () => {
     render(
       <DrawingCanvasRenderer

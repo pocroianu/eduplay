@@ -1,12 +1,11 @@
 'use client';
 
-import { useContext, useEffect, useId, type ReactNode } from 'react';
+import { MantineBoundary } from './MantineBoundary';
+import { useEffect, useId, type ReactNode } from 'react';
 import {
   Box,
   FocusTrap,
   Group,
-  MantineContext,
-  MantineProvider,
   Modal,
   Paper,
   Stack,
@@ -51,10 +50,9 @@ export interface ConfirmDialogProps {
 }
 
 export function ConfirmDialog(props: ConfirmDialogProps) {
-  const mantineContext = useContext(MantineContext);
   const dialog = <ConfirmDialogContent {...props} />;
 
-  return mantineContext ? dialog : <MantineProvider>{dialog}</MantineProvider>;
+  return <MantineBoundary>{dialog}</MantineBoundary>;
 }
 
 function ConfirmDialogContent({

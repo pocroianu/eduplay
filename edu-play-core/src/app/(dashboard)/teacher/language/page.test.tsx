@@ -45,7 +45,6 @@ vi.mock('@/lib/i18n/server', () => ({
   }[key] ?? key),
 }));
 
-
 import TeacherLanguagePage from './page';
 
 beforeEach(() => {
@@ -78,8 +77,12 @@ describe('/teacher/language', () => {
     const radios = within(picker).getAllByRole('radio');
     expect(radios).toHaveLength(2);
 
-    expect(within(picker).getByRole('radio', { name: /Română.*Romanian/i })).not.toBeChecked();
-    expect(within(picker).getByRole('radio', { name: /English.*Current: English/i })).toBeChecked();
+    const romanian = within(picker).getByRole('radio', { name: 'Română' });
+    const english = within(picker).getByRole('radio', { name: 'English' });
+    expect(romanian).not.toBeChecked();
+    expect(romanian).toHaveAccessibleDescription('Romanian');
+    expect(english).toBeChecked();
+    expect(english).toHaveAccessibleDescription('Current: English');
     expect(within(picker).getByText('Romanian')).toBeInTheDocument();
     expect(within(picker).getAllByText('English')).toHaveLength(1);
     expect(within(picker).getByText('Current')).toBeInTheDocument();

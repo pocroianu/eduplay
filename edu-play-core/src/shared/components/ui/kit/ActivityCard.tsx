@@ -1,3 +1,5 @@
+import { Card as MantineCard } from '@mantine/core';
+import { MantineBoundary } from './MantineBoundary';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { cn } from '@/shared/lib/utils/cn';
@@ -22,7 +24,8 @@ export function ActivityCard({
   className,
 }: ActivityCardProps) {
   return (
-    <Link
+    <MantineBoundary>
+    <MantineCard component={Link} unstyled
       href={href}
       className={cn(
         'group block overflow-hidden rounded-xl bg-surface-container-lowest shadow-soft-sm transition-shadow duration-200 ease-standard hover:shadow-soft-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
@@ -47,6 +50,7 @@ export function ActivityCard({
           {creator}
         </span>
       </span>
-    </Link>
+    </MantineCard>
+    </MantineBoundary>
   );
 }

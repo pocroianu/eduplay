@@ -121,14 +121,18 @@ Default workflow:
 
 ## UI And Copy Rules
 
-- `DESIGN.md` is the design authority. EduPlay uses the Seesaw-style EduPlay design system.
+- `DESIGN.md` is the design authority. EduPlay uses the EduPlay design system.
 - Student routes keep 64px minimum primary touch targets, 18px minimum body
   text, larger spacing, and reduced-motion-aware animation while using the same
-  Seesaw-style visual language.
+  EduPlay visual language.
 - Teacher, parent, and admin routes use denser layouts, sidebar-led navigation
   where established, and calmer motion.
 - Use primitives from `@/shared/components/ui/kit` and icons through
   `@/shared/components/ui/Icon`.
+- Use Mantine as the implementation foundation for reusable DOM UI. Extend
+  Mantine-backed kit components instead of creating parallel native controls.
+  Preserve native layout semantics, hidden form inputs, SVG artwork, and canvas
+  rendering where appropriate. `npm run audit:mantine` reports adoption and gaps.
 - Use token-based Tailwind classes from `src/app/globals.css`; avoid raw hex,
   arbitrary shadows, and arbitrary radii in production UI.
 - User-facing copy is Romanian, informal where appropriate, and uses correct

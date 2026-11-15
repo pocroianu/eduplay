@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import {
   createElement,
   type ComponentProps,
@@ -98,18 +98,18 @@ describe('RewardModal', () => {
   });
 
   it('does not render anything when open=false', () => {
-    const { container } = render(
+    render(
       <RewardModal open={false} onDismiss={vi.fn()} title="Hidden" />,
     );
-    expect(container).toBeEmptyDOMElement();
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  it('renders dialog with aria-modal and labelled by eyebrow', () => {
+  it('renders dialog with aria-modal and labelled by title', () => {
     renderModal();
     const dialog = screen.getByRole('dialog');
     expect(dialog).toHaveAttribute('aria-modal', 'true');
-    const eyebrow = screen.getByText('Nivel nou!');
-    expect(dialog).toHaveAttribute('aria-labelledby', eyebrow.id);
+    const heading = screen.getByRole('heading', { level: 2 });
+    expect(dialog).toHaveAttribute('aria-labelledby', heading.id);
   });
 
   it('falls back to title for aria-labelledby when no eyebrow is provided', () => {
@@ -184,14 +184,14 @@ describe('RewardModal', () => {
 
   it('dismisses on Escape keydown', () => {
     const { onDismiss } = renderModal();
-    fireEvent.keyDown(window, { key: 'Escape' });
+    fireEvent.keyDown(screen.getByRole('dialog'), { key: 'Escape' });
     expect(onDismiss).toHaveBeenCalledTimes(1);
   });
 
-  it('focuses the default CTA on open', () => {
+  it('focuses the default CTA on open', async () => {
     renderModal();
     const cta = screen.getByRole('button', { name: /mai departe/i });
-    expect(document.activeElement).toBe(cta);
+    await waitFor(() => expect(document.activeElement).toBe(cta));
   });
 
   it('still renders all content when reduced motion is preferred', () => {

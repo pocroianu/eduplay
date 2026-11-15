@@ -3,6 +3,8 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { Progress, Table } from '@mantine/core'
+import { Button, MantineBoundary } from '@/shared/components/ui/kit'
 import {
   BarChart,
   Bar,
@@ -131,19 +133,16 @@ function performanceLabel(avg: number): { text: string; className: string } {
 const REPORT_TONES = [
   {
     textClass: 'text-primary',
-    barClass: 'bg-primary',
     fill: 'var(--mantine-color-violet-6, var(--color-primary))',
     softClass: 'bg-primary/10 text-primary',
   },
   {
     textClass: 'text-gold-deep',
-    barClass: 'bg-gold',
     fill: 'var(--mantine-color-yellow-6, var(--color-gold))',
     softClass: 'bg-gold/10 text-gold-deep',
   },
   {
     textClass: 'text-primary-dim',
-    barClass: 'bg-primary-dim',
     fill: 'var(--mantine-color-violet-4, var(--color-primary-dim))',
     softClass: 'bg-primary-dim/10 text-primary-dim',
   },
@@ -278,14 +277,10 @@ function SubjectProgressSection({
               <span>{s.subject}</span>
               <span className={tone.textClass}>{s.score}%</span>
             </div>
-            <div className="h-4 w-full bg-surface-container rounded-full overflow-hidden">
-              <motion.div
-                className={`h-full rounded-full ${tone.barClass}`}
-                initial={{ width: 0 }}
-                animate={{ width: `${s.score}%` }}
-                transition={{ duration: 0.8, ease: 'easeOut' }}
-              />
-            </div>
+            <MantineBoundary>
+              <Progress value={Math.max(0, Math.min(100, s.score))}
+                color={tone.fill} size={16} aria-label={`${s.subject}: ${s.score}%`} />
+            </MantineBoundary>
           </div>
           )
         })}
@@ -496,39 +491,39 @@ function GameHistoryTable({ games }: { games: GameHistoryItem[] }) {
 
       {/* Desktop table */}
       <div className="hidden md:block overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-surface-container">
-              <th className="text-left px-6 lg:px-8 py-3 font-bold text-on-surface-variant text-xs uppercase tracking-wider">
+        <Table className="w-full text-sm">
+          <Table.Thead>
+            <Table.Tr className="bg-surface-container">
+              <Table.Th className="text-left px-6 lg:px-8 py-3 font-bold text-on-surface-variant text-xs uppercase tracking-wider">
                 Joc
-              </th>
-              <th className="text-left px-4 py-3 font-bold text-on-surface-variant text-xs uppercase tracking-wider">
+              </Table.Th>
+              <Table.Th className="text-left px-4 py-3 font-bold text-on-surface-variant text-xs uppercase tracking-wider">
                 Disciplina
-              </th>
-              <th className="text-left px-4 py-3 font-bold text-on-surface-variant text-xs uppercase tracking-wider">
+              </Table.Th>
+              <Table.Th className="text-left px-4 py-3 font-bold text-on-surface-variant text-xs uppercase tracking-wider">
                 Scor
-              </th>
-              <th className="text-left px-4 py-3 font-bold text-on-surface-variant text-xs uppercase tracking-wider">
+              </Table.Th>
+              <Table.Th className="text-left px-4 py-3 font-bold text-on-surface-variant text-xs uppercase tracking-wider">
                 Durata
-              </th>
-              <th className="text-left px-4 py-3 font-bold text-on-surface-variant text-xs uppercase tracking-wider">
+              </Table.Th>
+              <Table.Th className="text-left px-4 py-3 font-bold text-on-surface-variant text-xs uppercase tracking-wider">
                 Data
-              </th>
-            </tr>
-          </thead>
-          <tbody>
+              </Table.Th>
+            </Table.Tr>
+          </Table.Thead>
+          <Table.Tbody>
             {games.map((game) => {
               const scorePercent = game.maxScore > 0 ? Math.round((game.score / game.maxScore) * 100) : 0
               return (
-                <tr
+                <Table.Tr
                   key={game.id}
                   className="transition-colors hover:bg-surface-container/40 even:bg-surface-container/25"
                 >
-                  <td className="px-6 lg:px-8 py-4 font-bold text-on-background">
+                  <Table.Td className="px-6 lg:px-8 py-4 font-bold text-on-background">
                     {game.gameName}
-                  </td>
-                  <td className="px-4 py-4 text-on-surface-variant">{game.subject}</td>
-                  <td className="px-4 py-4">
+                  </Table.Td>
+                  <Table.Td className="px-4 py-4 text-on-surface-variant">{game.subject}</Table.Td>
+                  <Table.Td className="px-4 py-4">
                     <div className="flex items-center gap-2">
                       <span className="font-bold text-on-background">
                         {game.score}/{game.maxScore}
@@ -545,14 +540,14 @@ function GameHistoryTable({ games }: { games: GameHistoryItem[] }) {
                         {scorePercent}%
                       </span>
                     </div>
-                  </td>
-                  <td className="px-4 py-4 text-on-surface-variant">{game.duration}</td>
-                  <td className="px-4 py-4 text-on-surface-variant">{game.completedAt}</td>
-                </tr>
+                  </Table.Td>
+                  <Table.Td className="px-4 py-4 text-on-surface-variant">{game.duration}</Table.Td>
+                  <Table.Td className="px-4 py-4 text-on-surface-variant">{game.completedAt}</Table.Td>
+                </Table.Tr>
               )
             })}
-          </tbody>
-        </table>
+          </Table.Tbody>
+        </Table>
       </div>
 
       {/* Mobile card list */}
@@ -667,27 +662,31 @@ export function StudentReport({
   }
 
   return (
+    <MantineBoundary>
     <div className="space-y-8">
       {/* Header row with student info + actions */}
       <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
         <StudentHeader student={student} />
         <div className="flex items-center gap-3 self-start sm:self-auto">
-          <button
+          <Button
+            type="button"
             onClick={handlePrint}
             disabled={isPrinting}
-            className="bg-surface-container-lowest border border-outline-variant shadow-soft-sm flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-on-surface transition-[box-shadow,transform,opacity] hover:shadow-soft motion-safe:active:translate-y-px disabled:opacity-50"
+            variant="secondary"
+            className="motion-safe:active:translate-y-px"
           >
             <Icon name="Printer" size={18} />
             <span className="hidden sm:inline">Exportă / Printează</span>
             <span className="sm:hidden">Export</span>
-          </button>
-          <a
+          </Button>
+          <Button
             href={ROUTES.TEACHER.STUDENT(student.id)}
-            className="bg-primary shadow-soft-sm flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-bold text-on-primary transition-[box-shadow,transform,opacity] hover:shadow-soft motion-safe:active:translate-y-px"
+            variant="primary"
+            className="motion-safe:active:translate-y-px"
           >
             <Icon name="User" size={18} />
             <span className="hidden sm:inline">Profil elev</span>
-          </a>
+          </Button>
         </div>
       </div>
 
@@ -723,5 +722,6 @@ export function StudentReport({
       {/* Game history */}
       <GameHistoryTable games={gameHistory} />
     </div>
+    </MantineBoundary>
   )
 }

@@ -92,7 +92,7 @@ describe('TopAppBar', () => {
     expect(topbarSource()).not.toMatch(/<button\b/)
   })
 
-  it('centers the teacher home title in the Seesaw top chrome', () => {
+  it('centers the teacher home title in the EduPlay top chrome', () => {
     renderTopAppBar(<TopAppBar mode="standard" role="teacher" profile={{ full_name: 'Ana Popescu' }} />)
 
     const banner = screen.getByRole('banner')
@@ -135,7 +135,7 @@ describe('TopAppBar', () => {
     expect(screen.getByTestId('libraries-seesaw-tab-icon')).toBeInTheDocument()
     expect(screen.getByTestId('libraries-community-tab-icon')).toBeInTheDocument()
     expect(screen.queryByRole('tablist', { name: /surse bibliotecă/i })).not.toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Biblioteca Seesaw' })).not.toHaveAttribute('aria-current')
+    expect(screen.getByRole('link', { name: 'Biblioteca EduPlay' })).not.toHaveAttribute('aria-current')
     expect(screen.getByRole('link', { name: 'Biblioteca comunității' })).toHaveAttribute('aria-current', 'page')
     expect(screen.getByRole('link', { name: 'Biblioteca comunității' })).toHaveClass('mantine-Button-root')
     expect(screen.getByRole('link', { name: 'Biblioteca comunității' })).not.toHaveClass('seesaw-interactive')

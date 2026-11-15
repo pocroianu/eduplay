@@ -275,7 +275,7 @@ describe('QuestMap', () => {
     )
 
     const firstLesson = screen.getByRole('link', { name: /Scăderi simple/ })
-    expect(within(firstLesson).getByText('Matematică')).toHaveClass('text-[18px]')
+    expect(within(firstLesson).getByText('Matematică').parentElement).toHaveClass('text-[18px]')
     expect(within(firstLesson).getByText('10 min')).toHaveClass('text-[18px]')
   })
 

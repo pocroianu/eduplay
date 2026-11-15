@@ -38,7 +38,6 @@ vi.mock('@/features/teacher-activities/server', () => ({
   getTeacherOwnedActivities: (...args: unknown[]) => getTeacherOwnedActivitiesMock(...args),
 }))
 
-
 vi.mock('@/lib/i18n/server', () => ({
   getServerLanguage: () => Promise.resolve('ro'),
   preloadNamespaces: () => Promise.resolve({}),
@@ -76,8 +75,6 @@ const cssRuleStartingAt = (css: string, selector: string) => {
   return closeBraceIndex === -1 ? '' : css.slice(openBraceIndex + 1, closeBraceIndex)
 }
 
-
-
 const inlineStylePropertyNames = (element: Element) =>
   (element.getAttribute('style') ?? '')
     .split(';')
@@ -91,7 +88,6 @@ const expectNoInlineHoverOverrides = (elements: Iterable<Element>, forbiddenProp
     expect(inlineStylePropertyNames(element).filter((property) => forbidden.has(property))).toEqual([])
   }
 }
-
 
 function renderWithMantine(ui: ReactNode) {
   return render(<MantineProvider>{ui}</MantineProvider>)
@@ -160,8 +156,6 @@ const upperGradeGame = {
   target_age_min: 9,
   target_age_max: 10,
 } as const
-
-
 
 describe('/teacher/libraries/explore page', () => {
   it('renders the Mantine-rewritten Explore Libraries page with the previous visual structure below top-panel source tabs', async () => {
@@ -345,7 +339,7 @@ describe('teacher library reference layout CSS', () => {
     expect(actionHoverRule).toContain('filter: brightness(0.96);')
   })
 
-  it('removes obsolete My Library global Seesaw selectors after the Mantine rewrite', () => {
+  it('removes obsolete My Library global EduPlay selectors after the Mantine rewrite', () => {
     expect(globalsCss()).not.toContain('.seesaw-library-page')
     expect(globalsCss()).not.toContain('.seesaw-library-column')
     expect(globalsCss()).not.toContain('.seesaw-library-card')
@@ -401,7 +395,7 @@ describe('teacher library reference layout CSS', () => {
       'filter',
     ])
   })
-  it('keeps Libraries top bar styling out of global Seesaw CSS after the Mantine rewrite', () => {
+  it('keeps Libraries top bar styling out of global EduPlay CSS after the Mantine rewrite', () => {
     expect(globalsCss()).not.toContain('.seesaw-library-topbar')
     expect(globalsCss()).not.toContain('.seesaw-library-topbar__explore-title')
     expect(globalsCss()).not.toContain('.seesaw-library-topbar__explore-tabs')

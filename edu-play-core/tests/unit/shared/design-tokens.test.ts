@@ -5,7 +5,7 @@ import { describe, expect, it } from 'vitest';
 const globalsCss = readFileSync(join(process.cwd(), 'src/app/globals.css'), 'utf8');
 
 describe('global design tokens', () => {
-  it('uses the Seesaw-inspired EduPlay token spine for standard surfaces', () => {
+  it('uses the EduPlay token spine for standard surfaces', () => {
     expect(globalsCss).toContain('--color-primary:       #5F2FA8;');
     expect(globalsCss).toContain('--ep-purple-600: var(--color-primary);');
     expect(globalsCss).toContain('--color-success-journal: #2F7A2F;');

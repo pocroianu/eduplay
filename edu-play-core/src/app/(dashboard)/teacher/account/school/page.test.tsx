@@ -89,7 +89,7 @@ describe('/teacher/account/school', () => {
     expect(redirectMock).toHaveBeenCalledWith('/login');
   });
 
-  it('renders the Seesaw add-school flow with i18n copy', async () => {
+  it('renders the EduPlay add-school flow with i18n copy', async () => {
     supabaseGetUserMock.mockResolvedValue({ data: { user: { id: 'teacher-1', email: 'maria@example.test' } } });
     profileSingleMock.mockResolvedValue({ data: { id: 'teacher-1', role: 'teacher', full_name: 'Prof. Maria Ionescu' } });
     classesOrderMock.mockResolvedValue({

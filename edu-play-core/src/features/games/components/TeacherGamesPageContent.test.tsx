@@ -28,7 +28,6 @@ const game = {
   updated_at: '2026-05-18T00:00:00.000Z',
 };
 
-
 describe('TeacherGamesPageContent', () => {
   function renderPage(games: Parameters<typeof TeacherGamesPageContent>[0]['games']) {
     return render(
@@ -51,7 +50,7 @@ describe('TeacherGamesPageContent', () => {
 
     expect(screen.getByRole('heading', { name: 'Activități' })).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Explorează biblioteca EduPlay' })).toBeInTheDocument();
-    expect(screen.getByText('Bibliotecă Seesaw')).toBeInTheDocument();
+    expect(screen.getByText('Bibliotecă EduPlay')).toBeInTheDocument();
     expect(screen.getByText('Bibliotecă comunitate')).toBeInTheDocument();
     expect(screen.getByRole('searchbox', { name: /caută activități/i })).toHaveAttribute(
       'placeholder',

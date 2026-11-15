@@ -169,3 +169,4 @@ export type { VulpitaProps, VulpitaMood, VulpitaBandana } from './Vulpita';
 export { RewardModal } from './RewardModal';
 export type { RewardModalProps, RewardItem, RewardTone } from './RewardModal';
 export type { DuoTooltipProps } from './DuoTooltip';
+export { MantineBoundary } from './MantineBoundary';

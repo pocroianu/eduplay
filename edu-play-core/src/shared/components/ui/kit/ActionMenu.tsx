@@ -1,11 +1,10 @@
 'use client';
 
-import { useContext, type ReactNode } from 'react';
+import { MantineBoundary } from './MantineBoundary';
+import { type ReactNode } from 'react';
 import {
   ActionIcon,
   Box,
-  MantineContext,
-  MantineProvider,
   Menu,
   type ActionIconProps,
   type MenuProps,
@@ -90,8 +89,7 @@ function ActionMenuContent({
 }
 
 export function ActionMenu(props: ActionMenuProps) {
-  const mantineContext = useContext(MantineContext);
   const menu = <ActionMenuContent {...props} />;
 
-  return mantineContext ? menu : <MantineProvider>{menu}</MantineProvider>;
+  return <MantineBoundary>{menu}</MantineBoundary>;
 }

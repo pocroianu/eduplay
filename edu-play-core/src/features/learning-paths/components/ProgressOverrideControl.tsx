@@ -2,9 +2,11 @@
 
 import { useMemo, useState, useTransition, type FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
+import { Checkbox } from '@mantine/core';
 import {
   ChunkyButton,
   FilterSelect,
+  MantineBoundary,
   type FilterSelectOption,
 } from '@/shared/components/ui/kit';
 import { overrideProgress } from '../actions';
@@ -156,13 +158,14 @@ export function ProgressOverrideControl({
       ) : null}
 
       <label className="flex items-start gap-2 text-xs font-semibold text-on-surface-variant">
-        <input
-          type="checkbox"
+        <MantineBoundary>
+        <Checkbox
           checked={confirmed}
-          onChange={(event) => setConfirmed(event.target.checked)}
+          onChange={(event) => setConfirmed(event.currentTarget.checked)}
           disabled={isPending}
-          className="mt-0.5 size-4 rounded-sm border border-outline"
+          aria-label="Confirm cÄƒ vreau sÄƒ corectez manual progresul acestui elev."
         />
+        </MantineBoundary>
         Confirm că vreau să corectez manual progresul acestui elev.
       </label>
 

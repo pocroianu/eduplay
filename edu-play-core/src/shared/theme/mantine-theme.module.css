@@ -1,0 +1,29 @@
+.button:focus-visible,
+.actionIcon:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.button:where(:not(:disabled, [data-disabled])):hover,
+.button:where(:not(:disabled, [data-disabled])):active {
+  background-color: var(--button-hover, var(--color-purple-deep));
+}
+
+.actionIcon:where(:not(:disabled, [data-disabled])):hover,
+.actionIcon:where(:not(:disabled, [data-disabled])):active {
+  background-color: var(--color-purple-soft);
+  color: var(--color-purple-deep);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .button:where(:not(:disabled, [data-disabled])):active,
+  .actionIcon:where(:not(:disabled, [data-disabled])):active {
+    transform: translateY(1px);
+  }
+}
+
+.input:focus,
+.input:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--color-purple-soft);
+}

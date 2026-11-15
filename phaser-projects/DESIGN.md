@@ -1,6 +1,12 @@
 # Design Contract — phaser-projects
 
-The games shipped from this monorepo run inside the EduPlay platform and follow the single **EduPlay Duo** design system. Kid-mode is the dominant register for everything we ship here: chunky 3D buttons with solid-offset shadows in ink, signature green primary, the Vulpiță mascot, Phosphor icons, and Baloo 2 type.
+The games shipped from this monorepo run inside the EduPlay platform. EduPlay
+is developing its own design identity; follow the workspace `.impeccable.md`
+and the current platform implementation contracts in `../edu-play-core/DESIGN.md`.
+Existing canvas styling is a baseline to evolve, not a fixed brand direction.
+Legacy palette, font, and mascot examples below are historical implementation
+notes; they do not override the current platform contract or canvas accessibility
+rules in `.impeccable.md`.
 
 ## Source Of Truth
 

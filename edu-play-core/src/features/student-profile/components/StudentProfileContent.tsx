@@ -1,26 +1,28 @@
-'use client';
+"use client";
 
-import { useMemo, useState, useTransition } from 'react';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useMemo, useState, useTransition } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { Progress, Radio, Switch } from "@mantine/core";
 import {
   Button,
   Card,
   ConfirmDialog,
+  MantineBoundary,
   ToastProvider,
   useToast,
-} from '@/shared/components/ui/kit';
-import { Icon } from '@/shared/components/ui/Icon';
-import type { IconName } from '@/shared/components/ui/Icon.registry';
-import { cn } from '@/shared/lib/utils/cn';
-import { logout } from '@/features/auth';
-import { formatAgeBand, type AgeBand } from '@/shared/lib/utils/age';
-import { AvatarPickerDialog } from './AvatarPickerDialog';
-import { ChangePinDialog } from './ChangePinDialog';
-import { usePreferences } from './PreferencesProvider';
-import { updateAvatarAction } from '../actions/update-avatar';
-import { updatePreferencesAction } from '../actions/update-preferences';
-import type { ThemeMode } from '../schemas/preferences.schema';
+} from "@/shared/components/ui/kit";
+import { Icon } from "@/shared/components/ui/Icon";
+import type { IconName } from "@/shared/components/ui/Icon.registry";
+import { cn } from "@/shared/lib/utils/cn";
+import { logout } from "@/features/auth";
+import { formatAgeBand, type AgeBand } from "@/shared/lib/utils/age";
+import { AvatarPickerDialog } from "./AvatarPickerDialog";
+import { ChangePinDialog } from "./ChangePinDialog";
+import { usePreferences } from "./PreferencesProvider";
+import { updateAvatarAction } from "../actions/update-avatar";
+import { updatePreferencesAction } from "../actions/update-preferences";
+import type { ThemeMode } from "../schemas/preferences.schema";
 
 export interface StudentProfileContentProps {
   profile: {
@@ -41,13 +43,15 @@ export interface StudentProfileContentProps {
 }
 
 const STARS_PER_LEVEL = 25;
-const FALLBACK_AVATAR = '/avatars/preset-01.svg';
+const FALLBACK_AVATAR = "/avatars/preset-01.svg";
 
 export function StudentProfileContent(props: StudentProfileContentProps) {
   return (
-    <ToastProvider>
-      <StudentProfileBody {...props} />
-    </ToastProvider>
+    <MantineBoundary>
+      <ToastProvider>
+        <StudentProfileBody {...props} />
+      </ToastProvider>
+    </MantineBoundary>
   );
 }
 
@@ -65,7 +69,8 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
   const [logoutPending, setLogoutPending] = useState(false);
 
   const stageLabel = formatAgeBand(profile.ageBand);
-  const ageBadgeLabel = profile.ageBand === '3-6' ? 'Pași mici (3–6 ani)' : 'Aventură (7–12 ani)';
+  const ageBadgeLabel =
+    profile.ageBand === "3-6" ? "Pași mici (3–6 ani)" : "Aventură (7–12 ani)";
 
   const xpInLevel = profile.stats.starsEarned % STARS_PER_LEVEL;
   const levelProgress = Math.min(1, xpInLevel / STARS_PER_LEVEL);
@@ -81,14 +86,14 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
       if (result.success) {
         setAvatarOpen(false);
         toast({
-          message: 'Avatar nou salvat!',
-          variant: 'success',
+          message: "Avatar nou salvat!",
+          variant: "success",
         });
         router.refresh();
       } else {
         toast({
-          message: result.error ?? 'Nu am putut salva avatarul.',
-          variant: 'error',
+          message: result.error ?? "Nu am putut salva avatarul.",
+          variant: "error",
         });
       }
     });
@@ -105,8 +110,8 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
       if (!result.success) {
         setPreferences({ [key]: previous } as Partial<typeof preferences>);
         toast({
-          message: result.error ?? 'Nu am putut salva setările.',
-          variant: 'error',
+          message: result.error ?? "Nu am putut salva setările.",
+          variant: "error",
         });
       }
     });
@@ -119,7 +124,10 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
     } catch {
       // logout() redirects on success — only the rare error branch lands here.
       setLogoutPending(false);
-      toast({ message: 'Nu am putut să te deconectăm. Încearcă din nou.', variant: 'error' });
+      toast({
+        message: "Nu am putut să te deconectăm. Încearcă din nou.",
+        variant: "error",
+      });
     }
   };
 
@@ -155,19 +163,30 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
             </p>
 
             <div className="mt-5 max-w-2xl">
-              <div className="mb-2 flex items-center justify-between gap-4 text-sm font-semibold text-on-surface-variant">
-                <span>{xpInLevel} / {STARS_PER_LEVEL} stele până la următorul nivel</span>
+              <div className="mb-2 flex items-center justify-between gap-4 text-[18px] font-semibold text-on-surface-variant">
+                <span>
+                  {xpInLevel} / {STARS_PER_LEVEL} stele până la următorul nivel
+                </span>
                 <span>{Math.round(levelProgress * 100)}%</span>
               </div>
-              <div
-                className="h-2 overflow-hidden rounded-sm bg-surface-container"
-                role="progressbar"
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={Math.round(levelProgress * 100)}
-              >
-                <div className="h-full rounded-sm bg-primary" style={{ width: `${levelProgress * 100}%` }} />
-              </div>
+              <MantineBoundary>
+                <Progress.Root
+                  unstyled
+                  className="h-2 overflow-hidden rounded-sm bg-surface-container"
+                  role="progressbar"
+                  aria-label="Progres până la următorul nivel"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={Math.round(levelProgress * 100)}
+                >
+                  <Progress.Section
+                    value={levelProgress * 100}
+                    withAria={false}
+                    className="h-full rounded-sm bg-primary"
+                    style={{ width: `${levelProgress * 100}%` }}
+                  />
+                </Progress.Root>
+              </MantineBoundary>
             </div>
           </div>
 
@@ -192,10 +211,26 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
           description="Câte progrese ai făcut până acum"
         />
         <Card className="grid grid-cols-1 divide-y divide-outline-variant border border-outline-variant bg-surface-container-lowest p-0 md:grid-cols-4 md:divide-x md:divide-y-0">
-          <SummaryCell icon="GameController" label="Jocuri jucate" value={profile.stats.gamesPlayed} />
-          <SummaryCell icon="Fire" label="Zile la rând" value={profile.stats.streakDays} />
-          <SummaryCell icon="Star" label="Stele câștigate" value={profile.stats.starsEarned} />
-          <SummaryCell icon="Medal" label="Nivel actual" value={profile.stats.level} />
+          <SummaryCell
+            icon="GameController"
+            label="Jocuri jucate"
+            value={profile.stats.gamesPlayed}
+          />
+          <SummaryCell
+            icon="Fire"
+            label="Zile la rând"
+            value={profile.stats.streakDays}
+          />
+          <SummaryCell
+            icon="Star"
+            label="Stele câștigate"
+            value={profile.stats.starsEarned}
+          />
+          <SummaryCell
+            icon="Medal"
+            label="Nivel actual"
+            value={profile.stats.level}
+          />
         </Card>
       </section>
 
@@ -211,7 +246,9 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
             label="Sunete"
             description="Efecte sonore în jocuri și pe ecranul de premii"
             checked={preferences.sound_enabled}
-            onCheckedChange={(next) => handlePreferenceChange('sound_enabled', next)}
+            onCheckedChange={(next) =>
+              handlePreferenceChange("sound_enabled", next)
+            }
             disabled={prefPending}
             testId="toggle-sound"
           />
@@ -220,14 +257,16 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
             label="Animații reduse"
             description="Mișcare mai puțină — bun pentru concentrare"
             checked={preferences.reduced_motion}
-            onCheckedChange={(next) => handlePreferenceChange('reduced_motion', next)}
+            onCheckedChange={(next) =>
+              handlePreferenceChange("reduced_motion", next)
+            }
             disabled={prefPending}
             testId="toggle-reduced-motion"
           />
           <Divider />
           <ThemeRow
             value={preferences.theme}
-            onChange={(theme) => handlePreferenceChange('theme', theme)}
+            onChange={(theme) => handlePreferenceChange("theme", theme)}
             disabled={prefPending}
           />
           <Divider />
@@ -235,7 +274,10 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
         </Card>
       </section>
 
-      <section aria-labelledby="profile-securitate-heading" className="space-y-3">
+      <section
+        aria-labelledby="profile-securitate-heading"
+        className="space-y-3"
+      >
         <SectionTitle
           id="profile-securitate-heading"
           eyebrow="Securitate"
@@ -258,8 +300,12 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
                 <Icon name="SignOut" size={22} />
               </span>
               <div>
-                <p className="text-[18px] font-semibold text-error">Deconectează-mă</p>
-                <p className="text-base text-on-surface-variant">Vei reveni la ecranul de conectare.</p>
+                <p className="text-[18px] font-semibold text-error">
+                  Deconectează-mă
+                </p>
+                <p className="text-base text-on-surface-variant">
+                  Vei reveni la ecranul de conectare.
+                </p>
               </div>
             </div>
             <Button
@@ -289,9 +335,9 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
         onSuccess={() => {
           setPinOpen(false);
           toast({
-            message: 'PIN-ul a fost schimbat.',
-            description: 'Folosește noul PIN data viitoare când te conectezi.',
-            variant: 'success',
+            message: "PIN-ul a fost schimbat.",
+            description: "Folosește noul PIN data viitoare când te conectezi.",
+            variant: "success",
           });
         }}
       />
@@ -300,7 +346,9 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
         open={logoutOpen}
         title="Te deconectezi?"
         body="Va trebui să introduci numele și PIN-ul ca să te întorci."
-        confirmLabel={logoutPending ? 'Se deconectează…' : 'Da, deconectează-mă'}
+        confirmLabel={
+          logoutPending ? "Se deconectează…" : "Da, deconectează-mă"
+        }
         cancelLabel="Anulează"
         destructive
         icon="SignOut"
@@ -329,8 +377,12 @@ interface SectionTitleProps {
 function SectionTitle({ id, eyebrow, title, description }: SectionTitleProps) {
   return (
     <div>
-      <p className="text-sm font-semibold uppercase tracking-wide text-on-surface-variant">{eyebrow}</p>
-      <h2 id={id} className="mt-1 text-2xl font-semibold text-on-surface">{title}</h2>
+      <p className="text-sm font-semibold uppercase tracking-wide text-on-surface-variant">
+        {eyebrow}
+      </p>
+      <h2 id={id} className="mt-1 text-2xl font-semibold text-on-surface">
+        {title}
+      </h2>
       <p className="mt-1 text-[18px] text-on-surface-variant">{description}</p>
     </div>
   );
@@ -345,7 +397,10 @@ interface SummaryCellProps {
 function SummaryCell({ icon, label, value }: SummaryCellProps) {
   return (
     <div className="flex min-h-16 items-center gap-3 p-4">
-      <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-outline-variant bg-surface-container text-primary" aria-hidden="true">
+      <span
+        className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-outline-variant bg-surface-container text-primary"
+        aria-hidden="true"
+      >
         <Icon name={icon} size={22} />
       </span>
       <div className="min-w-0">
@@ -379,38 +434,15 @@ function ToggleRow({
         <p className="text-[18px] font-semibold text-on-surface">{label}</p>
         <p className="text-sm text-on-surface-variant mt-0.5">{description}</p>
       </div>
-      <button
-        type="button"
-        role="switch"
-        aria-checked={checked}
+      <Switch
         aria-label={label}
+        checked={checked}
         disabled={disabled}
-        onClick={() => onCheckedChange(!checked)}
+        onChange={(event) => onCheckedChange(event.currentTarget.checked)}
         data-testid={testId}
-        className={cn(
-          'relative flex h-16 w-20 shrink-0 items-center justify-center rounded-xl transition-colors duration-150',
-          'outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
-          disabled && 'opacity-60 cursor-not-allowed',
-        )}
-      >
-        <span
-          aria-hidden
-          className={cn(
-            'relative h-7 w-12 rounded-md border border-outline-variant transition-colors duration-150',
-            checked ? 'bg-primary' : 'bg-surface-container',
-          )}
-        >
-          <span
-            className={cn(
-              'absolute left-1 top-1 flex h-5 w-5 items-center justify-center rounded-sm bg-surface-container-lowest text-on-surface shadow-soft-sm',
-              'transition-transform duration-150',
-              checked ? 'translate-x-5' : 'translate-x-0',
-            )}
-          >
-            <Icon name={checked ? 'Check' : 'X'} size={12} />
-          </span>
-        </span>
-      </button>
+        size="xl"
+        className="min-h-16 min-w-16 shrink-0"
+      />
     </div>
   );
 }
@@ -421,10 +453,14 @@ interface ThemeRowProps {
   disabled?: boolean;
 }
 
-const THEME_OPTIONS: Array<{ value: ThemeMode; label: string; icon: IconName }> = [
-  { value: 'light', label: 'Luminos', icon: 'Sun' },
-  { value: 'dark', label: 'Întunecat', icon: 'Moon' },
-  { value: 'auto', label: 'Automat', icon: 'Sparkle' },
+const THEME_OPTIONS: Array<{
+  value: ThemeMode;
+  label: string;
+  icon: IconName;
+}> = [
+  { value: "light", label: "Luminos", icon: "Sun" },
+  { value: "dark", label: "Întunecat", icon: "Moon" },
+  { value: "auto", label: "Automat", icon: "Sparkle" },
 ];
 
 function ThemeRow({ value, onChange, disabled }: ThemeRowProps) {
@@ -433,37 +469,48 @@ function ThemeRow({ value, onChange, disabled }: ThemeRowProps) {
       <div className="flex items-center justify-between gap-4 mb-3">
         <div>
           <p className="text-[18px] font-semibold text-on-surface">Temă</p>
-          <p className="text-sm text-on-surface-variant mt-0.5">Cum arată culorile aplicației</p>
+          <p className="text-sm text-on-surface-variant mt-0.5">
+            Cum arată culorile aplicației
+          </p>
         </div>
       </div>
-      <div role="radiogroup" aria-label="Temă" className="grid grid-cols-3 gap-2">
+      <Radio.Group
+        name="student-theme"
+        value={value}
+        onChange={(next) => onChange(next as ThemeMode)}
+        aria-label="Temă"
+        className="grid grid-cols-3 gap-2"
+      >
         {THEME_OPTIONS.map((option) => {
           const isActive = option.value === value;
           return (
-            <button
+            <Radio
               key={option.value}
-              type="button"
-              role="radio"
-              aria-checked={isActive}
+              value={option.value}
               disabled={disabled}
-              onClick={() => onChange(option.value)}
-              data-testid={`theme-${option.value}`}
+              data-testid={option.value}
+              label={
+                <span className="flex min-h-16 flex-col items-center justify-center gap-2 text-sm font-bold">
+                  <Icon name={option.icon} size={24} />
+                  {option.label}
+                </span>
+              }
               className={cn(
-                'flex min-h-16 flex-col items-center justify-center gap-2 rounded-lg px-3 py-3',
-                'border transition-colors duration-150 outline-none',
-                'focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+                "w-full rounded-lg border px-3 py-3 transition-colors duration-150",
+                "focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2",
                 isActive
-                  ? 'bg-primary-container/40 border-primary text-on-primary-container'
-                  : 'bg-surface-container border-outline-variant text-on-surface hover:border-primary',
-                disabled && 'opacity-60 cursor-not-allowed',
+                  ? "border-primary bg-primary-container/40 text-on-primary-container"
+                  : "border-outline-variant bg-surface-container text-on-surface hover:border-primary",
+                disabled && "opacity-60",
               )}
-            >
-              <Icon name={option.icon} size={24} />
-              <span className="text-sm font-bold">{option.label}</span>
-            </button>
+              classNames={{
+                body: "flex items-center gap-2",
+                label: "flex-1 p-0",
+              }}
+            />
           );
         })}
-      </div>
+      </Radio.Group>
     </div>
   );
 }
@@ -473,7 +520,9 @@ function LanguageRow() {
     <div className="px-5 py-5 md:px-6 md:py-6 flex items-center justify-between gap-4 opacity-70">
       <div>
         <p className="text-[18px] font-semibold text-on-surface">Limbă</p>
-        <p className="text-sm text-on-surface-variant mt-0.5">Curând: vei putea alege limba aplicației</p>
+        <p className="text-sm text-on-surface-variant mt-0.5">
+          Curând: vei putea alege limba aplicației
+        </p>
       </div>
       <span className="rounded-md border border-outline-variant bg-surface-container px-3 py-1 text-sm font-semibold text-on-surface">
         Română

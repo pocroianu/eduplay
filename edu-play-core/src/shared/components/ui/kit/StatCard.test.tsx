@@ -20,7 +20,7 @@ describe('StatCard (standard)', () => {
     expect(chip?.className).toContain('text-primary');
   });
 
-  it('applies tertiary tone classes (mapped to Seesaw primary)', () => {
+  it('applies tertiary tone classes (mapped to EduPlay primary)', () => {
     const { container } = render(
       <StatCard label="Active" value={12} icon="Lightning" tone="tertiary" />,
     );
@@ -29,7 +29,7 @@ describe('StatCard (standard)', () => {
     expect(chip?.className).toContain('text-primary');
   });
 
-  it('applies secondary tone classes (mapped to Seesaw gold)', () => {
+  it('applies secondary tone classes (mapped to EduPlay gold)', () => {
     const { container } = render(
       <StatCard label="Premii" value={3} icon="Trophy" tone="secondary" />,
     );
@@ -38,7 +38,7 @@ describe('StatCard (standard)', () => {
     expect(chip?.className).toContain('text-gold');
   });
 
-  it('applies warning tone classes (mapped to Seesaw coral)', () => {
+  it('applies warning tone classes (mapped to EduPlay coral)', () => {
     const { container } = render(
       <StatCard label="Atenție" value={1} icon="Warning" tone="warning" />,
     );
@@ -47,9 +47,9 @@ describe('StatCard (standard)', () => {
     expect(chip?.className).toContain('text-coral');
   });
 
-  it('renders Seesaw card styling with compact metric sizing', () => {
-    const { container } = render(<StatCard label="x" value="1" icon="Star" />);
-    const card = container.firstChild as HTMLElement;
+  it('renders EduPlay card styling with compact metric sizing', () => {
+    render(<StatCard label="x" value="1" icon="Star" data-testid="stat" />);
+    const card = screen.getByTestId("stat");
     expect(card.className).toContain('bg-surface-container-lowest');
     expect(card.className).toContain('border-outline-variant');
     expect(card.className).toContain('shadow-soft-sm');

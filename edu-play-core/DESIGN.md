@@ -1,9 +1,16 @@
-# DESIGN.md — EduPlay Seesaw-Style Design System
+# DESIGN.md — EduPlay Design System
 
 > Single-system spec for EduPlay product UI. Teacher, parent, admin, public,
-> auth, student, play, and game surfaces use the Seesaw-inspired EduPlay system:
+> auth, student, play, and game surfaces use the EduPlay system:
 > Lexend, EduPlay purple, classroom-white cards, quiet canvas surfaces, soft shadows,
 > and gentle motion.
+
+## Design Direction
+
+EduPlay is developing its own design identity. The tokens and components below
+are the current implementation baseline, not a requirement to imitate another
+product. Evolve them intentionally around learner needs, teacher workflows,
+and an original EduPlay voice.
 
 ## 1. Source Of Truth
 
@@ -12,7 +19,6 @@ Production implementation authority lives in:
 - `src/app/globals.css` — Tailwind 4 token source of truth.
 - `src/shared/components/ui/kit/` — primitive implementations and prop contracts.
 - `src/shared/components/ui/Icon.tsx` and `Icon.registry.ts` — approved icon wrapper and glyph registry.
-- `src/shared/components/ui/seesaw-design-system/` — reference bundle for visual direction, tokens, and teacher-web patterns.
 - `docs/ui-kit.md` — import and extension rules.
 
 Keep imports stable through `@/shared/components/ui/kit`. Component names such
@@ -24,9 +30,9 @@ system branding.
 | Mode | Surfaces | Rules |
 | --- | --- | --- |
 | Standard | Teacher, parent, admin, auth, and public surfaces. | Lexend, purple primary, soft shadows, calm motion, token cards, and denser route-appropriate spacing. Primary touch targets follow the primitive contract for non-child dashboards. |
-| Kid mode | Student routes, play routes, games, and child-facing rewards/errors. | Same Seesaw visual language and tokens, with 64px minimum primary touch targets, 18px minimum body text, larger spacing, reduced-motion-aware animation, and simpler choices for children. Use kit props such as `Button mode="kid" size="lg"` rather than parallel styling. |
+| Kid mode | Student routes, play routes, games, and child-facing rewards/errors. | Same EduPlay visual language and tokens, with 64px minimum primary touch targets, 18px minimum body text, larger spacing, reduced-motion-aware animation, and simpler choices for children. Use kit props such as `Button mode="kid" size="lg"` rather than parallel styling. |
 
-There is no runtime theme switch. Routes and primitives use the same Seesaw-style token spine with surface-specific sizing.
+There is no runtime theme switch. Routes and primitives use the same EduPlay token spine with surface-specific sizing.
 
 ## 3. Tokens
 
@@ -68,7 +74,20 @@ arbitrary radii, or arbitrary shadows in production UI components.
 
 ## 5. Primitives
 
-- Use `Button` or `ChunkyButton` for actions. Both render Seesaw-style chrome
+Mantine is the foundation for reusable DOM controls, cards, overlays, tables,
+fields, progress, and status components. Keep EduPlay APIs in the shared kit;
+implement their behavior with Mantine rather than building parallel native
+controls. The Mantine Styles API and token classes preserve EduPlay's own visual
+identity. Use `MantineBoundary` for standalone components that need a themed
+fallback; the application already supplies the provider.
+
+Native semantic layout elements, hidden form inputs, SVG brand artwork, drawing
+canvases, and Phaser game objects remain appropriate. A component that composes
+Mantine-backed kit primitives does not need a redundant direct Mantine import.
+Run `npm run audit:mantine` to inspect direct and indirect adoption and remaining
+visible native controls. Import counts measure dependencies, not visual quality.
+
+- Use `Button` or `ChunkyButton` for actions. Both render EduPlay chrome
   with soft shadows; student/play callsites keep larger sizing via props.
 - Use `Card` or `DuoCard` for card surfaces. Both render white cards,
   12-16px radii, and `shadow-soft-sm` / `shadow-soft`.

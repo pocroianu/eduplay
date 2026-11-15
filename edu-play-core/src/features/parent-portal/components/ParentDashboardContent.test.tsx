@@ -76,7 +76,7 @@ const resources = {
 } as const
 
 describe('ParentDashboardContent', () => {
-  it('renders the Seesaw-style family thread shell', () => {
+  it('renders the EduPlay family thread shell', () => {
     render(
       <I18nProvider lang="en" resources={resources}>
         <ParentDashboardContent {...props} />
@@ -107,7 +107,7 @@ describe('ParentDashboardContent', () => {
     }
   })
 
-  it('uses the shared Seesaw focus ring for dashboard links', () => {
+  it('uses the shared EduPlay focus ring for dashboard links', () => {
     const source = readFileSync(
       join(
         process.cwd(),

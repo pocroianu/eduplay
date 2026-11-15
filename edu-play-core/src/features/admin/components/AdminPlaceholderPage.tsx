@@ -25,7 +25,7 @@ export interface AdminPlaceholderPageProps {
   icon: IconName
   /** Identifier of the follow-up ticket this surface ships under. */
   trackingTicket: string
-  /** Read-only rows modelled after the Seesaw account settings list. */
+  /** Read-only rows modelled after the EduPlay account settings list. */
   rows?: AdminPlaceholderRow[]
   /** Compact status cards for unavailable operational controls. */
   statusCards?: AdminPlaceholderStatusCard[]

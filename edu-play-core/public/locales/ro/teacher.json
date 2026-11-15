@@ -205,7 +205,7 @@
         "studentOther": "{{count}} elevi",
         "emptyTitle": "Încă nu ai clase",
         "emptyFilteredTitle": "Clasele apar aici",
-        "emptyBody": "Creează o clasă ca să vezi carduri ca în pagina Home Seesaw."
+        "emptyBody": "Creează o clasă ca să vezi activitățile și progresul elevilor."
       },
       "resources": {
         "ariaLabel": "Resurse pentru profesori",
@@ -405,7 +405,7 @@
         "bulkArchive": "Arhivează activități în masă",
         "pullToRefresh": "Trage pentru reîmprospătare",
         "title": "Activități active",
-        "description": "Activități active pentru {{name}}, afișate în structura tabului Seesaw. Acțiunile reale rămân în fluxurile existente.",
+        "description": "Activități active pentru {{name}}. Deschide o activitate ca să vezi acțiunile disponibile.",
         "assignedToAll": "Atribuită tuturor elevilor și grupurilor",
         "completed": "Finalizate",
         "waitingForReview": "Așteaptă revizuire",
@@ -442,7 +442,7 @@
         "itemRequest": "{{name}} vrea să adauge un element.",
         "hoursAgo": "acum {{count}} ore",
         "daysAgo": "acum {{count}} zile",
-        "weeklyDigest": "Săptămâna aceasta în Seesaw pentru {{name}}"
+        "weeklyDigest": "Săptămâna aceasta în EduPlay pentru {{name}}"
       }
     }
   },
@@ -494,7 +494,7 @@
       "preview": "Previzualizează"
     },
     "library": {
-      "seesawLibrary": "Bibliotecă Seesaw",
+      "seesawLibrary": "Bibliotecă EduPlay",
       "communityLibrary": "Bibliotecă comunitate",
       "selectGrade": "Selectează nivelul",
       "language": "Limbă",
@@ -666,7 +666,7 @@
       "classActive": "Clasă activă",
       "classArchived": "Clasă arhivată",
       "toolsTitle": "Alege instrumentul",
-      "toolsDescription": "Seesaw afișează șase intrări clare: Fotografie, Desen, Video, Încărcare, Notiță și Link.",
+      "toolsDescription": "Alege cum adaugi o lucrare: Fotografie, Desen, Video, Încărcare, Notiță și Link.",
       "contextTitle": "Context jurnal",
       "contextDescription": "Date reale din clasă, fără acțiuni de publicare.",
       "noPersistenceTitle": "Fără persistență",
@@ -681,7 +681,7 @@
       "upload": "Încărcare",
       "uploadDescription": "Atașează o lucrare sau o resursă externă.",
       "note": "Notiță",
-      "noteDescription": "Deschide editorul de text în stil Seesaw.",
+      "noteDescription": "Deschide editorul de text.",
       "link": "Link",
       "linkDescription": "Adaugă o adresă web pentru familie."
     },
@@ -689,7 +689,7 @@
       "back": "Înapoi la instrumente",
       "headingLabel": "Scrie o notiță",
       "heading": "Scrie o notiță",
-      "description": "Editor în stil Seesaw pentru această clasă. Câmpurile rămân doar previzualizare, fără publicare.",
+      "description": "Scrie o notiță pentru această clasă. Câmpurile rămân doar previzualizare, fără publicare.",
       "draft": "Ciornă indisponibilă",
       "publish": "Publicare indisponibilă",
       "editorTitle": "Notiță pentru jurnal",

@@ -108,7 +108,7 @@ describe('DataTable', () => {
     const { container } = render(
       <DataTable columns={COLUMNS} rows={[]} getRowKey={(r) => r.id} loading loadingRows={3} />,
     );
-    const wrapper = container.firstChild as HTMLElement;
+    const wrapper = container.querySelector('[aria-busy]') as HTMLElement;
     expect(wrapper.getAttribute('aria-busy')).toBe('true');
     const desktop = container.querySelector('.hidden.md\\:block tbody');
     expect(desktop?.children.length).toBe(3);
@@ -130,6 +130,40 @@ describe('DataTable', () => {
     expect(row).toBeTruthy();
     fireEvent.click(row!);
     expect(onRowClick).toHaveBeenCalledWith(STUDENTS[0], 0);
+  });
+
+  it('keeps table row semantics and activates a focused row with Enter or Space', () => {
+    const onRowClick = vi.fn();
+    render(<DataTable columns={COLUMNS} rows={STUDENTS} getRowKey={(r) => r.id} onRowClick={onRowClick} />);
+    const row = within(screen.getByRole('table')).getByText('Ana').closest('tr')!;
+    expect(row).toHaveAttribute('tabindex', '0');
+    expect(row).not.toHaveAttribute('role', 'button');
+    expect(within(screen.getByRole('table')).getAllByRole('row')).toContain(row);
+    fireEvent.keyDown(row, { key: 'Enter' });
+    fireEvent.keyDown(row, { key: ' ' });
+    expect(onRowClick).toHaveBeenCalledTimes(2);
+    expect(onRowClick).toHaveBeenCalledWith(STUDENTS[0], 0);
+  });
+
+  it('does not activate a row when a nested control is used on desktop or mobile', () => {
+    const onRowClick = vi.fn();
+    const onAction = vi.fn();
+    const columns: DataTableColumn<Student>[] = [
+      { key: 'name', header: 'Nume', cell: (row) => row.name },
+      { key: 'action', header: 'Acțiune', cell: () => <button onClick={onAction}>Editează</button> },
+    ];
+    const { container } = render(<DataTable columns={columns} rows={[STUDENTS[0]]} getRowKey={(r) => r.id} onRowClick={onRowClick} />);
+    const desktopAction = within(screen.getByRole('table')).getByRole('button', { name: 'Editează' });
+    fireEvent.keyDown(desktopAction, { key: 'Enter' });
+    fireEvent.click(desktopAction);
+    const mobile = container.querySelector('.md\\:hidden') as HTMLElement;
+    const mobileAction = within(mobile).getByRole('button', { name: 'Editează' });
+    expect(mobileAction.closest('button')?.parentElement?.closest('button')).toBeNull();
+    fireEvent.click(mobileAction);
+    expect(onAction).toHaveBeenCalledTimes(2);
+    expect(onRowClick).not.toHaveBeenCalled();
+    fireEvent.click(within(mobile).getByRole('button', { name: 'Deschide rândul 1' }));
+    expect(onRowClick).toHaveBeenCalledTimes(1);
   });
 
   it('renders a mobile stacked card view with each row as a labeled block', () => {

@@ -1,8 +1,8 @@
 'use client';
 
-import { Button as MantineButton, MantineContext, MantineProvider } from '@mantine/core';
+import { MantineBoundary } from '@/shared/components/ui/kit';
+import { Button as MantineButton } from '@mantine/core';
 import {
-  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -127,7 +127,6 @@ export function StudentPinPad({
   const [shakeKey, setShakeKey] = useState(0);
   const [status, setStatus] = useState<AttemptStatus>('calm');
   const [isPending, startTransition] = useTransition();
-  const mantineContext = useContext(MantineContext);
   const recentUsernamesSnapshot = useSyncExternalStore(
     subscribeRecentUsernames,
     readRecentUsernamesSnapshot,
@@ -342,5 +341,5 @@ export function StudentPinPad({
     </form>
   );
 
-  return mantineContext ? formMarkup : <MantineProvider>{formMarkup}</MantineProvider>;
+  return <MantineBoundary>{formMarkup}</MantineBoundary>;
 }

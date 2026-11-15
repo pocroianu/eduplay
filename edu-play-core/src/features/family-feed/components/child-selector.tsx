@@ -2,7 +2,8 @@
 
 import { useTransition } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { Pill } from '@/shared/components/ui/kit';
+import { UnstyledButton } from '@mantine/core';
+import { MantineBoundary, Pill } from '@/shared/components/ui/kit';
 import { cn } from '@/shared/lib/utils/cn';
 
 export interface ChildOption {
@@ -64,6 +65,7 @@ export function ChildSelector({
   };
 
   return (
+    <MantineBoundary>
     <div
       data-testid="family-feed-child-selector"
       role="group"
@@ -86,6 +88,7 @@ export function ChildSelector({
         </SelectorPill>
       ))}
     </div>
+    </MantineBoundary>
   );
 }
 
@@ -99,14 +102,14 @@ function SelectorPill({
   children: React.ReactNode;
 }) {
   return (
-    <button
+    <UnstyledButton
       type="button"
       aria-pressed={active}
       data-active={active}
       onClick={onClick}
-      className="rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+      className="min-h-16 min-w-16 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
     >
       <Pill tone={active ? 'lime' : 'neutral'}>{children}</Pill>
-    </button>
+    </UnstyledButton>
   );
 }

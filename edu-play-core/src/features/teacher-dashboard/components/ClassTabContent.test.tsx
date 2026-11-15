@@ -85,7 +85,7 @@ describe('<ClassTabContent />', () => {
       </MantineProvider>,
     )
 
-  it('renders shared Seesaw-style class workspace chrome', () => {
+  it('renders shared EduPlay class workspace chrome', () => {
     renderClassTab('journal')
 
     expect(screen.getByTestId('class-workspace')).toBeInTheDocument()
@@ -129,7 +129,7 @@ describe('<ClassTabContent />', () => {
     )
   })
 
-  it('renders the class activities tab like the Seesaw class-activities reference flow', () => {
+  it('renders the class activities tab like the EduPlay class-activities reference flow', () => {
     renderClassTab('activities')
 
     expect(screen.getByRole('heading', { name: 'Bradiceni' })).toBeInTheDocument()
@@ -152,7 +152,7 @@ describe('<ClassTabContent />', () => {
     expect(screen.getAllByText('Atribuită tuturor elevilor și grupurilor')).toHaveLength(2)
   })
 
-  it('renders the class journal like the Seesaw class-journal reference flow', () => {
+  it('renders the class journal like the EduPlay class-journal reference flow', () => {
     renderClassTab('journal')
 
     expectActiveClassTab(/jurnal/i)
@@ -179,7 +179,7 @@ describe('<ClassTabContent />', () => {
     expect(componentSource).not.toMatch(/<button\b/)
   })
 
-  it('renders the gradebook upsell like the Seesaw class-gradebook reference flow', () => {
+  it('renders the gradebook upsell like the EduPlay class-gradebook reference flow', () => {
     renderClassTab('gradebook')
 
     expectActiveClassTab(/catalog/i)
@@ -191,7 +191,7 @@ describe('<ClassTabContent />', () => {
     expect(screen.queryByRole('table')).not.toBeInTheDocument()
   })
 
-  it('renders notifications like the Seesaw class-notifications reference flow', () => {
+  it('renders notifications like the EduPlay class-notifications reference flow', () => {
     renderClassTab('notifications')
 
     expectActiveClassTab(/notificări/i)
@@ -204,6 +204,6 @@ describe('<ClassTabContent />', () => {
     expect(screen.getByText(/Grasu vrea să adauge un comentariu la elementul lui Geani Pocroianu/i)).toBeInTheDocument()
     expect(screen.getAllByText(/Grasu vrea să adauge un element/i)).toHaveLength(2)
     expect(screen.getByText('marți, 28 aprilie')).toBeInTheDocument()
-    expect(screen.getByText('Săptămâna aceasta în Seesaw pentru Bradiceni')).toBeInTheDocument()
+    expect(screen.getByText('Săptămâna aceasta în EduPlay pentru Bradiceni')).toBeInTheDocument()
   })
 })

@@ -1,11 +1,10 @@
 'use client';
 
-import { useContext, type HTMLAttributes, type ReactNode } from 'react';
+import { MantineBoundary } from './MantineBoundary';
+import { type HTMLAttributes, type ReactNode } from 'react';
 import {
   Box,
   Card as MantineCard,
-  MantineContext,
-  MantineProvider,
 } from '@mantine/core';
 import { cn } from '@/shared/lib/utils/cn';
 
@@ -108,7 +107,7 @@ export interface CardProps
   mode?: Mode;
   tone?: Tone;
   padding?: Padding;
-  /** Compatibility prop retained; Seesaw styling no longer uses depth shadows. */
+  /** Compatibility prop retained; EduPlay styling no longer uses depth shadows. */
   depth?: number;
   /** standard-mode only: use ambient soft shadow. Default true. */
   shadow?: boolean;
@@ -126,7 +125,6 @@ export function Card({
   style,
   ...props
 }: CardProps) {
-  const mantineContext = useContext(MantineContext);
   const toneStyle =
     mode === 'kid' ? KID_TONE_STYLE[tone] : STANDARD_TONE_STYLE[tone];
   const card = (
@@ -152,7 +150,7 @@ export function Card({
     </MantineCard>
   );
 
-  return mantineContext ? card : <MantineProvider>{card}</MantineProvider>;
+  return <MantineBoundary>{card}</MantineBoundary>;
 }
 
 export interface CardHeaderProps extends HTMLAttributes<HTMLDivElement> {

@@ -1,14 +1,14 @@
 'use client';
 
+import { MantineBoundary } from './MantineBoundary';
 import {
   forwardRef,
-  useContext,
   useId,
   type CSSProperties,
   type ReactNode,
   type TextareaHTMLAttributes,
 } from 'react';
-import { Box, MantineContext, MantineProvider, Textarea } from '@mantine/core';
+import { Box, Textarea } from '@mantine/core';
 
 export interface TextareaFieldProps
   extends Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'className'> {
@@ -65,7 +65,6 @@ export const TextareaField = forwardRef<
     },
     ref,
   ) => {
-    const mantineContext = useContext(MantineContext);
     const generatedId = useId();
     const textareaId = id ?? generatedId;
     const errorId = `${textareaId}-error`;
@@ -90,7 +89,7 @@ export const TextareaField = forwardRef<
       </Box>
     );
 
-    return mantineContext ? field : <MantineProvider>{field}</MantineProvider>;
+    return <MantineBoundary>{field}</MantineBoundary>;
   },
 );
 

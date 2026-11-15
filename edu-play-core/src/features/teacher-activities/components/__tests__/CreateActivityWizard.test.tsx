@@ -48,7 +48,7 @@ beforeEach(() => {
 })
 
 describe('CreateActivityWizard', () => {
-  it('renders the Seesaw workspace, source controls, response template group, and student preview', async () => {
+  it('renders the EduPlay workspace, source controls, response template group, and student preview', async () => {
     const user = userEvent.setup()
     renderWithProvider(<CreateActivityWizard interactiveTypes={interactiveTypes} />)
 

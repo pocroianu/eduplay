@@ -105,7 +105,7 @@ describe('DashboardShell', () => {
     expect(screen.getAllByRole('link', { name: /panou/i }).length).toBeGreaterThan(0)
   })
 
-  it('renders Seesaw shell anatomy for the teacher dashboard', () => {
+  it('renders EduPlay shell anatomy for the teacher dashboard', () => {
     renderDashboard(
       <DashboardShell
         variant="teacher"

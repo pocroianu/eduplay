@@ -1,12 +1,13 @@
 import type { ReactNode } from 'react'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
+import { Switch, TextInput } from '@mantine/core'
 import { getClassDetailData, type ClassDetailData, type ClassDetailStudent } from '@/features/teacher-dashboard/server'
 import { I18nProvider } from '@/lib/i18n/I18nProvider'
 import type { Language } from '@/lib/i18n/config'
 import { getServerLanguage, getServerTranslation, preloadNamespaces } from '@/lib/i18n/server'
 import { Icon } from '@/shared/components/ui/Icon'
-import { Button, Card, Pill } from '@/shared/components/ui/kit'
+import { Button, Card, MantineBoundary, Pill } from '@/shared/components/ui/kit'
 import { ROUTES } from '@/shared/lib/constants'
 
 const sectionDefinitions = [
@@ -124,7 +125,6 @@ async function getSettingsSectionCopy(lang: Language): Promise<SettingsSectionCo
   }
 }
 
-
 const sectionBySlug = new Map<string, SectionDefinition>(
   sectionDefinitions.map((section) => [section.slug, section] as const),
 )
@@ -154,7 +154,6 @@ export default async function ClassSettingsSectionPage({
   const lang = await getServerLanguage()
   const resources = await preloadNamespaces(lang, ['teacher'])
   const copy = await getSettingsSectionCopy(lang)
-
 
   return (
     <I18nProvider lang={lang} resources={resources}>
@@ -453,13 +452,16 @@ function ManageTeachersSection({ data }: { data: SettingsSectionData }) {
           Introdu e-mailul profesorului pe care vrei să îl inviți:
         </label>
         <div className="mt-2 flex flex-col gap-2 sm:flex-row">
-          <input
-            id="teacher-email-preview"
-            type="email"
-            disabled
-            placeholder="profesor@scoala.ro"
-            className="min-h-11 flex-1 rounded-md border border-outline-variant bg-surface px-3 text-sm text-on-surface-variant"
-          />
+          <MantineBoundary>
+            <TextInput
+              id="teacher-email-preview"
+              type="email"
+              disabled
+              placeholder="profesor@scoala.ro"
+              className="flex-1"
+              styles={{ input: { minHeight: 44 } }}
+            />
+          </MantineBoundary>
           <Button mode="standard" disabled>
             Invită profesorul
           </Button>
@@ -637,17 +639,8 @@ function ReadonlySwitch({
         <p className="text-sm font-semibold text-on-surface">{label}</p>
         {description && <p className="mt-1 text-sm leading-6 text-on-surface-variant">{description}</p>}
       </div>
-      <span
-        role="switch"
-        aria-label={label}
-        aria-checked={checked}
-        aria-disabled="true"
-        className={`relative h-6 w-11 shrink-0 rounded-full border ${checked ? 'border-primary bg-primary' : 'border-outline bg-surface-container'}`}
-      >
-        <span
-          className={`absolute top-1 h-4 w-4 rounded-full bg-surface-container-lowest ${checked ? 'right-1' : 'left-1'}`}
-        />
-      </span>
+      <MantineBoundary><Switch disabled checked={checked} aria-label={label}
+        aria-checked={checked} aria-disabled="true" className="shrink-0" /></MantineBoundary>
     </div>
   )
 }

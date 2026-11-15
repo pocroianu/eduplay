@@ -1,3 +1,5 @@
+import { Card as MantineCard } from '@mantine/core';
+import { MantineBoundary } from './MantineBoundary';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/ui/Icon';
 import type { IconName } from '@/shared/components/ui/Icon.registry';
@@ -44,7 +46,8 @@ export function FeatureActionCard({
   className,
 }: FeatureActionCardProps) {
   return (
-    <Link
+    <MantineBoundary>
+    <MantineCard component={Link} unstyled
       href={href}
       className={cn(
         'group flex min-h-32 flex-col justify-between rounded-xl p-5 shadow-soft-sm transition-[background-color,box-shadow,color] duration-200 ease-standard hover:shadow-soft-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary',
@@ -67,6 +70,7 @@ export function FeatureActionCard({
           {subtitle}
         </span>
       </span>
-    </Link>
+    </MantineCard>
+    </MantineBoundary>
   );
 }

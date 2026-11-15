@@ -12,7 +12,7 @@ describe('Button (standard mode)', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  it('uses Seesaw-style standard chrome without scale-hover behavior', () => {
+  it('uses EduPlay standard chrome without scale-hover behavior', () => {
     render(<Button variant="secondary">Sign in</Button>);
     const button = screen.getByRole('button', { name: /sign in/i });
     const className = button.getAttribute('class') ?? '';
@@ -103,6 +103,24 @@ describe('Button (standard mode)', () => {
 });
 
 describe('Button (kid mode)', () => {
+  it('blocks disabled kid links for pointer and keyboard activation', () => {
+    const onClick = vi.fn();
+    render(<Button mode="kid" href="/preview" isPending onClick={onClick}>Preview</Button>);
+    const link = screen.getByRole('link', { name: 'Preview' });
+    expect(link).toHaveAttribute('aria-disabled', 'true');
+    expect(link).toHaveAttribute('tabindex', '-1');
+    expect(link).toHaveAttribute('aria-busy', 'true');
+    expect(fireEvent.click(link)).toBe(false);
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it('forwards link attributes and keyboard handlers to the anchor', () => {
+    const onKeyDown = vi.fn();
+    render(<Button mode="kid" href="/preview" data-testid="preview" onKeyDown={onKeyDown}>Preview</Button>);
+    fireEvent.keyDown(screen.getByTestId('preview'), { key: 'Enter' });
+    expect(onKeyDown).toHaveBeenCalledOnce();
+  });
+
   it('renders a button with depth face color when tone=lime', () => {
     render(
       <Button mode="kid" tone="lime">

@@ -1,3 +1,6 @@
+'use client';
+import { Paper, UnstyledButton } from '@mantine/core';
+import { MantineBoundary } from './MantineBoundary';
 import type { MouseEventHandler, ReactNode } from 'react';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/ui/Icon';
@@ -42,7 +45,7 @@ export function LibraryExploreCard({
   const isCollection = variant === 'collection';
 
   return (
-    <article
+    <MantineBoundary><Paper component="article" unstyled
       aria-label={title}
       className={cn(
         'seesaw-explore-card',
@@ -65,11 +68,11 @@ export function LibraryExploreCard({
         </span>
       </Link>
       {actionLabel && onAction ? (
-        <button type="button" className="seesaw-explore-card__action seesaw-interactive" onClick={onAction}>
+        <UnstyledButton type="button" className="seesaw-explore-card__action seesaw-interactive" onClick={onAction}>
           <Icon name="Star" size={20} weight="regular" aria-hidden />
           <span className="sr-only">{actionLabel}</span>
-        </button>
+        </UnstyledButton>
       ) : null}
-    </article>
+    </Paper></MantineBoundary>
   );
 }

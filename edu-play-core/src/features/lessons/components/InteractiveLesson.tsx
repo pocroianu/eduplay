@@ -3,8 +3,9 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useRouter } from 'next/navigation'
+import { TextInput, UnstyledButton } from '@mantine/core'
 import { ProgressBar } from '@/shared/components/ui/ProgressBar'
-import { Button, RewardModal, Vulpita, type RewardItem } from '@/shared/components/ui/kit'
+import { Button, MantineBoundary, RewardModal, Vulpita, type RewardItem } from '@/shared/components/ui/kit'
 import { Icon } from '@/shared/components/ui/Icon'
 import type { IconName } from '@/shared/components/ui/Icon.registry';
 import { ROUTES } from '@/shared/lib/constants/routes'
@@ -13,7 +14,6 @@ import {
   fadeInUp,
   slideIn,
   staggerContainer,
-  staggerItem,
 } from '@/config/animations'
 
 /* -------------------------------------------------------------------------- */
@@ -440,8 +440,7 @@ export function InteractiveLesson({
                 {steps.map((step, idx) => (
                   <motion.div
                     key={step.id}
-                    variants={staggerItem}
-                    className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${
+                            className={`flex items-center gap-3 p-3 rounded-xl transition-colors ${
                       idx === currentStepIndex
                         ? 'bg-primary-soft ring-1 ring-primary/30'
                         : idx < currentStepIndex
@@ -722,6 +721,7 @@ interface MultipleChoiceProps {
 
 function MultipleChoice({ options, selectedId, onSelect, answered }: MultipleChoiceProps) {
   return (
+    <MantineBoundary>
     <motion.div
       className="grid grid-cols-1 sm:grid-cols-2 gap-4"
       variants={staggerContainer}
@@ -749,13 +749,10 @@ function MultipleChoice({ options, selectedId, onSelect, answered }: MultipleCho
         }
 
         return (
-          <motion.button
+          <UnstyledButton
             key={option.id}
-            variants={staggerItem}
             onClick={() => !answered && onSelect(option.id)}
             disabled={answered}
-            whileHover={answered ? undefined : { y: -1 }}
-            whileTap={answered ? undefined : { y: 1 }}
             className={`min-h-[64px] p-5 rounded-xl border ${borderColor} ${bgColor} text-left font-medium text-lg transition-colors flex items-center gap-3 disabled:cursor-default`}
           >
             {option.icon && (
@@ -764,10 +761,11 @@ function MultipleChoice({ options, selectedId, onSelect, answered }: MultipleCho
             <span className="flex-1">{option.label}</span>
             {showCorrect && <Icon name="CheckCircle" weight="fill" size={24} className="text-primary shrink-0" />}
             {showIncorrect && <Icon name="XCircle" weight="fill" size={24} className="text-error shrink-0" />}
-          </motion.button>
+          </UnstyledButton>
         )
       })}
     </motion.div>
+    </MantineBoundary>
   )
 }
 
@@ -784,6 +782,7 @@ interface FillInTheBlankProps {
 
 function FillInTheBlank({ blanks, values, onChange, answered }: FillInTheBlankProps) {
   return (
+    <MantineBoundary>
     <motion.div className="flex flex-col gap-5" variants={fadeInUp} initial="initial" animate="animate">
       {blanks.map((blank) => {
         const value = values[blank.id] ?? ''
@@ -800,13 +799,15 @@ function FillInTheBlank({ blanks, values, onChange, answered }: FillInTheBlankPr
               className={`flex items-center gap-3 rounded-2xl bg-surface-container-lowest px-5 py-4 ring-1 ${ringClass} transition-all`}
             >
               <Icon name="Pencil" size={20} className="text-on-surface-variant shrink-0" />
-              <input
+              <TextInput
+                aria-label={blank.placeholder}
                 type="text"
                 value={value}
                 onChange={(e) => onChange({ ...values, [blank.id]: e.target.value })}
                 placeholder={blank.placeholder}
                 disabled={answered}
-                className="flex-1 bg-transparent outline-none text-lg font-medium text-on-surface placeholder:text-on-surface-variant/50 min-h-[48px] disabled:cursor-default"
+                className="flex-1"
+                styles={{ input: { minHeight: 64, fontSize: "var(--text-lg)", backgroundColor: "transparent" } }}
               />
               {isFieldCorrect && <Icon name="CheckCircle" weight="fill" size={24} className="text-primary" />}
               {isFieldIncorrect && <Icon name="XCircle" weight="fill" size={24} className="text-error" />}
@@ -824,6 +825,7 @@ function FillInTheBlank({ blanks, values, onChange, answered }: FillInTheBlankPr
         )
       })}
     </motion.div>
+    </MantineBoundary>
   )
 }
 
@@ -860,6 +862,7 @@ function DragAndDrop({ tokens, dropZones, placements, onPlace, answered }: DragA
   const isTokenPlaced = (tokenId: string) => !!placements[tokenId]
 
   return (
+    <MantineBoundary>
     <motion.div className="flex flex-col gap-6" variants={fadeInUp} initial="initial" animate="animate">
       <p className="text-sm font-medium text-on-surface-variant text-center">
         Selectează un element, apoi apasă pe zona potrivită.
@@ -874,13 +877,11 @@ function DragAndDrop({ tokens, dropZones, placements, onPlace, answered }: DragA
           const isIncorrectlyPlaced = answered && placements[token.id] && placements[token.id] !== token.targetZoneId
 
           return (
-            <motion.button
+            <UnstyledButton
               key={token.id}
               onClick={() => handleTokenClick(token.id)}
               disabled={answered}
-              whileHover={answered ? undefined : { y: -1 }}
-              whileTap={answered ? undefined : { y: 1 }}
-              className={`min-h-[64px] min-w-[80px] px-5 py-3 rounded-2xl font-bold text-lg shadow-soft transition-all disabled:cursor-default ${
+                  className={`min-h-[64px] min-w-[80px] px-5 py-3 rounded-2xl font-bold text-lg shadow-soft transition-all disabled:cursor-default ${
                 isCorrectlyPlaced
                   ? 'bg-primary/20 border border-tertiary text-on-surface'
                   : isIncorrectlyPlaced
@@ -893,7 +894,7 @@ function DragAndDrop({ tokens, dropZones, placements, onPlace, answered }: DragA
               }`}
             >
               {token.label}
-            </motion.button>
+            </UnstyledButton>
           )
         })}
       </div>
@@ -906,12 +907,11 @@ function DragAndDrop({ tokens, dropZones, placements, onPlace, answered }: DragA
           const isIncorrect = answered && tokenInZone && tokenInZone.targetZoneId !== zone.id
 
           return (
-            <motion.button
+            <UnstyledButton
               key={zone.id}
               onClick={() => handleZoneClick(zone.id)}
               disabled={answered}
-              whileHover={answered ? undefined : { y: -1 }}
-              className={`min-h-[80px] min-w-[120px] px-6 py-4 rounded-2xl border border-dashed flex flex-col items-center justify-center gap-1 transition-all disabled:cursor-default ${
+                className={`min-h-[80px] min-w-[120px] px-6 py-4 rounded-2xl border border-dashed flex flex-col items-center justify-center gap-1 transition-all disabled:cursor-default ${
                 isCorrect
                   ? 'border-tertiary bg-primary/10'
                   : isIncorrect
@@ -930,10 +930,11 @@ function DragAndDrop({ tokens, dropZones, placements, onPlace, answered }: DragA
               {!tokenInZone && (
                 <span className="text-on-surface-variant/50 text-sm">Trage aici</span>
               )}
-            </motion.button>
+            </UnstyledButton>
           )
         })}
       </div>
     </motion.div>
+    </MantineBoundary>
   )
 }

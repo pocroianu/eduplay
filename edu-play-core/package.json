@@ -19,6 +19,7 @@
     "build:activity-protocol": "npm run build --workspace=@edu-play/activity-protocol",
     "verify:agent": "npm run lint && npm run typecheck && npm run test:unit && tsx scripts/check-agent-guardrails.ts --types-drift-if-needed",
     "check:agent-guardrails": "tsx scripts/check-agent-guardrails.ts",
+    "audit:mantine": "node scripts/audit-mantine.mjs",
     "test": "npm run test:unit && npm run test:e2e",
     "test:scripts": "bash scripts/post-paperclip-summary.test.sh",
     "test:unit": "vitest run",

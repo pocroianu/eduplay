@@ -17,7 +17,7 @@ describe('Pill', () => {
         Hello
       </Pill>,
     );
-    const pill = container.firstElementChild as HTMLElement;
+    const pill = container.querySelector('.mantine-Badge-root') as HTMLElement;
     expect(pill.style.border).toContain('2px');
   });
 
@@ -27,7 +27,7 @@ describe('Pill', () => {
         Hello
       </Pill>,
     );
-    const pill = container.firstElementChild as HTMLElement;
+    const pill = container.querySelector('.mantine-Badge-root') as HTMLElement;
     expect(pill.style.border).toBe('');
   });
 });

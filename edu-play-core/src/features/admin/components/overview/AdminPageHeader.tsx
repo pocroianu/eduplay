@@ -1,4 +1,5 @@
 import { Icon } from '@/shared/components/ui/Icon';
+import { Button } from '@/shared/components/ui/kit';
 import { ADMIN_OVERVIEW_HEADER, getAdminGreeting } from '@/features/admin/copy/overview'
 
 export interface AdminPageHeaderProps {
@@ -33,16 +34,10 @@ export function AdminPageHeader({ fullName, now }: AdminPageHeaderProps) {
         </p>
       </div>
 
-      <button
-        type="button"
-        disabled
-        aria-disabled="true"
-        title={cta.disabledTooltip}
-        className="self-start lg:self-auto inline-flex items-center gap-2 rounded-full border border-outline-variant bg-surface-container px-5 py-3 text-sm font-semibold text-on-surface-variant shadow-soft-sm opacity-60 cursor-not-allowed focus-visible:outline-2 focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
-      >
+      <Button type="button" disabled title={cta.disabledTooltip} variant="secondary" className="self-start lg:self-auto">
         <Icon name="Wrench" size={18} />
         <span>{cta.label}</span>
-      </button>
+      </Button>
     </header>
   )
 }

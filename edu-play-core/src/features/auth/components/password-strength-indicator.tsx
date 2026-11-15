@@ -1,10 +1,12 @@
-'use client';
+"use client";
 
-import { useMemo } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Icon } from '@/shared/components/ui/Icon';
-import { calculatePasswordStrength } from '../utils/calculate-password-strength';
-import { passwordRequirementChecks } from '../schemas/reset-password.schema';
+import { useMemo } from "react";
+import { Progress } from "@mantine/core";
+import { useTranslation } from "react-i18next";
+import { Icon } from "@/shared/components/ui/Icon";
+import { MantineBoundary } from "@/shared/components/ui/kit";
+import { calculatePasswordStrength } from "../utils/calculate-password-strength";
+import { passwordRequirementChecks } from "../schemas/reset-password.schema";
 
 interface PasswordStrengthIndicatorProps {
   /** The current password value to evaluate */
@@ -17,9 +19,14 @@ interface PasswordStrengthIndicatorProps {
  * - Text label showing strength level
  * - Checklist of individual requirements with check/cross icons
  */
-export function PasswordStrengthIndicator({ password }: PasswordStrengthIndicatorProps) {
-  const { t } = useTranslation('auth');
-  const strength = useMemo(() => calculatePasswordStrength(password), [password]);
+export function PasswordStrengthIndicator({
+  password,
+}: PasswordStrengthIndicatorProps) {
+  const { t } = useTranslation("auth");
+  const strength = useMemo(
+    () => calculatePasswordStrength(password),
+    [password],
+  );
 
   const requirements = useMemo(() => {
     return Object.entries(passwordRequirementChecks).map(([key, check]) => ({
@@ -32,23 +39,35 @@ export function PasswordStrengthIndicator({ password }: PasswordStrengthIndicato
   // Map strength to Tailwind color classes
   const barColor = useMemo(() => {
     switch (strength.score) {
-      case 0: return 'bg-error';
-      case 1: return 'bg-gold';
-      case 2: return 'bg-primary';
-      case 3: return 'bg-primary';
-      case 4: return 'bg-primary';
-      default: return 'bg-outline-variant';
+      case 0:
+        return "bg-error";
+      case 1:
+        return "bg-gold";
+      case 2:
+        return "bg-primary";
+      case 3:
+        return "bg-primary";
+      case 4:
+        return "bg-primary";
+      default:
+        return "bg-outline-variant";
     }
   }, [strength.score]);
 
   const textColor = useMemo(() => {
     switch (strength.score) {
-      case 0: return 'text-error';
-      case 1: return 'text-gold';
-      case 2: return 'text-primary';
-      case 3: return 'text-primary';
-      case 4: return 'text-primary';
-      default: return 'text-on-surface-variant';
+      case 0:
+        return "text-error";
+      case 1:
+        return "text-gold";
+      case 2:
+        return "text-primary";
+      case 3:
+        return "text-primary";
+      case 4:
+        return "text-primary";
+      default:
+        return "text-on-surface-variant";
     }
   }, [strength.score]);
 
@@ -62,18 +81,31 @@ export function PasswordStrengthIndicator({ password }: PasswordStrengthIndicato
       <div>
         <div className="flex justify-between mb-1">
           <span className="text-xs text-on-surface-variant font-medium">
-            {t('passwordStrength.label')}
+            {t("passwordStrength.label")}
           </span>
           <span className={`text-xs font-semibold ${textColor}`}>
             {t(`passwordStrength.score.${strength.score}`)}
           </span>
         </div>
-        <div className="h-1.5 bg-surface-container rounded-full overflow-hidden">
-          <div
-            className={`h-full rounded-full transition-all duration-300 ease-in-out ${barColor}`}
-            style={{ width: `${strength.percentage}%` }}
-          />
-        </div>
+        <MantineBoundary>
+          <Progress.Root
+            unstyled
+            className="h-1.5 bg-surface-container rounded-full overflow-hidden"
+            role="progressbar"
+            aria-label={t("passwordStrength.label")}
+            aria-valuenow={strength.percentage}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuetext={t(`passwordStrength.score.${strength.score}`)}
+          >
+            <Progress.Section
+              value={strength.percentage}
+              withAria={false}
+              className={`h-full rounded-full transition-all duration-300 ease-in-out ${barColor}`}
+              style={{ width: `${strength.percentage}%` }}
+            />
+          </Progress.Root>
+        </MantineBoundary>
       </div>
 
       {/* Requirements checklist */}
@@ -81,23 +113,17 @@ export function PasswordStrengthIndicator({ password }: PasswordStrengthIndicato
         {requirements.map(({ key, label, met }) => (
           <div key={key} className="flex items-center gap-2">
             {met ? (
-              <span
-                data-testid={`requirement-${key}`}
-                data-met={met}
-              >
+              <span data-testid={`requirement-${key}`} data-met={met}>
                 <Icon name="Check" size={16} className="text-primary" />
               </span>
             ) : (
-              <span
-                data-testid={`requirement-${key}`}
-                data-met={met}
-              >
+              <span data-testid={`requirement-${key}`} data-met={met}>
                 <Icon name="X" size={16} className="text-on-surface-variant" />
               </span>
             )}
             <span
               className={`text-xs transition-colors duration-200 ${
-                met ? 'text-primary' : 'text-on-surface-variant'
+                met ? "text-primary" : "text-on-surface-variant"
               }`}
             >
               {label}

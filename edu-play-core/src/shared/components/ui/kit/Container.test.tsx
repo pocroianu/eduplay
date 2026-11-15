@@ -4,8 +4,8 @@ import { Container } from './Container';
 
 describe('Container', () => {
   it('renders as <div> by default', () => {
-    const { container } = render(<Container>hi</Container>);
-    expect(container.firstElementChild?.tagName).toBe('DIV');
+    render(<Container data-testid="container">hi</Container>);
+    expect(screen.getByTestId("container").tagName).toBe('DIV');
   });
 
   it('renders as the requested semantic tag', () => {

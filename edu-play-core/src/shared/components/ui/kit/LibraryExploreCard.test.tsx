@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { LibraryExploreCard } from './LibraryExploreCard';
 
 describe('LibraryExploreCard', () => {
-  it('renders a Seesaw-style collection card with motion-ready interactivity', () => {
+  it('renders an EduPlay collection card with motion-ready interactivity', () => {
     render(
       <LibraryExploreCard
         href="/teacher/libraries/explore?collection=summer"

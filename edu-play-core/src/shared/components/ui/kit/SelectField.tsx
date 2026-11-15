@@ -50,7 +50,7 @@ function optionChildrenToItems(children: ReactNode): FilterSelectOption[] {
     });
 }
 
-/** Standard-mode select field matching the Seesaw-style `TextField` anatomy. */
+/** Standard-mode select field matching the EduPlay `TextField` anatomy. */
 export const SelectField = forwardRef<HTMLSelectElement, SelectFieldProps>(
   (
     {

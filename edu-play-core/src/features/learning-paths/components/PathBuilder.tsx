@@ -15,6 +15,8 @@ import {
   type FilterSelectOption,
   Pill,
 } from '@/shared/components/ui/kit';
+import { Textarea, TextInput } from '@mantine/core';
+import { MantineBoundary } from '@/shared/components/ui/kit';
 import { ROUTES } from '@/shared/lib/constants';
 import { addStep, publishPath, reorderSteps } from '../actions';
 import type { LearningPath, LearningPathStep } from '../types';
@@ -184,6 +186,7 @@ export function PathBuilder({
   }
 
   return (
+    <MantineBoundary>
     <div className="min-h-screen bg-surface text-on-surface">
       <div className="sticky top-0 z-10 border-b border-outline-variant bg-surface-container-lowest px-6 py-4 lg:px-10">
         <div className="mx-auto flex max-w-6xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -322,14 +325,13 @@ export function PathBuilder({
                     <span className="text-sm font-bold text-on-surface">
                       Titlu
                     </span>
-                    <input
+                    <TextInput
                       value={title}
                       onChange={(event) => setTitle(event.target.value)}
                       disabled={!isDraft || isPending}
                       required
                       minLength={2}
                       maxLength={120}
-                      className="min-h-11 w-full rounded-md border border-outline bg-surface-container-lowest px-3 font-body text-sm text-on-surface"
                       data-testid="learning-path-step-title"
                     />
                   </label>
@@ -338,13 +340,12 @@ export function PathBuilder({
                     <span className="text-sm font-bold text-on-surface">
                       Descriere
                     </span>
-                    <textarea
+                    <Textarea
                       value={description}
                       onChange={(event) => setDescription(event.target.value)}
                       disabled={!isDraft || isPending}
                       rows={3}
                       maxLength={2000}
-                      className="w-full rounded-md border border-outline bg-surface-container-lowest px-3 py-2 font-body text-sm text-on-surface"
                       data-testid="learning-path-step-description"
                     />
                   </label>
@@ -393,6 +394,7 @@ export function PathBuilder({
         </div>
       </main>
     </div>
+    </MantineBoundary>
   );
 }
 

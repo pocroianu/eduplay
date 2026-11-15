@@ -65,7 +65,7 @@ describe('DuoProgressRing', () => {
   it('renders as an SVG element', () => {
     render(<DuoProgressRing value={50} />);
     const ring = screen.getByRole('progressbar');
-    expect(ring.tagName).toBe('svg');
+    expect(ring.querySelector('svg')).toBeInTheDocument();
   });
 
   it('clamps value below 0 to 0', () => {
@@ -81,15 +81,13 @@ describe('DuoProgressRing', () => {
   it('respects custom size', () => {
     render(<DuoProgressRing value={50} size={80} />);
     const ring = screen.getByRole('progressbar');
-    expect(ring).toHaveAttribute('width', '80');
-    expect(ring).toHaveAttribute('height', '80');
+    expect(ring).toHaveStyle({ width: '80px', height: '80px' });
   });
 
   it('defaults to size 48', () => {
     render(<DuoProgressRing value={50} />);
     const ring = screen.getByRole('progressbar');
-    expect(ring).toHaveAttribute('width', '48');
-    expect(ring).toHaveAttribute('height', '48');
+    expect(ring).toHaveStyle({ width: '48px', height: '48px' });
   });
 
   it('forwards className', () => {

@@ -392,7 +392,7 @@ describe('<TeacherActivitiesHub />', () => {
     )
   })
 
-  it('keeps explicit teacher library chrome on the new Seesaw kit primitives', () => {
+  it('keeps explicit teacher library chrome on the new EduPlay kit primitives', () => {
     const offenders = teacherLibraryChromeFiles.flatMap((relativePath) => {
       const source = readFileSync(join(process.cwd(), relativePath), 'utf8')
 

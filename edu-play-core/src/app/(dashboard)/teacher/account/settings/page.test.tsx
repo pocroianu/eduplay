@@ -59,7 +59,7 @@ vi.mock('@/lib/i18n/server', () => ({
     'account.settings.classes': 'Classes',
     'account.settings.currentClasses': 'Current Classes',
     'account.settings.addToClass': 'Add to Class',
-    'account.settings.premiumHeading': 'SEESAW PREMIUM FEATURES',
+    'account.settings.premiumHeading': 'EDUPLAY PREMIUM FEATURES',
     'account.settings.tryTrial': 'Try Free for 60 Days',
     'account.settings.previewPremium': 'Preview Premium Features',
     'account.settings.learnMore': 'Learn More',
@@ -69,7 +69,7 @@ vi.mock('@/lib/i18n/server', () => ({
     'account.settings.emailNotifications': 'Email Notifications',
     'account.settings.pushNotifications': 'Push Notifications',
     'account.settings.smsNotifications': 'SMS notifications',
-    'account.settings.tips': 'Tips, tricks, and Seesaw updates',
+    'account.settings.tips': 'Tips, tricks, and EduPlay updates',
     'account.settings.parentNotifications': 'Parent notifications',
     'account.settings.archives': 'Journal archives',
     'account.settings.downloadArchives': 'Download Journal Archives',
@@ -84,7 +84,6 @@ vi.mock('@/lib/i18n/server', () => ({
     'account.settings.readOnly': 'Read only',
   }[key] ?? key),
 }));
-
 
 import TeacherAccountSettingsPage from './page';
 
@@ -123,7 +122,7 @@ describe('/teacher/account/settings', () => {
     expect(redirectMock).toHaveBeenCalledWith('/login');
   });
 
-  it('renders Seesaw reference account settings with i18n copy', async () => {
+  it('renders EduPlay reference account settings with i18n copy', async () => {
     supabaseGetUserMock.mockResolvedValue({
       data: { user: { id: 'teacher-1', email: 'maria@example.test' } },
     });
@@ -152,7 +151,7 @@ describe('/teacher/account/settings', () => {
     expect(screen.getByText('Account Activity Details')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /School Directory/i })).toHaveAttribute('href', '/teacher/account/school');
     expect(screen.getByText('Current Classes')).toBeInTheDocument();
-    expect(screen.getByText('SEESAW PREMIUM FEATURES')).toBeInTheDocument();
+    expect(screen.getByText('EDUPLAY PREMIUM FEATURES')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: /Try Free for 60 Days/i })).toHaveAttribute('href', '/teacher/trial');
     expect(screen.queryByRole('button', { name: /Change|Manage|Save/i })).not.toBeInTheDocument();
     expect(screen.getByText('Class notifications')).toBeInTheDocument();

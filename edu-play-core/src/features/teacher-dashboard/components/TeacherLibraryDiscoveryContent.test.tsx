@@ -3,7 +3,7 @@ import { MantineProvider } from '@mantine/core'
 import { expect, it } from 'vitest'
 import { TeacherLibraryDiscoveryContent } from './TeacherLibraryDiscoveryContent'
 
-it('renders Seesaw-style library search, filters, and activity rails', () => {
+it('renders EduPlay library search, filters, and activity rails', () => {
   render(
     <MantineProvider>
       <TeacherLibraryDiscoveryContent />

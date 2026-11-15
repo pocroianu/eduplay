@@ -1,13 +1,12 @@
 'use client';
 
+import { MantineBoundary } from '@/shared/components/ui/kit';
 import {
   ActionIcon,
-  MantineContext,
-  MantineProvider,
   TextInput,
   type TextInputProps,
 } from '@mantine/core';
-import { forwardRef, useContext, useId, useState } from 'react';
+import { forwardRef, useId, useState } from 'react';
 import { Icon } from '@/shared/components/ui/Icon';
 import type { IconName } from '@/shared/components/ui/Icon.registry';
 
@@ -28,7 +27,6 @@ export const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
     const [showPassword, setShowPassword] = useState(false);
     const isPassword = type === 'password';
     const inputType = isPassword && showPassword ? 'text' : type;
-    const mantineContext = useContext(MantineContext);
 
     const field = (
       <TextInput
@@ -69,7 +67,7 @@ export const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
       />
     );
 
-    return mantineContext ? field : <MantineProvider>{field}</MantineProvider>;
+    return <MantineBoundary>{field}</MantineBoundary>;
   }
 );
 

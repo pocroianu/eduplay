@@ -271,7 +271,7 @@ async function expectTargetSizes(
   expect(violations).toEqual([]);
 }
 
-test.describe('Seesaw + Mantine P1 design matrix', () => {
+test.describe('EduPlay + Mantine P1 design matrix', () => {
   for (const route of ROUTES) {
     for (const motion of MOTION_MODES) {
       test(`${route.slug} ${motion.name} captures route matrix artifacts`, async ({

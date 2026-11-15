@@ -1,8 +1,8 @@
 'use client';
 
+import { MantineBoundary } from './MantineBoundary';
 import {
   forwardRef,
-  useContext,
   useId,
   useState,
   type CSSProperties,
@@ -12,8 +12,6 @@ import {
 import {
   ActionIcon,
   Box,
-  MantineContext,
-  MantineProvider,
   TextInput,
 } from '@mantine/core';
 import { useTranslation } from 'react-i18next';
@@ -86,7 +84,6 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
     },
     ref,
   ) => {
-    const mantineContext = useContext(MantineContext);
     const { t } = useTranslation('common');
     const generatedId = useId();
     const inputId = id ?? generatedId;
@@ -156,7 +153,7 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(
       </Box>
     );
 
-    return mantineContext ? field : <MantineProvider>{field}</MantineProvider>;
+    return <MantineBoundary>{field}</MantineBoundary>;
   },
 );
 

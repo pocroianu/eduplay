@@ -26,19 +26,19 @@ describe('HeroBanner', () => {
     expect(screen.getByRole('button', { name: /porneste/i })).toBeInTheDocument()
   })
 
-  it('applies tone-specific Seesaw surface classes', () => {
+  it('applies tone-specific EduPlay surface classes', () => {
     const { container, rerender } = render(
       <HeroBanner title="T" tone="secondary" />,
     )
-    expect(container.firstElementChild).toHaveClass('bg-gold')
+    expect(container.querySelector("section")).toHaveClass('bg-gold')
 
     rerender(<HeroBanner title="T" tone="tertiary" />)
-    expect(container.firstElementChild).toHaveClass('bg-success-journal')
+    expect(container.querySelector("section")).toHaveClass('bg-success-journal')
   })
 
   it('defaults to primary tone when none is given', () => {
     const { container } = render(<HeroBanner title="T" />)
-    expect(container.firstElementChild).toHaveClass('bg-primary')
+    expect(container.querySelector("section")).toHaveClass('bg-primary')
   })
 
   it('renders decorative icon when specified', () => {

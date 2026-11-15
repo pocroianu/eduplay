@@ -164,7 +164,7 @@ describe('TeacherDashboardContent', () => {
     expect(screen.queryByText(/reușite recente/i)).not.toBeInTheDocument()
   })
 
-  it('does not depend on legacy Seesaw home utility classes', () => {
+  it('does not depend on legacy EduPlay home utility classes', () => {
     const { container } = renderDashboard()
 
     expect(container.querySelector('.seesaw-home')).not.toBeInTheDocument()

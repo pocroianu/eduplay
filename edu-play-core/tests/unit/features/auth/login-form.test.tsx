@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { Component, type ReactNode } from 'react';
 
 // Mock the login action
 vi.mock('@/features/auth/actions/login', () => ({
@@ -13,6 +14,13 @@ import { login } from '@/features/auth/actions/login';
 
 function renderLoginForm() {
   return render(<LoginForm />);
+}
+
+class NavigationBoundary extends Component<{ children: ReactNode; onSignal: (error: Error) => void }, { caught: boolean }> {
+  state = { caught: false };
+  static getDerivedStateFromError() { return { caught: true }; }
+  componentDidCatch(error: Error) { this.props.onSignal(error); }
+  render() { return this.state.caught ? <p>Navigation signal</p> : this.props.children; }
 }
 
 describe('LoginForm', () => {
@@ -157,6 +165,24 @@ describe('LoginForm', () => {
   });
 
   describe('loading state', () => {
+    it('preserves framework redirects instead of showing NEXT_REDIRECT as a login error', async () => {
+      const user = userEvent.setup();
+      const signal = Object.assign(new Error('NEXT_REDIRECT'), { digest: 'NEXT_REDIRECT;replace;/parent;307;' });
+      vi.mocked(login).mockRejectedValue(signal);
+      const onSignal = vi.fn();
+      const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
+      try {
+        render(<NavigationBoundary onSignal={onSignal}><LoginForm /></NavigationBoundary>);
+        await user.type(screen.getByRole('textbox', { name: 'Adresă de email' }), 'parent@example.com');
+        await user.type(screen.getByLabelText('Parolă'), 'password123');
+        await user.click(screen.getByRole('button', { name: /autentificare/i }));
+        await waitFor(() => expect(onSignal).toHaveBeenCalledWith(signal));
+        expect(screen.queryByRole('alert')).not.toBeInTheDocument();
+      } finally {
+        consoleError.mockRestore();
+      }
+    });
+
     it('should disable inputs during submission', async () => {
       const user = userEvent.setup();
 

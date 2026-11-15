@@ -10,13 +10,13 @@ describe('SubjectPill', () => {
 
   it('renders as a span element', () => {
     render(<SubjectPill>Label</SubjectPill>);
-    const el = screen.getByText('Label');
+    const el = screen.getByText('Label').closest('.mantine-Badge-root')!;
     expect(el.tagName).toBe('SPAN');
   });
 
   it('applies correct background for tone="math"', () => {
     render(<SubjectPill tone="math">Math</SubjectPill>);
-    const el = screen.getByText('Math');
+    const el = screen.getByText('Math').closest('.mantine-Badge-root')!;
     expect(el).toHaveStyle({
       backgroundColor: 'var(--color-blue-soft)',
       color: 'var(--color-blue-deep)',
@@ -25,7 +25,7 @@ describe('SubjectPill', () => {
 
   it('applies correct background for tone="coral"', () => {
     render(<SubjectPill tone="coral">Coral</SubjectPill>);
-    const el = screen.getByText('Coral');
+    const el = screen.getByText('Coral').closest('.mantine-Badge-root')!;
     expect(el).toHaveStyle({
       backgroundColor: 'var(--color-coral-soft)',
       color: 'var(--color-coral-deep)',
@@ -34,7 +34,7 @@ describe('SubjectPill', () => {
 
   it('applies correct background for tone="romana"', () => {
     render(<SubjectPill tone="romana">Romana</SubjectPill>);
-    const el = screen.getByText('Romana');
+    const el = screen.getByText('Romana').closest('.mantine-Badge-root')!;
     expect(el).toHaveStyle({
       backgroundColor: 'var(--color-coral-soft)',
       color: 'var(--color-coral-deep)',
@@ -43,7 +43,7 @@ describe('SubjectPill', () => {
 
   it('defaults to green tone', () => {
     render(<SubjectPill>Default</SubjectPill>);
-    const el = screen.getByText('Default');
+    const el = screen.getByText('Default').closest('.mantine-Badge-root')!;
     expect(el).toHaveStyle({
       backgroundColor: 'var(--color-primary-soft)',
       color: 'var(--color-primary-deep)',
@@ -52,7 +52,7 @@ describe('SubjectPill', () => {
 
   it('applies custom className', () => {
     render(<SubjectPill className="extra-class">Pill</SubjectPill>);
-    expect(screen.getByText('Pill')).toHaveClass('extra-class');
+    expect(screen.getByText('Pill').closest('.mantine-Badge-root')).toHaveClass('extra-class');
   });
 
   it('exposes the canonical 6-subject Romanian taxonomy', () => {
@@ -79,7 +79,7 @@ describe('SubjectPill', () => {
 
   it.each(SUBJECT_KEYS)('renders a styled pill for subject key=%s', (key) => {
     render(<SubjectPill tone={key}>{SUBJECT_LABEL[key]}</SubjectPill>);
-    const el = screen.getByText(SUBJECT_LABEL[key]);
+    const el = screen.getByText(SUBJECT_LABEL[key]).closest<HTMLElement>('.mantine-Badge-root')!;
     expect(el.tagName).toBe('SPAN');
     expect(el.style.backgroundColor).not.toBe('');
     expect(el.style.color).not.toBe('');
