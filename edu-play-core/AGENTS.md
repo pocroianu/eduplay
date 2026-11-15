@@ -68,7 +68,8 @@ Playwright remains a heavier gate: `npm run test:e2e`.
 
 ## Simplification Pass
 
-Opportunistically use the globally installed `simplify` skill when a task
+Opportunistically use the shared `simplify` skill at
+`../.agents/skills/simplify/SKILL.md` when a task
 introduces or exposes unnecessary complexity. Treat this as a cross-cutting
 final pass, not as permission to over-refactor.
 

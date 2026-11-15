@@ -1,0 +1,173 @@
+{
+  "version": 2,
+  "skills": {
+    "actions-and-utilities": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/actions-and-utilities/SKILL.md",
+      "computedHash": "05d73b206bde4b9cce4dd2eb3eaa41982ae92cb11bc13e6dc588a7e9a35ec46d"
+    },
+    "animations": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/animations/SKILL.md",
+      "computedHash": "6d9666a914c4a53e3789302459935352a57c45b264da0ca5132368474b6c20e4"
+    },
+    "audio-and-sound": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/audio-and-sound/SKILL.md",
+      "computedHash": "033ba73aa4d21cfd4f3e1b9c74ad707d1cb8778e05b6a0641f771ad56c490bc4"
+    },
+    "cameras": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/cameras/SKILL.md",
+      "computedHash": "26fd7e70e27c9875923646598b4765bb8dc95cd426dac96231f53e7932287cf3"
+    },
+    "curves-and-paths": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/curves-and-paths/SKILL.md",
+      "computedHash": "d04db243bdb1716793beb170841e8d8929919f995e611fb41a37bd00b1d75c4b"
+    },
+    "data-manager": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/data-manager/SKILL.md",
+      "computedHash": "3d91a3c3d72dba864080ee38b0094c83ad5327739d39a4654e9e93cb7dc96dd9"
+    },
+    "events-system": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/events-system/SKILL.md",
+      "computedHash": "37c8e5fad2a368ac35b83c47bded8d5071fbb7a6230a2006c94000d579c25819"
+    },
+    "filters-and-postfx": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/filters-and-postfx/SKILL.md",
+      "computedHash": "ffb0d6a785b4795ea4835604f9a873c9a3049aeacb51026c03ab7b4018bf93b3"
+    },
+    "game-object-components": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/game-object-components/SKILL.md",
+      "computedHash": "cc7f7a38efbbaf8329974afabc513b0a099cf9eab8de1874ef865702dc15a060"
+    },
+    "game-setup-and-config": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/game-setup-and-config/SKILL.md",
+      "computedHash": "768aa16da0efb08b22cbf91be3ce656008a88bd929929fee942152fad485e3f3"
+    },
+    "geometry-and-math": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/geometry-and-math/SKILL.md",
+      "computedHash": "cc2e8d84c8831e02c2d44887aa8adc1eb1064a47d1066099e6bc644b5b6b4c5e"
+    },
+    "graphics-and-shapes": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/graphics-and-shapes/SKILL.md",
+      "computedHash": "4db88af071242c10cc86ee97f485e001e5cfb8c1d682382470f9cfb6d2e4db5d"
+    },
+    "groups-and-containers": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/groups-and-containers/SKILL.md",
+      "computedHash": "f54a6e890ab20512c9c889a832bb64910b2b7db63a9c840b49b6e473e73f7212"
+    },
+    "input-keyboard-mouse-touch": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/input-keyboard-mouse-touch/SKILL.md",
+      "computedHash": "47d30c918e266c7833322b2495cd31ed28ec85ba03db1f3c495ba379e65fcfc2"
+    },
+    "loading-assets": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/loading-assets/SKILL.md",
+      "computedHash": "91cf0ef9a0ab9adccd6a05939fa1c0aed407ce9a8dfbde7410ddc98bb7356bf2"
+    },
+    "particles": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/particles/SKILL.md",
+      "computedHash": "60d054fa78f529f49ec7020ef8dfb2a347a5f2b8b969bd4ead99fbf0e114bb01"
+    },
+    "physics-arcade": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/physics-arcade/SKILL.md",
+      "computedHash": "98c9456ce56dedc4a20472a50d330d7d54cf85aeb36dd71228e79a5eb42cd57e"
+    },
+    "physics-matter": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/physics-matter/SKILL.md",
+      "computedHash": "2643bd1053efddc959d135d249bee85ebcd2677876559106d3b675c3e9c906cd"
+    },
+    "render-textures": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/render-textures/SKILL.md",
+      "computedHash": "f8b70972513f62ee7e2e66c656dea277c7dc6a0a5af69a2034cb4e07418f38f8"
+    },
+    "scale-and-responsive": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/scale-and-responsive/SKILL.md",
+      "computedHash": "70ba549c58fee9a136466dc5d731c553b894d461ee70430aa73e4910f7946483"
+    },
+    "scenes": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/scenes/SKILL.md",
+      "computedHash": "d83a8b7828d7c526210be340ef91db476072d588a2129c3ba1fbc0eaa03283b6"
+    },
+    "sprites-and-images": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/sprites-and-images/SKILL.md",
+      "computedHash": "5cc09bc45e88614494f2eea3da8a51ccfa88900873e2e60744e54a1844417faa"
+    },
+    "text-and-bitmaptext": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/text-and-bitmaptext/SKILL.md",
+      "computedHash": "0bbd7f5c9e1fa257b90b8aa4403476259983cd9d8281cb36812f388e4def3304"
+    },
+    "tilemaps": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/tilemaps/SKILL.md",
+      "computedHash": "f93df92e9867ab942716b773e8457a168a6aa6a134e100427ec1492fd4dea1ae"
+    },
+    "time-and-timers": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/time-and-timers/SKILL.md",
+      "computedHash": "579217ae7f96cb76fda8ba4c10e3e9b9ae9f347fb0fb9dc1e02a1034a3bebf2a"
+    },
+    "tweens": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/tweens/SKILL.md",
+      "computedHash": "be521f3d4b4a28671f8a8134383ad35651f492ef19ed78aaedaee58779adcfe6"
+    },
+    "v3-to-v4-migration": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/v3-to-v4-migration/SKILL.md",
+      "computedHash": "9299f511a3f48f6a28cda3908fb790a1f1fdbb2efc60320e27bde6b87c11fd29"
+    },
+    "v4-new-features": {
+      "source": "phaserjs/phaser",
+      "sourceType": "github",
+      "skillPath": "skills/v4-new-features/SKILL.md",
+      "computedHash": "a274578494a53e921cccdb0ca159cef8dbfaf96e729e20d747bdd5ebfede8eac"
+    }
+  }
+}

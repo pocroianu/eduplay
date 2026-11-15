@@ -54,6 +54,23 @@ Platform browser tests require local Supabase and currently run Chromium.
 Several authenticated scenarios are still skipped; see the
 [E2E notes](./edu-play-core/tests/e2e/README.md).
 
+## Agent skills
+
+Shared skills live in the root `.agents/skills/`: `simplify` and the five
+TanStack skills (Query, Table, Form, Router, and Start). TanStack guidance is
+available for selective adoption; it does not change the current Next.js
+architecture. Check version-sensitive guidance against current official docs.
+
+Project-specific skills stay with their project: Mantine and Next.js skills in
+`edu-play-core/.agents/skills/`, and Phaser skills in
+`phaser-projects/.agents/skills/`. Each of these three locations has a
+`skills-lock.json` in its owning directory. Run skill installation and update
+commands from that directory so the installed skills and lockfile stay together.
+Keep shared skills at the root rather than duplicating them in subprojects.
+
+The Phaser lockfile records the existing checked-in content from
+`phaserjs/phaser`, including the local `v4-new-features` reference version.
+
 ## Local files and release status
 
 Keep real credentials in ignored environment files. `edu-play-core/env.example`

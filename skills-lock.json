@@ -1,6 +1,12 @@
 {
   "version": 2,
   "skills": {
+    "simplify": {
+      "source": "brianlovin/claude-config",
+      "sourceType": "github",
+      "skillPath": "skills/simplify/SKILL.md",
+      "computedHash": "d6b37f3a75b69303fbab569f4822e34b76eb3238ac9adf1e604f2ff9fb29524b"
+    },
     "tanstack-form": {
       "source": "tanstack-skills/tanstack-skills",
       "sourceType": "github",
