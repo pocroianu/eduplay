@@ -52,7 +52,7 @@ P0 means an immediate release blocker; P1 means address before a broader release
 
 ### F01 — P0: Ordinary users can become administrators
 
-[Initial schema:27](C:/Users/pocro/development/personal/eduplay/edu-play-core/supabase/migrations/20260107000000_initial_schema.sql:27) allows users to update their own profile without protecting the `role` column. The same file's [signup trigger:35](C:/Users/pocro/development/personal/eduplay/edu-play-core/supabase/migrations/20260107000000_initial_schema.sql:35) copies caller-controlled signup metadata into that role, whose allowed values include `admin`. No later migration was found that closes either path.
+[Initial schema:27](https://github.com/pocroianu/eduplay/blob/9927d3b/edu-play-core/supabase/migrations/20260107000000_initial_schema.sql#L27) allows users to update their own profile without protecting the `role` column. The same file's [signup trigger:35](https://github.com/pocroianu/eduplay/blob/9927d3b/edu-play-core/supabase/migrations/20260107000000_initial_schema.sql#L35) copies caller-controlled signup metadata into that role, whose allowed values include `admin`. No later migration was found that closes either path.
 
 [API authorization:40](C:/Users/pocro/development/personal/eduplay/edu-play-core/src/lib/api/auth.ts:40) and [middleware:117](C:/Users/pocro/development/personal/eduplay/edu-play-core/src/lib/supabase/middleware.ts:117) then trust the resulting database role. Direct signup requires signup to be enabled; profile modification requires normal authenticated UPDATE privileges. Both are consistent with the checked-in setup, but deployed grants were not queried.
 
@@ -60,13 +60,13 @@ Remediation: make signup roles server-controlled; prevent ordinary callers from 
 
 ### F02 — P1: Parent-child links can be forged without an invitation
 
-[Parent relationship policy:43](C:/Users/pocro/development/personal/eduplay/edu-play-core/supabase/migrations/20260107000003_parent_children.sql:43) checks only that `parent_id` equals the caller. It does not validate the caller's role or an invitation. The UPDATE policy at line 48 also leaves `student_id` mutable. A caller with a known student UUID and ordinary table grants can forge/repoint a link, after which other policies grant child-data access.
+[Parent relationship policy:43](https://github.com/pocroianu/eduplay/blob/9927d3b/edu-play-core/supabase/migrations/20260107000003_parent_children.sql#L43) checks only that `parent_id` equals the caller. It does not validate the caller's role or an invitation. The UPDATE policy at line 48 also leaves `student_id` mutable. A caller with a known student UUID and ordinary table grants can forge/repoint a link, after which other policies grant child-data access.
 
 Remove direct client relationship creation and sensitive updates. Redeem invitations through one role-checked transaction that validates expiry/usage, consumes the code, and creates the link. Test cross-family denial directly through the Data API, independently of server actions.
 
 ### F03 — P1: New-parent invitation redemption appears blocked by its own RLS
 
-[Link action:65](C:/Users/pocro/development/personal/eduplay/edu-play-core/src/features/parent-portal/actions/link-child.ts:65) reads an unused invite through the ordinary user client. [Invite policies:32](C:/Users/pocro/development/personal/eduplay/edu-play-core/supabase/migrations/20260107000004_parent_invite_codes.sql:32) only let teachers or the parent who already used a code read it. The action also reads the student before creating the relationship. This is a strong static finding, not a reproduced database test.
+[Link action:65](C:/Users/pocro/development/personal/eduplay/edu-play-core/src/features/parent-portal/actions/link-child.ts:65) reads an unused invite through the ordinary user client. [Invite policies:32](https://github.com/pocroianu/eduplay/blob/9927d3b/edu-play-core/supabase/migrations/20260107000004_parent_invite_codes.sql#L32) only let teachers or the parent who already used a code read it. The action also reads the student before creating the relationship. This is a strong static finding, not a reproduced database test.
 
 The transactional redemption operation from F02 should fix this flow too. Do not resolve it by exposing all unused invite records. Include successful first redemption, expired/used codes, concurrent redemption, and foreign-family attempts in database-backed tests.
 
@@ -106,13 +106,13 @@ Keep these services internal or bind to loopback and require authenticated acces
 
 ### F09 — P2: Privileged helper functions disclose other users' relationships
 
-[Classmate RPC:68](C:/Users/pocro/development/personal/eduplay/edu-play-core/supabase/migrations/20260419232837_profile_preferences.sql:68) is SECURITY DEFINER and accepts arbitrary student IDs without verifying the caller. [Older relationship helpers:16](C:/Users/pocro/development/personal/eduplay/edu-play-core/supabase/migrations/20260327000001_fix_rls_infinite_recursion.sql:16) similarly accept arbitrary teacher/parent identities without explicit execution revocation.
+[Classmate RPC:68](https://github.com/pocroianu/eduplay/blob/9927d3b/edu-play-core/supabase/migrations/20260419232837_profile_preferences.sql#L68) is SECURITY DEFINER and accepts arbitrary student IDs without verifying the caller. [Older relationship helpers:16](https://github.com/pocroianu/eduplay/blob/9927d3b/edu-play-core/supabase/migrations/20260327000001_fix_rls_infinite_recursion.sql#L16) similarly accept arbitrary teacher/parent identities without explicit execution revocation.
 
 Bind identities to `auth.uid()`, check authorized delegation, and keep internal helpers outside the exposed API schema where feasible. Test function EXECUTE permissions and cross-account input. Returned identifiers also make F02 easier to exploit.
 
 ### F10 — P2: Notification INSERT policy does not enforce its stated service-only intent
 
-[Notification policy:40](C:/Users/pocro/development/personal/eduplay/edu-play-core/supabase/migrations/20260107000005_parent_notifications.sql:40) is named for the service role but has no `TO service_role` restriction and uses `WITH CHECK (true)`. With ordinary INSERT grants, clients can forge notification content for known users. Remove normal-client insertion; service-role operations already bypass RLS. Add negative database tests.
+[Notification policy:40](https://github.com/pocroianu/eduplay/blob/9927d3b/edu-play-core/supabase/migrations/20260107000005_parent_notifications.sql#L40) is named for the service role but has no `TO service_role` restriction and uses `WITH CHECK (true)`. With ordinary INSERT grants, clients can forge notification content for known users. Remove normal-client insertion; service-role operations already bypass RLS. Add negative database tests.
 
 ### F11 — P2: Student PIN throttling can be bypassed through direct Auth requests
 
@@ -156,7 +156,7 @@ Restore a concrete data inventory, retention/deletion policy, processor/location
 
 [Game iframe:474](C:/Users/pocro/development/personal/eduplay/edu-play-core/src/features/games/components/GameEmbed.tsx:474) has no sandbox, and [renderer proxy:90](C:/Users/pocro/development/personal/eduplay/edu-play-core/src/app/api/v1/renderer-proxy/[...path]/route.ts:90) re-serves executable storage content on the shell origin. Treat renderer publication/storage write privileges as application-code deployment privileges. No untrusted upload-to-XSS chain was demonstrated. Restrict proxy buckets/paths and consider a separate renderer origin with validated protocol messages.
 
-[Directus migration:25](C:/Users/pocro/development/personal/eduplay/edu-play-core/supabase/migrations/20260528000000_directus_role_and_schema.sql:25) grants BYPASSRLS and broad current/future public-table DML, with a denylist. Starting NOLOGIN is a good safeguard; before enabling it, replace the broad grant with an allowlist matching actual CMS needs. Jenkins also mounts the host Docker socket: verify untrusted PRs cannot execute in that trust context. Neither item proves a deployed compromise.
+[Directus migration:25](https://github.com/pocroianu/eduplay/blob/9927d3b/edu-play-core/supabase/migrations/20260528000000_directus_role_and_schema.sql#L25) grants BYPASSRLS and broad current/future public-table DML, with a denylist. Starting NOLOGIN is a good safeguard; before enabling it, replace the broad grant with an allowlist matching actual CMS needs. Jenkins also mounts the host Docker socket: verify untrusted PRs cannot execute in that trust context. Neither item proves a deployed compromise.
 
 ## Maintainability and performance direction
 

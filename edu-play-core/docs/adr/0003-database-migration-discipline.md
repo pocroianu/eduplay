@@ -9,6 +9,20 @@ EduPlay's database architecture is Supabase-native: Postgres tables, Row Level S
 - Prisma is not a good fit for this project because it does not naturally model Supabase RLS, storage policies, grants, triggers, and privilege-aware RPCs.
 - Drizzle may be considered later only as a typed query builder for narrow service-role/reporting use cases; it must not own migrations or duplicate the schema contract.
 
+## Baseline squash (2026-11-16)
+
+The prior migrations were squashed into `supabase/migrations/20261116225053_baseline.sql`. No production or hosted database existed. A clean `db reset` was broken: Directus bootstrap needed role membership, and `ALTER DEFAULT PRIVILEGES FOR ROLE supabase_admin` cannot run as the non-superuser `postgres`. Duplicate prefixes `20260417000000` and `20260501100000` also broke migration history. Migrations are forward-only from this baseline; new migration timestamps must follow it.
+
+When squashing, `supabase db dump` omits revokes relative to Supabase default privileges. Verify ACLs with a full schema-only `pg_dump` diff across all schemas, connecting as `supabase_admin` to both databases. Use matching PostgreSQL client versions and substitute the database URLs:
+
+```bash
+pg_dump --schema-only --username=supabase_admin --dbname="$OLD_DB_URL" > old-schema.sql
+pg_dump --schema-only --username=supabase_admin --dbname="$BASELINE_DB_URL" > baseline-schema.sql
+diff -u old-schema.sql baseline-schema.sql
+```
+
+Review any differences, including ACLs, before accepting a squash. Account for nondeterministic dump metadata such as `\restrict` keys when comparing dumps.
+
 ## Migration discipline
 
 - Migrations are forward-only once applied/shared. Do not edit old migrations except to fix an unmerged broken branch.

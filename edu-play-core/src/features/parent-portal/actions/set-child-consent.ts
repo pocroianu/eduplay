@@ -23,7 +23,7 @@ export interface SetChildConsentResult {
  * Server Action: Toggle a single parent-granted consent flag for one child.
  *
  * Goes through the SECURITY DEFINER `set_child_consent` RPC (see migration
- * `20260502000001_student_consents.sql`) so the parent_children link check
+ * `20261116225053_baseline.sql`) so the parent_children link check
  * and the audit-trigger attribution land server-side without an extra
  * column-scoped UPDATE policy on `students`. The audit trigger captures the
  * change with `auth.uid()` (the parent), so PRIVACY.md §7 audit

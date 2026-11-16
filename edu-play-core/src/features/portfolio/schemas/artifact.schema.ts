@@ -121,7 +121,7 @@ export const MAX_PHOTO_BYTES = 8 * 1024 * 1024;
 /**
  * Audio MIME types accepted by the voice-recorder activity. The bucket
  * `allowed_mime_types` is locked to the same list (see migration
- * `20260501010000_child_artifacts_bucket_mime_types.sql`) so callers
+ * `20261116225053_baseline.sql`) so callers
  * cannot smuggle other formats past the action.
  */
 export const AUDIO_MIME_TYPES = ['audio/webm', 'audio/ogg'] as const;
@@ -131,7 +131,7 @@ export type AudioMimeType = (typeof AUDIO_MIME_TYPES)[number];
  * Photo MIME types accepted by the teacher upload action (F6 Phase 2A).
  * PNG stays the drawing path (game canvas screenshots), so it's not in
  * this list. The bucket allow-list mirrors these entries — see migration
- * `20260508000000_teacher_child_artifact_uploads.sql`.
+ * `20261116225053_baseline.sql`.
  */
 export const PHOTO_MIME_TYPES = ['image/jpeg', 'image/webp'] as const;
 export type PhotoMimeType = (typeof PHOTO_MIME_TYPES)[number];

@@ -20,8 +20,8 @@ import {
  * flow saw zero rows through the "Parents can view family-visible artifacts"
  * RLS policy on `child_artifacts`. F7 ships nothing without the fix.
  *
- * The migration `20260501100000_fix_parent_artifact_rls.sql` switches the
- * function body to `SELECT student_id FROM parent_children WHERE parent_id =
+ * The baseline `20261116225053_baseline.sql` defines the
+ * function body as `SELECT student_id FROM parent_children WHERE parent_id =
  * parent_uid AND status = 'active'`. This spec exercises the full flow:
  *
  *   1. Parent (registered via invite-code flow) signs in.

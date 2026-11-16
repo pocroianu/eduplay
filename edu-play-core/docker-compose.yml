@@ -319,7 +319,7 @@ services:
   # ============================================
   # Self-hosted Directus pointed at the Supabase Postgres. Uses a dedicated
   # `directus_admin` role + `directus` schema (see migration
-  # 20260528000000_directus_role_and_schema.sql). Operators must run, once,
+  # 20261116225053_baseline.sql). Operators must run, once,
   # against the local DB:
   #
   #   ALTER ROLE directus_admin WITH LOGIN PASSWORD '${DIRECTUS_DB_PASSWORD}';
