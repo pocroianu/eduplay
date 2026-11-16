@@ -93,6 +93,12 @@ npm run verify:agent      # Default local agent gate
 
 ## Database
 
+From the repository root, `npm run db:setup` starts local Supabase and seeds the
+medium demo dataset. If it is already running, use `npm run db:seed` (or
+`db:seed:minimal` / `db:seed:full`). See the
+[root database commands](../README.md#local-database-and-demo-data) for dry runs,
+renderer options, cleanup and reset.
+
 Key tables: `profiles`, `classes`, `students`, `activities`, `activity_versions`, `activity_progress`, `assignments`
 
 ```bash

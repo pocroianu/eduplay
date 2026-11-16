@@ -79,7 +79,39 @@ function parseArgs(args: string[]): {
 }
 
 async function main(): Promise<void> {
-  const args = parseArgs(process.argv.slice(2));
+  const cliArgs = process.argv.slice(2);
+  if (cliArgs.includes('--help') || cliArgs.includes('-h')) {
+    console.log(`Seed the local EduPlay database from the repository root:
+
+  npm run db:setup               Start Supabase, prepare local env, seed medium
+  npm run db:seed                Seed medium (Supabase must already be running)
+  npm run db:seed:minimal        Seed the smallest demo dataset
+  npm run db:seed:full           Seed the full demo dataset
+  npm run db:seed -- --tier minimal --dry-run
+
+Options:
+  --tier minimal|medium|full     Dataset size (default: medium)
+  --dry-run                     Validate configs and show counts; no writes/builds
+  --no-build                    Reuse the existing Activity host build
+  --no-renderers                Skip renderer build/upload (Activities may not launch)
+  --phaser-root <path>           Override the sibling Phaser project directory
+  --clean                       Delete the selected tier's seed data and users
+  --help, -h                    Show this help
+
+Normal seeding builds and uploads the Activity host and prints demo logins.
+The seed API target is local: http://127.0.0.1:54421`);
+    return;
+  }
+  const args = parseArgs(cliArgs);
+
+  if (cliArgs.includes('--dry-run')) {
+    const data = await loadTierData(args.tier);
+    const activities = loadSeedActivities(data.tier, { phaserRoot: args.phaserRoot });
+    logSection(`Dry run: ${args.isClean ? 'clean' : 'seed'} ${data.tier}`);
+    console.log(`  Teachers: ${data.teachers.length}; parents: ${data.parents.length}; learners: ${data.students.length}; Activities: ${activities.length}`);
+    console.log('  Configs validated. No database/storage writes or builds performed.');
+    return;
+  }
 
   if (args.isClean) {
     console.log('\n🧹 Cleaning seed data...');

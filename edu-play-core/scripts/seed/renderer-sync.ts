@@ -74,7 +74,7 @@ export async function syncActivityRenderers(
 }
 
 export function getActivityHostBuildCommand(): string {
-  return `npm run build:host --workspace=@edu-play/game-core -- --base ${ACTIVITY_HOST_PUBLIC_BASE}`;
+  return `npm --prefix packages/game-core run build:host -- --base ${ACTIVITY_HOST_PUBLIC_BASE}`;
 }
 
 export function collectActivityHostUploads(phaserRoot: string): ActivityHostUpload[] {

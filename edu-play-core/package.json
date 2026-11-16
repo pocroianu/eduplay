@@ -39,12 +39,12 @@
     "build-storybook": "storybook build",
     "generate:types": "npx supabase gen types typescript --local > src/shared/types/database.ts",
     "check:types-drift": "bash scripts/check-supabase-types-drift.sh",
-    "seed": "tsx scripts/seed/index.ts --tier medium",
+    "seed": "tsx scripts/seed/index.ts",
     "seed:minimal": "tsx scripts/seed/index.ts --tier minimal",
     "seed:medium": "tsx scripts/seed/index.ts --tier medium",
     "seed:full": "tsx scripts/seed/index.ts --tier full",
     "seed:clean": "tsx scripts/seed/index.ts --clean",
-    "db:reset": "supabase db reset && npm run seed",
+    "db:reset": "supabase db reset --local && npm run seed",
     "dev:turbo": "next dev --turbopack"
   },
   "dependencies": {
