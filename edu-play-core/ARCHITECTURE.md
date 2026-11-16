@@ -736,7 +736,10 @@ Self-hosted Directus runs alongside Supabase as the admin authoring surface
 - **Bootstrap:** the migration creates the role `NOLOGIN`. An operator must
   explicitly set a password (`ALTER ROLE directus_admin WITH LOGIN PASSWORD '…'`)
   before Directus can connect, preventing accidental enablement in any
-  environment where this migration runs.
+  environment where this migration runs. Locally, `npm run directus:up`
+  (`scripts/directus.mjs` + `docker-compose.directus.yml`) does this with a
+  generated password from the gitignored `.env.directus`, attaches Directus to
+  the Supabase CLI Docker network, and waits for `/server/health`.
 - **RLS interaction:** Directus bypasses RLS by design (admin context). The
   Next.js runtime continues to authenticate as Supabase Auth users and is
   fully governed by RLS — Directus' bypass does not leak there.

@@ -314,62 +314,8 @@ services:
       timeout: 5s
       retries: 3
 
-  # ============================================
-  # Directus CMS (Phase 1 — admin authoring surface)
-  # ============================================
-  # Self-hosted Directus pointed at the Supabase Postgres. Uses a dedicated
-  # `directus_admin` role + `directus` schema (see migration
-  # 20260528000000_directus_role_and_schema.sql). Operators must run, once,
-  # against the local DB:
-  #
-  #   ALTER ROLE directus_admin WITH LOGIN PASSWORD '${DIRECTUS_DB_PASSWORD}';
-  #
-  # The migration creates the role NOLOGIN by default to prevent the service
-  # from authenticating in unconfigured environments.
-  directus:
-    image: directus/directus:11
-    container_name: eduplay-directus
-    ports:
-      - "8055:8055"
-    environment:
-      KEY: ${DIRECTUS_KEY:-replace-me-32-char-random-string-aaaa}
-      SECRET: ${DIRECTUS_SECRET:-replace-me-32-char-random-string-bbbb}
-      PUBLIC_URL: http://localhost:8055
-      DB_CLIENT: pg
-      DB_HOST: supabase-db
-      DB_PORT: 5432
-      DB_DATABASE: postgres
-      DB_USER: directus_admin
-      DB_PASSWORD: ${DIRECTUS_DB_PASSWORD:-directus-local-dev}
-      # Directus system tables live in the `directus` schema (created by the
-      # bootstrap migration). `public` is included so Directus can introspect
-      # app tables. Order matters — Directus' own tables resolve first.
-      DB_SEARCH_PATH: directus,public
-      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL:-admin@eduplay.local}
-      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD:-changeme}
-      # Disable self-service signup; admin users are created via Data Studio.
-      AUTH_DISABLE_DEFAULT: "false"
-      PUBLIC_REGISTRATION: "false"
-      STORAGE_LOCATIONS: local
-      STORAGE_LOCAL_DRIVER: local
-      STORAGE_LOCAL_ROOT: /directus/uploads
-      # CORS: Next.js app on :3000 may embed Data Studio links/iframes later.
-      CORS_ENABLED: "true"
-      CORS_ORIGIN: http://localhost:3000
-    volumes:
-      - directus-uploads:/directus/uploads
-      - directus-extensions:/directus/extensions
-    depends_on:
-      supabase-db:
-        condition: service_healthy
-    networks:
-      - eduplay-network
-    healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8055/server/health"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
+  # Directus CMS lives in docker-compose.directus.yml and runs against the
+  # Supabase CLI stack: `npm run directus:up` (see scripts/directus.mjs).
 
   # Image transformation
   supabase-imgproxy:
@@ -402,5 +348,3 @@ volumes:
   supabase-storage-data:
   workspace_node_modules:
   app_next:
-  directus-uploads:
-  directus-extensions:
