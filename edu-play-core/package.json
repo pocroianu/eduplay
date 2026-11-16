@@ -67,7 +67,7 @@
     "react-hook-form": "7.72.0",
     "react-i18next": "16.6.6",
     "recharts": "3.8.1",
-    "zod": "4.3.6",
+    "zod": "4.6.6",
     "zxcvbn": "4.4.2"
   },
   "devDependencies": {
