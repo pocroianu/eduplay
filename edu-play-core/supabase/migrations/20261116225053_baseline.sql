@@ -6755,3 +6755,42 @@ SET display_name = EXCLUDED.display_name,
     is_auto_scored = EXCLUDED.is_auto_scored,
     version = GREATEST(public.activity_types.version, EXCLUDED.version),
     updated_at = NOW();
+
+-- Restore explicit revokes from the original migrations: Supabase default
+-- privileges otherwise grant access that pg_dump does not preserve.
+REVOKE ALL ON FUNCTION public.accept_native_activity_submission(p_student_id uuid, p_instance_id uuid, p_submission_id uuid, p_type_id text, p_storage_path text, p_duration_ms integer) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.advance_learning_path_progress(p_student_id uuid, p_path_id uuid, p_completed_step_id uuid) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.append_learning_path_step(p_path_id uuid, p_title text, p_activity_type text, p_config jsonb, p_description text) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.archive_teacher_activity_atomically(p_activity_id uuid, p_actor_id uuid) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.capture_activity_day() FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.change_artifact_visibility(p_artifact_id uuid, p_visibility text) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.create_activity_version_atomically(p_activity_id uuid, p_activity_type_id text, p_config_data jsonb, p_config_schema_version integer, p_actor_id uuid) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.duplicate_teacher_activity_atomically(p_activity_id uuid, p_actor_id uuid) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.guard_learning_path_definition() FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.make_teacher_activity_ready_atomically(p_activity_id uuid, p_activity_type_id text, p_config_data jsonb, p_config_schema_version integer, p_actor_id uuid, p_before_status text, p_before_is_published boolean, p_before_config_schema_version integer) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.override_learning_path_progress(p_student_id uuid, p_path_id uuid, p_status text, p_current_step_id uuid) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.publish_activity_atomically(p_activity_id uuid, p_activity_type_id text, p_config_data jsonb, p_config_schema_version integer, p_actor_id uuid, p_before_status text, p_before_is_published boolean, p_before_config_schema_version integer) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.publish_learning_path(p_path_id uuid) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.record_activity_play_session(p_student_id uuid, p_activity_id uuid, p_session_id uuid, p_sequence integer, p_elapsed_seconds integer, p_status text, p_version_id uuid, p_score integer, p_data jsonb) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.restore_teacher_activity_atomically(p_activity_id uuid, p_actor_id uuid) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.retry_native_activity_progress(p_student_id uuid, p_submission_id uuid) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.revert_activity_atomically(p_activity_id uuid, p_activity_type_id text, p_config_data jsonb, p_config_schema_version integer, p_actor_id uuid, p_before_status text, p_before_is_published boolean, p_before_config_schema_version integer) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON FUNCTION public.save_teacher_activity_draft(p_draft jsonb, p_activity_id uuid) FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON TABLE public.activity_days FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON TABLE public.activity_play_sessions FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON TABLE public.native_activity_submission_targets FROM PUBLIC, anon, authenticated;
+REVOKE ALL ON TABLE public.native_activity_submissions FROM PUBLIC, anon, authenticated;
+GRANT SELECT ON TABLE public.native_activity_submissions TO authenticated;
+GRANT ALL ON FUNCTION public.append_learning_path_step(p_path_id uuid, p_title text, p_activity_type text, p_config jsonb, p_description text) TO authenticated;
+GRANT ALL ON FUNCTION public.change_artifact_visibility(p_artifact_id uuid, p_visibility text) TO authenticated;
+GRANT ALL ON FUNCTION public.override_learning_path_progress(p_student_id uuid, p_path_id uuid, p_status text, p_current_step_id uuid) TO authenticated;
+GRANT ALL ON FUNCTION public.publish_learning_path(p_path_id uuid) TO authenticated;
+GRANT ALL ON FUNCTION public.record_activity_play_session(p_student_id uuid, p_activity_id uuid, p_session_id uuid, p_sequence integer, p_elapsed_seconds integer, p_status text, p_version_id uuid, p_score integer, p_data jsonb) TO authenticated;
+GRANT ALL ON FUNCTION public.save_teacher_activity_draft(p_draft jsonb, p_activity_id uuid) TO authenticated;
+GRANT SELECT ON TABLE public.activity_days TO authenticated;
+GRANT SELECT ON TABLE public.activity_play_sessions TO authenticated;
+GRANT SELECT ON TABLE public.native_activity_submission_targets TO authenticated;
+
+-- Restore the role comment from the Directus bootstrap migration.
+COMMENT ON ROLE directus_admin IS
+  'Directus CMS service account. BYPASSRLS, DML on public tables, owns the directus schema. No DDL on public — schema migrations remain the source of truth.';
