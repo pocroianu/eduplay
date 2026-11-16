@@ -33,6 +33,17 @@ the database. Use `npm run setup:deps` for dependencies and shared builds only
 (including local Supabase), Activity host, and config editor together, with
 labelled logs. If a command exits, the runner stops the other commands.
 
+Vite+ is available locally as an initial task-runner integration. With npm
+11.6.2, run existing root scripts through it, for example:
+
+```powershell
+npx --no-install vp run build:shared
+```
+
+Use `vp run <script>` for package scripts; built-in commands such as `vp build`
+have different behavior. Existing Vite, Vitest, lint, and formatting setups have
+not yet been migrated.
+
 Next.js development uses webpack to avoid runaway Turbopack/PostCSS workers
 observed on Windows. Production builds still use Next.js's default bundler.
 To explicitly try Turbopack, use
@@ -43,7 +54,6 @@ To explicitly try Turbopack, use
 | `npm run dev:platform` | Supabase + Next.js | http://localhost:3000 |
 | `npm run dev:games` | Activity host | http://localhost:5173 |
 | `npm run dev:editor` | Config editor | http://localhost:8091 |
-| `npm run dev:storybook` | Optional platform component explorer | http://localhost:6006 |
 | `npm run dev:ai` | Optional AI package TypeScript watcher | No HTTP server |
 
 Press Ctrl+C in the `dev` terminal to stop its foreground processes. Supabase

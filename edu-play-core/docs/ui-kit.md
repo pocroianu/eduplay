@@ -176,20 +176,8 @@ larger `StatCard` treatment.
 4. Use EduPlay tokens only. Computed styles may use `var(--color-*)`; component code
    must not introduce raw hex.
 5. Colocate a focused `*.test.tsx` next to the primitive.
-6. Add or update `*.stories.tsx` beside the primitive for Storybook (see
-   [storybook.md](./storybook.md)).
-7. Export the component and prop types from `src/shared/components/ui/kit/index.ts`.
-8. Update this document when the public contract changes.
-
-## Storybook
-
-Storybook is the visual catalog for kit primitives. Colocate `ComponentName.stories.tsx`
-next to each component and use the `UI Kit/…` title prefix.
-
-```bash
-npm run storybook
-npm run build-storybook
-```
+6. Export the component and prop types from `src/shared/components/ui/kit/index.ts`.
+7. Update this document when the public contract changes.
 
 Useful local checks:
 
@@ -198,5 +186,5 @@ npm run test:unit -- src/shared/components/ui/kit
 npm run lint
 ```
 
-Include a Storybook screenshot in the PR when you add or materially change a
-primitive’s appearance.
+Include a screenshot in the PR when you add or materially change a primitive’s
+appearance.
