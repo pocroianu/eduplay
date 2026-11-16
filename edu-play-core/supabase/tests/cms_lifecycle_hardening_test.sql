@@ -42,6 +42,15 @@ SELECT col_is_fk(
 
 SET LOCAL row_security = on;
 
+-- Distinct keys make a mistaken lookup through the parent template observable,
+-- even when the seeded activity types share a renderer host.
+UPDATE activity_types
+SET renderer_key = CASE type_id
+  WHEN 'multiple-choice' THEN 'test-pinned-renderer'
+  WHEN 'matching-game' THEN 'test-parent-renderer'
+END
+WHERE type_id IN ('multiple-choice', 'matching-game');
+
 INSERT INTO auth.users (id, email, instance_id, aud, role)
 VALUES
   ('33333333-3333-3333-3333-333333333333', 'cms533-admin-test@example.com',  '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated'),
@@ -220,7 +229,7 @@ SELECT is(
     JOIN activity_types t ON t.type_id = v.activity_type_id
     WHERE v.id = 'c1c1c1c1-c1c1-c1c1-c1c1-c1c1c1c1c1c1'
   ),
-  'multiple-choice',
+  (SELECT renderer_key FROM activity_types WHERE type_id = 'multiple-choice'),
   'renderer_key resolved through version row stays stable across parent template edits'
 );
 
