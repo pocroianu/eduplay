@@ -27,6 +27,17 @@ BEGIN
 END
 $$;
 
+-- On Supabase Postgres 15 the migration role (`postgres`) is not a superuser,
+-- so `CREATE SCHEMA ... AUTHORIZATION directus_admin` requires it to be a
+-- member of `directus_admin`. Grant that membership idempotently.
+DO $$
+BEGIN
+  IF NOT pg_has_role(current_user, 'directus_admin', 'MEMBER') THEN
+    EXECUTE format('GRANT directus_admin TO %I', current_user);
+  END IF;
+END
+$$;
+
 -- ---------- schema ----------
 CREATE SCHEMA IF NOT EXISTS directus AUTHORIZATION directus_admin;
 
@@ -44,14 +55,17 @@ GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA public TO directus_admin;
 -- Future tables created in `public` (by future migrations) automatically get
 -- the same DML grants. Note: this only applies to tables created by roles that
 -- match the FOR ROLE clause. We grant for `postgres` (CLI migrations) and
--- `supabase_admin` (Supabase platform).
+-- `supabase_admin` (Supabase platform). Altering another role's default
+-- privileges requires membership in it, so roles the migration user cannot
+-- act as (e.g. `supabase_admin` when migrating as `postgres`) are skipped.
 DO $$
 DECLARE
   r text;
 BEGIN
   FOREACH r IN ARRAY ARRAY['postgres', 'supabase_admin']
   LOOP
-    IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = r) THEN
+    IF EXISTS (SELECT 1 FROM pg_roles WHERE rolname = r)
+       AND pg_has_role(current_user, r, 'MEMBER') THEN
       EXECUTE format(
         'ALTER DEFAULT PRIVILEGES FOR ROLE %I IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO directus_admin',
         r

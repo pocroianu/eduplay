@@ -7,6 +7,13 @@
     "node": "24.12.0",
     "npm": ">=11.6.2"
   },
+  "devEngines": {
+    "packageManager": {
+      "name": "npm",
+      "version": "11.6.2",
+      "onFail": "error"
+    }
+  },
   "scripts": {
     "setup": "npm run setup:deps && npm run db:setup",
     "setup:deps": "npm ci && npm run build:shared",
@@ -14,7 +21,6 @@
     "dev:platform": "npm --workspace=edu-play-core run dev:full",
     "dev:games": "npm --prefix phaser-projects run start:activities",
     "dev:editor": "npm --prefix phaser-projects run start:config-editor",
-    "dev:storybook": "npm --workspace=edu-play-core run storybook",
     "dev:ai": "npm run dev --workspace=@edu-play/ai-content",
     "dev:stop": "npm --workspace=edu-play-core run dev:stop",
     "dev:status": "npm --workspace=edu-play-core run dev:status",
@@ -43,16 +49,17 @@
     "db:reset": "npm run db:reset --workspace=edu-play-core --"
   },
   "devDependencies": {
-    "concurrently": "10.0.7",
-    "typescript": "5.9.3",
-    "@types/node": "24.10.13",
     "@playwright/test": "1.59.1",
-    "phaser": "4.1.0",
-    "eslint-plugin-react-hooks": "7.0.1",
+    "@types/node": "24.10.13",
+    "concurrently": "10.0.7",
     "dockerfile-language-server-nodejs": "0.15.0",
+    "eslint-plugin-react-hooks": "7.0.1",
     "glob": "13.0.3",
+    "phaser": "4.1.0",
     "ts-node": "10.9.2",
+    "typescript": "5.9.3",
     "typescript-language-server": "5.3.0",
+    "vite-plus": "1.6.0",
     "vscode-langservers-extracted": "4.10.0",
     "yaml-language-server": "1.23.0"
   },

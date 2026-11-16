@@ -1,7 +1,6 @@
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
-import storybook from "eslint-plugin-storybook";
 
 const BLOCKED_ANALYTICS_PACKAGES = [
   "@vercel/analytics",
@@ -28,7 +27,6 @@ const BLOCKED_ANALYTICS_MESSAGE =
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  ...storybook.configs["flat/recommended"],
   {
     rules: {
       '@typescript-eslint/no-unused-vars': ['warn', {
