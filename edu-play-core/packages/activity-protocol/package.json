@@ -21,7 +21,7 @@
     "build": "tsc -p tsconfig.json && node scripts/patch-dist-extensions.mjs"
   },
   "dependencies": {
-    "zod": "^4.3.4"
+    "zod": "4.3.6"
   },
   "devDependencies": {}
 }

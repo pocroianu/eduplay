@@ -1,8 +1,14 @@
 import type { NextConfig } from "next";
+import path from "node:path";
 
 // EU region pinning: all serverless functions deploy to fra1 (Frankfurt).
 // See PRIVACY.md §2 and vercel.json "regions". Do not add non-EU preferredRegion exports.
 const nextConfig: NextConfig = {
+  output: "standalone",
+  outputFileTracingRoot: path.resolve(__dirname, ".."),
+  turbopack: {
+    root: path.resolve(__dirname, ".."),
+  },
   reactCompiler: true,
   experimental: {
     serverActions: {

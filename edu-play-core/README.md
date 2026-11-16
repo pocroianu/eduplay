@@ -12,9 +12,9 @@
 
 ```bash
 git clone https://github.com/pocroianu/eduplay.git
-cd eduplay/edu-play-core
-npm ci
-npm run dev:full          # Starts Supabase + Next.js and auto-writes .env.local
+cd eduplay
+npm run setup
+npm run dev               # Supabase + Next.js, Activity host and config editor
 ```
 
 - App: http://localhost:3000
@@ -25,6 +25,12 @@ npm run dev:full          # Starts Supabase + Next.js and auto-writes .env.local
 npm run dev:status        # Check services
 npm run dev:stop          # Stop everything
 ```
+
+For platform-only commands below, run from `edu-play-core/` after root setup.
+Dependencies and the lockfile are owned by the repository root.
+
+For the platform-only commands below, run from `edu-play-core/` after root setup.
+Dependency installation and updates use the repository root lockfile.
 
 ## First Run
 
@@ -135,10 +141,9 @@ Use `env.example` only when you intentionally want to point the app at a differe
 npm run build && npm run start    # Production
 ```
 
-The root Docker files are retained for ongoing deployment work, but the
-production Dockerfile does not yet match the required Node version and Next.js
-output configuration. Validate and repair that path before using it for a
-release.
+Docker builds use the repository root as context and Node.js 24.12.0. See the
+[root README](../README.md#workspace-maintenance) for build arguments and runtime
+configuration. The Docker path still needs execution validation before release.
 
 ## Troubleshooting
 

@@ -1,5 +1,7 @@
 # Local workspace IDE metadata
 /.idea/
+/node_modules/
+/npm-debug.log*
 
 # Temporary captures and account-bearing design references
 /edu-play-core/.tmp/

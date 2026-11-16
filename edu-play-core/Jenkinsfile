@@ -1,3 +1,5 @@
+// ARCHIVED: original standalone-repository pipeline. Not a monorepo entrypoint.
+// Active checks live in /.github/workflows/ci.yml; see its README.
 
 def CI_IMAGE = 'ghcr.io/eduplay-org/eduplay-ci@sha256:836c0f124fd121a235782002ff0c69f0e73440bcf83211f9514e33acbe0c93d9'
 def CI_AGENT_ARGS = '-v /var/run/docker.sock:/var/run/docker.sock --group-add 989 -e HOME=/tmp --dns 1.1.1.1 --dns 8.8.8.8 --network=host'

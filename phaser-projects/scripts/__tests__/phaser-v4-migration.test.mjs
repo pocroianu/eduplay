@@ -59,7 +59,7 @@ test('Phaser runtime packages target Phaser 4', () => {
     const packageJson = JSON.parse(readFileSync(join(repoRoot, file), 'utf8'));
     const range = packageJson.dependencies?.phaser ?? packageJson.peerDependencies?.phaser;
 
-    assert.match(range, /^\^4\./, `${file} should target Phaser 4, got ${range}`);
+    assert.match(range, /^(?:\^)?4\./, `${file} should target Phaser 4, got ${range}`);
   }
 });
 

@@ -5,8 +5,10 @@ import { dirname, join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
+import { createRequire } from "node:module";
 
 const repoRoot = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
+const tsNode = createRequire(import.meta.url).resolve("ts-node/dist/bin.js");
 
 test("validate-all-configs reports selected-game missing asset pins", () => {
   const fixtureRoot = mkdtempSync(join(tmpdir(), "validate-all-configs-pins-"));
@@ -53,7 +55,7 @@ test("validate-all-configs reports selected-game missing asset pins", () => {
     }
   }));
 
-  const result = spawnSync(process.execPath, [resolve(repoRoot, "node_modules/ts-node/dist/bin.js"), resolve(repoRoot, "scripts/validate-all-configs.ts"), "--root", fixtureRoot], {
+  const result = spawnSync(process.execPath, [tsNode, resolve(repoRoot, "scripts/validate-all-configs.ts"), "--root", fixtureRoot], {
     cwd: repoRoot,
     encoding: "utf8"
   });
@@ -89,7 +91,7 @@ test("validate-all-configs reports invalid Activity config JSON without crashing
     }
   }));
 
-  const result = spawnSync(process.execPath, [resolve(repoRoot, "node_modules/ts-node/dist/bin.js"), resolve(repoRoot, "scripts/validate-all-configs.ts"), "--root", fixtureRoot], {
+  const result = spawnSync(process.execPath, [tsNode, resolve(repoRoot, "scripts/validate-all-configs.ts"), "--root", fixtureRoot], {
     cwd: repoRoot,
     encoding: "utf8"
   });
@@ -126,7 +128,7 @@ test("validate-all-configs rejects an invalid older version while the selected v
     }));
   }
   const result = spawnSync(process.execPath, [
-    resolve(repoRoot, "node_modules/ts-node/dist/bin.js"), resolve(repoRoot, "scripts/validate-all-configs.ts"), "--root", fixtureRoot
+    tsNode, resolve(repoRoot, "scripts/validate-all-configs.ts"), "--root", fixtureRoot
   ], { cwd: repoRoot, encoding: "utf8" });
   assert.notEqual(result.status, 0);
   assert.match(result.stdout + result.stderr, /older-invalid[\\/]versions[\\/]1[\\/]config.json/);

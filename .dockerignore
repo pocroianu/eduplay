@@ -1,0 +1,17 @@
+**/node_modules
+**/.next
+**/dist
+**/coverage
+**/playwright-report
+**/test-results
+**/.env*
+**/.runtime
+**/.tmp
+**/.agents
+**/.claude
+**/.idea
+**/supabase/.temp
+**/supabase/.branches
+phaser-projects/packages/ai-content/models
+phaser-projects/packages/ai-content/training-data
+.git

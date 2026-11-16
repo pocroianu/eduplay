@@ -2,6 +2,18 @@ import { parse as parseDotenv } from 'dotenv'
 
 const SUPABASE_AUTH_HEALTH_PATH = '/auth/v1/health'
 
+export function getWindowsListeningPids(netstatOutput, port) {
+  const pids = new Set()
+  for (const line of (netstatOutput ?? '').split(/\r?\n/)) {
+    const [protocol, localAddress, , state, rawPid] = line.trim().split(/\s+/)
+    if (protocol !== 'TCP' || state !== 'LISTENING') continue
+    const localPort = Number(localAddress.slice(localAddress.lastIndexOf(':') + 1))
+    const pid = Number(rawPid)
+    if (localPort === port && Number.isInteger(pid) && pid > 0) pids.add(pid)
+  }
+  return [...pids]
+}
+
 export function getSupabaseApiHealthUrl(apiUrl) {
   return `${apiUrl.replace(/\/+$/, '')}${SUPABASE_AUTH_HEALTH_PATH}`
 }
