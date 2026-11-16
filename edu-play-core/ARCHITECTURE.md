@@ -727,12 +727,14 @@ Self-hosted Directus runs alongside Supabase as the admin authoring surface
 - **Topology:** introspection-only. Directus connects to the same Supabase
   Postgres. Its own system tables live in the `directus` schema; app tables
   remain in `public`.
-- **Role:** dedicated Postgres role `directus_admin` with `BYPASSRLS`, DML on
-  `public` tables, **no DDL**. Supabase migrations remain the single source of
-  truth for app schema. See `supabase/migrations/20261116225053_baseline.sql`.
-- **Sensitive tables revoked:** `audit_logs`, `password_reset_requests`,
-  `activity_preview_sessions`, `child_artifacts`, `parent_invite_codes`,
-  `deletion_requests`. These remain Next.js-only surfaces.
+- **Role:** dedicated Postgres role `directus_admin` with `BYPASSRLS` and
+  read-only access to an explicit `public` table allowlist. It owns the
+  `directus` schema; Supabase migrations remain the source of truth for app
+  schema. New public tables require an explicit grant.
+- **Allowed tables:** `activity_types`, `activities`, `activity_versions`,
+  `activity_resources`, `learning_paths`, `learning_path_steps`, and
+  `feature_flags`. No public table writes are granted yet; catalog editorial
+  writes require the safeguards in the field ownership ADR.
 - **Bootstrap:** the migration creates the role `NOLOGIN`. An operator must
   explicitly set a password (`ALTER ROLE directus_admin WITH LOGIN PASSWORD '…'`)
   before Directus can connect, preventing accidental enablement in any
@@ -759,4 +761,4 @@ Self-hosted Directus runs alongside Supabase as the admin authoring surface
 | Feature modules with barrel exports | Prevents spaghetti imports; each feature is a small, testable vertical slice | Jan 2026 |
 | `/api/v1/` namespace | Clean versioning; allows legacy route deprecation without breaking clients | Feb 2026 |
 | F9 activity-type registry is code-side | Each activity type ships as a `ActivityTypeDefinition` registered at module-load time. Avoids a DB-driven type catalog that would need a CMS before any type can ship; F11 will add a form-driven editor over each type's `configSchema` later. In-shell activities skip the postMessage iframe boundary and call the type's `resultCollector` directly because there is no third-party game runtime to sandbox. | May 2026 |
-| Directus as admin CMS (introspection-only) | Replace hand-rolled `/admin/cms/*` pages with Directus Data Studio pointed at the existing Supabase Postgres. Same DB (not a separate one) so the admin edits the rows the runtime reads — no sync. Dedicated `directus_admin` role with `BYPASSRLS` + DML only, no DDL: schema migrations remain the source of truth. Phased rollout — start with low-risk tables (`games`, `classes`, `activity_types`); leave the activities publish/version workflow in Next.js until/unless custom Directus extensions are built. | May 2026 |
+| Directus as admin CMS (introspection-only) | Directus shares Supabase Postgres. Its `BYPASSRLS` role has read-only access to an explicit content allowlist; migrations own the app schema. Future catalog presentation writes require a restricted database surface, while the publish/version workflow stays in Next.js. | May 2026 |
