@@ -14,7 +14,7 @@ export interface AdminPageHeaderProps {
  * subtitle on the left; muted maintenance CTA pinned to the right. The CTA
  * is wired but disabled until the maintenance route ships in a follow-up
  * ticket — copy comes from `ADMIN_OVERVIEW_HEADER` so the same Romanian
- * strings cover Storybook, page render, and the visual review.
+ * strings cover the page render and visual review.
  */
 export function AdminPageHeader({ fullName, now }: AdminPageHeaderProps) {
   const greeting = ADMIN_OVERVIEW_HEADER.greeting(getAdminGreeting(now), fullName)
