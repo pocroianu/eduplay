@@ -12,6 +12,7 @@
     "dev:stop": "node scripts/dev.mjs stop",
     "dev:status": "node scripts/dev.mjs status",
     "directus:up": "node scripts/directus.mjs up",
+    "directus:snapshot": "node scripts/directus.mjs snapshot",
     "directus:stop": "node scripts/directus.mjs stop",
     "directus:status": "node scripts/directus.mjs status",
     "directus:logs": "node scripts/directus.mjs logs",
