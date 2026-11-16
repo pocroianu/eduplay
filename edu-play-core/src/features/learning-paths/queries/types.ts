@@ -1,7 +1,7 @@
 // Shared row types + select column lists for learning-paths queries.
 //
 // Mirrors the migration in
-// supabase/migrations/20260501200000_learning_paths.sql exactly. Pure
+// supabase/migrations/20261116225053_baseline.sql exactly. Pure
 // mappers translate snake_case rows into the camel-cased shapes the
 // feature module exposes.
 

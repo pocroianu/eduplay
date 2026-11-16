@@ -7,7 +7,7 @@ const migrationPath = join(
   process.cwd(),
   'supabase',
   'migrations',
-  '20260508000002_teacher_child_artifact_uploads.sql',
+  '20261116225053_baseline.sql',
 );
 
 function migrationSql() {
@@ -17,13 +17,13 @@ function migrationSql() {
 describe('teacher upload artifact migration policy', () => {
   it('requires inserted child_artifacts.student_id to be one of the teacher students', () => {
     expect(migrationSql()).toMatch(
-      /student_id\s+IN\s*\(\s*SELECT\s+public\.get_teacher_student_ids\(auth\.uid\(\)\)/i,
+      /"student_id"\s+IN\s*\(\s*SELECT\s+"public"\."get_teacher_student_ids"\("auth"\."uid"\(\)\)/i,
     );
   });
 
   it('requires child_artifacts.storage_path to live under the inserted student id folder', () => {
     expect(migrationSql()).toMatch(
-      /\(storage\.foldername\(storage_path\)\)\[1\]::uuid\s*=\s*student_id/i,
+      /\("storage"\."foldername"\("storage_path"\)\)\[1\]\)::"uuid"\s*=\s*"student_id"/i,
     );
   });
 });

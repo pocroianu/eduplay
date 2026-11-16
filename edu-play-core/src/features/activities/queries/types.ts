@@ -2,7 +2,7 @@ import type { ActivityInstance } from '../types';
 
 /**
  * Raw DB row for `activity_instances` keyed in snake_case. Mirrors the
- * migration in `supabase/migrations/20260501100000_create_activity_instances.sql`.
+ * migration in `supabase/migrations/20261116225053_baseline.sql`.
  *
  * Kept local so queries can shape responses without depending on the
  * generated `Database` types until they are regenerated downstream.

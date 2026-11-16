@@ -36,7 +36,7 @@ describe('ADMIN_OVERVIEW_PANELS.recentReleases.actionLabels', () => {
   it('maps every feature_flag_events.action value to a Romanian label', () => {
     const labels = ADMIN_OVERVIEW_PANELS.recentReleases.actionLabels;
     // These keys must stay in sync with feature_flag_events.action CHECK
-    // constraint in `20260426150000_admin_feature_flags.sql`.
+    // constraint in `20261116225053_baseline.sql`.
     expect(Object.keys(labels).sort()).toEqual(
       [
         'created',

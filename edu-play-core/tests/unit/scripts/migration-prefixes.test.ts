@@ -34,17 +34,17 @@ describe('Supabase migration filenames', () => {
     expect(newDuplicatePrefixes).toEqual([])
   })
 
-  it('keeps the unique CMS lifecycle hardening migration recorded as applied', () => {
+  it('keeps the squashed baseline recorded as applied', () => {
     const migrationPath = join(
       process.cwd(),
       'supabase',
       'migrations',
-      '20260508000001_cms_lifecycle_hardening.sql'
+      '20261116225053_baseline.sql'
     )
     const migration = readFileSync(migrationPath, 'utf8')
 
     expect(migration).not.toMatch(
-      /DELETE\s+FROM\s+supabase_migrations\.schema_migrations[\s\S]*20260508000001/i
+      /DELETE\s+FROM\s+supabase_migrations\.schema_migrations[\s\S]*20261116225053/i
     )
   })
 
@@ -53,15 +53,15 @@ describe('Supabase migration filenames', () => {
       process.cwd(),
       'supabase',
       'migrations',
-      '20260502000001_student_consents.sql'
+      '20261116225053_baseline.sql'
     )
     const migration = readFileSync(migrationPath, 'utf8')
 
     expect(migration).toMatch(
-      /CREATE\s+OR\s+REPLACE\s+FUNCTION\s+public\.enforce_parent_only_student_consents/i
+      /CREATE\s+OR\s+REPLACE\s+FUNCTION\s+"public"\."enforce_parent_only_student_consents"/i
     )
     expect(migration).toMatch(
-      /BEFORE\s+UPDATE\s+OF\s+consents\s+ON\s+students/i
+      /BEFORE\s+UPDATE\s+OF\s+"consents"\s+ON\s+"public"\."students"/i
     )
     expect(migration).toMatch(
       /current_setting\('eduplay\.allow_child_consent_update',\s*true\)/i
@@ -79,7 +79,7 @@ describe('Supabase migration filenames', () => {
       process.cwd(),
       'supabase',
       'migrations',
-      '20260502000001_student_consents.sql'
+      '20261116225053_baseline.sql'
     )
     const migration = readFileSync(migrationPath, 'utf8')
 

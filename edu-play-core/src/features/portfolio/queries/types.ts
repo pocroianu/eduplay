@@ -2,7 +2,7 @@ import type { Artifact, ArtifactType, ArtifactVisibility } from '../types';
 
 /**
  * Raw DB row for `child_artifacts` keyed in snake_case. Mirrors the
- * migration in `supabase/migrations/20260417100000_child_artifacts_audit_log.sql`.
+ * migration in `supabase/migrations/20261116225053_baseline.sql`.
  * Kept local so queries can shape responses without depending on the
  * generated `Database` types (which haven't been regenerated to include
  * `child_artifacts` yet — tracked as follow-up work).

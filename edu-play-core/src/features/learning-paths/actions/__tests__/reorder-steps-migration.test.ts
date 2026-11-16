@@ -7,7 +7,7 @@ describe('reorder_learning_path_steps migration', () => {
     const migration = readFileSync(
       join(
         process.cwd(),
-        'supabase/migrations/20260515002000_learning_path_step_reorder_rpc.sql',
+        'supabase/migrations/20261116225053_baseline.sql',
       ),
       'utf8',
     );

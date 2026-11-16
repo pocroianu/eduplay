@@ -53,4 +53,4 @@ REVOKE EXECUTE ON FUNCTION my_sensitive_fn() FROM PUBLIC;
 GRANT  EXECUTE ON FUNCTION my_sensitive_fn() TO service_role;
 ```
 
-Example: `20260417000001_hard_delete_user.sql`.
+Example: `20261116225053_baseline.sql`.

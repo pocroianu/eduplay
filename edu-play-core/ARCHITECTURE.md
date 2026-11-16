@@ -398,12 +398,12 @@ activity_progress     — Canonical learner progress per Activity
 └── score, attempts, status, time_spent, last_played_at
 ```
 
-The Activity-only cutover migration (`20260518000000_activity_only_cutover.sql`)
+The Activity-only cutover, now represented in `20261116225053_baseline.sql`,
 dropped `games`, `game_progress`, legacy game pointers, and the games storage
 bucket. It requires assignments to pin both Activity and Activity Version.
-Learning paths target Activity templates. Historical migrations describe earlier
-states; use the full migration chain and generated database types for the current
-schema. Some presentation types still use Game-shaped names for Activity data.
+Learning paths target Activity templates. Use the baseline, subsequent migrations,
+and generated database types for the current schema. Some presentation types still
+use Game-shaped names for Activity data.
 
 ### Row Level Security (RLS)
 
@@ -522,7 +522,7 @@ through `recordAdminAction()` in `src/lib/admin/audit.ts`.
 Three pieces support it:
 
 - **`feature_flags` + `feature_flag_events`** (migration
-  `20260426150000_admin_feature_flags.sql`) — flag catalog with a
+  `20261116225053_baseline.sql`) — flag catalog with a
   per-event audit trail (one row per `enabled/disabled/targeting_changed/
   description_changed/created/deleted`). Both tables are admin-only via
   RLS.
@@ -729,7 +729,7 @@ Self-hosted Directus runs alongside Supabase as the admin authoring surface
   remain in `public`.
 - **Role:** dedicated Postgres role `directus_admin` with `BYPASSRLS`, DML on
   `public` tables, **no DDL**. Supabase migrations remain the single source of
-  truth for app schema. See `supabase/migrations/20260528000000_directus_role_and_schema.sql`.
+  truth for app schema. See `supabase/migrations/20261116225053_baseline.sql`.
 - **Sensitive tables revoked:** `audit_logs`, `password_reset_requests`,
   `activity_preview_sessions`, `child_artifacts`, `parent_invite_codes`,
   `deletion_requests`. These remain Next.js-only surfaces.
