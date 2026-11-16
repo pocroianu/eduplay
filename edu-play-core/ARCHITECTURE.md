@@ -754,6 +754,16 @@ Self-hosted Directus runs alongside Supabase as the admin authoring surface
   addressing. Restrict and rotate those credentials and protect Directus access:
   the bucket is public, and S3 credentials may have wider access than the prefix.
   Never use the `child-artifacts` or `activity-renderers` buckets for Directus.
+- **Configuration:** `directus/config.json` is the application collection
+  allowlist and Editor role/policy definition. On `directus:up`, the runner
+  derives excluded public tables from that allowlist and the live database,
+  applies `directus/schema.json`, and reconciles Editor permissions via the
+  Directus API. Editor can read the seven catalog collections and manage files;
+  catalog writes remain disabled pending ADR 0007's database row boundary.
+  To change collection, field or relation metadata, edit it in Data Studio,
+  run `npm run directus:snapshot`, review the snapshot and commit it. Edit
+  `config.json` and the access reconciliation together for permission changes.
+  Supabase migrations remain authoritative for database schema changes.
 - **RLS interaction:** Directus bypasses RLS by design (admin context). The
   Next.js runtime continues to authenticate as Supabase Auth users and is
   fully governed by RLS — Directus' bypass does not leak there.

@@ -25,6 +25,7 @@
     "dev:stop": "npm --workspace=edu-play-core run dev:stop",
     "dev:status": "npm --workspace=edu-play-core run dev:status",
     "directus:up": "npm --workspace=edu-play-core run directus:up",
+    "directus:snapshot": "npm --workspace=edu-play-core run directus:snapshot",
     "directus:stop": "npm --workspace=edu-play-core run directus:stop",
     "directus:status": "npm --workspace=edu-play-core run directus:status",
     "directus:logs": "npm --workspace=edu-play-core run directus:logs",

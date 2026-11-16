@@ -38,6 +38,7 @@ services:
       # Directus system tables are created in the first schema (`directus`).
       # `public` is included so Directus can introspect app tables.
       DB_SEARCH_PATH: directus,public
+      DB_EXCLUDE_TABLES: ${DIRECTUS_EXCLUDE_TABLES:-}
       ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL:?run npm run directus:up}
       ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD:?run npm run directus:up}
       PUBLIC_REGISTRATION: "false"

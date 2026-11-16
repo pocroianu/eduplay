@@ -28,6 +28,8 @@ const DB_CONTAINER = "supabase_db_edu-play-core";
 const DIRECTUS_CONTAINER = "eduplay-directus";
 const HEALTH_URL = "http://localhost:8055/server/health";
 const HEALTH_TIMEOUT_MS = 180_000;
+const CONFIG_DIR = path.join(ROOT, "directus");
+const config = JSON.parse(fs.readFileSync(path.join(CONFIG_DIR, "config.json"), "utf8"));
 
 const log = {
   info: (m) => console.log(`[directus] ${m}`),
@@ -50,6 +52,94 @@ function compose(args, opts) {
     ["compose", "-f", COMPOSE_FILE, "--env-file", ENV_FILE, ...args],
     opts,
   );
+}
+
+function excludeTables() {
+  const tables = psql(
+    "SELECT c.relname FROM pg_class c JOIN pg_namespace n ON n.oid = c.relnamespace " +
+      "WHERE n.nspname = 'public' AND c.relkind IN ('r', 'p', 'v', 'm', 'f') ORDER BY c.relname;",
+    "list public collections",
+  ).split("\n");
+  return tables.filter((table) => table && !config.collections.includes(table)).join(",");
+}
+
+function cliSchema(action) {
+  const file = path.join(CONFIG_DIR, "schema.json");
+  const containerFile = action === "apply" ? "/directus/schema-config.json" : "/directus/schema-export.json";
+  if (action === "apply") {
+    const copy = run("docker", ["cp", file, `${DIRECTUS_CONTAINER}:${containerFile}`]);
+    if (copy.status !== 0) die("Could not copy Directus schema into container.");
+  }
+  const args = ["exec", DIRECTUS_CONTAINER, "node", "cli.js", "schema", action, "--yes"];
+  if (action === "snapshot") args.push("--format", "json");
+  const result = run("docker", [...args, containerFile]);
+  if (result.status !== 0) die(`Directus schema ${action} failed: ${(result.stderr || result.stdout).trim()}`);
+  if (action === "snapshot") {
+    const copy = run("docker", ["cp", `${DIRECTUS_CONTAINER}:${containerFile}`, file]);
+    if (copy.status !== 0) die("Could not copy Directus snapshot from container.");
+  }
+  log.ok(`Schema ${action} complete`);
+}
+
+async function applyAccess(env) {
+  async function request(route, method = "GET", data, token) {
+    const response = await fetch(`http://localhost:8055${route}`, {
+      method,
+      headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+      ...(data ? { body: JSON.stringify(data) } : {}),
+    });
+    const body = response.status === 204 ? {} : await response.json();
+    if (!response.ok) die(`Directus ${method} ${route} failed (${response.status}): ${JSON.stringify(body.errors)}`);
+    return body.data;
+  }
+  const login = await request("/auth/login", "POST", { email: env.DIRECTUS_ADMIN_EMAIL, password: env.DIRECTUS_ADMIN_PASSWORD });
+  const token = login.access_token;
+  const api = (route, method, data) => request(route, method, data, token);
+  const collections = await api("/collections?limit=-1");
+  for (const name of config.collections) {
+    const collection = collections.find((entry) => entry.collection === name);
+    if (!collection) die(`Allowlisted collection ${name} is missing from the database.`);
+    if (!collection.meta) await api(`/collections/${name}`, "PATCH", { meta: {} });
+  }
+  const snapshot = JSON.parse(fs.readFileSync(path.join(CONFIG_DIR, "schema.json"), "utf8"));
+  for (const field of snapshot.fields.filter((entry) => config.collections.includes(entry.collection))) {
+    const current = await api(`/fields/${field.collection}/${field.field}`);
+    if (!current.meta) await api(`/fields/${field.collection}/${field.field}`, "PATCH", { meta: {} });
+  }
+  const roles = await api("/roles?limit=-1");
+  const existingRole = roles.find((role) => role.name === config.role.name);
+  const role = existingRole ? await api(`/roles/${existingRole.id}`, "PATCH", config.role) : await api("/roles", "POST", config.role);
+  const policies = await api("/policies?limit=-1");
+  const existingPolicy = policies.find((policy) => policy.name === config.policy.name);
+  const policy = existingPolicy ? await api(`/policies/${existingPolicy.id}`, "PATCH", config.policy) : await api("/policies", "POST", config.policy);
+  const access = await api("/access?limit=-1");
+  for (const entry of access.filter((entry) => entry.role === role.id && entry.policy !== policy.id)) {
+    await api(`/access/${entry.id}`, "DELETE");
+  }
+  if (!access.some((entry) => entry.role === role.id && entry.policy === policy.id)) {
+    await api("/access", "POST", { role: role.id, policy: policy.id });
+  }
+  // Reconcile the managed policy completely so stale permissions cannot survive.
+  const permissions = await api(`/permissions?filter[policy][_eq]=${policy.id}&limit=-1`);
+  const desired = [
+    ...config.collections.map((collection) => ({ collection, action: "read" })),
+    ...["create", "read", "update", "delete"].map((action) => ({ collection: "directus_files", action })),
+  ];
+  for (const permission of permissions) {
+    const index = desired.findIndex((item) => item.collection === permission.collection && item.action === permission.action);
+    if (index < 0) {
+      await api(`/permissions/${permission.id}`, "DELETE");
+    } else {
+      await api(`/permissions/${permission.id}`, "PATCH", { fields: ["*"], permissions: {}, validation: {}, presets: null });
+      desired.splice(index, 1);
+    }
+  }
+  for (const item of desired) {
+    await api("/permissions", "POST", { policy: policy.id, ...item, fields: ["*"] });
+  }
+  // TODO ADR 0007: title, description, thumbnail_url, category, catalog_visible,
+  // sort_order only after a database-enforced public-catalog boundary exists.
+  log.ok("Editor role, policy and permissions applied");
 }
 
 function parseEnv(text) {
@@ -201,6 +291,7 @@ async function waitForHealth() {
 async function up() {
   const env = ensureEnvFile(supabaseStorage());
   ensureDatabase(env);
+  process.env.DIRECTUS_EXCLUDE_TABLES = excludeTables();
   log.info("Starting Directus container…");
   const res = compose(["up", "-d"], { stdio: "inherit" });
   if (res.status !== 0) process.exit(res.status ?? 1);
@@ -211,6 +302,8 @@ async function up() {
     die(`Directus did not become healthy: ${JSON.stringify(result)}. Inspect with: npm run directus:logs`);
   }
   ensureAdminUser();
+  await applyAccess(env);
+  cliSchema("apply");
   log.ok("Directus is healthy at http://localhost:8055");
   log.info(`Admin login: ${env.DIRECTUS_ADMIN_EMAIL} (password in .env.directus)`);
 }
@@ -235,6 +328,9 @@ switch (cmd) {
   }
   case "status":
     await status();
+    break;
+  case "snapshot":
+    cliSchema("snapshot");
     break;
   case "logs":
     ensureEnvFile();

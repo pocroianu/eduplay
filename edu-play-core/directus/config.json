@@ -1,0 +1,13 @@
+{
+  "collections": [
+    "activity_types",
+    "activities",
+    "activity_versions",
+    "activity_resources",
+    "learning_paths",
+    "learning_path_steps",
+    "feature_flags"
+  ],
+  "role": { "name": "Editor", "icon": "edit", "description": "Catalog reader and asset editor" },
+  "policy": { "name": "Editor", "icon": "edit", "description": "Read catalog and manage assets", "admin_access": false, "app_access": true }
+}
