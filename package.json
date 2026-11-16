@@ -8,7 +8,8 @@
     "npm": ">=11.6.2"
   },
   "scripts": {
-    "setup": "npm ci && npm run build:shared",
+    "setup": "npm run setup:deps && npm run db:setup",
+    "setup:deps": "npm ci && npm run build:shared",
     "dev": "concurrently --kill-others --names platform,games,editor \"npm run dev:platform\" \"npm run dev:games\" \"npm run dev:editor\"",
     "dev:platform": "npm --workspace=edu-play-core run dev:full",
     "dev:games": "npm --prefix phaser-projects run start:activities",
@@ -31,7 +32,15 @@
     "test:e2e": "npm --workspace=edu-play-core run test:e2e && npm --prefix phaser-projects run test:e2e",
     "verify:agent": "npm run verify:agent --workspace=edu-play-core && npm run test:games",
     "check:agent-guardrails": "npm run check:agent-guardrails --workspace=edu-play-core",
-    "test:games": "npm --prefix phaser-projects run test:validation && npm --prefix phaser-projects run test:game-core && npm --prefix phaser-projects run test:config-validation"
+    "test:games": "npm --prefix phaser-projects run test:validation && npm --prefix phaser-projects run test:game-core && npm --prefix phaser-projects run test:config-validation",
+    "db:start": "npm run dev:full --workspace=edu-play-core -- --skip-next",
+    "db:setup": "npm run db:start && npm run db:seed",
+    "db:seed": "npm run seed --workspace=edu-play-core --",
+    "db:seed:minimal": "npm run seed:minimal --workspace=edu-play-core --",
+    "db:seed:medium": "npm run seed:medium --workspace=edu-play-core --",
+    "db:seed:full": "npm run seed:full --workspace=edu-play-core --",
+    "db:seed:clean": "npm run seed:clean --workspace=edu-play-core --",
+    "db:reset": "npm run db:reset --workspace=edu-play-core --"
   },
   "devDependencies": {
     "concurrently": "10.0.7",

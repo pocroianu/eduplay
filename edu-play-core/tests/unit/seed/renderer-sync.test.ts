@@ -19,7 +19,7 @@ describe('renderer sync planning', () => {
     fs.writeFileSync(path.join(distRoot, 'assets/app.js'), 'export {};');
 
     expect(getActivityHostBuildCommand()).toBe(
-      'npm run build:host --workspace=@edu-play/game-core -- --base /api/v1/renderer-proxy/activity-renderers/activity-host/',
+      'npm --prefix packages/game-core run build:host -- --base /api/v1/renderer-proxy/activity-renderers/activity-host/',
     );
     expect(collectActivityHostUploads(phaserRoot).map((upload) => upload.storagePath)).toEqual([
       `${ACTIVITY_HOST_STORAGE_PREFIX}/assets/app.js`,

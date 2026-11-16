@@ -31,7 +31,7 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
           cache-dependency-path: package-lock.json
-      - run: npm run setup
+      - run: npm run setup:deps
       - run: npm ls --workspaces --include-workspace-root --depth=0
       - run: npm run lint
       - run: npm run typecheck

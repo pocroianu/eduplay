@@ -17,15 +17,18 @@ Use Node.js 24.12.0 and Docker Desktop for local Supabase. Install from the
 root lockfile, especially after copying the workspace: npm workspace links from a
 different checkout may still point at the old directory.
 
-Run from the repository root:
+Start Docker Desktop, then run from the repository root:
 
 ```powershell
 npm run setup
 npm run dev
 ```
 
-`setup` runs a single root `npm ci`, then builds shared protocol and validation
-exports. Use the root lockfile for all installs and dependency updates.
+`setup` installs dependencies from the root lockfile, builds shared protocol and
+validation exports, starts local Supabase, prepares the local environment file,
+and seeds the medium demo dataset with playable Activities. It does not reset
+the database. Use `npm run setup:deps` for dependencies and shared builds only
+(CI or games-only development, without Docker or database seeding).
 `dev` starts the platform
 (including local Supabase), Activity host, and config editor together, with
 labelled logs. If a command exits, the runner stops the other commands.
@@ -59,6 +62,47 @@ adapters are consumed by the apps; they do not each need a server. See each
 project's README for environment configuration and detailed workflows.
 After editing protocol or validation source, run `npm run build:shared` to
 refresh their compiled exports.
+
+## Local database and demo data
+
+The standard `npm run setup` includes database setup. To start Supabase and seed
+again without reinstalling dependencies, run this from the repository root:
+
+```powershell
+npm run db:setup
+```
+
+This starts local Supabase without launching Next.js, prepares
+`edu-play-core/.env.local`, then seeds the medium demo dataset. It does not reset
+the database. If Supabase is already running (for example through `npm run dev`),
+seed directly:
+
+```powershell
+npm run db:seed
+```
+
+| Root command | Purpose |
+| --- | --- |
+| `npm run db:start` | Start/check Supabase and prepare local environment values |
+| `npm run db:seed:minimal` | Smallest dataset, with one Activity |
+| `npm run db:seed:medium` | Default demo dataset |
+| `npm run db:seed:full` | Full demo dataset |
+| `npm run db:seed -- --help` | Show seed flags without modifying data |
+| `npm run db:seed -- --tier minimal --dry-run` | Validate configs and preview counts without writes or builds |
+| `npm run db:seed -- --no-build` | Seed using an existing compiled Activity host |
+
+Normal seeding builds and uploads the shared Activity host to local Supabase
+Storage, then creates demo accounts, classes, learners, Activities, assignments,
+progress and notifications. It prints the demo login details at the end. The
+seed client targets `http://127.0.0.1:54421`; npm workspace execution keeps env
+loading and sibling Activity catalog paths relative to `edu-play-core/`.
+
+For cleanup, `npm run db:seed:clean` deletes the medium tier's seed users and
+associated data. Select another tier with
+`npm run db:seed:clean -- --tier full`. `npm run db:reset` deletes **all local
+database data**, reapplies migrations, and seeds medium again. Neither cleanup
+nor reset is needed for the normal seed command. Keep schema changes in SQL
+migrations; this TypeScript seed runner owns demo data and renderer imports.
 
 ## Checks
 

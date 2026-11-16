@@ -11,7 +11,7 @@ A monorepo containing educational Phaser games for early learning.
 ### Run the Activity host
 ```bash
 # From the repository root
-npm run setup
+npm run setup:deps
 npm run dev:games
 ```
 
@@ -26,7 +26,9 @@ http://localhost:5173/templates/multiple-choice/
 Renderers are package-less modules under `renderers/`. Legacy per-template webpack dev servers and template workspaces have been removed.
 
 Install and update dependencies from the repository root; there is one shared
-lockfile. The commands below run from `phaser-projects/` after root setup.
+lockfile. The commands below run from `phaser-projects/` after root dependency
+setup. For the complete platform and seeded database, use root `npm run setup`
+with Docker Desktop running.
 
 ### Build and test
 ```bash

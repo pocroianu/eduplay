@@ -26,10 +26,8 @@ npm run dev:status        # Check services
 npm run dev:stop          # Stop everything
 ```
 
+Root `npm run setup` installs dependencies and prepares a seeded local database.
 For platform-only commands below, run from `edu-play-core/` after root setup.
-Dependencies and the lockfile are owned by the repository root.
-
-For the platform-only commands below, run from `edu-play-core/` after root setup.
 Dependency installation and updates use the repository root lockfile.
 
 ## First Run
@@ -92,6 +90,12 @@ npm run verify:agent      # Default local agent gate
 ```
 
 ## Database
+
+From the repository root, `npm run db:setup` starts local Supabase and seeds the
+medium demo dataset. If it is already running, use `npm run db:seed` (or
+`db:seed:minimal` / `db:seed:full`). See the
+[root database commands](../README.md#local-database-and-demo-data) for dry runs,
+renderer options, cleanup and reset.
 
 Key tables: `profiles`, `classes`, `students`, `activities`, `activity_versions`, `activity_progress`, `assignments`
 

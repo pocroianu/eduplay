@@ -4,14 +4,15 @@
 pushes to `main`, and manual dispatch, using Node from the root `.nvmrc` and the
 single root npm lockfile. Commands run from the repository root:
 
-1. `npm run setup`: frozen install and shared exports.
+1. `npm run setup:deps`: frozen install and shared exports.
 2. `npm run lint`: existing platform and AI package lint coverage.
 3. `npm run typecheck`: platform and game library TypeScript checks.
 4. `npm run check:agent-guardrails`: platform changed-file guardrails.
 5. `npm test`: platform unit, validation, game-core and configuration script tests.
 6. `npm run build`: prerequisite libraries, game/editor bundles and Next.js.
 
-After setup, CI also validates the installed workspace dependencies with
+CI uses dependency-only setup; the normal `npm run setup` also starts local
+Supabase and seeds demo data. After dependency setup, CI validates the install with
 `npm ls --workspaces --include-workspace-root --depth=0`.
 
 Builds use public placeholder Supabase values; no deployment credentials are
