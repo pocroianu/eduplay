@@ -22,6 +22,7 @@ import {
   getComposeProjectEnvAnonKey,
   getSupabaseApiHealthUrl,
   getSupabaseStatusAnonKey,
+  getWindowsListeningPids,
   hasSupabaseCliStack,
   isSupabaseApiReady,
 } from "./dev-readiness.mjs";
@@ -136,9 +137,13 @@ async function checkUrl(url, timeout = 5000) {
 
 function isPortInUse(port) {
   const isWindows = process.platform === "win32";
-  const command = isWindows
-    ? `netstat -ano | findstr LISTENING | findstr ":${port}"`
-    : `lsof -nP -iTCP:${port} -sTCP:LISTEN`;
+  if (isWindows) {
+    return getWindowsListeningPids(
+      runCommandSync("netstat -ano -p tcp", { stdio: "pipe" }),
+      port,
+    ).length > 0;
+  }
+  const command = `lsof -nP -iTCP:${port} -sTCP:LISTEN`;
 
   const output = runCommandSync(command, { stdio: "pipe" });
   return output && output.trim().length > 0;
@@ -647,14 +652,12 @@ async function killNextjsProcesses() {
   const port = CONFIG.nextjs.port;
 
   if (isWindows) {
-    const netstatOutput = runCommandSync(`netstat -ano | findstr ":${port}"`, {
+    const netstatOutput = runCommandSync("netstat -ano -p tcp", {
       stdio: "pipe",
     });
 
     if (netstatOutput) {
-      // Extract PIDs from netstat output
-      const pidMatches = netstatOutput.matchAll(/LISTENING\s+(\d+)/g);
-      const pids = [...new Set([...pidMatches].map((match) => match[1]))];
+      const pids = getWindowsListeningPids(netstatOutput, port);
 
       if (pids.length > 0) {
         log.info(

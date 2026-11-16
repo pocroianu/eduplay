@@ -1,0 +1,60 @@
+{
+  "name": "eduplay",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Root development commands for the EduPlay platform and games",
+  "engines": {
+    "node": "24.12.0",
+    "npm": ">=11.6.2"
+  },
+  "scripts": {
+    "setup": "npm ci && npm run build:shared",
+    "dev": "concurrently --kill-others --names platform,games,editor \"npm run dev:platform\" \"npm run dev:games\" \"npm run dev:editor\"",
+    "dev:platform": "npm --workspace=edu-play-core run dev:full",
+    "dev:games": "npm --prefix phaser-projects run start:activities",
+    "dev:editor": "npm --prefix phaser-projects run start:config-editor",
+    "dev:storybook": "npm --workspace=edu-play-core run storybook",
+    "dev:ai": "npm run dev --workspace=@edu-play/ai-content",
+    "dev:stop": "npm --workspace=edu-play-core run dev:stop",
+    "dev:status": "npm --workspace=edu-play-core run dev:status",
+    "ai:up": "docker compose --project-directory phaser-projects/packages/ai-content/docker up -d",
+    "ai:stop": "docker compose --project-directory phaser-projects/packages/ai-content/docker stop",
+    "ai:status": "docker compose --project-directory phaser-projects/packages/ai-content/docker ps",
+    "ai:health": "npm --prefix phaser-projects run ai:health",
+    "build": "npm run build:games && npm run build:platform",
+    "build:shared": "npm run build --workspace=@edu-play/activity-protocol --workspace=@edu-play/validation",
+    "build:platform": "npm run build --workspace=edu-play-core",
+    "build:games": "npm --prefix phaser-projects run build:all",
+    "lint": "npm --workspace=edu-play-core run lint && npm --prefix phaser-projects run lint",
+    "typecheck": "npm run build:shared && npm run typecheck --workspace=edu-play-core && npm run build --workspace=@edu-play/phaser-ui --workspace=@edu-play/game-core --workspace=@edu-play/ai-content",
+    "test": "npm run test:unit --workspace=edu-play-core && npm run test:games",
+    "test:e2e": "npm --workspace=edu-play-core run test:e2e && npm --prefix phaser-projects run test:e2e",
+    "verify:agent": "npm run verify:agent --workspace=edu-play-core && npm run test:games",
+    "check:agent-guardrails": "npm run check:agent-guardrails --workspace=edu-play-core",
+    "test:games": "npm --prefix phaser-projects run test:validation && npm --prefix phaser-projects run test:game-core && npm --prefix phaser-projects run test:config-validation"
+  },
+  "devDependencies": {
+    "concurrently": "10.0.7",
+    "typescript": "5.9.3",
+    "@types/node": "24.10.13",
+    "@playwright/test": "1.59.1",
+    "phaser": "4.1.0",
+    "eslint-plugin-react-hooks": "7.0.1",
+    "dockerfile-language-server-nodejs": "0.15.0",
+    "glob": "13.0.3",
+    "ts-node": "10.9.2",
+    "typescript-language-server": "5.3.0",
+    "vscode-langservers-extracted": "4.10.0",
+    "yaml-language-server": "1.23.0"
+  },
+  "workspaces": [
+    "edu-play-core/packages/*",
+    "phaser-projects/packages/validation",
+    "phaser-projects/packages/phaser-ui",
+    "phaser-projects/packages/game-core",
+    "phaser-projects/packages/game-editor",
+    "phaser-projects/packages/ai-content",
+    "phaser-projects/tools/*",
+    "edu-play-core"
+  ]
+}

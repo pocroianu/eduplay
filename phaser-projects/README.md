@@ -10,8 +10,9 @@ A monorepo containing educational Phaser games for early learning.
 
 ### Run the Activity host
 ```bash
-npm install
-npm run start:activities
+# From the repository root
+npm run setup
+npm run dev:games
 ```
 
 Open canonical Activity routes on the single game-core Vite host:
@@ -23,6 +24,9 @@ http://localhost:5173/templates/multiple-choice/
 ```
 
 Renderers are package-less modules under `renderers/`. Legacy per-template webpack dev servers and template workspaces have been removed.
+
+Install and update dependencies from the repository root; there is one shared
+lockfile. The commands below run from `phaser-projects/` after root setup.
 
 ### Build and test
 ```bash

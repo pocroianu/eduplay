@@ -7,52 +7,138 @@ Personal workspace for the EduPlay platform and educational games.
 | [edu-play-core](./edu-play-core/) | Accounts, classes, activities, assignments, portfolios, and iframe player | Next.js 16, React 19, TypeScript, Supabase |
 | [phaser-projects](./phaser-projects/) | Game runtime, renderer plugins, activity editor, validation, and optional AI content tools | Phaser 4, TypeScript, Vite |
 
-Each directory has its own npm workspaces, lockfile, and agent instructions.
-There is no root npm install or build command. Keep the directories adjacent:
+The root owns one npm workspace graph, lockfile, and development commands.
+Project-specific agent instructions stay in each directory. Keep them adjacent:
 platform deployment scripts resolve the game workspace as `../phaser-projects`.
 
 ## Development
 
 Use Node.js 24.12.0 and Docker Desktop for local Supabase. Install from the
-lockfiles, especially after copying the workspace: npm workspace links from a
+root lockfile, especially after copying the workspace: npm workspace links from a
 different checkout may still point at the old directory.
 
-```powershell
-cd edu-play-core
-npm ci
-npm run dev:full
-```
-
-In another terminal, to work on games:
+Run from the repository root:
 
 ```powershell
-cd phaser-projects
-npm ci
-npm run start:activities
+npm run setup
+npm run dev
 ```
 
-The platform runs on port 3000 and the game host on port 5173. See each
-directory's README for details. AI generation services are optional and are
-not required to start the platform or game host.
+`setup` runs a single root `npm ci`, then builds shared protocol and validation
+exports. Use the root lockfile for all installs and dependency updates.
+`dev` starts the platform
+(including local Supabase), Activity host, and config editor together, with
+labelled logs. If a command exits, the runner stops the other commands.
+
+Next.js development uses webpack to avoid runaway Turbopack/PostCSS workers
+observed on Windows. Production builds still use Next.js's default bundler.
+To explicitly try Turbopack, use
+`npm run dev:turbo --workspace=edu-play-core`.
+
+| Command | What it runs | URL |
+| --- | --- | --- |
+| `npm run dev:platform` | Supabase + Next.js | http://localhost:3000 |
+| `npm run dev:games` | Activity host | http://localhost:5173 |
+| `npm run dev:editor` | Config editor | http://localhost:8091 |
+| `npm run dev:storybook` | Optional platform component explorer | http://localhost:6006 |
+| `npm run dev:ai` | Optional AI package TypeScript watcher | No HTTP server |
+
+Press Ctrl+C in the `dev` terminal to stop its foreground processes. Supabase
+containers remain available between runs; use `npm run dev:stop` to stop the
+platform's local stack. That command does not stop separately launched game or
+editor terminals. `npm run dev:status` reports platform/Supabase health only.
+
+AI generation services are optional and may require GPU support, model files,
+and provider configuration. Use `npm run ai:up` to start their default Docker
+Compose services, `npm run ai:status` or `npm run ai:health` to inspect them, and
+`npm run ai:stop` to stop them. Optional Compose profiles remain opt-in; see the
+[AI package README](./phaser-projects/packages/ai-content/README.md).
+
+Shared libraries (`activity-protocol`, `validation`, `phaser-ui`) and editor
+adapters are consumed by the apps; they do not each need a server. See each
+project's README for environment configuration and detailed workflows.
+After editing protocol or validation source, run `npm run build:shared` to
+refresh their compiled exports.
 
 ## Checks
 
 ```powershell
-cd edu-play-core
 npm run verify:agent
 npm run build
 ```
 
 ```powershell
-cd phaser-projects
-npm run test:validation
-npm run test:game-core
-npm run build:all
+npm run lint
+npm run test
+npm run test:e2e
 ```
 
 Platform browser tests require local Supabase and currently run Chromium.
 Several authenticated scenarios are still skipped; see the
 [E2E notes](./edu-play-core/tests/e2e/README.md).
+
+`build` builds games and the platform with explicit prerequisites: validation
+before game consumers, and activity-protocol before Next.js. `build:games`
+includes library checks, the config editor bundle, and the Activity host bundle.
+`typecheck` checks the platform and compiled game packages. `test` runs platform
+unit tests, validation, game-core, and configuration script tests; browser tests
+and AI provider integration tests remain separate. `verify:agent` combines the
+platform gate with the game checks. Lint coverage still follows the existing
+package configurations. Individual scripts are accessible from the root:
+
+```powershell
+npm run test:unit --workspace=edu-play-core -- src/path/to/example.test.ts
+npm --prefix phaser-projects run generate:schemas
+```
+
+## Workspace maintenance
+
+Install from the repository root with Node.js 24.12.0 and npm 11.6.2 or newer.
+All apps, tools, and libraries are declared in root package.json. Dependencies
+are linked by package name, and package-lock.json is the only dependency lockfile.
+Do not recreate nested lockfiles or workspace declarations.
+`phaser-projects/package.json` retains command aliases, while its shared
+development tools live at root; that directory is not itself a workspace package.
+When migrating another existing checkout, remove its old
+`phaser-projects/node_modules` before the first root setup so stale tooling cannot
+shadow the root installation. Fresh clones need only `npm run setup`.
+
+Examples of dependency updates from the root:
+
+```powershell
+npm install <dependency> --workspace=edu-play-core
+npm install <dependency> --workspace=@edu-play/game-core
+```
+
+TypeScript, Node 24 types, and Playwright use matching versions across packages.
+Vitest and Vite retain their existing compatible major versions per consumer;
+validation and platform schemas retain separate Zod majors. Shared tooling in
+root devDependencies is available to all workspaces. Packages still declare the
+tools they directly use so their requirements remain visible.
+Root tooling pins retain Phaser 4.1.0 and React Hooks lint plugin 7.0.1 from the
+previous lockfiles. Upgrade those deliberately alongside their type/lint impact.
+
+Build order is explicit in root and Phaser scripts. When adding a built package,
+declare its dependency by name and add its build before consumers. Root checks
+do not rely on npm recursively discovering nested workspaces or sorting them.
+This small graph does not currently need a separate task runner or build cache.
+
+GitHub Actions runs root installation, lint, type checks, guardrails, unit tests,
+and builds on pull requests and pushes to main. See
+[CI notes](./.github/workflows/README.md) for coverage and deployment details.
+
+Docker builds use the repository root as context. Development Compose files
+already select that context. For a production image, provide the public Supabase
+URL and anonymous key at build time (Next.js embeds public environment values):
+
+```powershell
+docker build -f edu-play-core/Dockerfile --build-arg NEXT_PUBLIC_SUPABASE_URL --build-arg NEXT_PUBLIC_SUPABASE_ANON_KEY -t eduplay .
+```
+
+Set those environment variables in your shell first. Supply server-only secrets
+at runtime. The image runs Next.js standalone output under edu-play-core, with
+root dependency tracing enabled. Existing renderer deployment scripts keep their
+sibling-directory paths because app directories have not moved.
 
 ## Agent skills
 
@@ -79,6 +165,7 @@ account pages are excluded by the root `.gitignore`.
 
 The imported Jenkinsfiles describe the previous delivery setup; importing them
 does not configure CI or branch protection for this personal GitHub repository.
-The production Docker path, database authorization findings, dependency
-advisories, and missing privacy documentation still need release-readiness work.
+Database authorization findings, dependency advisories, and missing privacy
+documentation still need release-readiness work. Docker execution still needs
+verification on a running Docker engine before release.
 This cleanup does not resolve those findings or establish production readiness.
