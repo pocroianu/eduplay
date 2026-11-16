@@ -44,6 +44,9 @@ pop3_port = 1100
 enabled = true
 file_size_limit = "50MiB"
 
+[storage.s3_protocol]
+enabled = true
+
 # Image transformation (imgproxy) is explicitly disabled — no surface in
 # edu-play-core uses Supabase storage's transform endpoints, and imgproxy is
 # one of the sibling services the CLI restarts during `db reset`. Explicit

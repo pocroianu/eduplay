@@ -42,14 +42,19 @@ services:
       ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD:?run npm run directus:up}
       PUBLIC_REGISTRATION: "false"
       TELEMETRY: "false"
-      STORAGE_LOCATIONS: local
-      STORAGE_LOCAL_DRIVER: local
-      STORAGE_LOCAL_ROOT: /directus/uploads
+      STORAGE_LOCATIONS: supabase
+      STORAGE_SUPABASE_DRIVER: s3
+      STORAGE_SUPABASE_BUCKET: assets
+      STORAGE_SUPABASE_ROOT: directus
+      STORAGE_SUPABASE_ENDPOINT: ${DIRECTUS_S3_ENDPOINT:?run npm run directus:up}
+      STORAGE_SUPABASE_REGION: ${DIRECTUS_S3_REGION:?run npm run directus:up}
+      STORAGE_SUPABASE_KEY: ${DIRECTUS_S3_ACCESS_KEY_ID:?run npm run directus:up}
+      STORAGE_SUPABASE_SECRET: ${DIRECTUS_S3_SECRET_ACCESS_KEY:?run npm run directus:up}
+      STORAGE_SUPABASE_FORCE_PATH_STYLE: "true"
       # CORS: Next.js app on :3000 may embed Data Studio links/iframes later.
       CORS_ENABLED: "true"
       CORS_ORIGIN: http://localhost:3000
     volumes:
-      - directus-uploads:/directus/uploads
       - directus-extensions:/directus/extensions
     networks:
       - supabase
@@ -68,5 +73,4 @@ networks:
     external: true
 
 volumes:
-  directus-uploads:
   directus-extensions:

@@ -740,6 +740,18 @@ Self-hosted Directus runs alongside Supabase as the admin authoring surface
   (`scripts/directus.mjs` + `docker-compose.directus.yml`) does this with a
   generated password from the gitignored `.env.directus`, attaches Directus to
   the Supabase CLI Docker network, and waits for `/server/health`.
+- **Files:** Directus uses the S3 driver for the public Supabase Storage
+  `assets` bucket, under `directus/`. Local Supabase enables the S3 protocol;
+  `directus:up` refreshes its credentials and region from `supabase status`
+  into `.env.directus`, and connects through Kong at
+  `http://host.docker.internal:54421/storage/v1/s3` using path-style addressing.
+  The published gateway port matches Kong's forwarded port for S3 signatures. Existing files
+  on the former local volume require migration before switching an installation.
+  For hosted Supabase, configure the project's S3 endpoint, region and S3 access
+  keys as Directus secrets, retaining the `assets` bucket, prefix and path-style
+  addressing. Restrict and rotate those credentials and protect Directus access:
+  the bucket is public, and S3 credentials may have wider access than the prefix.
+  Never use the `child-artifacts` or `activity-renderers` buckets for Directus.
 - **RLS interaction:** Directus bypasses RLS by design (admin context). The
   Next.js runtime continues to authenticate as Supabase Auth users and is
   fully governed by RLS — Directus' bypass does not leak there.
