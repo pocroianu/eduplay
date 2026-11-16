@@ -26,10 +26,8 @@ npm run dev:status        # Check services
 npm run dev:stop          # Stop everything
 ```
 
+Root `npm run setup` installs dependencies and prepares a seeded local database.
 For platform-only commands below, run from `edu-play-core/` after root setup.
-Dependencies and the lockfile are owned by the repository root.
-
-For the platform-only commands below, run from `edu-play-core/` after root setup.
 Dependency installation and updates use the repository root lockfile.
 
 ## First Run

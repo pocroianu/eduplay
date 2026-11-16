@@ -17,15 +17,18 @@ Use Node.js 24.12.0 and Docker Desktop for local Supabase. Install from the
 root lockfile, especially after copying the workspace: npm workspace links from a
 different checkout may still point at the old directory.
 
-Run from the repository root:
+Start Docker Desktop, then run from the repository root:
 
 ```powershell
 npm run setup
 npm run dev
 ```
 
-`setup` runs a single root `npm ci`, then builds shared protocol and validation
-exports. Use the root lockfile for all installs and dependency updates.
+`setup` installs dependencies from the root lockfile, builds shared protocol and
+validation exports, starts local Supabase, prepares the local environment file,
+and seeds the medium demo dataset with playable Activities. It does not reset
+the database. Use `npm run setup:deps` for dependencies and shared builds only
+(CI or games-only development, without Docker or database seeding).
 `dev` starts the platform
 (including local Supabase), Activity host, and config editor together, with
 labelled logs. If a command exits, the runner stops the other commands.
@@ -62,7 +65,8 @@ refresh their compiled exports.
 
 ## Local database and demo data
 
-After `npm run setup`, start Docker Desktop and run this from the repository root:
+The standard `npm run setup` includes database setup. To start Supabase and seed
+again without reinstalling dependencies, run this from the repository root:
 
 ```powershell
 npm run db:setup

@@ -8,7 +8,8 @@
     "npm": ">=11.6.2"
   },
   "scripts": {
-    "setup": "npm ci && npm run build:shared",
+    "setup": "npm run setup:deps && npm run db:setup",
+    "setup:deps": "npm ci && npm run build:shared",
     "dev": "concurrently --kill-others --names platform,games,editor \"npm run dev:platform\" \"npm run dev:games\" \"npm run dev:editor\"",
     "dev:platform": "npm --workspace=edu-play-core run dev:full",
     "dev:games": "npm --prefix phaser-projects run start:activities",
