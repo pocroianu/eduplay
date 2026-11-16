@@ -13,12 +13,21 @@ import {
 import { Radio } from '@mantine/core';
 import { useRouter } from 'next/navigation';
 import { motion, useReducedMotion } from 'framer-motion';
-import { Button, ConfirmDialog, MantineBoundary, RewardModal } from '@/shared/components/ui/kit';
+import {
+  Button,
+  ConfirmDialog,
+  MantineBoundary,
+  RewardModal,
+} from '@/shared/components/ui/kit';
 import { Icon } from '@/shared/components/ui/Icon';
 import { ROUTES } from '@/shared/lib/constants/routes';
 import { cn } from '@/shared/lib/utils/cn';
 import type { ActivityRendererProps } from '../../types';
 import { submitDrawingArtifact } from './actions';
+import {
+  useNativeSubmission,
+  NativeSubmissionNotice,
+} from '../../submission/use-native-submission';
 import {
   BACKGROUND_COLOR_TOKENS,
   BRUSH_INDICATOR_PX,
@@ -68,6 +77,7 @@ export function DrawingCanvasRenderer({
   onCancel,
 }: RendererProps) {
   const reduceMotion = useReducedMotion();
+  const submission = useNativeSubmission(instanceId);
   const router = useRouter();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const activePointerIdRef = useRef<number | null>(null);
@@ -76,8 +86,10 @@ export function DrawingCanvasRenderer({
   const canvasSizeRef = useRef<CanvasDisplaySize | null>(null);
   const [confirmingClear, setConfirmingClear] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [retryOnly, setRetryOnly] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [rewardArtifact, setRewardArtifact] = useState<string | null>(null);
+  const submittedImage = useRef<string | null>(null);
 
   const canUndo = selectCanUndo(state);
   const canRedo = selectCanRedo(state);
@@ -147,7 +159,12 @@ export function DrawingCanvasRenderer({
 
       canvasSizeRef.current = nextSize;
       sizeCanvasToDisplay(canvas, nextSize);
-      redrawCanvas(canvas, strokesForRedraw, pendingForRedraw, backgroundCssVar);
+      redrawCanvas(
+        canvas,
+        strokesForRedraw,
+        pendingForRedraw,
+        backgroundCssVar,
+      );
     };
 
     handleResize();
@@ -162,7 +179,14 @@ export function DrawingCanvasRenderer({
 
   const handlePointerDown = useCallback(
     (e: ReactPointerEvent<HTMLCanvasElement>) => {
-      if (submitting) return;
+      if (
+        submitting ||
+        retryOnly ||
+        submission.recovering ||
+        submission.recoveryError ||
+        submission.alreadySaved
+      )
+        return;
       const canvas = canvasRef.current;
       if (!canvas) return;
       if (activePointerIdRef.current !== null || e.isPrimary === false) return;
@@ -171,7 +195,7 @@ export function DrawingCanvasRenderer({
       canvas.setPointerCapture(e.pointerId);
       dispatch({ type: 'begin-stroke', point: pointFromEvent(canvas, e) });
     },
-    [submitting],
+    [submitting, retryOnly, submission],
   );
 
   const handlePointerMove = useCallback(
@@ -222,16 +246,37 @@ export function DrawingCanvasRenderer({
 
   const handleSubmit = useCallback(async () => {
     const canvas = canvasRef.current;
-    if (!canvas || isEmpty) return;
+    if (
+      !canvas ||
+      isEmpty ||
+      submitting ||
+      submission.recovering ||
+      submission.recoveryError ||
+      submission.alreadySaved
+    )
+      return;
     setSubmitError(null);
     setSubmitting(true);
-    const dataUrl = canvas.toDataURL('image/png');
+    const dataUrl = submittedImage.current ?? canvas.toDataURL('image/png');
+    submittedImage.current = dataUrl;
     try {
-      const result = await submitDrawingArtifact({ instanceId, dataUrl });
+      const result = await submitDrawingArtifact({
+        instanceId,
+        submissionId: submission.submissionId(),
+        dataUrl,
+      });
       if (!result.success) {
-        setSubmitError(result.error ?? 'Hopa, n-am reușit să trimit. Încearcă încă o dată.');
+        setRetryOnly(!result.canEdit);
+        if (result.canEdit) {
+          submittedImage.current = null;
+          submission.startAgain();
+        }
+        setSubmitError(
+          result.error ?? 'Hopa, n-am reușit să trimit. Încearcă încă o dată.',
+        );
         return;
       }
+      if (result.data) submission.saved(result.data);
       setRewardArtifact(dataUrl);
       // Forward only the durable artifact id. The shell's preview line
       // stringifies whatever it gets, so passing the raw PNG dataURL would
@@ -239,16 +284,18 @@ export function DrawingCanvasRenderer({
       // "Mai desenez" path where the modal closes without navigating away).
       onComplete({ artifactId: result.data?.artifactId ?? '' });
     } catch {
+      setRetryOnly(true);
       setSubmitError('Hopa, n-am reușit să trimit. Încearcă încă o dată.');
     } finally {
       setSubmitting(false);
     }
-  }, [instanceId, isEmpty, onComplete]);
+  }, [instanceId, isEmpty, onComplete, submission, submitting]);
 
   const handleClearConfirm = useCallback(() => {
+    if (retryOnly) return;
     dispatch({ type: 'clear' });
     setConfirmingClear(false);
-  }, []);
+  }, [retryOnly]);
 
   const handleRewardDismiss = useCallback(() => {
     setRewardArtifact(null);
@@ -257,16 +304,20 @@ export function DrawingCanvasRenderer({
   }, [router, onCancel]);
 
   const handleRewardAgain = useCallback(() => {
+    submittedImage.current = null;
+    setRetryOnly(false);
+    submission.startAgain();
     setRewardArtifact(null);
     setSubmitError(null);
     dispatch({ type: 'clear' });
-  }, []);
+  }, [submission]);
 
   return (
-    <div
-      className="flex flex-col gap-5"
-      data-testid="drawing-canvas-renderer"
-    >
+    <div className="flex flex-col gap-5" data-testid="drawing-canvas-renderer">
+      <NativeSubmissionNotice
+        submission={submission}
+        onStartAgain={handleRewardAgain}
+      />
       <p className="text-body text-on-surface text-center" role="status">
         {encouragementText}
       </p>
@@ -283,18 +334,15 @@ export function DrawingCanvasRenderer({
         initial={false}
         className="relative w-full"
         animate={
-          reduceMotion
-            ? { opacity: 1 }
-            : { opacity: submitting ? 0.85 : 1 }
+          reduceMotion ? { opacity: 1 } : { opacity: submitting ? 0.85 : 1 }
         }
       >
         <canvas
           ref={canvasRef}
           role={isEmpty ? 'application' : 'img'}
+          aria-busy={submission.recovering}
           aria-label={
-            isEmpty
-              ? 'Suprafață de desen — atinge să desenezi'
-              : 'Desenul tău'
+            isEmpty ? 'Suprafață de desen — atinge să desenezi' : 'Desenul tău'
           }
           className="block w-full rounded-xl border border-outline-variant shadow-soft-sm"
           style={{
@@ -312,9 +360,14 @@ export function DrawingCanvasRenderer({
       </motion.div>
 
       <ActionBar
-        canUndo={canUndo}
-        canRedo={canRedo}
-        canSubmit={!isEmpty}
+        canUndo={canUndo && !retryOnly}
+        canRedo={canRedo && !retryOnly}
+        canSubmit={
+          !isEmpty &&
+          !submission.recovering &&
+          !submission.recoveryError &&
+          !submission.alreadySaved
+        }
         submitting={submitting}
         onClear={() => setConfirmingClear(true)}
         onUndo={() => dispatch({ type: 'undo' })}
@@ -377,13 +430,18 @@ export function DrawingCanvasRenderer({
             >
               Mai desenez
             </Button>
-            <Button mode="kid" variant="primary" size="lg" fullWidth onClick={dismiss}>
+            <Button
+              mode="kid"
+              variant="primary"
+              size="lg"
+              fullWidth
+              onClick={dismiss}
+            >
               Gata
             </Button>
           </div>
         )}
       />
-
     </div>
   );
 }
@@ -406,73 +464,77 @@ function ToolBar({
   const groupId = useId();
   return (
     <MantineBoundary>
-    <div className="flex flex-wrap items-center justify-center gap-4">
-      <div
-        role="radiogroup"
-        aria-label="Mărime pensulă"
-        className="flex items-center gap-2"
-      >
-        {BRUSH_SIZES.map((size) => {
-          const selected = size === currentSize;
-          return (
-            <Radio.Card unstyled
-              key={size}
-              type="button"
-              checked={selected}
-              name={groupId + "-brush"}
-              tabIndex={selected ? 0 : -1}
-              aria-label={BRUSH_LABELS[size]}
-              disabled={disabled}
-              onClick={() => onSelectSize(size)}
-              className={cn(
-                'inline-flex h-16 w-16 items-center justify-center rounded-xl border border-outline-variant shadow-soft-sm transition-colors',
-                selected ? 'bg-primary text-on-primary' : 'bg-surface-container-lowest text-on-surface',
-                disabled && 'opacity-50 cursor-not-allowed',
-              )}
-            >
-              <span
-                aria-hidden="true"
-                className="rounded-full"
-                style={{
-                  width: `${BRUSH_INDICATOR_PX[size]}px`,
-                  height: `${BRUSH_INDICATOR_PX[size]}px`,
-                  backgroundColor: 'currentColor',
-                }}
-              />
-            </Radio.Card>
-          );
-        })}
-      </div>
+      <div className="flex flex-wrap items-center justify-center gap-4">
+        <div
+          role="radiogroup"
+          aria-label="Mărime pensulă"
+          className="flex items-center gap-2"
+        >
+          {BRUSH_SIZES.map((size) => {
+            const selected = size === currentSize;
+            return (
+              <Radio.Card
+                unstyled
+                key={size}
+                type="button"
+                checked={selected}
+                name={groupId + '-brush'}
+                tabIndex={selected ? 0 : -1}
+                aria-label={BRUSH_LABELS[size]}
+                disabled={disabled}
+                onClick={() => onSelectSize(size)}
+                className={cn(
+                  'inline-flex h-16 w-16 items-center justify-center rounded-xl border border-outline-variant shadow-soft-sm transition-colors',
+                  selected
+                    ? 'bg-primary text-on-primary'
+                    : 'bg-surface-container-lowest text-on-surface',
+                  disabled && 'opacity-50 cursor-not-allowed',
+                )}
+              >
+                <span
+                  aria-hidden="true"
+                  className="rounded-full"
+                  style={{
+                    width: `${BRUSH_INDICATOR_PX[size]}px`,
+                    height: `${BRUSH_INDICATOR_PX[size]}px`,
+                    backgroundColor: 'currentColor',
+                  }}
+                />
+              </Radio.Card>
+            );
+          })}
+        </div>
 
-      <div
-        role="radiogroup"
-        aria-label="Culoare"
-        className="flex items-center gap-2"
-      >
-        {PALETTE.map((swatch) => {
-          const selected = swatch.id === currentColor;
-          return (
-            <Radio.Card unstyled
-              key={swatch.id}
-              type="button"
-              checked={selected}
-              name={groupId + "-color"}
-              tabIndex={selected ? 0 : -1}
-              aria-label={`Culoare ${swatch.label}`}
-              data-testid={`drawing-color-${swatch.id}`}
-              disabled={disabled}
-              onClick={() => onSelectColor(swatch.id)}
-              className={cn(
-                'h-16 w-16 rounded-full border border-outline-variant shadow-soft-sm transition-shadow',
-                selected && 'outline outline-2 outline-gold outline-offset-2',
-                disabled && 'opacity-50 cursor-not-allowed',
-              )}
-              style={{ backgroundColor: `var(${swatch.cssVar})` }}
-            />
-          );
-        })}
+        <div
+          role="radiogroup"
+          aria-label="Culoare"
+          className="flex items-center gap-2"
+        >
+          {PALETTE.map((swatch) => {
+            const selected = swatch.id === currentColor;
+            return (
+              <Radio.Card
+                unstyled
+                key={swatch.id}
+                type="button"
+                checked={selected}
+                name={groupId + '-color'}
+                tabIndex={selected ? 0 : -1}
+                aria-label={`Culoare ${swatch.label}`}
+                data-testid={`drawing-color-${swatch.id}`}
+                disabled={disabled}
+                onClick={() => onSelectColor(swatch.id)}
+                className={cn(
+                  'h-16 w-16 rounded-full border border-outline-variant shadow-soft-sm transition-shadow',
+                  selected && 'outline outline-2 outline-gold outline-offset-2',
+                  disabled && 'opacity-50 cursor-not-allowed',
+                )}
+                style={{ backgroundColor: `var(${swatch.cssVar})` }}
+              />
+            );
+          })}
+        </div>
       </div>
-    </div>
     </MantineBoundary>
   );
 }
@@ -601,9 +663,7 @@ function redrawCanvas(
   ctx.scale(dpr, dpr);
 
   const computed = getComputedStyle(canvas);
-  const fillFromVar = computed
-    .getPropertyValue(backgroundCssVar)
-    .trim();
+  const fillFromVar = computed.getPropertyValue(backgroundCssVar).trim();
   const fill = fillFromVar || computed.backgroundColor || '#ffffff';
   ctx.fillStyle = fill;
   ctx.fillRect(0, 0, cssWidth, cssHeight);
@@ -615,9 +675,7 @@ function redrawCanvas(
   for (const stroke of allStrokes) {
     if (stroke.points.length === 0) continue;
     const swatch = getPaletteSwatch(stroke.color);
-    const colorValue = computed
-      .getPropertyValue(swatch.cssVar)
-      .trim();
+    const colorValue = computed.getPropertyValue(swatch.cssVar).trim();
     ctx.strokeStyle = colorValue || '#222222';
     ctx.fillStyle = colorValue || '#222222';
     ctx.lineWidth = BRUSH_STROKE_PX[stroke.size];

@@ -107,3 +107,4 @@ export * from './previewRuntime';
 
 // Runtime config URL
 export * from './runtimeConfig';
+export { preloadActivity, type ActivityPreloadOptions } from './templates/ActivityPreload';

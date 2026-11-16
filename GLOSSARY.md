@@ -46,3 +46,6 @@ A learner's latest saved state for an Activity, including completion, score, and
 
 **Portfolio artifact**:
 A learner's drawing, audio recording, or photograph kept for review and possible sharing with their family.
+
+**Activity submission attempt**:
+A learner's deliberate submission of work from an Activity. Retrying the attempt refers to the same saved work; choosing to create another drawing or recording begins a new attempt.

@@ -1,16 +1,14 @@
 'use client';
 
-import {
-  useCallback,
-  useEffect,
-  useReducer,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { ChunkyButton } from '@/shared/components/ui/kit';
 import { Icon } from '@/shared/components/ui/Icon';
 import { submitVoiceRecordingArtifact } from './actions';
+import {
+  useNativeSubmission,
+  NativeSubmissionNotice,
+} from '../../submission/use-native-submission';
 import type { ActivityRendererProps } from '../../types';
 import {
   initialVoiceState,
@@ -68,6 +66,8 @@ export function VoiceRecorderRenderer({
   onComplete,
 }: ActivityRendererProps<VoiceRecordingConfig, VoiceRecordingResult>) {
   const [state, dispatch] = useReducer(voiceReducer, initialVoiceState);
+  const submission = useNativeSubmission(instanceId);
+  const [retryOnly, setRetryOnly] = useState(false);
   const shouldReduceMotion = useReducedMotion();
 
   const recorderRef = useRef<MediaRecorder | null>(null);
@@ -85,40 +85,43 @@ export function VoiceRecorderRenderer({
 
   const [playbackUrl, setPlaybackUrl] = useState<string | null>(null);
 
-  const stopMediaPipeline = useCallback((options?: { ignoreStopEvent?: boolean }) => {
-    if (options?.ignoreStopEvent) {
-      ignoreRecorderStopRef.current = true;
-    }
-    if (tickHandleRef.current !== null) {
-      clearInterval(tickHandleRef.current);
-      tickHandleRef.current = null;
-    }
-    if (animationFrameRef.current !== null) {
-      cancelAnimationFrame(animationFrameRef.current);
-      animationFrameRef.current = null;
-    }
-    if (recorderRef.current && recorderRef.current.state !== 'inactive') {
-      try {
-        recorderRef.current.stop();
-      } catch {
-        // best-effort
+  const stopMediaPipeline = useCallback(
+    (options?: { ignoreStopEvent?: boolean }) => {
+      if (options?.ignoreStopEvent) {
+        ignoreRecorderStopRef.current = true;
       }
-    }
-    recorderRef.current = null;
-    if (streamRef.current) {
-      stopTracks(streamRef.current);
-      streamRef.current = null;
-    }
-    if (audioCtxRef.current) {
-      try {
-        void audioCtxRef.current.close();
-      } catch {
-        // best-effort
+      if (tickHandleRef.current !== null) {
+        clearInterval(tickHandleRef.current);
+        tickHandleRef.current = null;
       }
-      audioCtxRef.current = null;
-    }
-    analyserRef.current = null;
-  }, []);
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+        animationFrameRef.current = null;
+      }
+      if (recorderRef.current && recorderRef.current.state !== 'inactive') {
+        try {
+          recorderRef.current.stop();
+        } catch {
+          // best-effort
+        }
+      }
+      recorderRef.current = null;
+      if (streamRef.current) {
+        stopTracks(streamRef.current);
+        streamRef.current = null;
+      }
+      if (audioCtxRef.current) {
+        try {
+          void audioCtxRef.current.close();
+        } catch {
+          // best-effort
+        }
+        audioCtxRef.current = null;
+      }
+      analyserRef.current = null;
+    },
+    [],
+  );
 
   // Cleanup on unmount.
   useEffect(() => {
@@ -138,9 +141,9 @@ export function VoiceRecorderRenderer({
       if (shouldReduceMotion) return;
       const AudioCtx =
         typeof window !== 'undefined'
-          ? window.AudioContext ??
+          ? (window.AudioContext ??
             (window as unknown as { webkitAudioContext?: typeof AudioContext })
-              .webkitAudioContext
+              .webkitAudioContext)
           : undefined;
       if (!AudioCtx) return;
 
@@ -287,6 +290,7 @@ export function VoiceRecorderRenderer({
   }, []);
 
   const handleReRecordPressed = useCallback(() => {
+    submission.startAgain();
     if (playbackUrlRef.current) {
       URL.revokeObjectURL(playbackUrlRef.current);
       playbackUrlRef.current = null;
@@ -294,7 +298,7 @@ export function VoiceRecorderRenderer({
     setPlaybackUrl(null);
     dispatch({ type: 're_record' });
     void beginRecording();
-  }, [beginRecording]);
+  }, [beginRecording, submission]);
 
   const handleSubmitPressed = useCallback(async () => {
     if (!state.take) return;
@@ -302,26 +306,30 @@ export function VoiceRecorderRenderer({
     try {
       const result = await submitVoiceRecordingArtifact({
         instanceId,
+        submissionId: submission.submissionId(),
         blob: state.take.blob,
         mime: state.take.mime,
         durationMs: state.take.durationMs,
       });
       if (!result.success || !result.data) {
+        setRetryOnly(!result.canEdit);
         dispatch({
           type: 'submit_failed',
           message: result.error ?? 'Nu am putut salva înregistrarea.',
         });
         return;
       }
+      submission.saved(result.data);
       dispatch({ type: 'submit_succeeded' });
       onComplete({ artifactId: result.data.artifactId });
     } catch {
+      setRetryOnly(true);
       dispatch({
         type: 'submit_failed',
         message: 'Nu am putut salva înregistrarea. Încearcă din nou.',
       });
     }
-  }, [instanceId, onComplete, state.take]);
+  }, [instanceId, onComplete, state.take, submission]);
 
   if (state.stage === 'device_unsupported') {
     return (
@@ -346,8 +354,8 @@ export function VoiceRecorderRenderer({
           Avem nevoie să folosim microfonul
         </h2>
         <p className="text-body text-on-surface-variant max-w-md">
-          Browserul a refuzat accesul. Apasă pictograma microfonului din bara
-          de adresă și alege „Permite”, apoi încearcă din nou.
+          Browserul a refuzat accesul. Apasă pictograma microfonului din bara de
+          adresă și alege „Permite”, apoi încearcă din nou.
         </p>
         <ChunkyButton
           variant="green"
@@ -364,6 +372,7 @@ export function VoiceRecorderRenderer({
   if (state.stage === 'idle' || state.stage === 'requesting') {
     return (
       <div className="flex flex-col items-center gap-6 text-center py-8">
+        <NativeSubmissionNotice submission={submission} />
         {config.promptText ? (
           <div className="rounded-xl bg-primary-container px-6 py-4 max-w-xl">
             <p className="text-body font-bold text-on-primary-container">
@@ -380,7 +389,12 @@ export function VoiceRecorderRenderer({
           size="lg"
           icon="Microphone"
           onClick={handleStartPressed}
-          disabled={state.stage === 'requesting'}
+          disabled={
+            state.stage === 'requesting' ||
+            submission.recovering ||
+            submission.recoveryError ||
+            submission.alreadySaved
+          }
           aria-label="Pornește înregistrarea"
         >
           {state.stage === 'requesting' ? 'Se pregătește…' : 'Înregistrează'}
@@ -439,7 +453,9 @@ export function VoiceRecorderRenderer({
           aria-label="Vizualizare nivel microfon"
           role="img"
           initial={false}
-          animate={shouldReduceMotion ? undefined : { opacity: [0.85, 1, 0.85] }}
+          animate={
+            shouldReduceMotion ? undefined : { opacity: [0.85, 1, 0.85] }
+          }
           transition={
             shouldReduceMotion
               ? undefined
@@ -484,6 +500,7 @@ export function VoiceRecorderRenderer({
             size="lg"
             icon="ArrowCounterClockwise"
             onClick={handleReRecordPressed}
+            disabled={state.stage === 'submit_error' && retryOnly}
             aria-label="Înregistrează din nou"
           >
             Reînregistrează
@@ -515,6 +532,13 @@ export function VoiceRecorderRenderer({
 
   return (
     <div className="flex flex-col items-center gap-4 py-8 text-center">
+      <NativeSubmissionNotice
+        submission={submission}
+        onStartAgain={() => {
+          submission.startAgain();
+          dispatch({ type: 'new_submission' });
+        }}
+      />
       <Icon name="CheckCircle" size="xl" weight="fill" />
       <h2 className="text-title font-heading text-on-surface">
         Înregistrarea a fost trimisă!

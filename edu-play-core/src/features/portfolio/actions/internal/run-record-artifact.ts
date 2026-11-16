@@ -77,7 +77,7 @@ function decodePngDataUrl(dataUrl: string): Uint8Array | null {
   return buffer;
 }
 
-function decodePayload(input: RecordChildArtifactInput): DecodedPayload | null {
+export function decodeArtifactPayload(input: RecordChildArtifactInput): DecodedPayload | null {
   if (input.kind === 'drawing') {
     const bytes = decodePngDataUrl(input.payload.dataUrl);
     if (!bytes) return null;
@@ -147,7 +147,7 @@ export async function runRecordChildArtifact(
     };
   }
 
-  const decoded = decodePayload(input);
+  const decoded = decodeArtifactPayload(input);
   if (!decoded) {
     let error: string;
     if (input.kind === 'drawing') {

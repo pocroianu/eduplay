@@ -61,6 +61,7 @@ export type VoiceEvent =
   | { type: 're_record' }
   | { type: 'submit_pressed' }
   | { type: 'submit_succeeded' }
+  | { type: 'new_submission' }
   | { type: 'submit_failed'; message: string };
 
 export const initialVoiceState: VoiceState = {
@@ -70,11 +71,11 @@ export const initialVoiceState: VoiceState = {
   errorMessage: null,
 };
 
-export function voiceReducer(
-  state: VoiceState,
-  event: VoiceEvent,
-): VoiceState {
+export function voiceReducer(state: VoiceState, event: VoiceEvent): VoiceState {
   switch (event.type) {
+    case 'new_submission': {
+      return state.stage === 'submitted' ? { ...initialVoiceState } : state;
+    }
     case 'start_pressed': {
       if (state.stage !== 'idle' && state.stage !== 'permission_denied') {
         return state;

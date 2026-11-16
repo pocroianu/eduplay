@@ -25,3 +25,5 @@ export {
 
 // Server actions (each file is `'use server'` so these are RPC endpoints).
 export { recordChildArtifact } from './actions/record-child-artifact';
+export { decodeArtifactPayload } from './actions/internal/run-record-artifact';
+export { withArtifactMedia } from './queries/with-artifact-media';
