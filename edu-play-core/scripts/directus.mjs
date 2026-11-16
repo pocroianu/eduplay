@@ -11,7 +11,7 @@
  * random local secrets to .env.directus (gitignored). Secrets are never printed.
  *
  * `up` is idempotent and non-destructive: it only enables LOGIN on the existing
- * `directus_admin` role (created NOLOGIN by migration 20260528000000) and sets
+ * `directus_admin` role (created NOLOGIN by the Supabase migrations) and sets
  * its password to the value in .env.directus. Directus creates its own system
  * tables in the `directus` schema on first boot and reuses them afterwards.
  */
