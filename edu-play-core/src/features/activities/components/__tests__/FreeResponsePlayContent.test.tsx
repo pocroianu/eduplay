@@ -2,7 +2,7 @@ import { fireEvent, render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { FreeResponsePlayContent } from '../FreeResponsePlayContent'
+import { FreeResponsePlayContent, pointFromEvent } from '../FreeResponsePlayContent'
 import { cleanupFreeResponseArtifacts, recordFreeResponseArtifact } from '../../actions/record-free-response-artifact'
 
 vi.mock('../../actions/record-free-response-artifact', () => ({
@@ -331,3 +331,24 @@ describe('<FreeResponsePlayContent />', () => {
     expect(screen.getByText(/răspuns trimis/i)).toBeInTheDocument()
   })
 })
+
+describe('pointFromEvent', () => {
+  const canvasWithRect = (rect: Partial<DOMRect>) => {
+    const canvas = document.createElement('canvas')
+    canvas.width = 720
+    canvas.height = 360
+    canvas.getBoundingClientRect = () => ({ left: 10, top: 20, width: 288, height: 144, ...rect }) as DOMRect
+    return canvas
+  }
+
+  it('scales displayed CSS pixels to the internal canvas resolution', () => {
+    const point = pointFromEvent(canvasWithRect({}), { clientX: 10 + 144, clientY: 20 + 72 })
+    expect(point).toEqual({ x: 360, y: 180 })
+  })
+
+  it('clamps points outside the canvas', () => {
+    const point = pointFromEvent(canvasWithRect({}), { clientX: 5000, clientY: -50 })
+    expect(point).toEqual({ x: 720, y: 0 })
+  })
+})
+

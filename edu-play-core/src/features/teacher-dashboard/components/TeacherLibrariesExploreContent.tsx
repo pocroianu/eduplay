@@ -1,14 +1,16 @@
 'use client'
 
-import { useCallback, useDeferredValue, useMemo, useState, type FormEvent } from 'react'
+import { useCallback, useDeferredValue, useId, useMemo, useState, type FormEvent } from 'react'
 import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { ActionIcon, Box, Card, Group, Input, SimpleGrid, Stack, Text, UnstyledButton } from '@mantine/core'
+import { ActionIcon, Box, Button, Card, Group, Input, SimpleGrid, Stack, Text, Tooltip, UnstyledButton } from '@mantine/core'
 import { Icon } from '@/shared/components/ui/Icon'
 import { FilterSelect as KitFilterSelect } from '@/shared/components/ui/kit'
 import { ROUTES } from '@/shared/lib/constants'
 import classes from './TeacherDashboardContent.module.css'
-import type { Game, GameCategory } from '@/features/games'
+import { CATEGORY_CONFIG, type Game, type GameCategory } from '@/features/games'
+import type { IconName } from '@/shared/components/ui/Icon.registry'
 
 interface TeacherLibrariesExploreContentProps {
   games: Game[]
@@ -20,60 +22,33 @@ interface LibraryTopic {
   label: string
   category?: GameCategory
   tone: TopicTone
-}
-
-interface FeaturedCollection {
-  href: string
-  title: string
-  meta: string
-  tone: TopicTone
+  icon: IconName
 }
 
 const topics: LibraryTopic[] = [
-  { label: 'Esențiale EduPlay', tone: 'purple' },
-  { label: 'Evaluări', tone: 'green' },
-  { label: 'Șabloane și portofolii', tone: 'blue' },
-  { label: 'Literație timpurie', category: 'literacy', tone: 'gold' },
-  { label: 'Literație AI', tone: 'pink' },
-  { label: 'Rutine zilnice', tone: 'purple' },
-  { label: 'Matematică', category: 'math', tone: 'blue' },
-  { label: 'Limba română', category: 'phonics', tone: 'green' },
-  { label: 'Caracter', tone: 'gold' },
-  { label: 'Științe', tone: 'pink' },
+  { label: 'all', tone: 'purple', icon: 'ListChecks' },
+  { label: 'literacy', category: 'literacy', tone: 'gold', icon: CATEGORY_CONFIG.literacy.icon },
+  { label: 'math', category: 'math', tone: 'blue', icon: CATEGORY_CONFIG.math.icon },
+  { label: 'phonics', category: 'phonics', tone: 'purple', icon: CATEGORY_CONFIG.phonics.icon },
+  { label: 'shapes', category: 'shapes', tone: 'gold', icon: CATEGORY_CONFIG.shapes.icon },
+  { label: 'colors', category: 'colors', tone: 'pink', icon: CATEGORY_CONFIG.colors.icon },
+  { label: 'vocabulary', category: 'vocabulary', tone: 'green', icon: CATEGORY_CONFIG.vocabulary.icon },
 ]
 
-const featuredCollections: FeaturedCollection[] = [
-  {
-    href: `${ROUTES.TEACHER.LIBRARIES_EXPLORE}?collection=dailies`,
-    title: 'Rutine zilnice de clasă',
-    meta: '98 de lecții',
-    tone: 'purple',
-  },
-  {
-    href: `${ROUTES.TEACHER.LIBRARIES_EXPLORE}?collection=summer`,
-    title: 'Învățare de vară',
-    meta: '48 de lecții',
-    tone: 'gold',
-  },
-  {
-    href: `${ROUTES.TEACHER.LIBRARIES_EXPLORE}?collection=reading`,
-    title: 'Îmi place să citesc',
-    meta: '24 de lecții',
-    tone: 'green',
-  },
-]
+function normalizeTopic(value: string | null): GameCategory | 'all' {
+  return topics.find((topic) => topic.category === value)?.category ?? 'all'
+}
 
-const allGradeOption = { value: 'all-grades', label: 'Alege clasa' } as const
+const PAGE_SIZE = 24
+const allGradeOption = { value: 'all-grades', label: 'all' } as const
 const gradeFilterDefinitions = [
-  { value: 'grade-1', label: 'Clasa I', minAge: 6, maxAge: 7 },
-  { value: 'grade-2', label: 'Clasa a II-a', minAge: 7, maxAge: 8 },
-  { value: 'grade-3', label: 'Clasa a III-a', minAge: 8, maxAge: 9 },
-  { value: 'grade-4', label: 'Clasa a IV-a', minAge: 9, maxAge: 10 },
+  { value: 'grade-1', label: 'grade-1', minAge: 6, maxAge: 7 },
+  { value: 'grade-2', label: 'grade-2', minAge: 7, maxAge: 8 },
+  { value: 'grade-3', label: 'grade-3', minAge: 8, maxAge: 9 },
+  { value: 'grade-4', label: 'grade-4', minAge: 9, maxAge: 10 },
 ] as const
-const allLanguageOption = { value: 'all-languages', label: 'Alege limba' } as const
-const catalogLanguageOptions = [{ value: 'ro', label: 'Română' }] as const
-
-const cardTones: TopicTone[] = ['purple', 'green', 'blue', 'gold', 'pink']
+const allLanguageOption = { value: 'all-languages', label: 'all' } as const
+const catalogLanguageOptions = [{ value: 'ro', label: 'ro' }] as const
 
 type GradeFilterValue = typeof allGradeOption.value | (typeof gradeFilterDefinitions)[number]['value']
 type LanguageFilterValue = typeof allLanguageOption.value | (typeof catalogLanguageOptions)[number]['value']
@@ -97,64 +72,16 @@ const toneIconStyle: Record<TopicTone, { backgroundColor: string; color: string 
   pink: { backgroundColor: 'var(--color-pink-soft)', color: 'var(--color-pink-deep)' },
 }
 
-const thumbStyle: Record<TopicTone, string> = {
-  purple: 'linear-gradient(135deg, var(--color-purple-dim) 0%, var(--color-purple) 100%)',
-  green: 'linear-gradient(135deg, var(--color-primary-wash) 0%, var(--color-tertiary-container) 100%)',
-  blue: 'linear-gradient(135deg, var(--color-blue-wash) 0%, var(--color-blue-dim) 100%)',
-  gold: 'linear-gradient(135deg, var(--color-gold-soft) 0%, var(--color-gold) 100%)',
-  pink: 'linear-gradient(135deg, var(--color-pink-soft) 0%, var(--color-pink) 100%)',
-}
-
-const searchHeadingStyle = {
-  color: 'var(--color-on-surface)',
-  fontSize: 20,
-  fontWeight: 700,
-  lineHeight: '30px',
-  margin: 0,
-} as const
-
-const searchButtonStyle = {
-  width: 44,
-  height: 44,
-  marginRight: 4,
-  borderRadius: 4,
-} as const
-
-const sectionStyle = {
-  marginTop: 38,
-} as const
-
-const sectionHeadingStyle = {
-  margin: '0 0 16px',
-  color: 'var(--color-on-surface)',
-  fontSize: 20,
-  fontWeight: 700,
-  lineHeight: '30px',
-} as const
-
-const cardBaseStyle = {
-  position: 'relative',
-  overflow: 'hidden',
-  borderRadius: 12,
-} as const
-
-const cardBodyStyle = {
-  display: 'flex',
-  minWidth: 0,
-  flex: 1,
-  flexDirection: 'column',
-} as const
-
-function gameMeta(game: Game) {
+function gameMeta(game: Game, t: ReturnType<typeof useTranslation>['t']) {
   if (game.target_age_min != null && game.target_age_max != null) {
-    return `Vârste ${game.target_age_min}-${game.target_age_max}`
+    return t('libraries.explore.ages', { min: game.target_age_min, max: game.target_age_max })
   }
 
   if (game.estimated_duration != null) {
-    return `${game.estimated_duration} min`
+    return t('libraries.explore.duration', { count: game.estimated_duration })
   }
 
-  return 'Activitate EduPlay'
+  return t('libraries.explore.activity')
 }
 
 function ageRangesOverlap(
@@ -198,36 +125,21 @@ function gameMatchesLanguage(languageFilter: LanguageFilterValue) {
   return languageFilter === allLanguageOption.value || languageFilter === 'ro'
 }
 
-function gradeHeading(gradeFilter: GradeFilterValue) {
-  if (gradeFilter === allGradeOption.value) return 'Cele mai populare activități'
-
-  const definition = gradeFilterDefinitions.find((option) => option.value === gradeFilter)
-  return definition
-    ? `Cele mai populare activități pentru ${definition.label.toLocaleLowerCase('ro-RO')}`
-    : 'Cele mai populare activități'
-}
-
-function TopicIcon({ tone }: { tone: TopicTone }) {
+function TopicIcon({ tone, icon }: { tone: TopicTone; icon: IconName }) {
   return (
     <Box
       component="span"
       aria-hidden="true"
-      style={{
-        display: 'inline-flex',
-        width: 40,
-        height: 40,
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderRadius: 12,
-        ...toneIconStyle[tone],
-      }}
+      className={classes.librariesTopicIcon}
+      style={toneIconStyle[tone]}
     >
-      <Icon name="BookOpen" size={24} weight="fill" />
+      <Icon name={icon} size={24} weight="fill" />
     </Box>
   )
 }
 
 function TopicButton({ topic, selected, onClick }: { topic: LibraryTopic; selected: boolean; onClick: () => void }) {
+  const { t } = useTranslation('teacher')
   return (
     <UnstyledButton
       type="button"
@@ -238,15 +150,9 @@ function TopicButton({ topic, selected, onClick }: { topic: LibraryTopic; select
           ? `${topicSurfaceInteractiveClassName} ${classes.librariesTopicButton} ${classes.librariesTopicSurfaceSelected}`
           : `${topicSurfaceInteractiveClassName} ${classes.librariesTopicButton}`
       }
-      style={{
-        fontSize: 14,
-        fontWeight: 700,
-        lineHeight: '17px',
-        textAlign: 'center',
-      }}
     >
-      <TopicIcon tone={topic.tone} />
-      <span>{topic.label}</span>
+      <TopicIcon tone={topic.tone} icon={topic.icon} />
+      <span>{t(`libraries.explore.topics.${topic.label}`)}</span>
     </UnstyledButton>
   )
 }
@@ -277,36 +183,8 @@ function LibraryFilterSelect({
   )
 }
 
-function CollectionCard({ href, title, meta, tone }: FeaturedCollection) {
-  return (
-    <Card
-      component={Link}
-      href={href}
-      aria-label={`${title}, ${meta}`}
-      classNames={{ root: cardSurfaceInteractiveClassName }}
-      padding={0}
-      withBorder={false}
-      className={classes.librariesCollectionCard}
-      style={{
-        ...cardBaseStyle,
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}
-    >
-      <CardThumb tone={tone} collection />
-      <Box
-        component="span"
-        style={{ ...cardBodyStyle, justifyContent: 'center', padding: 14 }}
-      >
-        <CardTitle collection>{title}</CardTitle>
-        <CardMeta>{meta}</CardMeta>
-      </Box>
-    </Card>
-  )
-}
-
-function ActivityCard({ game, tone, onAssign }: { game: Game; tone: TopicTone; onAssign: (activityId: string) => void }) {
+function ActivityCard({ game, onAssign }: { game: Game; onAssign: (activityId: string) => void }) {
+  const { t } = useTranslation('teacher')
   return (
     <Card
       classNames={{ root: cardSurfaceInteractiveClassName }}
@@ -314,135 +192,76 @@ function ActivityCard({ game, tone, onAssign }: { game: Game; tone: TopicTone; o
       aria-label={game.title}
       padding={0}
       withBorder={false}
-      className={classes.librariesActivityCard}
-      style={cardBaseStyle}
+      className={`${classes.librariesActivityCard} ${classes.librariesCardBase}`}
     >
       <Box
         component={Link}
         href={ROUTES.PLAY.ACTIVITY(game.id)}
-        style={{
-          display: 'flex',
-          minHeight: 233,
-          flexDirection: 'column',
-          color: 'inherit',
-          textDecoration: 'none',
-        }}
+        className={classes.librariesActivityLink}
       >
-        <CardThumb tone={tone} />
-        <Box component="span" style={{ ...cardBodyStyle, padding: '10px 12px 12px' }}>
+        <CardThumb category={game.category} />
+        <Box component="span" className={classes.librariesCardBody}>
           <Text
             component="span"
             mb={5}
-            style={{
-              color: 'var(--color-on-surface-variant)',
-              fontSize: 11,
-              fontWeight: 600,
-              lineHeight: 1.25,
-            }}
+            className={classes.librariesCreator}
           >
-            Biblioteca EduPlay
+            {t('libraries.explore.creator')}
           </Text>
           <CardTitle>{game.title}</CardTitle>
-          <CardMeta>{gameMeta(game)}</CardMeta>
+          <CardMeta>{gameMeta(game, t)}</CardMeta>
         </Box>
       </Box>
-      <ActionIcon
-        type="button"
-        aria-label={`Atribuie activitatea ${game.title}`}
-        variant="transparent"
-        onClick={() => onAssign(game.id)}
-        classNames={{ root: floatingActionInteractiveClassName }}
-        style={{
-          position: 'absolute',
-          right: 10,
-          top: 10,
-          width: 36,
-          height: 36,
-          borderRadius: 10,
-        }}
-      >
-        <Icon name="Star" size={20} weight="regular" aria-hidden />
-      </ActionIcon>
+      <Tooltip label={t('libraries.explore.assign')}>
+        <ActionIcon
+          type="button"
+          aria-label={t('libraries.explore.assignActivity', { title: game.title })}
+          variant="transparent"
+          onClick={() => onAssign(game.id)}
+          classNames={{ root: floatingActionInteractiveClassName }}
+        >
+          <Icon name="UserPlus" size={20} weight="bold" aria-hidden />
+        </ActionIcon>
+      </Tooltip>
     </Card>
   )
 }
 
-function CardThumb({ tone, collection = false }: { tone: TopicTone; collection?: boolean }) {
+function CardThumb({ category }: { category: GameCategory | null }) {
+  const config = category ? CATEGORY_CONFIG[category] : null
+  const topic = topics.find((item) => item.category === category)
   return (
-    <Box
-      component="span"
-      aria-hidden="true"
-      className={collection ? classes.librariesCollectionThumb : classes.librariesActivityThumb}
-      style={{
-        position: 'relative',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        overflow: 'hidden',
-        background: thumbStyle[tone],
-      }}
-    >
-      <Box
-        component="span"
-        style={{
-          display: 'inline-flex',
-          width: 64,
-          height: 64,
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: 16,
-          backgroundColor: 'color-mix(in oklab, var(--color-surface-container-lowest) 88%, transparent)',
-          color: 'var(--color-purple-dim)',
-          boxShadow: 'var(--shadow-soft-sm)',
-        }}
-      >
-        <Icon name="BookOpen" size={44} weight="fill" aria-hidden />
-      </Box>
+    <Box component="span" aria-hidden="true" className={classes.librariesActivityThumb}
+      style={{ background: config?.bgColor ?? 'var(--color-primary-wash)', color: config?.color ?? 'var(--color-primary)' }}>
+      <Icon name={topic?.icon ?? 'ListChecks'} size={44} weight="fill" aria-hidden />
     </Box>
   )
 }
 
-function CardTitle({ children, collection = false }: { children: string; collection?: boolean }) {
-  return (
-    <Text
-      component="span"
-      style={{
-        display: '-webkit-box',
-        overflow: 'hidden',
-        color: 'var(--color-on-surface)',
-        fontSize: collection ? 17 : 15,
-        fontWeight: 700,
-        lineHeight: 1.35,
-        WebkitBoxOrient: 'vertical',
-        WebkitLineClamp: collection ? 2 : 3,
-      }}
-    >
-      {children}
-    </Text>
-  )
+function CardTitle({ children }: { children: string }) {
+  return <Text component="span" className={classes.librariesCardTitle}>{children}</Text>
 }
 
 function CardMeta({ children }: { children: string }) {
-  return (
-    <Text component="span" mt="auto" pt={8} style={{ color: 'var(--color-on-surface-variant)', fontSize: 12, fontWeight: 700 }}>
-      {children}
-    </Text>
-  )
+  return <Text component="span" className={classes.librariesCardMeta}>{children}</Text>
 }
 
 export function TeacherLibrariesExploreContent({ games }: TeacherLibrariesExploreContentProps) {
+  const { t } = useTranslation('teacher')
   const router = useRouter()
+  const resultsHeadingId = useId()
   const searchParams = useSearchParams()
-  const [selectedTopic, setSelectedTopic] = useState(0)
+  const [selectedTopic, setSelectedTopic] = useState<GameCategory | 'all'>(() => normalizeTopic(searchParams.get('topic')))
   const [gradeFilter, setGradeFilter] = useState<GradeFilterValue>(() =>
     normalizeGradeFilter(searchParams.get('grade')),
   )
   const [languageFilter, setLanguageFilter] = useState<LanguageFilterValue>(() =>
     normalizeLanguageFilter(searchParams.get('language')),
   )
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
   const [search, setSearch] = useState(searchParams.get('q') ?? '')
   const deferredSearch = useDeferredValue(search)
-  const selectedCategory = topics[selectedTopic]?.category
+  const selectedCategory = selectedTopic === 'all' ? undefined : selectedTopic
 
   const gradeOptions = useMemo<SelectOption[]>(() => {
     const availableGrades = gradeFilterDefinitions.filter((definition) =>
@@ -456,15 +275,15 @@ export function TeacherLibrariesExploreContent({ games }: TeacherLibrariesExplor
       ),
     )
 
-    return [allGradeOption, ...availableGrades]
-  }, [games])
+    return [allGradeOption, ...availableGrades].map((option) => ({ ...option, label: t(`libraries.explore.grades.${option.label}`) }))
+  }, [games, t])
 
   const languageOptions = useMemo<SelectOption[]>(
     () => [
       allLanguageOption,
       ...(games.length > 0 ? catalogLanguageOptions : []),
-    ],
-    [games.length],
+    ].map((option) => ({ ...option, label: t(`libraries.explore.languages.${option.label}`) })),
+    [games.length, t],
   )
 
   const effectiveGradeFilter = gradeOptions.some((option) => option.value === gradeFilter)
@@ -475,10 +294,11 @@ export function TeacherLibrariesExploreContent({ games }: TeacherLibrariesExplor
     : allLanguageOption.value
 
   const pushExploreParams = useCallback(
-    (nextFilters: Partial<{ grade: GradeFilterValue; language: LanguageFilterValue; query: string }>) => {
+    (nextFilters: Partial<{ grade: GradeFilterValue; language: LanguageFilterValue; query: string; topic: GameCategory | 'all' }>) => {
       const nextGrade = nextFilters.grade ?? gradeFilter
       const nextLanguage = nextFilters.language ?? languageFilter
       const nextQuery = nextFilters.query ?? search
+      const nextTopic = nextFilters.topic ?? selectedTopic
       const params = new URLSearchParams(searchParams.toString())
 
       if (nextGrade === allGradeOption.value) params.delete('grade')
@@ -487,28 +307,39 @@ export function TeacherLibrariesExploreContent({ games }: TeacherLibrariesExplor
       if (nextLanguage === allLanguageOption.value) params.delete('language')
       else params.set('language', nextLanguage)
 
+      if (nextTopic === 'all') params.delete('topic')
+      else params.set('topic', nextTopic)
+
       const trimmedQuery = nextQuery.trim()
       if (trimmedQuery) params.set('q', trimmedQuery)
       else params.delete('q')
 
       const serialized = params.toString()
-      router.push(serialized ? `${ROUTES.TEACHER.LIBRARIES_EXPLORE}?${serialized}` : ROUTES.TEACHER.LIBRARIES_EXPLORE, {
+      router.replace(serialized ? `${ROUTES.TEACHER.LIBRARIES_EXPLORE}?${serialized}` : ROUTES.TEACHER.LIBRARIES_EXPLORE, {
         scroll: false,
       })
     },
-    [gradeFilter, languageFilter, router, search, searchParams],
+    [gradeFilter, languageFilter, router, search, searchParams, selectedTopic],
   )
 
   const handleGradeChange = (value: string) => {
     const nextGrade = normalizeGradeFilter(value)
+    setVisibleCount(PAGE_SIZE)
     setGradeFilter(nextGrade)
     pushExploreParams({ grade: nextGrade })
   }
 
   const handleLanguageChange = (value: string) => {
     const nextLanguage = normalizeLanguageFilter(value)
+    setVisibleCount(PAGE_SIZE)
     setLanguageFilter(nextLanguage)
     pushExploreParams({ language: nextLanguage })
+  }
+
+  const handleTopicChange = (topic: GameCategory | 'all') => {
+    setVisibleCount(PAGE_SIZE)
+    setSelectedTopic(topic)
+    pushExploreParams({ topic })
   }
 
   const handleSearchSubmit = (event: FormEvent) => {
@@ -533,7 +364,7 @@ export function TeacherLibrariesExploreContent({ games }: TeacherLibrariesExplor
     })
   }, [deferredSearch, effectiveGradeFilter, effectiveLanguageFilter, games, selectedCategory])
 
-  const visibleGames = filteredGames.slice(0, 24)
+  const visibleGames = filteredGames.slice(0, visibleCount)
 
   const handleAssign = (activityId: string) => {
     const params = new URLSearchParams()
@@ -552,18 +383,16 @@ export function TeacherLibrariesExploreContent({ games }: TeacherLibrariesExplor
 
   return (
     <Box
-      component="main"
-      aria-label="Explorează biblioteci"
-      h="calc(100vh - 98px)"
-      mih={0}
+      component="div"
+      data-testid="library-explore-content"
       bg="var(--color-surface)"
       c="var(--color-on-surface)"
-      className={classes.librariesPage}
+      className={`${classes.teacherScrollPage} teacher-scroll-page`}
     >
-      <Stack component="section" aria-label="Conținut biblioteci" gap={0} className={classes.librariesColumn}>
+      <Stack gap={0} className={classes.librariesColumn}>
         <Stack align="center" gap={8} className={classes.librariesSearchBlock}>
-          <Box component="h2" style={searchHeadingStyle}>
-            Ce vrei să predai?
+          <Box component="h2" className={classes.librariesHeading}>
+            {t('libraries.explore.searchHeading')}
           </Box>
           <Group
             component="form"
@@ -578,9 +407,9 @@ export function TeacherLibrariesExploreContent({ games }: TeacherLibrariesExplor
               id="libraries-search"
               type="search"
               value={search}
-              onChange={(event) => setSearch(event.currentTarget.value)}
-              placeholder="Caută"
-              aria-label="Caută"
+              onChange={(event) => { setVisibleCount(PAGE_SIZE); setSearch(event.currentTarget.value) }}
+              placeholder={t('libraries.explore.search')}
+              aria-label={t('libraries.explore.search')}
               variant="unstyled"
               style={{ flex: 1 }}
               styles={{
@@ -588,93 +417,59 @@ export function TeacherLibrariesExploreContent({ games }: TeacherLibrariesExplor
                   minHeight: 44,
                   padding: '9px 12px',
                   color: 'var(--color-on-surface)',
-                  fontSize: 16,
+                  fontSize: 'var(--mantine-font-size-md)',
                 },
               }}
             />
             <ActionIcon
               classNames={{ root: primaryActionInteractiveClassName }}
               type="submit"
-              aria-label="Caută"
+              aria-label={t('libraries.explore.search')}
               variant="transparent"
-              style={searchButtonStyle}
+              className={classes.librariesSearchButton}
             >
               <Icon name="MagnifyingGlass" size={22} weight="bold" aria-hidden />
             </ActionIcon>
           </Group>
         </Stack>
 
-        <SimpleGrid aria-label="Subiecte bibliotecă" className={classes.librariesTopicGrid}>
-          {topics.map((topic, index) => (
+        <SimpleGrid aria-label={t('libraries.explore.topicsLabel')} className={classes.librariesTopicGrid}>
+          {topics.filter((topic) => !topic.category || games.some((game) => game.category === topic.category)).map((topic) => (
             <TopicButton
               key={topic.label}
               topic={topic}
-              selected={selectedTopic === index}
-              onClick={() => setSelectedTopic(index)}
+              selected={selectedTopic === (topic.category ?? 'all')}
+              onClick={() => handleTopicChange(topic.category ?? 'all')}
             />
           ))}
         </SimpleGrid>
 
-        <Group aria-label="Filtre bibliotecă" gap={12} align="center" className={classes.librariesFilterRow}>
+        <Group aria-label={t('libraries.explore.filtersLabel')} gap={12} align="center" className={classes.librariesFilterRow}>
           <LibraryFilterSelect
-            label="Alege clasa"
+            label={t('libraries.explore.grades.all')}
             value={effectiveGradeFilter}
             options={gradeOptions}
             onChange={handleGradeChange}
           />
           <LibraryFilterSelect
-            label="Alege limba"
+            label={t('libraries.explore.languages.all')}
             value={effectiveLanguageFilter}
             options={languageOptions}
             onChange={handleLanguageChange}
           />
-          <Box
-            component="span"
-            className={classes.librariesCurriculumBadge}
-            style={{
-              display: 'inline-flex',
-              minHeight: 36,
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: 8,
-              border: '1px solid var(--color-outline-variant)',
-              borderRadius: 8,
-              padding: '0 12px',
-              backgroundColor: 'var(--color-surface-container-lowest)',
-              boxShadow: 'var(--shadow-soft-sm)',
-              color: 'var(--color-on-surface-variant)',
-              fontSize: 14,
-              fontWeight: 600,
-              textDecoration: 'none',
-            }}
-          >
-            <Icon name="ListChecks" size={16} weight="bold" aria-hidden />
-            Standarde și curriculum EduPlay
-          </Box>
         </Group>
 
-        <Box component="section" aria-label="Colecții recomandate" style={sectionStyle}>
-          <Box component="h2" style={sectionHeadingStyle}>
-            Colecții recomandate
+        <Box component="section" aria-labelledby={resultsHeadingId} style={{ marginTop: 37 }}>
+          <Box component="h2" id={resultsHeadingId} className={classes.librariesSectionHeading}>
+            {t('libraries.explore.resultsHeading')}
           </Box>
-          <SimpleGrid spacing={16} cols={{ base: 1, sm: 2, md: 3 }}>
-            {featuredCollections.map((collection) => (
-              <CollectionCard key={collection.title} {...collection} />
-            ))}
-          </SimpleGrid>
-        </Box>
-
-        <Box component="section" aria-label="Cele mai populare activități" style={{ marginTop: 37 }}>
-          <Box component="h2" style={sectionHeadingStyle}>
-            {gradeHeading(effectiveGradeFilter)}
-          </Box>
+          <Text mb="sm">{t('libraries.explore.results', { count: filteredGames.length, shown: visibleGames.length, total: filteredGames.length })}</Text>
           {visibleGames.length > 0 ? (
             <SimpleGrid spacing={16} verticalSpacing={24} cols={{ base: 1, sm: 2, md: 3, lg: 4 }}>
-              {visibleGames.map((game, index) => (
+              {visibleGames.map((game) => (
                 <ActivityCard
                   key={game.id}
                   game={game}
-                  tone={cardTones[index % cardTones.length]}
                   onAssign={handleAssign}
                 />
               ))}
@@ -682,18 +477,12 @@ export function TeacherLibrariesExploreContent({ games }: TeacherLibrariesExplor
           ) : (
             <Text
               p={24}
-              style={{
-                border: '1px solid var(--color-outline)',
-                borderRadius: 8,
-                backgroundColor: 'var(--color-surface-container-lowest)',
-                color: 'var(--color-on-surface-variant)',
-                fontSize: 16,
-                fontWeight: 600,
-              }}
+              className={classes.librariesEmpty}
             >
-              Nu am găsit activități pentru filtrul ales.
+              {t('libraries.explore.empty')}
             </Text>
           )}
+          {visibleCount < filteredGames.length && <Button mt="md" variant="default" onClick={() => setVisibleCount((count) => count + PAGE_SIZE)}>{t('libraries.explore.showMore')}</Button>}
         </Box>
       </Stack>
     </Box>

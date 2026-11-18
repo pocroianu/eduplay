@@ -2,7 +2,8 @@
 
 import { useEffect } from 'react';
 import { Icon } from '@/shared/components/ui/Icon';
-import { Button, Card } from '@/shared/components/ui/kit';
+import { Button } from '@/shared/components/ui/kit/Button';
+import { Card } from '@/shared/components/ui/kit/Card';
 
 interface ErrorProps {
   error: Error & { digest?: string };
@@ -15,8 +16,7 @@ export default function RootError({ error, reset }: ErrorProps) {
   }, [error]);
 
   return (
-    <html lang="ro">
-      <body className="min-h-screen bg-background flex items-center justify-center p-6">
+      <div className="min-h-screen bg-background flex items-center justify-center p-6">
         <Card
           mode="standard"
           tone="cream"
@@ -50,7 +50,6 @@ export default function RootError({ error, reset }: ErrorProps) {
             )}
           </div>
         </Card>
-      </body>
-    </html>
+      </div>
   );
 }

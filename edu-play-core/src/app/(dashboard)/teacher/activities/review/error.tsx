@@ -18,7 +18,7 @@ export default function TeacherActivityReviewError({
   }, [error])
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-surface p-6 lg:p-10">
+    <div className="flex min-h-screen items-center justify-center bg-surface p-6 lg:p-10">
       <Card className="w-full max-w-md border border-outline-variant text-center" padding="lg" shadow={false}>
         <Icon name="Warning" size="xl" className="mx-auto text-error" aria-hidden />
         <h1 className="mt-4 text-lg font-bold text-on-surface">Nu am putut încărca răspunsurile</h1>
@@ -37,6 +37,6 @@ export default function TeacherActivityReviewError({
           <p className="mt-4 text-xs text-on-surface-variant">Referință: {error.digest}</p>
         )}
       </Card>
-    </main>
+    </div>
   )
 }

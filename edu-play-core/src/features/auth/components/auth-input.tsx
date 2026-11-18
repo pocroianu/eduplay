@@ -58,9 +58,9 @@ export const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
           root: 'space-y-2',
           label: 'ml-1 block font-label text-sm font-semibold text-on-surface-variant',
           input:
-            'w-full rounded-md border border-outline-variant bg-surface-container-lowest font-label font-normal text-on-surface shadow-soft-sm outline-none transition-colors placeholder:text-on-surface-muted focus:border-primary focus:bg-surface-container-lowest focus-visible:ring-2 focus-visible:ring-primary/20',
+            'w-full rounded-md border border-outline-variant bg-surface-container-lowest font-label font-normal text-on-surface shadow-soft-sm outline-none transition-colors placeholder:text-on-surface-variant focus:border-primary focus:bg-surface-container-lowest focus-ring',
           error: 'ml-1 mt-1 block text-sm text-error',
-          section: 'text-on-surface-muted',
+          section: 'text-on-surface-variant',
         }}
         styles={{ input: { minHeight: 56 } }}
         {...props}

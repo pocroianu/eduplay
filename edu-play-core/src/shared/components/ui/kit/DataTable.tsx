@@ -360,13 +360,13 @@ function HeaderCell<T>({
         type="button"
         onClick={() => onSortChange?.(column.key, nextDirection)}
         className={cn(
-          "inline-flex items-center gap-1.5 rounded-full",
+          "inline-flex min-h-11 items-center gap-1.5 rounded-full",
 
-          "text-[11px] font-bold uppercase tracking-widest",
+          "text-sm font-bold uppercase tracking-wide",
 
           isActive ? "text-on-surface" : "text-on-surface-variant",
 
-          "hover:text-on-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
+          "hover:text-on-surface focus-ring",
         )}
       >
         <span>{column.header}</span>
@@ -393,6 +393,7 @@ function BodyRow<T>({ row, rowIndex, columns, onRowClick }: BodyRowProps<T>) {
   const interactiveProps = interactive
     ? {
         tabIndex: 0,
+        "aria-label": `Rândul ${rowIndex + 1}`,
 
         onClick: (event: MouseEvent<HTMLTableRowElement>) => {
           if (!isInteractiveTarget(event.target)) onRowClick?.(row, rowIndex);
@@ -419,7 +420,7 @@ function BodyRow<T>({ row, rowIndex, columns, onRowClick }: BodyRowProps<T>) {
         "hover:bg-primary-wash/60 transition-colors",
 
         interactive &&
-          "cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
+          "cursor-pointer focus-ring",
       )}
       {...interactiveProps}
     >
@@ -525,7 +526,7 @@ function MobileCard<T>({
           type="button"
           onClick={() => onRowClick?.(row, rowIndex)}
           aria-label={`Deschide rândul ${rowIndex + 1}`}
-          className="self-start rounded-md px-3 py-2 text-primary font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-primary"
+          className="self-start rounded-md px-3 py-2 text-primary font-semibold focus-ring"
         >
           Deschide
         </UnstyledButton>

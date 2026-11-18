@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { ink, tone, type ToneName, type DuoColor } from '../tokens/colors';
 import { duration, easing } from '../tokens/motion';
 import { fontStack, typeScale } from '../tokens/type';
+import { prefersReducedMotion } from './reducedMotion';
 
 /**
  * ChunkyButton — Phaser mirror of `kit/ChunkyButton.tsx`.
@@ -44,6 +45,24 @@ const SIZE_SPECS: Record<ChunkyButtonSize, SizeSpec> = {
   md: { paddingX: 22, paddingY: 12, depth: 4, radius: 14, borderWidth: 2, fontSize: 15 },
   lg: { paddingX: 30, paddingY: 16, depth: 5, radius: 16, borderWidth: 3, fontSize: 18 },
 };
+
+/** Minimum interactive size in canvas px (`.impeccable.md`: tap targets >= 88x88). */
+export const MIN_TAP_TARGET = 88;
+
+/**
+ * Hit-area size for a button whose visual is `visualWidth` x `visualHeight`
+ * plus a `depth` shadow. Expands (never shrinks) to the minimum tap target.
+ */
+export function computeHitSize(
+  visualWidth: number,
+  visualHeight: number,
+  depth: number,
+): { width: number; height: number } {
+  return {
+    width: Math.max(MIN_TAP_TARGET, visualWidth),
+    height: Math.max(MIN_TAP_TARGET, visualHeight + depth),
+  };
+}
 
 interface VariantStyle {
   bg: DuoColor;
@@ -121,12 +140,15 @@ export class ChunkyButton extends Phaser.GameObjects.Container {
 
     this.draw(false);
 
-    this.hitZone = scene.add.zone(0, 0, this.buttonWidth, this.buttonHeight + this.spec.depth);
+    // Invisible hit area, centred on the visual (face + shadow), expanded to
+    // the minimum tap target. The visual artwork is unchanged.
+    const hit = computeHitSize(this.buttonWidth, this.buttonHeight, this.spec.depth);
+    this.hitZone = scene.add.zone(0, this.spec.depth / 2, hit.width, hit.height);
     this.hitZone.setOrigin(0.5, 0.5);
     this.add(this.hitZone);
 
     if (!this.isDisabled) {
-      this.hitZone.setInteractive({ useHandCursor: true });
+      this.enableHitArea();
       this.hitZone.on('pointerdown', this.handlePointerDown, this);
       this.hitZone.on('pointerup', this.handlePointerUp, this);
       this.hitZone.on('pointerout', this.handlePointerOut, this);
@@ -135,6 +157,16 @@ export class ChunkyButton extends Phaser.GameObjects.Container {
     }
 
     scene.add.existing(this);
+  }
+
+  private enableHitArea(): void {
+    // Zone local coords start at the top-left of its (origin-centred) size.
+    const rect = new Phaser.Geom.Rectangle(0, 0, this.hitZone.width, this.hitZone.height);
+    this.hitZone.setInteractive({
+      hitArea: rect,
+      hitAreaCallback: Phaser.Geom.Rectangle.Contains,
+      useHandCursor: true,
+    });
   }
 
   private draw(pressed: boolean): void {
@@ -188,7 +220,7 @@ export class ChunkyButton extends Phaser.GameObjects.Container {
     if (disabled) {
       this.hitZone.disableInteractive();
     } else {
-      this.hitZone.setInteractive({ useHandCursor: true });
+      this.enableHitArea();
     }
     return this;
   }
@@ -203,6 +235,16 @@ export class ChunkyButton extends Phaser.GameObjects.Container {
    * `--ease-spring` and `--t-press` motion tokens.
    */
   pulse(): this {
+    if (prefersReducedMotion(this.scene)) {
+      // No scale animation under reduced motion; a brief opacity blip instead.
+      this.scene.tweens.add({
+        targets: this.faceGfx,
+        alpha: 0.8,
+        duration: duration.press,
+        yoyo: true,
+      });
+      return this;
+    }
     this.scene.tweens.add({
       targets: this.faceGfx,
       scaleX: 0.96,

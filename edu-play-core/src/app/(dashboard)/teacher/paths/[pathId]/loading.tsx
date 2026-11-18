@@ -11,7 +11,7 @@ function Skeleton({ className = '' }: { className?: string }) {
 
 export default function TeacherPathDetailLoading() {
   return (
-    <main aria-busy="true" className="min-h-screen bg-surface px-6 py-8 text-on-surface lg:px-10">
+    <div aria-busy="true" className="min-h-screen bg-surface px-6 py-8 text-on-surface lg:px-10">
       <p className="sr-only" role="status">
         Se încarcă editorul de parcurs.
       </p>
@@ -53,6 +53,6 @@ export default function TeacherPathDetailLoading() {
           </aside>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

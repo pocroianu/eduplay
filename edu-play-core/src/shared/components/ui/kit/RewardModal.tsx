@@ -306,7 +306,7 @@ export function RewardModal({
                 {subtitle && (
                   <p
                     id={subtitleId}
-                    className="mx-auto mt-2 max-w-[34rem] type-body text-on-surface-muted"
+                    className="mx-auto mt-2 max-w-[34rem] type-body text-on-surface-variant"
                   >
                     {subtitle}
                   </p>
@@ -344,7 +344,7 @@ export function RewardModal({
                 )}
 
                 {notice && (
-                  <div className="mt-[18px] inline-flex items-center gap-1.5 type-body text-on-surface-muted">
+                  <div className="mt-[18px] inline-flex items-center gap-1.5 type-body text-on-surface-variant">
                     <span aria-hidden="true" className="flex items-center">
                       {noticeIcon ?? <Icon name="Envelope" size={14} />}
                     </span>

@@ -97,3 +97,58 @@ export const staggerItem: Variants = {
     transition: transitions.smooth,
   },
 };
+
+// ---------------------------------------------------------------------------
+// Reduced-motion variants
+//
+// Every preset above has a calm counterpart: no loops, no transforms, no
+// springs; at most a short opacity fade. `motionPreset` picks between them so
+// call sites can stay a single line: `variants={motionPreset('float', reduced)}`.
+// ---------------------------------------------------------------------------
+
+const reducedFade = { duration: 0.15, ease: 'easeOut' } as Transition;
+
+const reducedEntrance: Variants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1, transition: reducedFade },
+  exit: { opacity: 0, transition: reducedFade },
+};
+
+const reducedStatic: Variants = {};
+
+export const motionPresets = {
+  fadeIn,
+  fadeInUp,
+  buttonTap,
+  buttonHover,
+  float,
+  pinShake,
+  cardHover,
+  cardTap,
+  thumbnailZoom,
+  slideIn,
+  staggerContainer,
+  staggerItem,
+} satisfies Record<string, Variants>;
+
+export type MotionPresetName = keyof typeof motionPresets;
+
+export const reducedMotionPresets: Record<MotionPresetName, Variants> = {
+  fadeIn,
+  fadeInUp: reducedEntrance,
+  buttonTap: reducedStatic,
+  buttonHover: reducedStatic,
+  // No floating loop: the element simply rests in place.
+  float: { initial: {}, animate: {} },
+  pinShake: { idle: {}, shake: {} },
+  cardHover: reducedStatic,
+  cardTap: reducedStatic,
+  thumbnailZoom: reducedStatic,
+  slideIn: reducedEntrance,
+  staggerContainer: { initial: {}, animate: {} },
+  staggerItem: reducedEntrance,
+};
+
+export function motionPreset(name: MotionPresetName, reduced: boolean): Variants {
+  return reduced ? reducedMotionPresets[name] : motionPresets[name];
+}

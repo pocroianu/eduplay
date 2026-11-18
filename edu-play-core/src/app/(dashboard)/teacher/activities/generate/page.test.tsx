@@ -81,10 +81,10 @@ describe('/teacher/activities/generate page', () => {
     expect(screen.getByText("You're getting a sneak peek at these features. Start a free trial to get full access.")).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Start Free Trial' })).toHaveAttribute('href', '/teacher/trial')
 
-    expect(screen.getByRole('button', { name: /Convert Resource\s*Upload any teaching resource/i })).toBeDisabled()
-    expect(screen.getByRole('button', { name: /Topic or Prompt\s*Enter a topic, learning goal or standard/i })).toBeDisabled()
-    expect(screen.getByRole('button', { name: /YouTube Video\s*Embed a video and generate questions/i })).toBeDisabled()
-    expect(screen.getByRole('button', { name: /Reading Fluency\s*Students read and AI grades reading fluency/i })).toBeDisabled()
+    expect(screen.getByText('Convert Resource')).toBeInTheDocument()
+    expect(screen.getByText('Topic or Prompt')).toBeInTheDocument()
+    expect(screen.getByText('YouTube Video')).toBeInTheDocument()
+    expect(screen.getByText('Reading Fluency')).toBeInTheDocument()
     expect(screen.getByText('Turn an existing resource into an interactive EduPlay activity with auto-graded assessments and multimedia tools.')).toBeInTheDocument()
 
     expect(screen.getByText('Worksheet')).toBeInTheDocument()
@@ -92,9 +92,8 @@ describe('/teacher/activities/generate page', () => {
     expect(screen.getByText('Study Guide')).toBeInTheDocument()
     expect(screen.getByText('Activity')).toBeInTheDocument()
     expect(screen.getByText('5 PDFs or 10 Images. Supported formats: pdf, jpg, png, heic.')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /^Upload$/ })).toBeDisabled()
-    expect(screen.getByRole('button', { name: /Google Drive/ })).toBeDisabled()
-    expect(screen.getByRole('button', { name: /^Next$/ })).toBeDisabled()
+    expect(screen.getByText('Încărcarea nu este disponibilă încă.')).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /^Next$/ })).not.toBeInTheDocument()
   })
 
   it('redirects signed-out visitors to login', async () => {

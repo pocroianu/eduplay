@@ -9,7 +9,7 @@ function Skeleton({ className = '' }: { className?: string }) {
 
 export default function TeacherGamesLoading() {
   return (
-    <main aria-busy="true" className="min-h-screen flex-1 bg-surface p-6 text-on-surface lg:p-10">
+    <div aria-busy="true" className="min-h-screen flex-1 bg-surface p-6 text-on-surface lg:p-10">
       <p className="sr-only" role="status">
         Se încarcă jocurile profesorului.
       </p>
@@ -55,6 +55,6 @@ export default function TeacherGamesLoading() {
           </div>
         </section>
       </div>
-    </main>
+    </div>
   )
 }

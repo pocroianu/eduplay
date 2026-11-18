@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
 import { primary, ink, coral } from '../tokens/colors';
+import { prefersReducedMotion } from './reducedMotion';
 
 /**
  * Vulpița — Phaser mirror of `kit/Vulpita.tsx`.
@@ -39,7 +40,7 @@ export class Vulpita extends Phaser.GameObjects.Container {
 
     this.mood = config.mood ?? 'happy';
     const size = config.size ?? 120;
-    const animate = config.animate !== false && !prefersReducedMotion();
+    const animate = config.animate !== false && !prefersReducedMotion(scene);
 
     const body = scene.add.graphics();
     this.drawBody(body);
@@ -264,9 +265,4 @@ function drawArcLine(g: Phaser.GameObjects.Graphics, x1: number, y1: number, x2:
   g.lineTo(cx, cy);
   g.lineTo(x2, y2);
   g.strokePath();
-}
-
-function prefersReducedMotion(): boolean {
-  if (typeof window === 'undefined' || !window.matchMedia) return false;
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }

@@ -377,7 +377,7 @@ function SkillsMastery({ skills }: { skills: SkillBadge[] }) {
               />
             </div>
             <span className="text-xs font-bold">{skill.label}</span>
-            <span className="text-[10px] text-on-surface-variant">{skill.level}</span>
+            <span className="text-xs text-on-surface-variant">{skill.level}</span>
           </div>
           )
         })}
@@ -386,7 +386,7 @@ function SkillsMastery({ skills }: { skills: SkillBadge[] }) {
   )
 }
 
-/** Time spent per subject bar chart (glassmorphism card) */
+/** Time spent per subject bar chart */
 function TimeBySubjectChart({ subjects }: { subjects: SubjectProgress[] }) {
   const data = subjects.map((s, index) => ({
     name: s.shortLabel,
@@ -395,9 +395,8 @@ function TimeBySubjectChart({ subjects }: { subjects: SubjectProgress[] }) {
   }))
 
   return (
-    <div className="bg-surface-container-lowest border border-outline-variant shadow-soft-sm relative overflow-hidden rounded-xl p-6 lg:p-8">
-      <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
-      <div className="relative z-10">
+    <div className="bg-surface-container-lowest border border-outline-variant shadow-soft-sm rounded-xl p-6 lg:p-8">
+      <div>
         <h3 className="font-bold text-lg mb-6">Timp petrecut pe discipline</h3>
         <div className="w-full h-52">
           <ResponsiveContainer width="100%" height="100%">

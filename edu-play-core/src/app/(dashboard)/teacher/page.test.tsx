@@ -47,7 +47,8 @@ const resources = {
             title: 'Găsește activități gata de predat pentru {{grade}}',
             gradeFallback: 'clasa ta',
             searchPlaceholder: 'Caută activități pentru citire, matematică, științe',
-            popularTitle: 'Activități populare din comunitate în {{grade}}',
+            popularTitle: 'Activități din biblioteca EduPlay',
+            empty: 'Nu există încă activități în bibliotecă.',
             viewAll: 'Vezi biblioteca',
             recentMeta: 'Din activitatea clasei',
             subjectMeta: 'Activitate',
@@ -123,6 +124,7 @@ vi.mock('@/lib/i18n/server', () => ({
 import TeacherDashboard from './page'
 
 const dashboardData = {
+  libraryActivities: [],
   profile: {
     id: 'teacher-1',
     full_name: 'Ana Popescu',

@@ -8,10 +8,10 @@ import type { AnchorHTMLAttributes, ReactNode } from "react";
 import { cn } from "@/shared/lib/utils/cn";
 
 import {
-  SEESAW_HOVER_HIGHLIGHT_CLASS,
-  SEESAW_HOVER_HIGHLIGHT_STYLE,
-  SEESAW_SURFACE_INTERACTION_CLASS,
-} from "./seesawInteraction";
+  HOVER_HIGHLIGHT_CLASS,
+  HOVER_HIGHLIGHT_STYLE,
+  SURFACE_INTERACTION_CLASS,
+} from "./interactionTokens";
 
 export interface InteractiveSurfaceProps
   extends Omit<
@@ -55,7 +55,7 @@ export function InteractiveSurface({
         component={Link}
         href={href}
         className={cn(
-          SEESAW_SURFACE_INTERACTION_CLASS,
+          SURFACE_INTERACTION_CLASS,
 
           className,
         )}
@@ -66,8 +66,8 @@ export function InteractiveSurface({
         <span
           data-hover-highlight
           aria-hidden="true"
-          className={cn(SEESAW_HOVER_HIGHLIGHT_CLASS, highlightClassName)}
-          style={SEESAW_HOVER_HIGHLIGHT_STYLE}
+          className={cn(HOVER_HIGHLIGHT_CLASS, highlightClassName)}
+          style={HOVER_HIGHLIGHT_STYLE}
         />
       </UnstyledButton>
     </MantineBoundary>

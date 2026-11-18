@@ -42,17 +42,16 @@ export default async function TeacherScanPage() {
   await requireTeacher();
 
   const lang = await getServerLanguage();
-  const [heading, permissionTitle, permissionBody, ok, backHome] = await Promise.all([
+  const [heading, permissionTitle, permissionBody, backHome] = await Promise.all([
     t(lang, 'utility.scan.heading'),
     t(lang, 'utility.scan.permissionTitle'),
     t(lang, 'utility.scan.permissionBody'),
-    t(lang, 'utility.scan.ok'),
     t(lang, 'utility.scan.backHome'),
   ]);
 
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-surface-container px-4 py-8 text-on-surface sm:px-6 lg:px-10">
+    <div className="flex min-h-screen items-center justify-center bg-surface-container px-4 py-8 text-on-surface sm:px-6 lg:px-10">
       <Card className="w-full max-w-2xl overflow-hidden border border-outline-variant bg-surface-container-lowest" padding="none">
         <div className="flex items-center justify-between gap-4 border-b border-outline-variant px-5 py-4">
           <h1 className="font-headline text-2xl font-bold text-on-surface">{heading}</h1>
@@ -72,15 +71,12 @@ export default async function TeacherScanPage() {
             </div>
           </div>
           <div className="flex flex-wrap justify-center gap-3">
-            <Button type="button" disabled size="sm">
-              {ok}
-            </Button>
             <Button href={ROUTES.TEACHER.DASHBOARD} variant="secondary" size="sm">
               {backHome}
             </Button>
           </div>
         </section>
       </Card>
-    </main>
+    </div>
   );
 }

@@ -13,7 +13,7 @@ function LoadingLine({ className = '' }: { className?: string }) {
 
 export default function StudentProfileLoading() {
   return (
-    <main
+    <div
       role="status"
       aria-label="Se încarcă profilul elevului"
       className="min-h-screen flex-1 bg-surface px-4 py-6 md:px-8"
@@ -84,6 +84,6 @@ export default function StudentProfileLoading() {
           ))}
         </section>
       </div>
-    </main>
+    </div>
   );
 }

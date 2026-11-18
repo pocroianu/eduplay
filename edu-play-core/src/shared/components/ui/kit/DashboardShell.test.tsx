@@ -21,7 +21,7 @@ describe('DashboardShell', () => {
         <div data-testid="content">Hello</div>
       </DashboardShell>,
     )
-    const main = screen.getByRole('main')
+    const main = screen.getByTestId('dashboard-shell-content')
     expect(main).toBeInTheDocument()
     expect(main).toHaveClass('bg-surface')
     expect(screen.getByTestId('content')).toBeInTheDocument()
@@ -76,8 +76,8 @@ describe('DashboardShell', () => {
         <div>body</div>
       </DashboardShell>,
     )
-    expect(screen.getByRole('main')).toHaveClass('max-w-4xl')
-    expect(screen.getByRole('main')).toHaveClass('custom-width')
+    expect(screen.getByTestId('dashboard-shell-content')).toHaveClass('max-w-4xl')
+    expect(screen.getByTestId('dashboard-shell-content')).toHaveClass('custom-width')
   })
 
   it('falls back to max-w-6xl when no content width is provided', () => {
@@ -86,7 +86,7 @@ describe('DashboardShell', () => {
         <div>body</div>
       </DashboardShell>,
     )
-    expect(screen.getByRole('main')).toHaveClass('max-w-6xl')
+    expect(screen.getByTestId('dashboard-shell-content')).toHaveClass('max-w-6xl')
   })
 
   it('routes the admin variant through the standard-mode side-nav and top-bar', () => {
@@ -120,7 +120,7 @@ describe('DashboardShell', () => {
       background: 'var(--color-surface-container-lowest)',
     })
     expect(screen.getByRole('banner', { name: /panou profesor/i })).toHaveClass('h-[72px]')
-    expect(screen.getByRole('main')).toHaveClass('bg-surface')
+    expect(screen.getByTestId('dashboard-shell-content')).toHaveClass('bg-surface')
     expect(within(screen.getByRole('navigation', { name: /navigare principală/i })).getByRole('link', { name: /panou/i })).toHaveAttribute('aria-current', 'page')
   })
 })

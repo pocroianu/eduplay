@@ -1,8 +1,9 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Icon } from '@/shared/components/ui/Icon';
 import NextLink from "next/link";
+import { ROUTES } from '@/shared/lib/constants/routes';
 import { fadeInUp, cardHover, cardTap, thumbnailZoom } from "@/config/animations";
 import {
   getCategoryConfig,
@@ -27,18 +28,19 @@ function getStatusBadge(status: GameStatus | undefined) {
 }
 
 export function GameCard({ game, index = 0 }: GameCardProps) {
+  const reduceMotion = useReducedMotion();
   const categoryConfig = getCategoryConfig(game.category);
   const statusBadge = getStatusBadge(game.progress?.status);
   const isCompleted = game.progress?.status === "completed";
-  const href = game.launchHref ?? game.game_url ?? `/play/${game.id}`;
+  const href = game.launchHref || game.game_url || ROUTES.PLAY.ACTIVITY(game.id);
 
   return (
     <motion.div
-      variants={fadeInUp}
-      initial="initial"
+      variants={reduceMotion ? undefined : fadeInUp}
+      initial={reduceMotion ? false : "initial"}
       animate="animate"
-      whileHover="hover"
-      whileTap="tap"
+      whileHover={reduceMotion ? undefined : "hover"}
+      whileTap={reduceMotion ? undefined : "tap"}
       custom={index}
       style={{ originX: 0.5, originY: 0.5 }}
       transition={{
@@ -48,12 +50,12 @@ export function GameCard({ game, index = 0 }: GameCardProps) {
       }}
     >
       <motion.div
-        className="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant shadow-soft-sm relative min-h-[180px] cursor-pointer"
-        variants={{ ...cardHover, ...cardTap }}
+        className="bg-surface-container-lowest rounded-xl overflow-hidden border border-outline-variant shadow-soft-sm relative min-h-[180px] cursor-pointer focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary"
+        variants={reduceMotion ? undefined : { ...cardHover, ...cardTap }}
       >
         {/* Status Badge */}
         <span
-          className={`absolute top-3 right-3 rounded-full px-3 py-1 text-sm font-bold z-[1] ${statusBadge.className}`}
+          className={`absolute top-3 right-3 rounded-full px-3 py-1 text-base font-bold z-[1] ${statusBadge.className}`}
         >
           {statusBadge.icon && <Icon name={statusBadge.icon} size={14} aria-hidden />} {statusBadge.label}
         </span>
@@ -75,7 +77,7 @@ export function GameCard({ game, index = 0 }: GameCardProps) {
 
           {/* Category Emoji */}
           <motion.span
-            variants={thumbnailZoom}
+            variants={reduceMotion ? undefined : thumbnailZoom}
             className="text-[50px]"
             style={{ filter: isCompleted ? "none" : "grayscale(0)" }}
           >
@@ -93,7 +95,7 @@ export function GameCard({ game, index = 0 }: GameCardProps) {
         {/* Game Info */}
         <div className="p-4">
           {/* Title with Link */}
-          <NextLink href={href}>
+          <NextLink href={href} className="after:absolute after:inset-0 focus-visible:outline-none">
             <p className="font-bold text-lg line-clamp-2 leading-snug mb-2 text-on-surface">
               {game.title}
             </p>
@@ -116,10 +118,7 @@ export function GameCard({ game, index = 0 }: GameCardProps) {
             {/* Score if completed */}
             {game.progress?.score !== null &&
               game.progress?.score !== undefined && (
-                <span
-                  className="text-sm font-semibold"
-                  style={{ color: categoryConfig.color }}
-                >
+                <span className="text-base font-semibold text-on-surface">
                   {game.progress.score}%
                 </span>
               )}
@@ -127,7 +126,7 @@ export function GameCard({ game, index = 0 }: GameCardProps) {
 
           {/* Duration */}
           {game.estimated_duration && (
-            <span className="text-xs text-on-surface-variant mt-2 block">
+            <span className="text-base text-on-surface-variant mt-2 block">
               {game.estimated_duration} min
             </span>
           )}

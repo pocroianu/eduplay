@@ -25,15 +25,7 @@ const footerColumns = [
       { labelKey: 'footer.columns.learning.activities', href: ROUTES.AUTH.REGISTER },
     ],
   },
-  {
-    key: 'trust',
-    titleKey: 'footer.columns.trust.title',
-    links: [
-      { labelKey: 'footer.columns.trust.privacy', href: '#' },
-      { labelKey: 'footer.columns.trust.gdpr', href: '#' },
-      { labelKey: 'footer.columns.trust.contact', href: '#' },
-    ],
-  },
+  // TODO(legal): restore once public privacy/GDPR/contact pages exist
 ] as const satisfies ReadonlyArray<{
   key: string
   titleKey: string
@@ -42,7 +34,7 @@ const footerColumns = [
 
 const trustBadges = [
   { labelKey: 'footer.badges.romanian', icon: 'TextAa' as IconName },
-  { labelKey: 'footer.badges.gdpr', icon: 'ShieldCheck' as IconName },
+  { labelKey: 'footer.badges.euHosting', icon: 'HardDrives' as IconName },
   { labelKey: 'footer.badges.primary', icon: 'GraduationCap' as IconName },
 ] as const
 
@@ -89,7 +81,7 @@ export function LandingFooter() {
         <div className="flex flex-col items-start justify-between gap-4 pt-8 lg:flex-row lg:items-center">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <p className="text-xs font-semibold" style={{ color: 'var(--color-on-surface-variant)' }}>
-              {t('footer.copyright')}
+              {t('footer.copyright', { year: new Date().getFullYear() })}
             </p>
             <p className="inline-flex items-center gap-1 text-xs" style={{ color: 'var(--color-on-surface-variant)' }}>
               {t('footer.madeInPrefix')}

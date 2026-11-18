@@ -16,7 +16,6 @@ const FILES = [
   'src/features/games/components/LessonDrawer.tsx',
   'src/features/games/components/OfflineNotice.tsx',
   'src/features/games/components/PreGameCover.tsx',
-  'src/features/games/components/ActionStrip.tsx',
   'src/features/games/components/CategoryBanner.tsx',
   'src/shared/components/ui/kit/Card.tsx',
   'src/shared/components/ui/kit/StatCard.tsx',
@@ -26,7 +25,6 @@ const BLACK_CHROME_PATTERN = /border-ink|ring-ink|shadow-chunk(?:-sm|-lg)?\b(?!-
 const HARD_3D_OFFSET_SHADOW_PATTERN = /boxShadow:\s*['"`]0\s+\d+px\s+0\s+0/;
 const DISALLOWED_TOUCH_SURFACE_PATTERN = /backdrop-blur|active:scale|whileTap=\{\{\s*scale/;
 const REDUCED_MOTION_PRESS_FILES = [
-  'src/features/games/components/ActionStrip.tsx',
   'src/features/games/components/GameLibraryHero.tsx',
 ] as const;
 
@@ -60,7 +58,6 @@ describe('player chrome', () => {
 
   it('uses Mantine-backed buttons for game chrome action controls', () => {
     const controlFiles = [
-      'src/features/games/components/ActionStrip.tsx',
       'src/features/games/components/CategoryBanner.tsx',
       'src/features/games/components/CoachFAB.tsx',
       'src/features/games/components/GameLibraryHero.tsx',

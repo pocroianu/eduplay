@@ -101,7 +101,7 @@ function TemplateCard({
   disabled?: boolean
 }) {
   const className = cn(
-    'relative flex min-h-32 flex-col items-center justify-center gap-3 rounded-xl border p-4 text-center transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+    'relative flex min-h-32 flex-col items-center justify-center gap-3 rounded-xl border p-4 text-center transition-colors focus-ring',
     active ? 'border-primary bg-primary-soft' : 'border-outline-variant bg-surface-container-lowest',
     disabled ? 'cursor-not-allowed opacity-70' : 'hover:border-primary hover:bg-primary-soft',
   )
@@ -149,7 +149,7 @@ function ActivitySourceCards({
   return (
     <section aria-label="Conținut activitate" className="grid gap-4 md:grid-cols-2">
       <CardButton
-        className="rounded-lg border border-outline bg-surface-container-lowest p-4 text-left shadow-soft-sm transition-colors hover:bg-primary-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        className="rounded-lg border border-outline bg-surface-container-lowest p-4 text-left shadow-soft-sm transition-colors hover:bg-primary-soft focus-ring"
         onClick={onSelectUpload}
       >
         <span className="flex items-center gap-3 text-sm font-bold text-on-surface">
@@ -162,7 +162,7 @@ function ActivitySourceCards({
       </CardButton>
       <CardButton
         disabled={linkDisabled}
-        className="rounded-lg border border-outline bg-surface-container-lowest p-4 text-left shadow-soft-sm transition-colors hover:bg-primary-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-60"
+        className="rounded-lg border border-outline bg-surface-container-lowest p-4 text-left shadow-soft-sm transition-colors hover:bg-primary-soft focus-ring disabled:opacity-60"
         onClick={onAddLink}
       >
         <span className="flex items-center gap-3 text-sm font-bold text-on-surface">
@@ -222,23 +222,14 @@ function ResponseTemplateSection({
           pill="Nou"
           onClick={onAiDraftSelected}
         />
-        {!isEditing && (
-          hasInteractiveTypes ? (
-            <TemplateCard
-              active={isInteractiveTemplateSelected}
-              icon="GameController"
-              label="Joc interactiv"
-              meta={`${interactiveTypeCount} șabloane disponibile`}
-              onClick={onInteractiveSelected}
-            />
-          ) : (
-            <TemplateCard
-              disabled
-              icon="GameController"
-              label="Joc interactiv"
-              meta="Șabloanele interactive nu sunt disponibile încă"
-            />
-          )
+        {!isEditing && hasInteractiveTypes && (
+          <TemplateCard
+            active={isInteractiveTemplateSelected}
+            icon="GameController"
+            label="Joc interactiv"
+            meta={`${interactiveTypeCount} șabloane disponibile`}
+            onClick={onInteractiveSelected}
+          />
         )}
       </div>
 
@@ -294,7 +285,7 @@ function InteractiveTypesSection({
             <div className="flex items-start justify-between gap-3">
               <div>
                 <h3 className="font-bold text-on-surface">{activityType.displayName}</h3>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.08em] text-on-surface-muted">
+                <p className="mt-1 text-xs font-semibold uppercase tracking-[0.08em] text-on-surface-variant">
                   {activityType.category ?? 'Interactiv'}
                 </p>
               </div>
@@ -577,7 +568,7 @@ export function CreateActivityWizard({ interactiveTypes, initialDraft }: CreateA
 
 
   return (
-    <main className="min-h-screen bg-surface text-on-surface">
+    <div className="min-h-screen bg-surface text-on-surface">
       <PageHeader
         title="Creează activitate"
         eyebrow="Atelier profesor"
@@ -597,7 +588,7 @@ export function CreateActivityWizard({ interactiveTypes, initialDraft }: CreateA
               <Link
                 href={isEditing ? `${ROUTES.TEACHER.ACTIVITIES}?tab=my` : ROUTES.TEACHER.ACTIVITIES}
                 aria-label="Înapoi la activități"
-                className="inline-flex min-h-10 items-center gap-2 rounded-md text-sm font-bold text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                className="inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-bold text-primary hover:underline focus-ring"
               >
                 <Icon name="ArrowLeft" size={18} aria-hidden />
                 Înapoi la activități
@@ -684,6 +675,6 @@ export function CreateActivityWizard({ interactiveTypes, initialDraft }: CreateA
           shareWithFamilyOnApproval={shareWithFamilyOnApproval}
         />
       </div>
-    </main>
+    </div>
   )
 }

@@ -103,8 +103,10 @@ export function DuoProgress({
             />
           )}
           {!indeterminate && (showPct || showPercent) && (
-            <span className="absolute inset-0 flex items-center justify-center font-bold text-[11px] text-surface-container-lowest">
-              {Math.round(clamped)}%
+            <span className="absolute inset-0 flex items-center justify-center">
+              <span className="rounded-full bg-surface-container-lowest px-1.5 font-bold text-[11px] leading-4 text-on-surface">
+                {Math.round(clamped)}%
+              </span>
             </span>
           )}
         </Progress.Root>

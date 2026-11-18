@@ -227,11 +227,18 @@ function readBackup(key: string | null): DraftBackup | null {
   }
 }
 
-function pointFromEvent(canvas: HTMLCanvasElement, event: ReactPointerEvent<HTMLCanvasElement>): DrawingPoint {
+/** Maps a pointer position (CSS px) to the canvas' internal drawing resolution. */
+export function pointFromEvent(
+  canvas: HTMLCanvasElement,
+  event: Pick<ReactPointerEvent<HTMLCanvasElement>, 'clientX' | 'clientY'>,
+): DrawingPoint {
   const rect = canvas.getBoundingClientRect()
+  if (rect.width <= 0 || rect.height <= 0) return { x: event.clientX, y: event.clientY }
+  const scaleX = canvas.width / rect.width
+  const scaleY = canvas.height / rect.height
   return {
-    x: rect.width > 0 ? Math.max(0, Math.min(rect.width, event.clientX - rect.left)) : event.clientX,
-    y: rect.height > 0 ? Math.max(0, Math.min(rect.height, event.clientY - rect.top)) : event.clientY,
+    x: Math.max(0, Math.min(canvas.width, (event.clientX - rect.left) * scaleX)),
+    y: Math.max(0, Math.min(canvas.height, (event.clientY - rect.top) * scaleY)),
   }
 }
 
@@ -293,7 +300,7 @@ function FreeResponseHeader({ backUrl, isPreview }: { backUrl: string; isPreview
       <Button href={backUrl} mode="kid" size="lg" variant="ghost" tone="cream">
         Înapoi
       </Button>
-      <span className="rounded-full bg-primary-soft px-4 py-2 text-sm font-bold text-primary-deep">
+      <span className="rounded-full bg-primary-soft px-4 py-2 text-base font-bold text-primary-deep">
         Mod elev{isPreview ? ' · previzualizare' : ''}
       </span>
     </div>
@@ -303,7 +310,7 @@ function FreeResponseHeader({ backUrl, isPreview }: { backUrl: string; isPreview
 function PromptCard({ title, prompt }: { title: string; prompt: string }) {
   return (
     <section className="rounded-2xl bg-surface-container-lowest p-6 shadow-soft sm:p-8">
-      <p className="text-sm font-bold uppercase tracking-[0.18em] text-primary-deep">Răspuns liber</p>
+      <p className="text-base font-bold uppercase tracking-[0.18em] text-primary-deep">Răspuns liber</p>
       <h1 className="mt-2 font-headline text-3xl font-bold tracking-tight text-on-surface sm:text-5xl">
         {title}
       </h1>
@@ -461,7 +468,6 @@ function DrawingResponsePanel({
         <Button
           type="button"
           mode="kid"
-          size="sm"
           variant="ghost"
           tone="cream"
           disabled={disabled || strokes.length === 0}
@@ -480,7 +486,7 @@ function DrawingResponsePanel({
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
         onPointerCancel={onPointerCancel}
-        className="mt-3 h-72 w-full touch-none rounded-2xl border border-outline-variant bg-surface-container-lowest shadow-soft-sm"
+        className="mt-3 aspect-[2/1] h-auto w-full max-w-[720px] touch-none rounded-2xl border border-outline-variant bg-surface-container-lowest shadow-soft-sm"
       />
       {drawingPreviewUrl ? (
         // eslint-disable-next-line @next/next/no-img-element

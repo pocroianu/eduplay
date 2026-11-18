@@ -49,7 +49,7 @@ vi.mock('@/lib/i18n/server', () => ({
       'settingsHome.inviteFamilies': 'Invite Families',
       'settingsHome.students': 'Students',
       'settingsHome.manageStudents': 'Manage Students',
-      'settingsHome.sharedDevices': 'Class Code - Shared Devices',
+      'settingsHome.studentSignInModeDescription': 'How students can sign in',
       'settingsHome.likesComments': 'Student Likes and Comments',
       'settingsHome.itemEditing': 'Item Editing',
       'settingsHome.sectionFamilies': 'Families',
@@ -182,7 +182,7 @@ describe('/teacher/classes/[classId]/settings', () => {
     expect(screen.getByRole('heading', { name: 'Students' })).toBeInTheDocument()
     expect(screen.getByText('Manage Students')).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Families' })).toBeInTheDocument()
-    expect(screen.getByText('Enable Family Access')).toBeInTheDocument()
+    expect(screen.queryByText('Enable Family Access')).not.toBeInTheDocument()
     expect(screen.getAllByText('Invite Families').length).toBeGreaterThanOrEqual(1)
     expect(screen.queryByText('Family Messaging')).not.toBeInTheDocument()
     expect(screen.getAllByText('Class Settings')[2].closest('a')).toHaveAttribute(
@@ -190,18 +190,18 @@ describe('/teacher/classes/[classId]/settings', () => {
       ROUTES.TEACHER.CLASS_SETTING_SECTION('class-1', 'class-info'),
     )
     expect(screen.getByText('Student Sign-in Mode')).toBeInTheDocument()
-    expect(screen.getByText('Student Groups')).toBeInTheDocument()
-    expect(screen.getByText('Home Learning Codes')).toBeInTheDocument()
+    expect(screen.queryByText('Student Groups')).not.toBeInTheDocument()
+    expect(screen.queryByText('Home Learning Codes')).not.toBeInTheDocument()
     expect(screen.getByText('Organization')).toBeInTheDocument()
-    expect(screen.getByText('Folders')).toBeInTheDocument()
-    expect(screen.getByText('Add to Folder Step')).toBeInTheDocument()
+    expect(screen.queryByText('Folders')).not.toBeInTheDocument()
+    expect(screen.queryByText('Add to Folder Step')).not.toBeInTheDocument()
     expect(screen.getByText('Teachers')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /Invite FamiliesInvite Families/i })).toHaveAttribute(
       'href',
       ROUTES.TEACHER.CLASS_FAMILIES('class-1'),
     )
-    expect(screen.getAllByText('Class Code - Shared Devices').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getByText('Student Likes and Comments')).toBeInTheDocument()
-    expect(screen.getByText('Item Editing')).toBeInTheDocument()
+    expect(screen.queryByText('Student Likes and Comments')).not.toBeInTheDocument()
+    expect(screen.queryByText('Item Editing')).not.toBeInTheDocument()
+    expect(screen.queryByRole('switch')).not.toBeInTheDocument()
   })
 })

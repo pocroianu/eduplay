@@ -137,6 +137,7 @@ describe('DataTable', () => {
     render(<DataTable columns={COLUMNS} rows={STUDENTS} getRowKey={(r) => r.id} onRowClick={onRowClick} />);
     const row = within(screen.getByRole('table')).getByText('Ana').closest('tr')!;
     expect(row).toHaveAttribute('tabindex', '0');
+    expect(row).toHaveAccessibleName('Rândul 1');
     expect(row).not.toHaveAttribute('role', 'button');
     expect(within(screen.getByRole('table')).getAllByRole('row')).toContain(row);
     fireEvent.keyDown(row, { key: 'Enter' });

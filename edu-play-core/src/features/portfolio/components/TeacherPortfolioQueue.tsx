@@ -162,7 +162,7 @@ export function TeacherPortfolioQueue({
         ) : null}
 
         {showRecentHint ? (
-          <p className="text-sm font-semibold text-on-surface-muted">
+          <p className="text-sm font-semibold text-on-surface-variant">
             Se afișează cele mai recente artefacte.
           </p>
         ) : null}

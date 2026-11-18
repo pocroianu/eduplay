@@ -17,6 +17,8 @@ import {
   Title,
 } from '@mantine/core'
 import Link from 'next/link'
+import { useId } from 'react'
+import { CATEGORY_CONFIG, type Game } from '@/features/games'
 import { useTranslation } from 'react-i18next'
 import { Icon } from '@/shared/components/ui/Icon'
 import type { IconName } from '@/shared/components/ui/Icon.registry'
@@ -24,6 +26,7 @@ import { ROUTES } from '@/shared/lib/constants'
 import classes from './TeacherDashboardContent.module.css'
 
 export interface TeacherDashboardContentProps {
+  libraryActivities: Array<Pick<Game, 'id' | 'title' | 'category' | 'target_age_min' | 'target_age_max' | 'estimated_duration'>>
   profile: {
     id: string
     full_name: string
@@ -78,7 +81,6 @@ export interface TeacherDashboardContentProps {
 }
 
 type ActionTone = 'journal' | 'purple'
-type ThumbnailTone = 'green' | 'pink' | 'gold' | 'blue'
 
 interface HomeAction {
   href: string
@@ -88,15 +90,6 @@ interface HomeAction {
   tone: ActionTone
 }
 
-interface LibraryCard {
-  href: string
-  title: string
-  creator: string
-  meta: string
-  imageAlt: string
-  tone: ThumbnailTone
-  count: number
-}
 
 interface TeacherResource {
   href: string
@@ -117,12 +110,6 @@ interface EmptyClassesCardProps {
   body: string
   actionLabel: string
 }
-
-const pageStyle = {
-  height: 'calc(100vh - 68px)',
-  minHeight: 0,
-  overflowY: 'auto',
-} as const
 
 const columnStyle = {
   width: 'min(1520px, calc(100% - 48px))',
@@ -145,21 +132,24 @@ const actionToneBackground: Record<ActionTone, string> = {
   purple: 'var(--color-purple-dim)',
 }
 
-const thumbnailBackground: Record<ThumbnailTone, string> = {
-  green: 'linear-gradient(135deg, var(--color-primary-wash) 0%, var(--color-tertiary-container) 100%)',
-  pink: 'linear-gradient(135deg, var(--color-gold-soft) 0%, var(--color-pink) 100%)',
-  gold: 'linear-gradient(135deg, var(--color-gold-soft) 0%, var(--color-purple-wash) 100%)',
-  blue: 'linear-gradient(135deg, var(--color-blue-wash) 0%, var(--color-blue-dim) 100%)',
-}
 
 const actionButtonStyles = {
   root: {
+    height: 'auto',
     minHeight: 108,
     padding: '22px 24px',
     whiteSpace: 'normal',
   },
   inner: {
     justifyContent: 'flex-start',
+  },
+  label: {
+    whiteSpace: 'normal',
+    textAlign: 'left',
+    overflow: 'visible',
+    textOverflow: 'clip',
+    flex: '1 1 0',
+    minWidth: 0,
   },
   section: {
     marginInlineEnd: 16,
@@ -173,19 +163,6 @@ const clampedTitleStyle = {
   WebkitLineClamp: 2,
 } as const
 
-const thumbnailTileStyle = {
-  position: 'absolute',
-  display: 'block',
-  borderRadius: 6,
-  backgroundColor: 'color-mix(in oklab, var(--color-surface-container-lowest) 82%, transparent)',
-  boxShadow: 'var(--shadow-soft-sm)',
-} as const
-
-const thumbnailTiles = [
-  { key: 'left-top', left: 16, top: 20, width: 42, height: 28 },
-  { key: 'right-top', right: 18, top: 26, width: 58, height: 36 },
-  { key: 'left-bottom', left: 58, bottom: 16, width: 76, height: 24 },
-] as const
 
 const surfaceInteractiveClassName = `${classes.interactive} ${classes.surfaceInteractive} teacher-home-interactive teacher-home-surface-interactive`
 const actionInteractiveClassName = `${classes.interactive} ${classes.actionInteractive} teacher-home-interactive teacher-home-action-interactive`
@@ -204,16 +181,19 @@ function initials(value: string) {
 
 function TeacherHomePanel({
   label,
+  labelledBy,
   children,
 }: {
-  label: string
+  label?: string
+  labelledBy?: string
   children: React.ReactNode
 }) {
   return (
     <Paper
       component="section"
       aria-label={label}
-      radius={8}
+      aria-labelledby={labelledBy}
+      radius="md"
       p={{ base: 16, sm: 20, md: 36 }}
       style={paperStyle}
     >
@@ -229,7 +209,7 @@ function TeacherHomeActionCard({ href, icon, title, subtitle, tone }: HomeAction
       href={href}
       fullWidth
       classNames={{ root: actionInteractiveClassName }}
-      radius={8}
+      radius="md"
       variant="filled"
       justify="flex-start"
       leftSection={
@@ -267,33 +247,40 @@ function TeacherHomeActionCard({ href, icon, title, subtitle, tone }: HomeAction
   )
 }
 
-function CommunityActivityCard({ href, title, creator, meta, imageAlt, tone, count }: LibraryCard) {
+function CommunityActivityCard({ activity }: { activity: TeacherDashboardContentProps['libraryActivities'][number] }) {
+  const { t } = useTranslation('teacher')
+  const { id, title, category, target_age_min, target_age_max, estimated_duration } = activity
+  const creator = t('dashboard.home.library.creatorEduplay')
+  const config = category ? CATEGORY_CONFIG[category] : null
+  let meta = t('dashboard.home.library.activity')
+  if (target_age_min != null && target_age_max != null) {
+    meta = t('dashboard.home.library.ages', { min: target_age_min, max: target_age_max })
+  } else if (estimated_duration != null) {
+    meta = t('dashboard.home.library.duration', { count: estimated_duration })
+  }
   return (
     <Card
       component={Link}
-      href={href}
+      href={ROUTES.PLAY.ACTIVITY(id)}
       withBorder
       classNames={{ root: surfaceInteractiveClassName }}
-      radius={8}
+      radius="md"
       shadow="xs"
       padding="sm"
-      aria-label={`${title} · ${creator}`}
       style={{ ...borderedCardStyle, minHeight: 264 }}
     >
       <Card.Section>
         <Box
-          role="img"
-          aria-label={imageAlt}
+          aria-hidden="true"
           pos="relative"
           h={118}
           style={{
             overflow: 'hidden',
-            background: thumbnailBackground[tone],
+            background: config?.bgColor ?? 'var(--color-primary-wash)',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', color: config?.color ?? 'var(--color-primary)',
           }}
         >
-          {thumbnailTiles.map(({ key, ...tileStyle }) => (
-            <Box key={key} style={{ ...thumbnailTileStyle, ...tileStyle }} />
-          ))}
+          <Icon name={config?.icon ?? 'BookOpen'} size={44} weight="fill" aria-hidden />
         </Box>
       </Card.Section>
 
@@ -322,12 +309,6 @@ function CommunityActivityCard({ href, title, creator, meta, imageAlt, tone, cou
         <Text span size="xs" fw={700}>
           {meta}
         </Text>
-        <Group gap={4} wrap="nowrap">
-          <Icon name="Heart" size={14} weight="fill" aria-hidden />
-          <Text span size="xs" fw={700}>
-            {count}
-          </Text>
-        </Group>
       </Group>
     </Card>
   )
@@ -340,7 +321,7 @@ function TeacherResourceCard({ href, title, meta, icon }: TeacherResource) {
       href={href}
       withBorder
       classNames={{ root: surfaceInteractiveClassName }}
-      radius={8}
+      radius="md"
       shadow="xs"
       padding={18}
       style={{ ...borderedCardStyle, minHeight: 118 }}
@@ -375,13 +356,13 @@ function TeacherClassCard({ classItem, studentCountLabel }: TeacherClassCardProp
       href={ROUTES.TEACHER.CLASS(classItem.id)}
       withBorder
       classNames={{ root: surfaceInteractiveClassName }}
-      radius={8}
+      radius="md"
       shadow="xs"
       padding="xl"
       style={{
         ...borderedCardStyle,
         width: 470,
-        minWidth: 320,
+        minWidth: 'min(320px, 100%)',
         minHeight: 156,
         flex: '0 0 min(470px, 100%)',
       }}
@@ -389,7 +370,7 @@ function TeacherClassCard({ classItem, studentCountLabel }: TeacherClassCardProp
       <Stack align="center" justify="center" gap={4}>
         <Avatar
           size={64}
-          radius={8}
+          radius="md"
           bg="var(--color-purple-dim)"
           c="var(--color-on-primary)"
           fz={24}
@@ -442,16 +423,20 @@ function EmptyClassesCard({ title, body, actionLabel }: EmptyClassesCardProps) {
 }
 
 export function TeacherDashboardContent({
-  classes,
+  classes: teacherClasses,
   countByClass,
+  libraryActivities,
 }: TeacherDashboardContentProps) {
   const { t } = useTranslation('teacher')
+  const libraryHeadingId = useId()
+  const classesHeadingId = useId()
+  const resourcesHeadingId = useId()
 
-  const primaryClass = classes.find((classItem) => classItem.is_active) ?? classes[0] ?? null
+  const primaryClass = teacherClasses.find((classItem) => classItem.is_active) ?? teacherClasses[0] ?? null
   const postToJournalHref = primaryClass ? ROUTES.TEACHER.CLASS_JOURNAL_NEW(primaryClass.id) : ROUTES.TEACHER.CLASS_NEW
   const classCards = primaryClass
-    ? [primaryClass, ...classes.filter((classItem) => classItem.id !== primaryClass.id)].slice(0, 3)
-    : classes.slice(0, 3)
+    ? [primaryClass, ...teacherClasses.filter((classItem) => classItem.id !== primaryClass.id)].slice(0, 3)
+    : teacherClasses.slice(0, 3)
   const gradeLabel = primaryClass?.grade_level
     ? t(`classes.gradeLevel.${primaryClass.grade_level}`, { defaultValue: primaryClass.name })
     : primaryClass?.name ?? t('dashboard.home.library.gradeFallback')
@@ -481,31 +466,6 @@ export function TeacherDashboardContent({
   ]
 
   const libraryHref = ROUTES.TEACHER.LIBRARIES_EXPLORE
-  const libraryFallbackCard = (
-    key: 'reading' | 'assessment' | 'math' | 'science',
-    meta: string,
-    tone: ThumbnailTone,
-    count: number,
-  ): LibraryCard => {
-    const title = t(`dashboard.home.library.fallbackCards.${key}.title`)
-
-    return {
-      href: libraryHref,
-      title,
-      creator: t(`dashboard.home.library.fallbackCards.${key}.creator`),
-      meta,
-      imageAlt: title,
-      tone,
-      count,
-    }
-  }
-
-  const libraryCards: LibraryCard[] = [
-    libraryFallbackCard('reading', t('dashboard.home.library.subjectMeta'), 'green', 280),
-    libraryFallbackCard('assessment', t('dashboard.home.library.assessmentMeta'), 'gold', 130),
-    libraryFallbackCard('math', t('dashboard.home.library.assessmentMeta'), 'pink', 310),
-    libraryFallbackCard('science', t('dashboard.home.library.subjectMeta'), 'blue', 350),
-  ]
 
   const resources: TeacherResource[] = [
     {
@@ -530,26 +490,25 @@ export function TeacherDashboardContent({
 
   return (
     <Box
-      component="main"
-      aria-label={t('dashboard.home.mainAriaLabel', { defaultValue: 'Acasă profesor' })}
+      component="div"
       bg="var(--color-surface)"
       c="var(--color-on-surface)"
-      style={pageStyle}
+      className={`${classes.teacherScrollPage} teacher-scroll-page`}
       data-testid="teacher-home"
     >
-      <Stack gap={16} py={12} pb={{ base: 88, sm: 32 }} style={columnStyle} data-testid="teacher-home-column">
+      <Stack gap={16} py={12} pb={32} style={columnStyle} data-testid="teacher-home-column">
         <TeacherHomePanel label={t('dashboard.home.actions.ariaLabel')}>
-          <SimpleGrid minColWidth={280} spacing={16}>
+          <SimpleGrid minColWidth={240} spacing={16}>
             {actions.map((action) => (
               <TeacherHomeActionCard key={action.href} {...action} />
             ))}
           </SimpleGrid>
         </TeacherHomePanel>
 
-        <TeacherHomePanel label={t('dashboard.home.library.ariaLabel')}>
+        <TeacherHomePanel labelledBy={libraryHeadingId}>
           <Box component="form" action={libraryHref} role="search">
             <Stack gap={8}>
-              <Title order={2} size="h3" lh={1.2} c="var(--color-on-surface)">
+              <Title id={libraryHeadingId} order={2} size="h3" lh={1.2} c="var(--color-on-surface)">
                 {t('dashboard.home.library.title', { grade: gradeLabel })}
               </Title>
               <TextInput
@@ -557,7 +516,7 @@ export function TeacherDashboardContent({
                 name="q"
                 type="search"
                 size="md"
-                radius={8}
+                radius="md"
                 aria-label={t('dashboard.home.library.searchPlaceholder')}
                 placeholder={t('dashboard.home.library.searchPlaceholder')}
                 classNames={{ input: inputInteractiveClassName }}
@@ -569,7 +528,7 @@ export function TeacherDashboardContent({
                     classNames={{ root: actionInteractiveClassName }}
                     type="submit"
                     size={44}
-                    radius={8}
+                    radius="md"
                     bg="var(--color-purple-dim)"
                     c="var(--color-on-primary)"
                     aria-label={t('dashboard.home.library.searchPlaceholder')}
@@ -579,7 +538,7 @@ export function TeacherDashboardContent({
                 }
                 styles={{
                   input: {
-                    borderColor: 'var(--color-outline)',
+                    borderColor: 'var(--color-outline-strong)',
                     color: 'var(--color-on-surface)',
                     fontWeight: 600,
                     minHeight: 44,
@@ -592,7 +551,7 @@ export function TeacherDashboardContent({
           <Box mt={32}>
             <Group mb={16} justify="space-between" gap="md">
               <Title order={2} size="h3" lh={1.2} c="var(--color-on-surface)">
-                {t('dashboard.home.library.popularTitle', { grade: gradeLabel })}
+                {t('dashboard.home.library.popularTitle')}
               </Title>
               <Anchor
                 component={Link}
@@ -605,20 +564,20 @@ export function TeacherDashboardContent({
                 {t('dashboard.home.library.viewAll')}
               </Anchor>
             </Group>
-            <Box style={{ overflowX: 'auto' }}>
+            {libraryActivities.length > 0 ? <Box style={{ overflowX: 'auto' }}>
               <Group gap={18} wrap="nowrap" pb={2}>
-                {libraryCards.map((activity) => (
-                  <Box key={`${activity.title}-${activity.creator}`} w={191} flex="0 0 191px">
-                    <CommunityActivityCard {...activity} />
+                {libraryActivities.map((activity) => (
+                  <Box key={activity.id} w={191} flex="0 0 191px">
+                    <CommunityActivityCard activity={activity} />
                   </Box>
                 ))}
               </Group>
-            </Box>
+            </Box> : <Text>{t('dashboard.home.library.empty')}</Text>}
           </Box>
         </TeacherHomePanel>
 
-        <TeacherHomePanel label={t('dashboard.home.classes.ariaLabel')}>
-          <Title order={2} size="h3" lh={1.2} c="var(--color-on-surface)">
+        <TeacherHomePanel labelledBy={classesHeadingId}>
+          <Title id={classesHeadingId} order={2} size="h3" lh={1.2} c="var(--color-on-surface)">
             {t('dashboard.home.classes.title')}
           </Title>
           {classCards.length > 0 ? (
@@ -650,9 +609,9 @@ export function TeacherDashboardContent({
           )}
         </TeacherHomePanel>
 
-        <TeacherHomePanel label={t('dashboard.home.resources.ariaLabel')}>
+        <TeacherHomePanel labelledBy={resourcesHeadingId}>
           <Group mb={16} justify="space-between" gap="md">
-            <Title order={2} size="h3" lh={1.2} c="var(--color-on-surface)">
+            <Title id={resourcesHeadingId} order={2} size="h3" lh={1.2} c="var(--color-on-surface)">
               {t('dashboard.home.resources.title')}
             </Title>
             <Anchor

@@ -37,7 +37,7 @@ export default async function TeacherActivityReviewPage() {
 
   return (
     <I18nProvider lang={lang} resources={resources}>
-      <main className="p-6 lg:p-10">
+      <div className="p-6 lg:p-10">
         <div className="mx-auto max-w-[1440px] space-y-6">
           <div className="flex flex-col gap-4 rounded-2xl border border-outline-variant bg-surface-container-lowest p-5 shadow-soft lg:flex-row lg:items-end lg:justify-between">
             <div className="space-y-2">
@@ -67,7 +67,7 @@ export default async function TeacherActivityReviewPage() {
 
           <TeacherReviewQueue items={items} />
         </div>
-      </main>
+      </div>
     </I18nProvider>
   )
 }

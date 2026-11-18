@@ -51,6 +51,7 @@ export default function NewStudentPage() {
     register,
     handleSubmit,
     setValue,
+    setError,
     watch,
     control,
     formState: { errors },
@@ -130,8 +131,8 @@ export default function NewStudentPage() {
 
       router.push(ROUTES.TEACHER.STUDENTS)
       router.refresh()
-    } catch (error) {
-      console.error('Eroare la crearea elevului', error instanceof Error ? error.message : 'Ceva nu a mers bine')
+    } catch {
+      setError('root', { message: 'Nu am putut salva. Încearcă din nou.' })
     } finally {
       setIsLoading(false)
     }
@@ -167,6 +168,7 @@ export default function NewStudentPage() {
           </div>
 
           <form onSubmit={handleSubmit(onSubmit)} noValidate className="bg-surface-container-lowest p-6 sm:p-8">
+            {errors.root && <p role="alert" className="mb-4 text-error">{errors.root.message}</p>}
             <div className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
             <div className="rounded-lg border border-outline-variant bg-surface p-5">
               <div className="mb-5 flex items-start gap-3">
@@ -275,7 +277,7 @@ export default function NewStudentPage() {
 
             <aside className="flex flex-col gap-4">
               <div className="rounded-lg border border-outline-variant bg-surface p-5">
-                <p className="text-xs font-bold uppercase tracking-widest text-on-surface-muted">
+                <p className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
                   Pași rapizi
                 </p>
                 <ol className="mt-4 space-y-3 text-sm text-on-surface-variant">
@@ -295,7 +297,7 @@ export default function NewStudentPage() {
               </div>
 
               {username && password && (
-                <Card className="border border-tertiary-container bg-tertiary-container p-5 text-on-tertiary-container" shadow={false}>
+                <Card className="border border-success-soft bg-success-soft p-5 text-success-deep" shadow={false}>
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <p className="text-xs font-bold uppercase tracking-widest">
@@ -307,7 +309,7 @@ export default function NewStudentPage() {
                     </div>
                     <span
                       aria-hidden="true"
-                      className="flex h-8 w-8 items-center justify-center rounded-md bg-surface-container-lowest text-tertiary"
+                      className="flex h-8 w-8 items-center justify-center rounded-md bg-surface-container-lowest text-success"
                     >
                       <Icon name="Check" size="sm" weight="bold" />
                     </span>

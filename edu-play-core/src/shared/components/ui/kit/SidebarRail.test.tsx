@@ -30,7 +30,7 @@ describe('SidebarRail', () => {
     );
 
     expect(screen.getByRole('heading', { name: 'EduPlay' })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /deschide meniul contului/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /maria popescu/i })).toBeInTheDocument();
 
     const navigation = screen.getByRole('navigation', { name: /navigare principală/i });
     const active = within(navigation).getByRole('link', { name: /panou/i });

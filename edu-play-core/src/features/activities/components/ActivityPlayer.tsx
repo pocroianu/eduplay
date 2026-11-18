@@ -160,12 +160,12 @@ export function ActivityPlayer({
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="bg-surface border-b-2 border-outline-variant px-6 py-4 flex items-center gap-4">
-        <Vulpita size={64} mood="happy" animate={!shouldReduceMotion} />
+        {!gateDeniedCopy && <Vulpita size={64} mood="happy" animate={!shouldReduceMotion} />}
         <div className="flex-1">
-          <h1 className="text-title font-heading text-on-surface">
+          <h1 className="text-title font-headline text-on-surface">
             {definition?.displayName ?? t('player.title')}
           </h1>
-          <p className="text-body-sm text-on-surface-variant">
+          <p className="text-lg text-on-surface-variant">
             {definition
               ? t('player.subtitle.ready')
               : t('player.subtitle.comingSoon')}
@@ -173,7 +173,7 @@ export function ActivityPlayer({
         </div>
       </header>
 
-      <main className="flex-1 px-6 py-8 flex items-center justify-center">
+      <div className="flex-1 px-6 py-8 flex items-center justify-center">
         <motion.div
           className="w-full max-w-3xl bg-surface rounded-xl p-8 shadow-soft"
           {...motionProps}
@@ -185,7 +185,7 @@ export function ActivityPlayer({
                 mood="think"
                 animate={!shouldReduceMotion}
               />
-              <h2 className="text-title font-heading text-on-surface">
+              <h2 className="text-title font-headline text-on-surface">
                 {gateDeniedCopy.title}
               </h2>
               <p className="text-body text-on-surface-variant max-w-md">
@@ -210,7 +210,7 @@ export function ActivityPlayer({
           ) : Body && configInvalid ? (
             <div className="flex flex-col items-center gap-4 text-center py-12">
               <Icon name="Sparkle" size="xl" weight="fill" />
-              <h2 className="text-title font-heading text-on-surface">
+              <h2 className="text-title font-headline text-on-surface">
                 {t('player.invalidConfig.title')}
               </h2>
               <p className="text-body text-on-surface-variant max-w-md">
@@ -220,7 +220,7 @@ export function ActivityPlayer({
           ) : (
             <div className="flex flex-col items-center gap-4 text-center py-12">
               <Icon name="Sparkle" size="xl" weight="fill" />
-              <h2 className="text-title font-heading text-on-surface">
+              <h2 className="text-title font-headline text-on-surface">
                 {t('player.notReady.title')}
               </h2>
               <p className="text-body text-on-surface-variant max-w-md">
@@ -229,7 +229,7 @@ export function ActivityPlayer({
                   i18nKey="player.notReady.body"
                   values={{ typeId: instance.typeId }}
                   components={{
-                    code: <code className="font-mono text-body-sm" />,
+                    code: <code className="font-mono text-lg" />,
                   }}
                 />
               </p>
@@ -238,14 +238,14 @@ export function ActivityPlayer({
           {resultPreview ? (
             <p
               role="status"
-              className="mt-6 text-body-sm text-on-surface-variant"
+              className="mt-6 text-lg text-on-surface-variant"
             >
               {t('player.result.previewLabel')}{' '}
               <code>{resultPreview}</code>
             </p>
           ) : null}
         </motion.div>
-      </main>
+      </div>
 
       <footer
         role="toolbar"

@@ -279,7 +279,7 @@ export function JournalToolPickerContent({ data, copy }: { data: JournalFlowData
         </div>
       </header>
 
-      <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 py-6 md:px-6 lg:py-10">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 py-6 md:px-6 lg:py-10">
         <section aria-labelledby="tool-picker-title" className="rounded-xl border border-outline-variant bg-surface-container-lowest shadow-soft-sm">
           <div className="border-b border-outline-variant px-5 py-4 text-center">
             <h2 id="tool-picker-title" className="font-headline text-xl font-bold text-on-surface">{copy.picker.toolsTitle}</h2>
@@ -307,7 +307,7 @@ export function JournalToolPickerContent({ data, copy }: { data: JournalFlowData
             </div>
           </div>
         </Card>
-      </main>
+      </div>
     </div>
   )
 }
@@ -341,7 +341,7 @@ export function JournalNoteEditorContent({ data, copy }: { data: JournalFlowData
         </div>
       </header>
 
-      <main className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 py-6 md:px-6 lg:py-10">
+      <div className="mx-auto flex w-full max-w-5xl flex-col gap-6 px-4 py-6 md:px-6 lg:py-10">
         <section aria-labelledby="note-editor-title" className="rounded-xl border border-outline-variant bg-surface-container-lowest shadow-soft-sm">
           <div className="border-b border-outline-variant px-5 py-4 text-center">
             <p className="text-sm font-semibold uppercase tracking-wide text-on-surface-variant">{copy.note.headingLabel}</p>
@@ -397,7 +397,7 @@ export function JournalNoteEditorContent({ data, copy }: { data: JournalFlowData
             )}
           </div>
         </section>
-      </main>
+      </div>
     </div>
   )
 }

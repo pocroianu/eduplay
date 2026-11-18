@@ -190,29 +190,14 @@
         "title": "Find ready-to-teach activities for {{grade}}",
         "gradeFallback": "your class",
         "searchPlaceholder": "Search activities for reading, math, science",
-        "popularTitle": "Popular community activities in {{grade}}",
+        "popularTitle": "Activities from the EduPlay library",
         "viewAll": "View library",
         "recentMeta": "From class activity",
-        "subjectMeta": "Activity",
-        "assessmentMeta": "Assessment",
-        "fallbackCards": {
-          "reading": {
-            "title": "Match the long vowel sound",
-            "creator": "EduPlay Library"
-          },
-          "assessment": {
-            "title": "Guided reading with questions",
-            "creator": "Community"
-          },
-          "math": {
-            "title": "Quick sums up to 20",
-            "creator": "EduPlay Library"
-          },
-          "science": {
-            "title": "Sort animals by habitat",
-            "creator": "Community"
-          }
-        }
+        "creatorEduplay": "EduPlay Library",
+        "ages": "Ages {{min}}-{{max}}",
+        "duration": "{{count}} min",
+        "activity": "EduPlay activity",
+        "empty": "There are no activities in the library yet."
       },
       "classes": {
         "ariaLabel": "My classes",
@@ -513,7 +498,7 @@
       "preview": "Preview"
     },
     "library": {
-      "seesawLibrary": "EduPlay Library",
+      "epLibrary": "EduPlay Library",
       "communityLibrary": "Community Library",
       "selectGrade": "Select grade",
       "language": "Language",
@@ -551,7 +536,8 @@
       "collections": "My Collections (0)",
       "notInCollection": "Activities not in a collection",
       "createCollection": "Create"
-    }
+    },
+    "libraryLoadError": "We could not load the activity library. Reload the page or try again in a moment."
   },
   "createClass": {
     "back": "Back",
@@ -612,7 +598,8 @@
     "classActive": "Active",
     "classArchived": "Archived",
     "classSummary": "students",
-    "classSummaryActive": "recently active"
+    "classSummaryActive": "recently active",
+    "studentSignInModeDescription": "How students can sign in"
   },
   "settingsSection": {
     "back": "Back to settings",
@@ -622,35 +609,73 @@
     "close": "Close settings section",
     "navTitle": "Settings sections",
     "navDescription": "Detailed sections for class settings.",
-    "navAria": "Class settings sections"
+    "navAria": "Class settings sections",
+    "sections": {
+      "class-info": {
+        "title": "Class settings",
+        "eyebrow": "Class",
+        "description": "Check the class name, year and status before moving on to detailed settings."
+      },
+      "manage-students": {
+        "title": "Manage students",
+        "eyebrow": "Students",
+        "description": "Review how students sign in to the class and manage catalog access."
+      },
+      "manage-teachers": {
+        "title": "Manage teachers",
+        "eyebrow": "Teachers",
+        "description": "Invite co-teachers and review shared permissions for this class."
+      },
+      "student-sign-in-mode": {
+        "title": "Student sign-in mode",
+        "eyebrow": "Students",
+        "description": "The ways students can sign in on shared or 1:1 devices."
+      }
+    },
+    "body": {
+      "className": "Class name",
+      "schoolYear": "School year",
+      "level": "Level",
+      "students": "Students",
+      "status": "Status",
+      "notSet": "Not set",
+      "active": "Active",
+      "archived": "Archived",
+      "editNotConnectedTitle": "Class editing is not connected yet",
+      "editNotConnectedDescription": "This screen is a read-only detail view for the \"Class settings\" row; it does not promise saves that do not exist.",
+      "manageStudentsIntro": "Students have an account with a username. Use \"Add student\" for new accounts, then review the class students here.",
+      "addStudent": "Add student",
+      "noStudentsTitle": "There are no students in this class. Add students with the button above.",
+      "noStudentsDescription": "Add students from the existing class flow.",
+      "studentActive": "Active",
+      "studentNeedsHelp": "Needs help",
+      "studentInactive": "Inactive",
+      "teachersIntro": "Add teachers who are already part of your school to new classes in the school catalog.",
+      "teachersInviteUnavailable": "Inviting teachers is not available yet.",
+      "currentTeachers": "Current teachers",
+      "teacherRole": "Teacher",
+      "you": "you",
+      "signInNote": "Informational only: the sign-in mode cannot be changed from here.",
+      "signInPinTitle": "Username and PIN",
+      "signInPinDescription": "Students sign in with the username you give them and their 4-digit PIN. You can create and reset accounts from the student list."
+    }
   },
   "students": {
     "add": {
       "back": "Back to class",
       "headingEyebrow": "Students for Class",
       "heading": "Add Students to Class",
-      "description": "Preview adding students to this class. Use the existing student creation flow to save changes.",
+      "description": "Students are added one at a time with the creation form. This class is already selected in the form.",
       "classActive": "Active class",
       "classArchived": "Archived class",
-      "createReal": "Create Real Student",
+      "createReal": "Add a student",
       "addStudentsTitle": "Add Students to Class",
-      "addStudentsDescription": "Add one name at a time or paste a list of names, one per line.",
-      "pasteTitle": "Paste a list of student names",
-      "pasteDescription": "Paste a student list to preview it; the list is not submitted automatically.",
-      "manualTitle": "Manual rows",
-      "preview": "Preview",
-      "moreLater": "You can always add more later.",
+      "addStudentsDescription": "Open the form to create a new student in this class.",
       "studentsTitle": "Students",
       "studentsDescription": "Preview of the real roster for this class.",
       "noStudents": "There are no students in this class yet.",
       "familiesTitle": "Families",
       "familiesDescription": "Prepare family access after student creation.",
-      "classCode": "Class Code",
-      "classCodeDescription": "Preview-only class code. Regeneration and sharing stay in class settings.",
-      "deviceShared": "Shared Device",
-      "deviceSharedDescription": "Students can use the class code on a shared device.",
-      "home": "Home",
-      "homeDescription": "For home access, use the home learning codes setting.",
       "existingAccount": "Existing Account",
       "existingAccountDescription": "Students with usernames can keep using the existing sign-in flow.",
       "classSummary": "Class Summary",
@@ -985,6 +1010,46 @@
         "simplifiedChinese": "Simplified Chinese",
         "traditionalChinese": "Traditional Chinese"
       }
+    }
+  },
+  "libraries": {
+    "explore": {
+      "mainLabel": "Explore libraries",
+      "searchHeading": "What would you like to teach?",
+      "search": "Search",
+      "topicsLabel": "Library topics",
+      "filtersLabel": "Library filters",
+      "topics": {
+        "all": "All",
+        "literacy": "Literacy",
+        "math": "Math",
+        "phonics": "Sounds and letters",
+        "shapes": "Shapes",
+        "colors": "Colors",
+        "vocabulary": "Vocabulary"
+      },
+      "grades": {
+        "all": "Choose grade",
+        "grade-1": "Grade 1",
+        "grade-2": "Grade 2",
+        "grade-3": "Grade 3",
+        "grade-4": "Grade 4"
+      },
+      "languages": {
+        "all": "Choose language",
+        "ro": "Romanian"
+      },
+      "creator": "EduPlay Library",
+      "ages": "Ages {{min}}-{{max}}",
+      "duration": "{{count}} min",
+      "activity": "EduPlay activity",
+      "assign": "Assign",
+      "assignActivity": "Assign activity {{title}}",
+      "resultsHeading": "Activities from the EduPlay library",
+      "results_one": "{{shown}} of {{total}} activity",
+      "results_other": "{{shown}} of {{total}} activities",
+      "showMore": "Show more",
+      "empty": "No activities match the selected filters."
     }
   }
 }

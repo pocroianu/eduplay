@@ -77,15 +77,6 @@ export const ADMIN_OVERVIEW_PANELS = {
       { label: 'Confidențialitate', helper: 'Cereri GDPR și jurnal de audit.' },
     ],
   },
-  systemHealth: {
-    title: 'Sănătatea sistemului',
-    apiStatusLabel: 'Stare API',
-    queueLabel: 'Coadă procesare',
-    storageLabel: 'Spațiu stocare',
-    healthyBadge: 'Operațional',
-    degradedBadge: 'Performanță scăzută',
-    downBadge: 'Indisponibil',
-  },
   recentReleases: {
     title: 'Lansări recente',
     emptyState: 'Nicio modificare de funcționalitate în ultima perioadă.',

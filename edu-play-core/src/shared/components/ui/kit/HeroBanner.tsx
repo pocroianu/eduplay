@@ -37,7 +37,7 @@ const TONE_CLASS: Record<
   tertiary: {
     surface: "bg-success-journal",
 
-    onColor: "text-on-tertiary",
+    onColor: "text-on-success",
 
     accent: "text-success-soft",
   },

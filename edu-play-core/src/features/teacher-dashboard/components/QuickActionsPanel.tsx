@@ -64,7 +64,7 @@ export function QuickActionsPanel({ classId }: QuickActionsPanelProps) {
           <Link
             key={action.icon}
             href={action.href}
-            className={`group flex w-full items-center gap-4 rounded-xl p-4 text-left transition-colors hover:shadow-soft-sm ${action.hoverBg} focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30`}
+            className={`group flex w-full items-center gap-4 rounded-xl p-4 text-left transition-colors hover:shadow-soft-sm ${action.hoverBg} focus-ring`}
           >
               <div
                 className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${action.iconBg} shadow-soft-sm`}

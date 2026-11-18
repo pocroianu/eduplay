@@ -1,5 +1,3 @@
-import { Icon } from '@/shared/components/ui/Icon';
-import { Button } from '@/shared/components/ui/kit';
 import { ADMIN_OVERVIEW_HEADER, getAdminGreeting } from '@/features/admin/copy/overview'
 
 export interface AdminPageHeaderProps {
@@ -18,7 +16,6 @@ export interface AdminPageHeaderProps {
  */
 export function AdminPageHeader({ fullName, now }: AdminPageHeaderProps) {
   const greeting = ADMIN_OVERVIEW_HEADER.greeting(getAdminGreeting(now), fullName)
-  const cta = ADMIN_OVERVIEW_HEADER.maintenanceCta
 
   return (
     <header className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between mb-8">
@@ -34,10 +31,6 @@ export function AdminPageHeader({ fullName, now }: AdminPageHeaderProps) {
         </p>
       </div>
 
-      <Button type="button" disabled title={cta.disabledTooltip} variant="secondary" className="self-start lg:self-auto">
-        <Icon name="Wrench" size={18} />
-        <span>{cta.label}</span>
-      </Button>
     </header>
   )
 }

@@ -23,11 +23,11 @@ export interface LibraryExploreCardProps {
 }
 
 const TONE_CLASS: Record<LibraryExploreCardTone, string> = {
-  purple: 'seesaw-explore-card__thumb--purple',
-  green: 'seesaw-explore-card__thumb--green',
-  blue: 'seesaw-explore-card__thumb--blue',
-  gold: 'seesaw-explore-card__thumb--gold',
-  pink: 'seesaw-explore-card__thumb--pink',
+  purple: 'ep-explore-card__thumb--purple',
+  green: 'ep-explore-card__thumb--green',
+  blue: 'ep-explore-card__thumb--blue',
+  gold: 'ep-explore-card__thumb--gold',
+  pink: 'ep-explore-card__thumb--pink',
 };
 
 export function LibraryExploreCard({
@@ -48,27 +48,27 @@ export function LibraryExploreCard({
     <MantineBoundary><Paper component="article" unstyled
       aria-label={title}
       className={cn(
-        'seesaw-explore-card',
-        isCollection && 'seesaw-explore-card--collection',
+        'ep-explore-card',
+        isCollection && 'ep-explore-card--collection',
         className,
       )}
     >
-      <Link href={href} className="seesaw-explore-card__main seesaw-interactive">
-        <span className={cn('seesaw-explore-card__thumb', TONE_CLASS[tone])} aria-hidden>
+      <Link href={href} className="ep-explore-card__main ep-interactive">
+        <span className={cn('ep-explore-card__thumb', TONE_CLASS[tone])} aria-hidden>
           {thumbnail ?? (
-            <span className="seesaw-explore-card__fallback">
+            <span className="ep-explore-card__fallback">
               <Icon name="BookOpen" size={44} weight="fill" aria-hidden />
             </span>
           )}
         </span>
-        <span className="seesaw-explore-card__body">
-          {creator ? <span className="seesaw-explore-card__creator">{creator}</span> : null}
-          <span className="seesaw-explore-card__title">{title}</span>
-          {meta ? <span className="seesaw-explore-card__meta">{meta}</span> : null}
+        <span className="ep-explore-card__body">
+          {creator ? <span className="ep-explore-card__creator">{creator}</span> : null}
+          <span className="ep-explore-card__title">{title}</span>
+          {meta ? <span className="ep-explore-card__meta">{meta}</span> : null}
         </span>
       </Link>
       {actionLabel && onAction ? (
-        <UnstyledButton type="button" className="seesaw-explore-card__action seesaw-interactive" onClick={onAction}>
+        <UnstyledButton type="button" className="ep-explore-card__action ep-interactive" onClick={onAction}>
           <Icon name="Star" size={20} weight="regular" aria-hidden />
           <span className="sr-only">{actionLabel}</span>
         </UnstyledButton>

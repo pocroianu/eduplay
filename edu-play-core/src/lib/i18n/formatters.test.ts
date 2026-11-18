@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   formatActivityDayGroupLabel,
   formatDateShort,
+  formatMonthYear,
   formatRecentActivityDateTime,
   formatTime,
 } from './formatters';
@@ -32,5 +33,9 @@ describe('i18n formatters', () => {
     );
 
     vi.useRealTimers();
+  });
+
+  it('formats month and year in Romanian', () => {
+    expect(formatMonthYear('2026-05-15T12:00:00.000Z')).toBe('mai 2026');
   });
 });

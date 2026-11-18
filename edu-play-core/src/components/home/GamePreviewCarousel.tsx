@@ -143,10 +143,10 @@ export function GamePreviewCarousel() {
               </div>
             </div>
 
-            <div className="rounded-xl border border-outline-variant bg-surface p-4">
+            <div className="rounded-xl border border-dashed border-outline bg-surface p-4">
               <div className="mb-4 flex items-center justify-between gap-3">
                 <span className="text-sm font-bold">{t('whyChoose.preview.weeklyActivity')}</span>
-                <span className="rounded-full bg-primary-soft px-3 py-1 text-xs font-bold text-primary">{t('whyChoose.preview.live')}</span>
+                <span className="rounded-full bg-surface-container px-3 py-1 text-xs font-bold text-on-surface-variant">{t('whyChoose.preview.live')}</span>
               </div>
               <div className="space-y-3">
                 {previewRows.map((row) => (
@@ -158,6 +158,8 @@ export function GamePreviewCarousel() {
                 ))}
               </div>
             </div>
+
+            <p className="mt-3 text-xs font-medium text-on-surface-variant">{t('whyChoose.preview.illustrationNote')}</p>
 
             <div className="mt-6 rounded-xl border border-outline-variant bg-surface p-4">
               <p className="text-sm font-semibold leading-relaxed">

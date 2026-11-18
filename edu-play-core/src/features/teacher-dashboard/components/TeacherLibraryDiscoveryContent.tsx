@@ -60,8 +60,8 @@ export function TeacherLibraryDiscoveryContent() {
 
   return (
     <Box
-      component="main"
-      aria-label="Explorează biblioteci"
+      component="div"
+      data-testid="library-explore-content"
       mih="100vh"
       bg="var(--color-surface)"
       c="var(--color-on-surface)"
@@ -87,7 +87,7 @@ export function TeacherLibraryDiscoveryContent() {
                 role="searchbox"
                 label="Caută activități"
                 placeholder="Caută după subiect, clasă sau standard"
-                leftSection={<Icon name="MagnifyingGlass" size="sm" className="text-on-surface-muted" aria-hidden />}
+                leftSection={<Icon name="MagnifyingGlass" size="sm" className="text-on-surface-variant" aria-hidden />}
               />
 
               <Group justify="flex-end">

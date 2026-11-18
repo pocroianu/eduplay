@@ -60,7 +60,7 @@ describe('LibraryActivityCard', () => {
     );
     expect(card).toHaveClass('mantine-Card-root');
     expect(card).toHaveClass('teacher-library-interactive');
-    expect(card.className).not.toContain('seesaw-library-card');
+    expect(card.className).not.toContain('ep-library-card');
   });
 
   it('defines Mantine CSS-module hover feedback for card and action surfaces', () => {

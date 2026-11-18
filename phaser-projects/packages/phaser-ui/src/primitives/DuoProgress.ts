@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import { ink, tone, type ToneName } from '../tokens/colors';
 import { duration } from '../tokens/motion';
 import { fontStack, typeScale } from '../tokens/type';
+import { prefersReducedMotion } from './reducedMotion';
 
 /**
  * DuoProgress — Phaser mirror of `kit/DuoProgress.tsx` (bar variant).
@@ -96,7 +97,7 @@ export class DuoProgress extends Phaser.GameObjects.Container {
       this.activeTween = null;
     }
 
-    if (!animate || prefersReducedMotion()) {
+    if (!animate || prefersReducedMotion(this.scene)) {
       this.currentValue = target;
       this.draw();
       return this;
@@ -126,9 +127,4 @@ export class DuoProgress extends Phaser.GameObjects.Container {
 
 function clamp(value: number, min: number, max: number): number {
   return Math.min(Math.max(value, min), max);
-}
-
-function prefersReducedMotion(): boolean {
-  if (typeof window === 'undefined' || !window.matchMedia) return false;
-  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }

@@ -1,5 +1,6 @@
 export { createTeacherAssignment } from './assignments/create-assignment'
 import { createClient } from '@/lib/supabase/server'
+import { getPublishedGames } from '@/features/games/server'
 import type { TeacherDashboardContentProps } from './components/TeacherDashboardContent'
 import {
   getTeacherClasses,
@@ -33,12 +34,13 @@ export async function getTeacherDashboardData(): Promise<TeacherDashboardContent
   const { classCount, classNameMap, classes, scopedClassIds } = await getTeacherClasses(supabase, user.id)
 
   // Step 2: Fetch students, profiles, progress, and activity count in parallel
-  const [classStudents, gameCountResult] = await Promise.all([
+  const [classStudents, gameCountResult, libraryActivities] = await Promise.all([
     getClassStudents(supabase, scopedClassIds),
     supabase
       .from('activities')
       .select('*', { count: 'exact', head: true })
       .eq('is_published', true),
+    getPublishedGames().catch(() => []),
   ])
 
   const { studentCount, studentRows, profileMap, progressRows, gameMap } = classStudents
@@ -65,6 +67,7 @@ export async function getTeacherDashboardData(): Promise<TeacherDashboardContent
       gameCount: gameCountResult.count || 0,
     },
     classes,
+    libraryActivities: libraryActivities.slice(0, 4),
     countByClass: studentRows.reduce<Record<string, number>>((counts, student) => {
       if (student.class_id) counts[student.class_id] = (counts[student.class_id] ?? 0) + 1
       return counts

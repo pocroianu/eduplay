@@ -36,7 +36,7 @@ export default async function ChildDetailPage({ params }: ChildDetailPageProps) 
   const { childData, streakDays, progressSummary, gamesWithProgress, childActivity, consents } = detail;
 
   return (
-    <main aria-label="Detalii copil">
+    <div data-testid="child-details">
       <ChildDetailContent
         streakDays={streakDays}
         profile={{
@@ -66,6 +66,6 @@ export default async function ChildDetailPage({ params }: ChildDetailPageProps) 
           Vezi portofoliul
         </Button>
       </div>
-    </main>
+    </div>
   );
 }

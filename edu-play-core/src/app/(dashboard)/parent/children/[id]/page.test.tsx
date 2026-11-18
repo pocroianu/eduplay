@@ -147,7 +147,7 @@ describe('/parent/children/[id] page', () => {
 
     render(ui);
 
-    const main = screen.getByRole('main', { name: /detalii copil/i });
+    const main = screen.getByTestId('child-details');
     expect(main).toContainElement(screen.getByTestId('child-detail-content'));
     expect(main).toContainElement(screen.getByRole('link', { name: /vezi portofoliul/i }));
   });

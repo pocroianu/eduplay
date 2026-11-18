@@ -6,6 +6,7 @@ import 'server-only';
 import type { SupabaseClient } from '@supabase/supabase-js';
 import type { Database } from '@/shared/types/database';
 import { revalidatePath } from 'next/cache';
+import { ROUTES } from '@/shared/lib/constants/routes';
 import { ApiError, requireRole } from '@/lib/api';
 import type { SetArtifactVisibilityInput } from '../../schemas';
 import type { ActionResult, Artifact } from '../../types';
@@ -79,9 +80,9 @@ export async function runVisibilityChange(
 
   // The teacher inbox reads every draft decision; parent surfaces only need
   // invalidation when a response is truly published to the family feed.
-  revalidatePath('/teacher/portfolio');
+  revalidatePath(ROUTES.TEACHER.PORTFOLIO);
   if (input.visibility === 'family_visible') {
-    revalidatePath('/parent');
+    revalidatePath(ROUTES.PARENT.DASHBOARD);
   }
 
   return {

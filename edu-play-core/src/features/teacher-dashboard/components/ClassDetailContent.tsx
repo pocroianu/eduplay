@@ -8,12 +8,10 @@ import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 
 import { motion, useReducedMotion } from 'framer-motion'
-import { ActionIcon, Button as MantineButton } from '@mantine/core'
 
 import { Icon } from '@/shared/components/ui/Icon'
 import type { IconName } from '@/shared/components/ui/Icon.registry'
 
-import { formatDateLong, formatWeekdayMonthDay } from '@/lib/i18n/formatters'
 import { Button, Card, FilterChipGroup, Pill, StatCard } from '@/shared/components/ui/kit'
 
 import { StudentRosterTable } from './StudentRosterTable'
@@ -63,7 +61,7 @@ export function ClassDetailContent({
 
               href={ROUTES.TEACHER.CLASSES}
 
-              className="font-medium text-primary hover:underline focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 rounded"
+              className="inline-flex min-h-11 items-center font-medium text-primary hover:underline focus-ring rounded"
 
             >
 
@@ -288,20 +286,10 @@ const classTabItems: Array<{
 
 export function ClassTabContent({ data, activeTab }: ClassTabContentProps) {
   const { t } = useTranslation('teacher')
-  const { classData, profile, studentRoster, stats } = data
+  const { classData, studentRoster, stats } = data
   const [feedFilter, setFeedFilter] = useState('class')
-  const postCount = studentRoster.filter((student) => student.recentGameTitle).length || studentRoster.length
   const attentionCount = studentRoster.filter((student) => student.status === 'needs_help').length
-  const unapprovedCount = 0
-  const formatPostCount = (count: number) =>
-    t(
-      count === 1
-        ? 'classes.detail.journal.postCountOne'
-        : 'classes.detail.journal.postCountOther',
-      { count },
-    )
   const tabNavLabel = t('classes.detail.tabs.ariaLabel', { name: classData.name })
-  const selectedStudent = studentRoster.find((student) => student.status === 'needs_help') ?? studentRoster[0]
   const feedFilterItems = [
     { value: 'class', icon: 'BookOpen' as const, label: t('classes.detail.journal.classJournal') },
     { value: 'date', icon: 'Calendar' as const, label: t('classes.detail.journal.dateFilter') },
@@ -309,11 +297,11 @@ export function ClassTabContent({ data, activeTab }: ClassTabContentProps) {
   ]
 
   return (
-    <main data-testid="class-workspace" className={classes.workspace}>
+    <div data-testid="class-workspace" className={classes.workspace}>
       <aside className={classes.workspaceRail}>
         <Link
           href={ROUTES.TEACHER.DASHBOARD}
-          aria-label="EduPlay"
+          aria-label="EP EduPlay"
           className={classes.railBrand}
         >
           EP
@@ -338,7 +326,7 @@ export function ClassTabContent({ data, activeTab }: ClassTabContentProps) {
               {classInitials(classData.name)}
             </div>
             <div className={classes.classHeaderText}>
-              <p className={classes.classMeta}>{classData.grade_level ?? classData.school_year}</p>
+              <p className={classes.classMeta}>{classData.grade_level ? t(`classes.gradeLevel.${classData.grade_level}`, { defaultValue: classData.grade_level }) : classData.school_year}</p>
               <h1 className="truncate font-headline text-2xl font-bold md:text-3xl">{classData.name}</h1>
             </div>
             <div className={classes.classActions}>
@@ -389,7 +377,6 @@ export function ClassTabContent({ data, activeTab }: ClassTabContentProps) {
                 </span>
                 <span className="min-w-0">
                   <span className="block truncate text-sm font-bold">{t('classes.detail.journal.classJournal')}</span>
-                  <span className={classes.rosterActiveMeta}>{formatPostCount(postCount)}</span>
                 </span>
               </Link>
               {studentRoster.map((student) => (
@@ -403,9 +390,6 @@ export function ClassTabContent({ data, activeTab }: ClassTabContentProps) {
                   </span>
                   <span className="min-w-0">
                     <span className="block truncate text-sm font-bold text-on-surface">{student.fullName}</span>
-                    <span className="block text-xs font-semibold text-on-surface-variant">
-                      {formatPostCount(student.recentGameTitle ? 1 : 0)}
-                    </span>
                   </span>
                 </Link>
               ))}
@@ -449,13 +433,7 @@ export function ClassTabContent({ data, activeTab }: ClassTabContentProps) {
 
             <div className="min-h-0 flex-1 overflow-y-auto p-4 md:p-5">
               {activeTab === 'journal' ? (
-                <JournalPanel
-                  classData={classData}
-                  profileName={profile.full_name}
-                  students={studentRoster}
-                  selectedStudent={selectedStudent}
-                  formatPostCount={formatPostCount}
-                />
+                <JournalPanel />
               ) : null}
 
               {activeTab === 'activities' ? (
@@ -472,18 +450,13 @@ export function ClassTabContent({ data, activeTab }: ClassTabContentProps) {
               ) : null}
 
               {activeTab === 'notifications' ? (
-                <NotificationsPanel
-                  className={classData.name}
-                  profileName={profile.full_name}
-                  students={studentRoster}
-                  unapprovedCount={unapprovedCount}
-                />
+                <NotificationsPanel />
               ) : null}
             </div>
           </section>
         </div>
       </div>
-    </main>
+    </div>
   )
 }
 
@@ -503,7 +476,7 @@ function RailClassLink({ href, label, initials }: { href: string; label: string;
   return (
     <Link
       href={href}
-      aria-label={label}
+      aria-label={`${initials} ${label}`}
       className={classes.railClassLink}
     >
       {initials}
@@ -511,148 +484,12 @@ function RailClassLink({ href, label, initials }: { href: string; label: string;
   )
 }
 
-function JournalPanel({
-  classData,
-  profileName,
-  students,
-  selectedStudent,
-  formatPostCount,
-}: {
-  classData: ClassDetailData['classData']
-  profileName: string
-  students: ClassDetailStudent[]
-  selectedStudent?: ClassDetailStudent
-  formatPostCount: (count: number) => string
-}) {
+function JournalPanel() {
   const { t } = useTranslation('teacher')
-  const secondaryEntries = selectedStudent
-    ? students.filter((student) => student.id !== selectedStudent.id)
-    : students
-
   return (
     <section aria-labelledby="class-journal-title" className="space-y-4">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <h2 id="class-journal-title" className="font-headline text-xl font-bold text-on-surface">
-            {t('classes.detail.journal.classJournal')}
-          </h2>
-          <h3 className="mt-1 text-sm font-semibold text-on-surface-variant">
-            {t('classes.detail.journal.feedTitle')}
-          </h3>
-        </div>
-      </div>
-
-      {selectedStudent ? (
-        <article className="overflow-hidden rounded-md border border-outline bg-surface-container-lowest shadow-soft-sm">
-          <header className="flex items-center gap-3 border-b border-outline-variant px-4 py-3">
-            <span className="flex h-9 w-9 items-center justify-center rounded-md bg-primary font-headline text-sm font-bold text-on-primary">
-              {classInitials(classData.name)}
-            </span>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-bold text-on-surface">{t('classes.detail.journal.everyone')}</p>
-              <p className="truncate text-xs font-semibold text-on-surface-variant">{profileName}</p>
-            </div>
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-soft font-headline text-xs font-bold text-primary-deep">
-              {classInitials(profileName)}
-            </span>
-          </header>
-
-          <div className="flex min-h-80 items-center justify-center bg-surface-container-lowest p-6">
-            <svg
-              aria-hidden
-              viewBox="0 0 640 300"
-              className="h-64 w-full max-w-3xl text-blue-dim"
-              fill="none"
-              stroke="var(--color-blue-dim)"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="6"
-            >
-              <path d="M146 160 C236 92 360 76 493 156" />
-              <path d="M178 156 C260 110 360 96 464 152" />
-              <path d="M214 154 C298 116 374 112 428 152" />
-              <path d="M234 157 V263" />
-              <path d="M420 157 V263" />
-              <path d="M234 244 C290 251 366 250 424 244" />
-              <path d="M178 171 C264 177 374 177 486 167" />
-            </svg>
-          </div>
-
-          <div className="border-t border-outline-variant px-4 py-3">
-            <div className="flex flex-wrap items-start justify-between gap-3">
-              <div className="min-w-0">
-                <p className="flex items-center gap-1 text-xs font-bold text-on-surface-variant">
-                  <Icon name="Archive" size="sm" aria-hidden className="text-notification" />
-                  {t('classes.detail.journal.folderLabel')}
-                </p>
-                <p className="mt-2 text-sm font-bold text-on-surface">
-                  {selectedStudent.fullName}{' '}
-                  <span className="font-semibold">
-                    {selectedStudent.recentGameTitle ?? t('classes.detail.journal.addedNewItem')}
-                  </span>
-                </p>
-                <p className="mt-2 text-xs font-semibold text-on-surface-variant">
-                  {t('classes.detail.journal.taggedFolders')}: {t('classes.detail.journal.folderLabel')}
-                </p>
-              </div>
-              <time className="text-xs font-semibold text-on-surface-variant" dateTime={selectedStudent.recentGameTime ?? undefined}>
-                {formatJournalDate(selectedStudent.recentGameTime)}
-              </time>
-            </div>
-            <div className="mt-3 flex flex-wrap items-center gap-2">
-              <MantineButton
-                type="button"
-                variant="default"
-                size="md"
-                radius="md"
-                className={classes.journalActionButton}
-                leftSection={<Icon name="Heart" size="sm" aria-hidden />}
-              >
-                {t('classes.detail.journal.like')}
-              </MantineButton>
-              <MantineButton
-                type="button"
-                variant="default"
-                size="md"
-                radius="md"
-                className={classes.journalActionButton}
-                leftSection={<Icon name="PencilSimple" size="sm" aria-hidden />}
-              >
-                {t('classes.detail.journal.comment')}
-              </MantineButton>
-              <ActionIcon
-                type="button"
-                variant="default"
-                size={44}
-                radius="md"
-                aria-label={t('classes.detail.journal.showMore')}
-                className={classes.journalMoreButton}
-              >
-                <Icon name="DotsThreeVertical" size="md" aria-hidden />
-              </ActionIcon>
-            </div>
-          </div>
-        </article>
-      ) : (
-        <p className="rounded-md border border-outline bg-surface-container-lowest p-5 text-sm font-semibold text-on-surface-variant">
-          {t('classes.detail.journal.noPosts')}
-        </p>
-      )}
-
-      {secondaryEntries.length > 0 ? (
-        <ul className="space-y-3">
-          {secondaryEntries.map((student) => (
-            <li key={student.id} className="rounded-md border border-outline-variant bg-surface-container-lowest p-4 shadow-soft-sm">
-              <p className="text-sm font-bold text-on-surface">{student.fullName}</p>
-              <p className="text-xs font-semibold text-on-surface-muted">{formatJournalDate(student.recentGameTime)}</p>
-              <p className="mt-2 text-sm text-on-surface-variant">{t('classes.detail.journal.taggedFolders')}</p>
-              <p className="mt-1 text-sm text-on-surface">{t('classes.detail.journal.folderLabel')}</p>
-              <p className="mt-1 text-sm text-on-surface">{student.recentGameTitle ?? t('classes.detail.journal.addedNewItem')}</p>
-              <p className="mt-1 text-xs font-semibold text-on-surface-variant">{formatPostCount(student.recentGameTitle ? 1 : 0)}</p>
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      <h2 id="class-journal-title" className="font-headline text-xl font-bold text-on-surface">{t('classes.detail.journal.classJournal')}</h2>
+      <p className="rounded-md border border-outline bg-surface-container-lowest p-5 text-sm font-semibold text-on-surface-variant">{t('classes.detail.journal.noPosts')}</p>
     </section>
   )
 }
@@ -746,49 +583,12 @@ function GradebookPanel({ className, students }: { className: string; students: 
   )
 }
 
-function NotificationsPanel({
-  className,
-  profileName,
-  students,
-  unapprovedCount,
-}: {
-  className: string
-  profileName: string
-  students: ClassDetailStudent[]
-  unapprovedCount: number
-}) {
+function NotificationsPanel() {
   const { t } = useTranslation('teacher')
-  const student = students.find((item) => item.status === 'needs_help') ?? students[0]
-  const studentName = student?.fullName ?? t('classes.detail.notifications.studentFallback')
-  const activityTitle = student?.recentGameTitle ?? t('classes.detail.activities.fallbackTitle')
-
   return (
     <section className="rounded-md border border-outline bg-surface-container-lowest p-5 shadow-soft-sm">
       <h2 className="font-headline text-xl font-bold text-on-surface">{t('classes.detail.notifications.title')}</h2>
-      <p className="mt-2 text-sm text-on-surface-variant">{t('classes.detail.notifications.loading')}</p>
-      <p className="mt-3 text-sm font-semibold text-primary">{t('classes.detail.notifications.tapHere')}</p>
-      <p className="mt-4 text-sm text-on-surface-variant">
-        {t(
-          unapprovedCount === 1
-            ? 'classes.detail.notifications.unapprovedOne'
-            : 'classes.detail.notifications.unapprovedOther',
-          { count: unapprovedCount },
-        )}
-      </p>
-      <div className="mt-4 space-y-3 text-sm text-on-surface">
-        <p>
-          <strong>{formatShortJournalDate(student?.recentGameTime)}</strong> ·{' '}
-          {t('classes.detail.notifications.commentRequest', {
-            name: studentName,
-            owner: profileName,
-            title: activityTitle,
-          })}
-        </p>
-        <p>{t('classes.detail.notifications.itemRequest', { name: studentName })}</p>
-        <p>{t('classes.detail.notifications.itemRequest', { name: studentName })}</p>
-        <p><strong>{formatShortJournalDate('2026-04-28T12:00:00.000Z')}</strong></p>
-        <p>{t('classes.detail.notifications.weeklyDigest', { name: className })}</p>
-      </div>
+      <p className="mt-4 text-sm text-on-surface-variant">Notificările nu sunt disponibile încă.</p>
     </section>
   )
 }
@@ -806,15 +606,3 @@ function classInitials(value: string | null | undefined) {
   return raw ? raw[0].toLocaleUpperCase('ro-RO') + raw.slice(1).toLocaleLowerCase('ro-RO') : '?'
 }
 
-function dateFrom(value: string | null | undefined) {
-  const date = value ? new Date(value) : new Date('2026-05-22T18:45:00.000Z')
-  return Number.isNaN(date.getTime()) ? new Date('2026-05-22T18:45:00.000Z') : date
-}
-
-function formatJournalDate(value: string | null | undefined) {
-  return formatDateLong(dateFrom(value))
-}
-
-function formatShortJournalDate(value: string | null | undefined) {
-  return formatWeekdayMonthDay(dateFrom(value))
-}

@@ -163,7 +163,7 @@ function ChangePinDialogBody({
             <Icon name="X" size={20} />
           </UnstyledButton>
           <div className="min-w-0 flex-1">
-            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+            <span className="inline-flex items-center gap-2 text-base font-bold uppercase tracking-wider text-on-surface-variant">
               Pasul {stepIndex + 1} din {ORDER.length}
             </span>
             <h2
@@ -188,7 +188,7 @@ function ChangePinDialogBody({
             {error ? (
               <p
                 role="alert"
-                className="max-w-[28ch] text-center text-sm font-bold text-error"
+                className="max-w-[28ch] text-center text-base font-bold text-error"
               >
                 {error}
               </p>
@@ -208,6 +208,7 @@ function ChangePinDialogBody({
         <footer className="shrink-0 border-t border-outline-variant px-5 py-4 md:px-6">
           <Button
             variant="ghost"
+            mode="kid"
             size="lg"
             onClick={onCancel}
             disabled={pending}

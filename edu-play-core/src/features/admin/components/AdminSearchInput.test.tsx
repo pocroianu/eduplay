@@ -22,25 +22,17 @@ describe('AdminSearchInput', () => {
 
   it('renders the unavailable search state explicitly', () => {
     renderSearchInput()
-    const input = screen.getByRole('searchbox', {
-      name: 'Căutarea în panoul administrativ nu este disponibilă momentan',
-    }) as HTMLInputElement
-    expect(input).toBeDefined()
-    expect(input.disabled).toBe(true)
-    expect(input.placeholder).toBe('Căutarea va fi disponibilă în curând')
-    expect(screen.getByText('Indisponibil')).toBeDefined()
+    expect(screen.queryByRole('searchbox')).not.toBeInTheDocument()
+    expect(screen.getByText('Căutarea va fi disponibilă în curând.')).toBeInTheDocument()
   })
 
   it('does not focus disabled search when "/" is pressed outside of any field', () => {
     renderSearchInput()
-    const input = screen.getByRole('searchbox') as HTMLInputElement
-
-    expect(document.activeElement).not.toBe(input)
+    expect(screen.queryByRole('searchbox')).not.toBeInTheDocument()
 
     const event = new KeyboardEvent('keydown', { key: '/', bubbles: true, cancelable: true })
     window.dispatchEvent(event)
 
-    expect(document.activeElement).not.toBe(input)
     expect(event.defaultPrevented).toBe(false)
   })
 
@@ -52,7 +44,6 @@ describe('AdminSearchInput', () => {
       </MantineProvider>,
     )
     const other = screen.getByTestId('other') as HTMLInputElement
-    const search = screen.getByRole('searchbox') as HTMLInputElement
     other.focus()
     expect(document.activeElement).toBe(other)
 
@@ -60,6 +51,6 @@ describe('AdminSearchInput', () => {
     other.dispatchEvent(event)
 
     expect(document.activeElement).toBe(other)
-    expect(document.activeElement).not.toBe(search)
+    expect(screen.queryByRole('searchbox')).not.toBeInTheDocument()
   })
 })

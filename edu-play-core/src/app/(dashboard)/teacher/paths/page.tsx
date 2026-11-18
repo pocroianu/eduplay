@@ -83,7 +83,7 @@ export default async function TeacherPathsPage() {
         </div>
       </div>
 
-      <main className="px-6 py-6 lg:px-10">
+      <div className="px-6 py-6 lg:px-10">
         <div className="mx-auto max-w-6xl">
           {paths.length === 0 ? (
             <EmptyState
@@ -134,7 +134,7 @@ export default async function TeacherPathsPage() {
                         </div>
                       </Link>
                       <div className="flex flex-wrap items-center gap-3 border-t border-outline-variant pt-4 md:border-l md:border-t-0 md:pl-4 md:pt-0">
-                        <p className="text-xs font-bold uppercase tracking-[0.08em] text-on-surface-muted">
+                        <p className="text-xs font-bold uppercase tracking-[0.08em] text-on-surface-variant">
                           Actualizat {formatRelativeTime(path.updatedAt).toLowerCase()}
                         </p>
                         <PathAssignmentDialog
@@ -182,7 +182,7 @@ export default async function TeacherPathsPage() {
             </div>
           )}
         </div>
-      </main>
+      </div>
     </div>
   );
 }

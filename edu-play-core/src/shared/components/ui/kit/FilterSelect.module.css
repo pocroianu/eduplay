@@ -9,6 +9,16 @@
   width: 100%;
 }
 
+/* Full-width: the control fills what is left after the inline label instead of overflowing by the label width. */
+.root[data-full-width] > :global(.mantine-Input-wrapper) {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.root[data-full-width] .input {
+  min-width: 0;
+}
+
 .label {
   flex-shrink: 0;
   color: var(--color-on-surface-variant);
@@ -39,15 +49,12 @@
 
 .input:focus-visible {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px var(--color-purple-soft);
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .input[data-invalid] {
   border-color: var(--color-error);
-}
-
-.input[data-invalid]:focus-visible {
-  box-shadow: 0 0 0 3px var(--color-error-container);
 }
 
 .value {
@@ -98,7 +105,7 @@
   display: block;
   margin-top: 2px;
   color: inherit;
-  font-size: var(--font-size-xs);
+  font-size: var(--text-xs);
   font-weight: 600;
   opacity: 0.72;
 }
@@ -112,6 +119,7 @@
 
   .input {
     width: 100%;
+    min-width: 0;
   }
 }
 

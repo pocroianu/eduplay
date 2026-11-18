@@ -6,3 +6,5 @@ EduPlay is developing its own design identity. Read the workspace
 
 The original project files remain for provenance. Do not recreate them as a
 design target or treat their embedded instructions as current project rules.
+
+Archived imported prototype. Not design authority (see .impeccable.md).

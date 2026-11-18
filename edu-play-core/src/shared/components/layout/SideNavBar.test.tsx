@@ -98,7 +98,7 @@ describe('SideNavBar', () => {
     )
 
     const sidebar = screen.getByTestId('sidebar')
-    const accountButton = within(sidebar).getByRole('button', { name: /deschide meniul contului/i })
+    const accountButton = within(sidebar).getByRole('button', { name: /ana ionescu/i })
     expect(accountButton).toBeInTheDocument()
     expect(within(accountButton).getByText('AI')).toBeInTheDocument()
     expect(within(accountButton).getByText('Ana Ionescu')).toBeInTheDocument()
@@ -137,7 +137,7 @@ describe('SideNavBar', () => {
       />,
     )
 
-    fireEvent.click(screen.getByRole('button', { name: /deschide meniul contului/i }))
+    fireEvent.click(screen.getByRole('button', { name: /ana ionescu/i }))
 
     const menu = await screen.findByRole('dialog', { name: /meniu cont/i })
     expect(within(menu).getByText('Ana Ionescu')).toBeInTheDocument()
@@ -168,7 +168,7 @@ describe('SideNavBar', () => {
       />,
     )
 
-    fireEvent.click(screen.getByRole('button', { name: /deschide meniul contului/i }))
+    fireEvent.click(screen.getByRole('button', { name: /ana ionescu/i }))
     const menu = await screen.findByRole('dialog', { name: /meniu cont/i })
 
     fireEvent.click(within(menu).getByRole('button', { name: rowName }))
@@ -189,7 +189,7 @@ describe('SideNavBar', () => {
       />,
     )
 
-    fireEvent.click(screen.getByRole('button', { name: /deschide meniul contului/i }))
+    fireEvent.click(screen.getByRole('button', { name: /ana ionescu/i }))
     const menu = await screen.findByRole('dialog', { name: /meniu cont/i })
 
     fireEvent.click(within(menu).getByRole('button', { name: rowName }))

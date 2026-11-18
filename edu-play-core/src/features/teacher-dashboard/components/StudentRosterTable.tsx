@@ -39,7 +39,7 @@ interface StudentRosterTableProps {
 type FilterOption = 'all' | 'online' | 'needs_help'
 
 const FOCUS_RING =
-  'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2'
+  'focus-ring'
 
 type ProgressTone = 'green' | 'blue' | 'coral'
 

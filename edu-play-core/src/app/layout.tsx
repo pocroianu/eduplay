@@ -4,6 +4,7 @@ import "./globals.css";
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
 import { getServerLanguage, preloadNamespaces } from "@/lib/i18n/server";
 import { eduPlayMantineTheme } from "@/shared/theme";
+import { MotionRoot } from "./MotionRoot";
 
 import '@mantine/core/styles.css';
 import { MantineProvider, mantineHtmlProps } from '@mantine/core';
@@ -27,7 +28,7 @@ export default async function RootLayout({
       <body className="antialiased">
         <MantineProvider theme={eduPlayMantineTheme}>
           <I18nProvider lang={lang} resources={resources}>
-            {children}
+            <MotionRoot>{children}</MotionRoot>
           </I18nProvider>
         </MantineProvider>
       </body>

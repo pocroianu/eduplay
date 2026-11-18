@@ -118,8 +118,9 @@ export function TeacherGameCard({
           </Text>
           {game.difficulty_level != null ? (
             <Badge
-              color="yellow"
               variant="light"
+              bg="var(--color-gold-soft)"
+              c="var(--color-gold-deep)"
               leftSection={<Icon name="Star" weight="fill" size={12} aria-hidden />}
               style={{ flexShrink: 0 }}
             >

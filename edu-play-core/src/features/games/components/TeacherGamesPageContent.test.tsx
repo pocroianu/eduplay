@@ -56,10 +56,10 @@ describe('TeacherGamesPageContent', () => {
       'placeholder',
       'Ce vrei să predai?',
     );
-    expect(screen.getByRole('button', { name: 'Selectează nivelul' })).toBeDisabled();
-    expect(screen.getByRole('button', { name: 'Limbă' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /Selectează nivelul/ })).toBeDisabled();
+    expect(screen.getByRole('button', { name: /Limbă/ })).toBeDisabled();
     expect(
-      screen.getByRole('button', { name: 'Răsfoiește după standarde și curriculum' }),
+      screen.getByRole('button', { name: /Răsfoiește după standarde și curriculum/ }),
     ).toBeDisabled();
     const categoryGroup = screen.getByRole('group', { name: /categorii/i });
     expect(

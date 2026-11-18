@@ -2,7 +2,7 @@
 
 import { useTransition } from 'react';
 import { ActionIcon, Button } from '@mantine/core';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { Icon } from '@/shared/components/ui/Icon';
 import type { IconName } from '@/shared/components/ui/Icon.registry';
 import {
@@ -63,6 +63,7 @@ export function NotificationList({
   total,
 }: NotificationListProps) {
   const [isPending, startTransition] = useTransition();
+  const reduceMotion = useReducedMotion();
   const unreadCount = notifications.filter((n) => !n.read_at).length;
 
   function handleMarkRead(id: string) {
@@ -115,7 +116,7 @@ export function NotificationList({
 
       {notifications.length === 0 ? (
         <motion.div
-          initial={{ opacity: 0, y: 8 }}
+          initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-surface-container-lowest border border-outline-variant shadow-soft-sm rounded-2xl"
         >
@@ -148,7 +149,7 @@ export function NotificationList({
               <motion.div
                 key={notification.id}
                 data-testid="parent-notification-row"
-                initial={{ opacity: 0, y: 8 }}
+                initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.03 }}
                 className={`flex gap-4 px-6 py-5 transition-colors ${

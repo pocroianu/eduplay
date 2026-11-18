@@ -20,7 +20,7 @@ export async function markNotificationAsRead(
     } = await supabase.auth.getUser();
 
     if (authError || !user) {
-      return { success: false, error: 'Nu sunteți autentificat' };
+      return { success: false, error: 'Nu ești autentificat' };
     }
 
     const { error } = await supabase
@@ -53,7 +53,7 @@ export async function markAllNotificationsAsRead(): Promise<MarkReadResult> {
     } = await supabase.auth.getUser();
 
     if (authError || !user) {
-      return { success: false, error: 'Nu sunteți autentificat' };
+      return { success: false, error: 'Nu ești autentificat' };
     }
 
     const { error } = await supabase

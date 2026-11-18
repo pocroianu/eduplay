@@ -13,7 +13,7 @@ function LoadingLine({ className = '' }: { className?: string }) {
 
 export default function TeacherActivitiesLoading() {
   return (
-    <main
+    <div
       role="status"
       aria-label="Se încarcă activitățile"
       className="min-h-screen bg-surface p-6 lg:p-10"
@@ -66,6 +66,6 @@ export default function TeacherActivitiesLoading() {
           ))}
         </section>
       </div>
-    </main>
+    </div>
   );
 }

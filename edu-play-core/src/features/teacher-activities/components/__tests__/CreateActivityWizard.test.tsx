@@ -53,7 +53,7 @@ describe('CreateActivityWizard', () => {
     renderWithProvider(<CreateActivityWizard interactiveTypes={interactiveTypes} />)
 
     expect(screen.getByRole('heading', { name: /creează activitate/i })).toBeInTheDocument()
-    expect(screen.getAllByRole('main')).toHaveLength(1)
+    expect(screen.queryByRole('main')).not.toBeInTheDocument()
     expect(screen.getAllByRole('link', { name: /înapoi la activități/i })[0]).toHaveAttribute('href', '/teacher/activities')
     const sourceGroup = screen.getByRole('group', { name: /sursa activității/i })
     expect(within(sourceGroup).getByRole('button', { name: /încarcă/i })).toHaveAttribute('aria-pressed', 'true')

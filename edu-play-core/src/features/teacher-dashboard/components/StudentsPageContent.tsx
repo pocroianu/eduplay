@@ -214,7 +214,7 @@ export function StudentsPageContent({
             {formatRelativeTime(row.lastActiveAt)}
           </span>
         ) : (
-          <span className="text-outline text-sm">—</span>
+          <span className="text-on-surface-variant text-sm">—</span>
         ),
     },
     {
@@ -224,7 +224,7 @@ export function StudentsPageContent({
       cell: (row) => (
         <Link
           href={ROUTES.TEACHER.STUDENT(row.id)}
-          className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-primary-dim focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 rounded-full px-3 py-2 min-h-[44px]"
+          className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:text-primary-dim focus-ring rounded-full px-3 py-2 min-h-[44px]"
         >
           Vezi detalii
           <Icon name="CaretRight" size={18} aria-hidden />
@@ -286,7 +286,7 @@ export function StudentsPageContent({
         </div>
       </header>
 
-      <main className="mx-auto max-w-[1440px] space-y-5 px-6 py-6 lg:px-10">
+      <div className="mx-auto max-w-[1440px] space-y-5 px-6 py-6 lg:px-10">
         {students.length > 0 && (
           <Card className="p-4">
             <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
@@ -321,7 +321,7 @@ export function StudentsPageContent({
           empty={emptyState}
           caption={isFiltered ? "Listă elevi filtrată" : "Listă elevi"}
         />
-      </main>
+      </div>
     </div>
   );
 }

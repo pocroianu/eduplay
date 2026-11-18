@@ -1,3 +1,5 @@
+import { ROUTES } from '@/shared/lib/constants/routes';
+
 export interface AssignmentActivityLaunchRow {
   id: string
   activity_id?: string | null
@@ -22,5 +24,5 @@ export function getAssignmentActivityPlayHref(
   if (!assignment.version_id || !activityId) return null
 
   const params = new URLSearchParams({ assignmentId: assignment.id })
-  return `/play/${activityId}?${params.toString()}`
+  return `${ROUTES.PLAY.ACTIVITY(activityId)}?${params.toString()}`
 }

@@ -30,8 +30,8 @@ export function AuthButton({
 
   const rootClassName = cn(
     variant === 'primary'
-      ? 'inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 font-label text-body font-semibold text-white shadow-soft-sm transition-colors duration-200 hover:bg-primary-dim disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2'
-      : 'inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-outline-variant bg-surface-container-lowest px-5 py-3 font-label text-body font-semibold text-on-surface shadow-soft-sm transition-colors duration-200 hover:bg-surface-container disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+      ? 'inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg bg-primary px-5 py-3 font-label text-body font-semibold text-white shadow-soft-sm transition-colors duration-200 hover:bg-primary-dim disabled:cursor-not-allowed disabled:opacity-50 focus-ring'
+      : 'inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-lg border border-outline-variant bg-surface-container-lowest px-5 py-3 font-label text-body font-semibold text-on-surface shadow-soft-sm transition-colors duration-200 hover:bg-surface-container disabled:cursor-not-allowed disabled:opacity-50 focus-ring',
     className,
   );
 

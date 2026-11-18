@@ -186,7 +186,7 @@ export function ParentGamesPageContent({
           <h3 className="text-lg font-semibold text-on-surface-variant mb-2">
             Nu există jocuri disponibile
           </h3>
-          <p className="text-outline">
+          <p className="text-on-surface-variant">
             Jocurile vor apărea aici când sunt publicate în bibliotecă
           </p>
         </div>
@@ -302,11 +302,10 @@ function GameCategoryRow({
 }
 
 interface ProgressScoreProps {
-  color: string
   score: number | null
 }
 
-function ProgressScore({ color, score }: ProgressScoreProps) {
+function ProgressScore({ score }: ProgressScoreProps) {
   if (score === null) {
     return null
   }
@@ -314,7 +313,7 @@ function ProgressScore({ color, score }: ProgressScoreProps) {
   return (
     <div className="flex justify-between items-center mb-2">
       <span className="text-xs text-on-surface-variant">Scor</span>
-      <span className="font-bold" style={{ color }}>
+      <span className="font-bold text-on-surface">
         {score}%
       </span>
     </div>
@@ -348,17 +347,15 @@ function ProgressStats({ progress }: { progress: GameProgress }) {
 }
 
 interface GameProgressDetailsProps {
-  categoryConfig: CategoryConfig
   progress: GameProgress | null
 }
 
 function GameProgressDetails({
-  categoryConfig,
   progress,
 }: GameProgressDetailsProps) {
   if (!hasStarted(progress)) {
     return (
-      <p className="text-xs text-outline text-center py-2">
+      <p className="text-xs text-on-surface-variant text-center py-2">
         Încă nu a jucat acest joc
       </p>
     )
@@ -366,7 +363,7 @@ function GameProgressDetails({
 
   return (
     <div>
-      <ProgressScore color={categoryConfig.color} score={progress.score} />
+      <ProgressScore score={progress.score} />
       <CompletedProgressBar status={progress.status} />
       <ProgressStats progress={progress} />
     </div>
@@ -416,7 +413,6 @@ function ParentGameCard({ game, index }: ParentGameCardProps) {
           difficultyLevel={game.difficulty_level}
         />
         <GameProgressDetails
-          categoryConfig={categoryConfig}
           progress={game.progress}
         />
         <ParentGameLaunchButton game={game} />

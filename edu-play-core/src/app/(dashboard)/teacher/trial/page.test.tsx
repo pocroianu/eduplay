@@ -96,7 +96,7 @@ describe('/teacher/trial', () => {
     expect(within(premiumPlan).getByText('AI-Generated Activities')).toBeInTheDocument();
     expect(within(premiumPlan).getByText('AI Generated Announcements')).toBeInTheDocument();
 
-    expect(screen.getByRole('button', { name: 'Trial unavailable' })).toBeDisabled();
+    expect(screen.getByText('Trial unavailable')).toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Plan details unavailable' })).toHaveAttribute('href', '/');
     expect(screen.getByText(/Trial activation is not available in this demo\./)).toBeInTheDocument();
     expect(screen.getByText(/No credit card required/)).toBeInTheDocument();

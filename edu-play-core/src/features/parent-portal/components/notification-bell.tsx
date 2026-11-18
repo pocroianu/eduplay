@@ -65,22 +65,22 @@ export function NotificationBell({
       withinPortal={false}
       transitionProps={{ transition: 'pop-top-right', duration: 120 }}
     >
-      <Popover.Target>
-        <Indicator
-          disabled={optimisticUnreadCount === 0}
-          label={optimisticUnreadCount > 99 ? '99+' : optimisticUnreadCount}
-          size={20}
-          color="red"
-          offset={5}
-          styles={{
-            indicator: {
-              background: 'var(--color-error)',
-              color: 'var(--color-on-error)',
-              fontSize: '0.625rem',
-              fontWeight: 800,
-            },
-          }}
-        >
+      <Indicator
+        disabled={optimisticUnreadCount === 0}
+        label={optimisticUnreadCount > 99 ? '99+' : optimisticUnreadCount}
+        size={20}
+        color="red"
+        offset={5}
+        styles={{
+          indicator: {
+            background: 'var(--color-error)',
+            color: 'var(--color-on-error)',
+            fontSize: '0.625rem',
+            fontWeight: 800,
+          },
+        }}
+      >
+        <Popover.Target>
           <ActionIcon
             aria-label={`Notificări${optimisticUnreadCount > 0 ? ` (${optimisticUnreadCount} necitite)` : ''}`}
             onClick={() => setIsOpen((current) => !current)}
@@ -95,8 +95,8 @@ export function NotificationBell({
           >
             <Icon name={optimisticUnreadCount > 0 ? 'BellRinging' : 'Bell'} aria-hidden />
           </ActionIcon>
-        </Indicator>
-      </Popover.Target>
+        </Popover.Target>
+      </Indicator>
 
       <Popover.Dropdown
         p={0}

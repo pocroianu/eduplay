@@ -8,13 +8,6 @@ import type { IconName } from '@/shared/components/ui/Icon.registry'
 import { Button } from '@/shared/components/ui/kit'
 import { ROUTES } from '@/shared/lib/constants'
 
-const navLinks = [
-  'hero.nav.products',
-  'hero.nav.teachers',
-  'hero.nav.families',
-  'hero.nav.schools',
-] as const
-
 const collageCards = [
   {
     icon: 'GameController' as IconName,
@@ -25,7 +18,7 @@ const collageCards = [
   },
   {
     icon: 'Users' as IconName,
-    titleKey: 'hero.trustPills.gdpr',
+    titleKey: 'hero.trustPills.euHosting',
     bodyKey: 'hero.descriptionStrong',
     className: 'right-0 top-0 w-56 bg-surface-container-lowest text-on-surface',
     iconClassName: 'bg-primary text-on-primary',
@@ -54,20 +47,14 @@ export function HeroSection() {
       </div>
 
       <div className="bg-surface-container-lowest">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-6 px-6 py-4 lg:px-10">
-          <div className="flex items-center gap-3" aria-label="EduPlay">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 sm:gap-6 sm:px-6 lg:px-10">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0" aria-label="EduPlay">
             <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-on-primary shadow-soft-sm" aria-hidden="true">
               <Icon name="BookOpen" weight="fill" size="md" />
             </span>
-            <span className="font-headline text-2xl font-bold tracking-tight text-primary-deep">
+            <span className="font-headline text-xl font-bold tracking-tight text-primary-deep sm:text-2xl">
               EduPlay
             </span>
-          </div>
-
-          <div className="hidden items-center gap-7 text-sm font-semibold text-on-surface-variant lg:flex" aria-hidden="true">
-            {navLinks.map((key) => (
-              <span key={key}>{t(key)}</span>
-            ))}
           </div>
 
           <div className="flex items-center gap-3">
@@ -160,7 +147,7 @@ export function HeroSection() {
                     EduPlay
                   </p>
                   <h2 className="mt-2 max-w-md text-3xl font-bold leading-tight text-on-surface md:text-4xl">
-                    {t('hero.visual.gameCount')} {t('hero.visual.gameLabel')}
+                    {t('hero.visual.gameLabel')}
                   </h2>
                   <p className="mt-3 max-w-sm text-base leading-relaxed text-on-surface-variant">
                     {t('hero.visual.gameSublabel')}
@@ -181,7 +168,7 @@ export function HeroSection() {
               </div>
 
               <div className="mt-6 grid gap-3 md:grid-cols-3">
-                {(['ro', 'gdpr', 'noAds'] as const).map((key) => (
+                {(['ro', 'euHosting', 'noAds'] as const).map((key) => (
                   <div
                     key={key}
                     className="rounded-lg bg-surface-container-lowest px-4 py-3 text-left text-sm font-semibold text-on-surface shadow-soft-sm"

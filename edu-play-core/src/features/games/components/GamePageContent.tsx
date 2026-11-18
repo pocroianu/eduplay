@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useSyncExternalStore } from "react";
+import { useState, useCallback, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { useActivityPlaySession } from '../player/use-activity-play-session';
@@ -35,6 +35,18 @@ interface GamePageContentProps {
 
 const TOTAL_DOTS = 5;
 
+function subscribeToOnlineStatus(onChange: () => void) {
+  window.addEventListener("offline", onChange);
+  window.addEventListener("online", onChange);
+  return () => {
+    window.removeEventListener("offline", onChange);
+    window.removeEventListener("online", onChange);
+  };
+}
+
+const getIsOffline = () => !navigator.onLine;
+const getServerIsOffline = () => false;
+
 export function GamePageContent({
   game,
   progress,
@@ -61,9 +73,9 @@ export function GamePageContent({
   );
   const [showExitConfirm, setShowExitConfirm] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
-  const [isOffline, setIsOffline] = useState<boolean>(() =>
-    typeof navigator !== "undefined" ? !navigator.onLine : false,
-  );
+  // Server snapshot is always "online" so SSR and hydration agree (Node >= 21 exposes a
+  // `navigator` without `onLine`); the real browser state is read after hydration.
+  const isOffline = useSyncExternalStore(subscribeToOnlineStatus, getIsOffline, getServerIsOffline);
   const [loadError, setLoadError] = useState(false);
 
   const theme = useCategoryTheme(game.category);
@@ -84,19 +96,6 @@ export function GamePageContent({
   const filledDots = result
     ? TOTAL_DOTS
     : Math.max(1, Math.min(TOTAL_DOTS, Math.round((liveScore || 15) / 20)));
-  // Track browser online/offline state. Initial value comes from the lazy
-  // useState initializer above; this effect only syncs subsequent transitions.
-  useEffect(() => {
-    const goOffline = () => setIsOffline(true);
-    const goOnline = () => setIsOffline(false);
-    window.addEventListener("offline", goOffline);
-    window.addEventListener("online", goOnline);
-    return () => {
-      window.removeEventListener("offline", goOffline);
-      window.removeEventListener("online", goOnline);
-    };
-  }, []);
-
   const handleStart = useCallback(() => {
     setLoadError(false);
     setPhase("playing");

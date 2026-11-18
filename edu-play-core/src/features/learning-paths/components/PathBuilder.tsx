@@ -237,7 +237,7 @@ export function PathBuilder({
         </div>
       </div>
 
-      <main className="px-6 py-6 lg:px-10">
+      <div className="px-6 py-6 lg:px-10">
         <div className="mx-auto max-w-6xl space-y-6">
           {message ? (
             <Card role="alert" className="border border-coral-dim bg-coral-soft" data-testid="learning-path-message">
@@ -391,7 +391,7 @@ export function PathBuilder({
             </aside>
           </div>
         </div>
-      </main>
+      </div>
     </div>
     </MantineBoundary>
   );

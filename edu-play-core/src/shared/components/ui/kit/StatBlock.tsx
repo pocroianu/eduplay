@@ -103,7 +103,7 @@ export function StatBlock({
 
           "shadow-soft-sm transition-shadow hover:shadow-soft",
 
-          "focus-within:ring-2 focus-within:ring-primary/40",
+          "focus-within:outline focus-within:outline-2 focus-within:outline-offset-2 focus-within:outline-primary",
 
           className,
         )}

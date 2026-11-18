@@ -25,7 +25,7 @@ export default function NotificationsLoading() {
         </div>
       </div>
 
-      <main className="bg-surface p-6 lg:p-10">
+      <div className="bg-surface p-6 lg:p-10">
         <div className="mx-auto max-w-7xl space-y-5 animate-pulse motion-reduce:animate-none">
           <section className="rounded-lg border border-outline-variant bg-surface-container-lowest p-5">
             <div className="flex flex-wrap items-center justify-between gap-4">
@@ -54,7 +54,7 @@ export default function NotificationsLoading() {
             ))}
           </section>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

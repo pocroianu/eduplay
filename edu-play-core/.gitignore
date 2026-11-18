@@ -90,3 +90,4 @@ subagent/*
 
 
 tmp/*
+/scripts/.tmp/

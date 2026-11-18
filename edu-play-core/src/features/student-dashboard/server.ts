@@ -3,6 +3,7 @@ import { getActivityType, getAssignmentActivityPlayHref } from '@/features/activ
 import { attachPinnedActivityIds, getStudentActivities } from '@/features/activities/server'
 import type { IconName } from '@/shared/components/ui/Icon.registry'
 import { getAgeBand } from '@/shared/lib/utils/age'
+import { ROUTES } from '@/shared/lib/constants'
 import type { PreschoolDashboardProps } from './components/PreschoolDashboard'
 import type { SchoolAgeDashboardProps } from './components/SchoolAgeDashboard'
 import type { StudentActivityCard } from './components/StudentActivitiesLane'
@@ -70,7 +71,7 @@ export async function getStudentDashboardData(): Promise<StudentDashboardData | 
     id: activity.id,
     title: activity.title,
     category: activity.category,
-    game_url: `/play/${activity.id}`,
+    game_url: ROUTES.PLAY.ACTIVITY(activity.id),
     difficulty_level:
       activity.difficulty === 'easy'
         ? 1

@@ -10,7 +10,7 @@ interface LaunchStepErrorProps {
 
 export default function LaunchStepError({ reset }: LaunchStepErrorProps) {
   return (
-    <main className="grid min-h-screen place-items-center bg-surface p-6">
+    <div className="grid min-h-screen place-items-center bg-surface p-6">
       <Card className="w-full max-w-md text-center" padding="lg">
         <Icon name="Warning" size="xl" className="mx-auto text-error" aria-hidden />
         <h2 className="mt-4 text-xl font-semibold text-on-surface">
@@ -29,6 +29,6 @@ export default function LaunchStepError({ reset }: LaunchStepErrorProps) {
           </Button>
         </div>
       </Card>
-    </main>
+    </div>
   );
 }

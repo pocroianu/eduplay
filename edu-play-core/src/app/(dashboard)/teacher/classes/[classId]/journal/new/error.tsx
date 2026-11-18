@@ -21,10 +21,10 @@ export default function NewJournalPostError({ error, reset }: ErrorProps) {
         <Icon name="Warning" size="xl" className="mx-auto text-error" aria-hidden />
         <h2 className="mt-4 text-lg font-bold text-on-surface">Eroare la încărcarea editorului de jurnal</h2>
         <p className="mt-2 text-sm text-on-surface-variant">
-          A apărut o eroare neașteptată. Încercați din nou sau reveniți la clase.
+          A apărut o eroare neașteptată. Încearcă din nou sau revino la clase.
         </p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
-          <Button mode="standard" onClick={reset}>Încercați din nou</Button>
+          <Button mode="standard" onClick={reset}>Încearcă din nou</Button>
           <Button mode="standard" variant="secondary" href={ROUTES.TEACHER.CLASSES}>Clase</Button>
         </div>
         {error.digest && (

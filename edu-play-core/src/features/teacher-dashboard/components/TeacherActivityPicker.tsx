@@ -115,7 +115,7 @@ export function TeacherActivityPicker({
         })}
       </div>
 
-      <div className="grid min-w-0 gap-3 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+      <div className="grid min-w-0 gap-3 md:grid-cols-[minmax(18rem,28rem)_minmax(0,1fr)] md:items-end">
         <FilterSelect
           label="Clasă"
           icon="Users"

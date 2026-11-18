@@ -22,7 +22,7 @@ describe('TeacherLibraryContent', () => {
     renderContent();
 
     expect(
-      screen.getByRole('main', { name: /biblioteca mea/i }),
+      screen.getByTestId('teacher-library-content'),
     ).toBeInTheDocument();
   });
 

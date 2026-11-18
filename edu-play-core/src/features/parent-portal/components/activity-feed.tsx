@@ -145,7 +145,7 @@ function GameProgressRow({ activity }: { activity: GameProgressFeedItem }) {
         </p>
 
         <div className="flex items-center gap-2 mt-1">
-          <span className="text-xs text-outline">
+          <span className="text-xs text-on-surface-variant">
             {formatTime(activity.timestamp)}
           </span>
 
@@ -211,7 +211,7 @@ function ArtifactRow({ activity }: { activity: ArtifactFeedItem }) {
               are o lucrare nouă: „{title}”.
             </p>
             <div className="flex items-center gap-2 mt-1 flex-wrap">
-              <span className="text-xs text-outline">
+              <span className="text-xs text-on-surface-variant">
                 {formatTime(activity.timestamp)}
               </span>
               <span className="inline-flex items-center gap-1 bg-primary-soft text-primary-deep text-xs px-2 rounded-full">
@@ -243,7 +243,7 @@ function DateGroup({ label, items }: DateGroupProps) {
     <div>
       <div className="mb-2 mt-4 flex items-center gap-2">
         <Icon name="Calendar" size={14} className="text-outline" />
-        <span className="text-xs font-bold uppercase tracking-wider text-outline">
+        <span className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">
           {label}
         </span>
       </div>
@@ -281,7 +281,7 @@ export function ActivityFeed({
         <h4 className="text-sm font-semibold text-on-surface-variant mb-1">
           Nicio activitate recentă
         </h4>
-        <p className="text-sm text-outline text-center">
+        <p className="text-sm text-on-surface-variant text-center">
           Activitățile copiilor vor apărea aici pe măsură ce joacă
         </p>
       </div>

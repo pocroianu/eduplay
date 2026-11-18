@@ -10,7 +10,7 @@ The `/play` route embeds Phaser Activities inside the Next.js Activity player. T
 
 - the host `GameEmbed` top HUD renders pause, mute, fullscreen, exit, score, time, and progress;
 - Phaser renderers render their own `BottomNavbar` with player name, repeat instruction, progress dots, and pause;
-- the route-level `ActionStrip` renders navigation such as `Următorul` below the stage;
+- a route-level strip rendered navigation such as `Următorul` below the stage (since removed);
 - `CategoryBanner` remains visible above active play.
 
 This creates duplicate navigation and control ownership, reduces the playable stage, and can block or compete with the Activity content. The host also cannot consistently manage accessibility, responsive layout, fullscreen, exit confirmation, restart, or completion actions while Phaser renderers own persistent chrome.
@@ -50,7 +50,7 @@ Phaser renderers must not render persistent player navbars or route/player contr
 
 - `CategoryBanner` is visible on intro and completion states, but hidden during active play.
 - The top-center active-play HUD is removed.
-- `ActionStrip` is not used by `/play`.
+- No route-level action strip exists on `/play`; player chrome actions now live in the player header.
 - `Următorul` / `Continuă` appears only after completion, inside the completion UI.
 - The Activity navbar is visible only during active play once the Activity is ready enough for controls.
 - Pause opens a host pause menu and pauses the embedded Activity.

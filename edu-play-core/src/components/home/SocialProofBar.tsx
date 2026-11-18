@@ -8,7 +8,7 @@ import type { IconName } from '@/shared/components/ui/Icon.registry'
 
 const proofItems = [
   { key: 'ro', icon: 'MapPin' as IconName, tone: 'bg-purple-soft text-purple-deep' },
-  { key: 'gdpr', icon: 'Shield' as IconName, tone: 'bg-primary-soft text-primary-deep' },
+  { key: 'euHosting', icon: 'HardDrives' as IconName, tone: 'bg-primary-soft text-primary-deep' },
   { key: 'noAds', icon: 'Prohibit' as IconName, tone: 'bg-pink-soft text-pink-deep' },
   { key: 'diacritics', icon: 'BookOpen' as IconName, tone: 'bg-gold-soft text-gold-deep' },
 ] as const
@@ -28,14 +28,11 @@ export function SocialProofBar() {
         <div className="rounded-xl bg-surface-container-lowest shadow-soft">
           <div className="grid grid-cols-1 divide-y divide-outline-variant lg:grid-cols-12 lg:divide-x lg:divide-y-0">
             <motion.div variants={staggerItem} className="p-6 text-center lg:col-span-3 lg:text-left">
-              <div className="text-[44px] font-bold leading-none text-purple-deep">
+              <div className="text-xl font-bold leading-tight text-purple-deep">
                 {t('socialProof.headline')}
               </div>
               <p className="mt-2 text-base font-semibold text-on-surface">
                 {t('socialProof.title')}
-              </p>
-              <p className="mt-1 text-sm leading-relaxed text-on-surface-variant">
-                {t('socialProof.subtitle')}
               </p>
             </motion.div>
 

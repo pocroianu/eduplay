@@ -16,7 +16,7 @@ export async function createTeacherAssignment(client: Client, teacherId: string,
   const ownedClassIds = (classes ?? []).map(row => row.id);
   if (studentIds.length && ownedClassIds.length === 0) throw ApiError.forbidden('Nu există clase proprii pentru elevii selectați.');
   if (input.classId) {
-    if (!ownedClassIds.includes(input.classId)) throw ApiError.forbidden('Clasa nu vă aparține.');
+    if (!ownedClassIds.includes(input.classId)) throw ApiError.forbidden('Clasa nu îți aparține.');
     classIds.add(input.classId);
   }
   let notificationStudents: Array<{ id: string; class_id: string | null }> = [];
@@ -28,7 +28,7 @@ export async function createTeacherAssignment(client: Client, teacherId: string,
     if (error) throw new ApiError('INTERNAL_ERROR', 'Nu am putut verifica elevii.');
     notificationStudents = data ?? [];
     if (studentIds.length && notificationStudents.length !== studentIds.length) {
-      throw ApiError.forbidden('Elevii selectați nu aparțin claselor voastre.');
+      throw ApiError.forbidden('Elevii selectați nu aparțin claselor tale.');
     }
     for (const student of notificationStudents) if (student.class_id) classIds.add(student.class_id);
   }

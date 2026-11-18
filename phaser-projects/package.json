@@ -21,6 +21,7 @@
     "test:validation": "npm --prefix .. test --workspace=@edu-play/validation",
     "test:config-validation": "node --test scripts/__tests__/*.test.mjs",
     "test:game-core": "npm --prefix .. test --workspace=@edu-play/game-core",
+    "test:phaser-ui": "npm --prefix .. test --workspace=@edu-play/phaser-ui",
     "test:e2e": "playwright test --config=e2e/playwright.config.ts",
     "test:e2e:activity-dist": "playwright test --config=e2e/playwright.activity-dist.config.ts",
     "test:e2e:ui": "playwright test --config=e2e/playwright.config.ts --ui",

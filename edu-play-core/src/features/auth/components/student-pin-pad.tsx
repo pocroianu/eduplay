@@ -320,7 +320,7 @@ export function StudentPinPad({
           role="status"
           className={cn(
             'flex items-center justify-center gap-2 rounded-2xl bg-primary-soft p-3 text-base font-bold text-primary-deep',
-            'animate-in fade-in zoom-in-95 duration-200',
+            '',
           )}
         >
           <Icon name="Check" weight="bold" size={24} aria-hidden />

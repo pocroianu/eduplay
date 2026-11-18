@@ -1,15 +1,18 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
+import type { TFunction } from 'i18next';
 import { Icon } from '@/shared/components/ui/Icon';
 import type { IconName } from '@/shared/components/ui/Icon.registry';
 import {
   Button,
   Card,
   Pill,
-  SEESAW_FOCUS_RING_CLASS,
+  StatBlock,
+  type StatBlockVariant,
+  FOCUS_RING_CLASS,
 } from '@/shared/components/ui/kit';
 import {
   ChildSelector,
@@ -67,26 +70,27 @@ function formatPlayTime(minutes: number): string {
 function buildRecommendation(
   children: LinkedChildWithStats[],
   recentActivity: ActivityItemForFeed[],
+  t: TFunction,
 ): { headline: string; body: string } {
   if (children.length === 0) {
     return {
-      headline: 'Începe cu primul copil',
-      body: 'Conectează un cont folosind codul primit de la profesor pentru a vedea progresul în timp real.',
+      headline: t('dashboard.recommendation.noChildrenHeadline'),
+      body: t('dashboard.recommendation.noChildrenBody'),
     };
   }
 
   const inactive = children.filter((c) => !c.stats.lastActivityAt);
   if (inactive.length === children.length) {
     return {
-      headline: 'Niciun joc încă',
-      body: 'Încurajează copiii să exploreze biblioteca — primele activități vor apărea aici imediat după.',
+      headline: t('dashboard.recommendation.noActivityHeadline'),
+      body: t('dashboard.recommendation.noActivityBody'),
     };
   }
 
   if (recentActivity.length === 0) {
     return {
-      headline: 'Pauză în această săptămână',
-      body: 'Nu am înregistrat activitate recentă. O sesiune scurtă astăzi poate menține ritmul de învățare.',
+      headline: t('dashboard.recommendation.pauseHeadline'),
+      body: t('dashboard.recommendation.pauseBody'),
     };
   }
 
@@ -96,46 +100,22 @@ function buildRecommendation(
 
   if (lowest && lowest.stats.averageScore < 70) {
     return {
-      headline: `Sprijin pentru ${lowest.name.split(' ')[0]}`,
-      body: `Scorul mediu este ${lowest.stats.averageScore}%. Vezi care jocuri merită repetate împreună.`,
+      headline: t('dashboard.recommendation.supportHeadline', { childName: lowest.name.split(' ')[0] }),
+      body: t('dashboard.recommendation.supportBody', { score: lowest.stats.averageScore }),
     };
   }
 
   return {
-    headline: 'Ritm bun de învățare',
-    body: 'Copiii avansează constant. Continuă să încurajezi sesiuni scurte și frecvente.',
+    headline: t('dashboard.recommendation.goodPaceHeadline'),
+    body: t('dashboard.recommendation.goodPaceBody'),
   };
 }
 
-interface OverviewStatCardProps {
+interface OverviewStat {
   label: string;
   value: string | number;
   icon: IconName;
-  accent: string;
-  tone: string;
-}
-
-function OverviewStatCard({ label, value, icon, accent, tone }: OverviewStatCardProps) {
-  return (
-    <Card data-testid="parent-overview-card" className="min-h-[146px] rounded-xl border border-outline-variant p-6 shadow-soft-sm">
-      <div className="flex items-center justify-between gap-4">
-        <div className="min-w-0">
-          <p className="mb-1 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">
-            {label}
-          </p>
-          <p className="text-[34px] font-bold leading-none text-on-surface">
-            {value}
-          </p>
-        </div>
-        <div
-          className="flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-xl"
-          style={{ backgroundColor: tone, color: accent }}
-        >
-          <Icon name={icon} size={24} />
-        </div>
-      </div>
-    </Card>
-  );
+  variant: StatBlockVariant;
 }
 
 export function ParentDashboardContent({
@@ -146,50 +126,48 @@ export function ParentDashboardContent({
   activeChildId = null,
 }: ParentDashboardContentProps) {
   const { t } = useTranslation('parent');
+  const reduceMotion = useReducedMotion();
   const hasChildren = linkedChildren.length > 0;
-  const recommendation = buildRecommendation(linkedChildren, recentActivity);
+  const recommendation = buildRecommendation(linkedChildren, recentActivity, t);
   const childOptions = linkedChildren.map((c) => ({ id: c.id, name: c.name }));
   const filteredChildName =
     linkedChildren.find((c) => c.id === activeChildId)?.name ?? null;
 
-  const statCards: OverviewStatCardProps[] = [
+  const statCards: OverviewStat[] = [
     {
       label: t('dashboard.stats.connectedChildren'),
       value: aggregateStats.totalChildren,
       icon: 'Users',
-      accent: 'var(--color-primary)',
-      tone: 'color-mix(in srgb, var(--color-primary) 8%, transparent)',
+      variant: 'primary',
     },
     {
       label: t('dashboard.stats.gamesPlayed'),
       value: aggregateStats.totalGamesPlayed,
       icon: 'GameController',
-      accent: 'var(--color-blue)',
-      tone: 'color-mix(in srgb, var(--color-blue) 10%, transparent)',
+      variant: 'primary',
     },
     {
       label: t('dashboard.stats.averageScore'),
       value: aggregateStats.averageScore > 0 ? `${aggregateStats.averageScore}%` : '—',
       icon: 'Star',
-      accent: 'var(--color-gold-deep)',
-      tone: 'color-mix(in srgb, var(--color-gold-soft) 60%, transparent)',
+      variant: 'secondary',
     },
   ];
 
   return (
-    <main data-testid="parent-dashboard-surface" className="bg-surface p-6 lg:p-10">
+    <div data-testid="parent-dashboard-surface" className="bg-surface p-6 lg:p-10">
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
         <motion.div
-          initial={{ opacity: 0, y: -12 }}
+          initial={reduceMotion ? false : { opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, ease: 'easeOut' }}
           className="flex flex-col gap-4 rounded-xl border border-outline-variant bg-surface-container-lowest px-5 py-4 shadow-soft-sm md:flex-row md:items-center md:justify-between"
         >
           <div className="min-w-0">
-            <p className="mb-1 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">
+            <p className="mb-1 text-xs font-bold uppercase tracking-widest text-on-surface-variant">
               {t('dashboard.familyShell.eyebrow')}
             </p>
-            <h1 className="text-[28px] font-bold leading-tight text-on-surface md:text-[34px]">
+            <h1 className="text-2xl font-bold leading-tight text-on-surface md:text-3xl">
               {t('dashboard.myChildren', { defaultValue: 'Copiii mei' })}
             </h1>
             <p className="mt-1 max-w-2xl text-sm leading-6 text-on-surface-variant">
@@ -211,19 +189,27 @@ export function ParentDashboardContent({
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
           {statCards.map((card) => (
-            <OverviewStatCard key={card.label} {...card} />
+            <div key={card.label} data-testid="parent-overview-card">
+              <StatBlock
+                label={card.label}
+                value={card.value}
+                icon={card.icon}
+                variant={card.variant}
+                className="h-full"
+              />
+            </div>
           ))}
 
           <Link
             href={ROUTES.PARENT.LINK_CHILD}
-            className={`block ${SEESAW_FOCUS_RING_CLASS}`}
+            className={`block ${FOCUS_RING_CLASS}`}
           >
             <Card data-testid="parent-action-card" className="min-h-[146px] rounded-xl border border-outline-variant bg-surface-container-lowest p-5 shadow-soft-sm transition-shadow hover:shadow-soft">
               <div>
-                <p className="mb-2 text-[11px] font-bold uppercase tracking-widest text-primary">
+                <p className="mb-2 text-xs font-bold uppercase tracking-widest text-primary">
                   Acțiune rapidă
                 </p>
-                <h2 className="mb-5 text-[22px] font-bold leading-tight text-on-surface">
+                <h2 className="mb-5 text-xl font-bold leading-tight text-on-surface">
                   {hasChildren ? 'Adaugă încă un copil' : 'Conectează primul copil'}
                 </h2>
                 <div className="flex items-center gap-2 font-bold text-primary">
@@ -239,7 +225,7 @@ export function ParentDashboardContent({
           <div data-testid="parent-dashboard-shell" className="grid min-h-[620px] grid-cols-1 overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest shadow-soft-sm xl:grid-cols-[340px_minmax(0,1fr)_340px]">
             <aside className="border-b border-outline-variant bg-surface-container-lowest xl:border-b-0 xl:border-r">
               <div className="border-b border-outline-variant px-4 py-4">
-                <p className="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">
+                <p className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
                   {t('dashboard.familyShell.connectedChildren')}
                 </p>
                 <h2 className="mt-1 text-xl font-bold text-on-surface">
@@ -251,7 +237,7 @@ export function ParentDashboardContent({
                   <Link
                     key={child.id}
                     href={ROUTES.PARENT.CHILD(child.id)}
-                    className={`flex items-center gap-3 px-4 py-4 transition-colors hover:bg-surface ${SEESAW_FOCUS_RING_CLASS}`}
+                    className={`flex items-center gap-3 px-4 py-4 transition-colors hover:bg-surface ${FOCUS_RING_CLASS}`}
                   >
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-soft text-sm font-bold text-primary-deep">
                       {child.name.charAt(0).toUpperCase()}
@@ -276,7 +262,7 @@ export function ParentDashboardContent({
               <div className="border-b border-outline-variant bg-surface-container-lowest px-5 py-4">
                 <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
                   <div>
-                    <p className="text-[11px] font-bold uppercase tracking-widest text-primary-deep">
+                    <p className="text-xs font-bold uppercase tracking-widest text-primary-deep">
                       {t('dashboard.recentActivity')}
                     </p>
                     <h2 className="mt-1 text-2xl font-bold text-on-surface">
@@ -300,7 +286,7 @@ export function ParentDashboardContent({
 
             <aside className="border-t border-outline-variant bg-surface-container-lowest xl:border-l xl:border-t-0">
               <div className="border-b border-outline-variant px-4 py-4">
-                <p className="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">
+                <p className="text-xs font-bold uppercase tracking-widest text-on-surface-variant">
                   {t('dashboard.familyShell.detailsTitle')}
                 </p>
                 <h2 className="mt-1 text-xl font-bold text-on-surface">
@@ -313,7 +299,7 @@ export function ParentDashboardContent({
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-primary-soft text-primary-deep">
                       <Icon name="Lightbulb" size={16} aria-hidden />
                     </div>
-                    <p className="text-[11px] font-bold uppercase tracking-widest text-primary-deep">
+                    <p className="text-xs font-bold uppercase tracking-widest text-primary-deep">
                       {t('dashboard.recommendation.label')}
                     </p>
                   </div>
@@ -328,10 +314,10 @@ export function ParentDashboardContent({
                 <Card data-testid="parent-detail-card" className="rounded-xl border border-outline-variant p-5 shadow-soft-sm">
                   <div className="mb-4 flex items-center justify-between">
                     <div>
-                      <p className="mb-1 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">
+                      <p className="mb-1 text-xs font-bold uppercase tracking-widest text-on-surface-variant">
                         Această săptămână
                       </p>
-                      <h3 className="text-[18px] font-bold text-on-surface">
+                      <h3 className="text-lg font-bold text-on-surface">
                         Rezumat de joc
                       </h3>
                     </div>
@@ -339,7 +325,7 @@ export function ParentDashboardContent({
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     <div className="rounded-lg border border-outline-variant bg-surface px-4 py-3">
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">
+                      <p className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">
                         Timp total
                       </p>
                       <p className="mt-1 text-xl font-bold text-on-surface">
@@ -347,7 +333,7 @@ export function ParentDashboardContent({
                       </p>
                     </div>
                     <div className="rounded-lg border border-outline-variant bg-surface px-4 py-3">
-                      <p className="text-[10px] font-bold uppercase tracking-wider text-on-surface-variant">
+                      <p className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">
                         Activități
                       </p>
                       <p className="mt-1 text-xl font-bold text-on-surface">
@@ -360,7 +346,7 @@ export function ParentDashboardContent({
                 <Card data-testid="parent-detail-card" className="rounded-xl border border-outline-variant p-5 shadow-soft-sm">
                   <div className="mb-4 flex items-center gap-3">
                     <Icon name="SquaresFour" size={20} className="text-primary" aria-hidden />
-                    <h3 className="text-[18px] font-bold text-on-surface">
+                    <h3 className="text-lg font-bold text-on-surface">
                       Activitate recentă
                     </h3>
                   </div>
@@ -371,17 +357,17 @@ export function ParentDashboardContent({
           </div>
         ) : (
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={reduceMotion ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.15, duration: 0.35 }}
           >
             <Card padding="none" className="overflow-hidden rounded-xl border border-outline-variant shadow-soft-sm">
               <div className="grid items-stretch md:grid-cols-[minmax(0,1fr)_320px]">
                 <div className="px-6 py-8 md:px-8">
-                  <p className="mb-3 text-[11px] font-bold uppercase tracking-widest text-primary-deep">
+                  <p className="mb-3 text-xs font-bold uppercase tracking-widest text-primary-deep">
                     Niciun copil conectat
                   </p>
-                  <h2 className="mb-3 text-[28px] font-bold leading-tight text-on-surface">
+                  <h2 className="mb-3 text-2xl font-bold leading-tight text-on-surface">
                     Conectează primul tău copil pentru a-i vedea progresul
                   </h2>
                   <p className="mb-6 max-w-md text-base text-on-surface-variant">
@@ -416,6 +402,6 @@ export function ParentDashboardContent({
           </motion.div>
         )}
       </div>
-    </main>
+    </div>
   );
 }

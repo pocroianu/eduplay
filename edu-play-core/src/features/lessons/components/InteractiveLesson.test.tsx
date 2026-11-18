@@ -1,8 +1,19 @@
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { InteractiveLesson } from './InteractiveLesson';
 
 describe('InteractiveLesson controls', () => {
+  it('keeps encouragement stable as the timer advances', () => {
+    vi.useFakeTimers();
+    const { unmount } = render(<InteractiveLesson title="Numărăm" subject="math" profile={{ full_name: 'Ana' }}
+      steps={[{ id: 'count', type: 'multiple-choice', question: 'Cât face 1 + 1?',
+        options: [{ id: 'two', label: 'Doi', isCorrect: true }] }]} />);
+    const message = screen.getByText(/Pasul 1 din 1\./).textContent;
+    act(() => { vi.advanceTimersByTime(5000); });
+    expect(screen.getByText(/Pasul 1 din 1\./)).toHaveTextContent(message!);
+    unmount();
+    vi.useRealTimers();
+  });
   it('keeps answer selection and submission working after migrating buttons', () => {
     render(<InteractiveLesson title="Numărăm" subject="math" profile={{ full_name: 'Ana' }}
       steps={[{ id: 'count', type: 'multiple-choice', question: 'Cât face 1 + 1?',

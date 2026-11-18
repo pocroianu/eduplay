@@ -94,14 +94,15 @@ export function DashboardShell({
           {topBar.children}
         </TopAppBar>
       ) : null}
-      <main
+      <div
+        data-testid="dashboard-shell-content"
         className={cn(
           'mx-auto w-full flex-1 overflow-y-auto bg-surface px-4 py-6 pb-28 md:px-8 md:pb-12',
           contentClassName ?? 'max-w-6xl',
         )}
       >
         {children}
-      </main>
+      </div>
     </div>
   )
 

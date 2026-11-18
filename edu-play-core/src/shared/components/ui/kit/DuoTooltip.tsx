@@ -21,10 +21,12 @@ export function DuoTooltip({
   children,
   className,
 }: DuoTooltipProps) {
+  // Non-element children (plain text) are not focusable; make the wrapper a
+  // tab stop so keyboard users can reveal the tooltip too.
   const target = isValidElement(children) ? (
     (children as ReactElement)
   ) : (
-    <span>{children}</span>
+    <span tabIndex={0}>{children}</span>
   );
   return (
     <MantineBoundary>
@@ -32,7 +34,7 @@ export function DuoTooltip({
         label={content}
         position={placement}
         openDelay={delay}
-        events={{ hover: true, focus: true, touch: false }}
+        events={{ hover: true, focus: true, touch: true }}
         className={cn(
           "bg-surface-container-lowest shadow-popover text-on-surface",
           className,

@@ -25,7 +25,7 @@ export function StudentActivitiesLane({
     <section aria-labelledby="student-activities-heading">
       <div className="mb-3 flex items-end justify-between gap-3">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-wide text-on-surface-variant">
+          <p className="text-base font-semibold uppercase tracking-wide text-on-surface-variant">
             Lucru de clasă
           </p>
           <h2
@@ -49,7 +49,7 @@ export function StudentActivitiesLane({
             <li key={activity.id}>
               <Link
                 href={ROUTES.STUDENT.ACTIVITY_PLAY(activity.id)}
-                className="flex min-h-16 items-center gap-3 px-4 py-3 outline-none transition-colors hover:bg-surface-container focus-visible:ring-4 focus-visible:ring-primary/30"
+                className="flex min-h-16 items-center gap-3 px-4 py-3 outline-none transition-colors hover:bg-surface-container focus-ring"
               >
                 <span
                   aria-hidden="true"

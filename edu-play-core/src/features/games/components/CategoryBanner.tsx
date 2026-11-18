@@ -43,7 +43,7 @@ export function CategoryBanner({
         {onBack ? (
           <GameChromeButton
             onClick={onBack}
-            className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-outline-variant bg-surface text-on-surface-variant transition-colors hover:bg-primary-soft hover:text-primary-deep focus:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
+            className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-outline-variant bg-surface text-on-surface-variant transition-colors hover:bg-primary-soft hover:text-primary-deep focus-ring"
             aria-label={backLabel}
           >
             <Icon name="ArrowLeft" size={20} aria-hidden />
@@ -51,7 +51,7 @@ export function CategoryBanner({
         ) : (
           <Link
             href={backUrl}
-            className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-outline-variant bg-surface text-on-surface-variant transition-colors hover:bg-primary-soft hover:text-primary-deep focus:outline-none focus-visible:ring-4 focus-visible:ring-primary/20"
+            className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl border border-outline-variant bg-surface text-on-surface-variant transition-colors hover:bg-primary-soft hover:text-primary-deep focus-ring"
             aria-label={backLabel}
           >
             <Icon name="ArrowLeft" size={20} aria-hidden />
@@ -73,7 +73,7 @@ export function CategoryBanner({
               animate={reduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
               exit={reduceMotion ? { opacity: 0 } : { opacity: 0, y: 3 }}
               transition={reduceMotion ? { duration: 0 } : { duration: 0.18 }}
-              className="text-xs font-bold text-primary-deep"
+              className="text-base font-bold text-primary-deep"
             >
               {badgeLabel}
             </motion.div>
@@ -85,6 +85,7 @@ export function CategoryBanner({
 
         <div
           className="flex shrink-0 items-center gap-1.5"
+          role="img"
           aria-label={t("progress.label", {
             filled: filledDots,
             total: totalDots,

@@ -19,7 +19,7 @@ export function PageHeader({ title, eyebrow, subtitle, action, className }: Page
       )}
     >
       <div className="min-w-0">
-        {eyebrow ? <p className="text-xs font-semibold uppercase tracking-wide text-on-surface-muted">{eyebrow}</p> : null}
+        {eyebrow ? <p className="text-xs font-semibold uppercase tracking-wide text-on-surface-variant">{eyebrow}</p> : null}
         <h1 className="truncate font-headline text-xl font-bold tracking-tight text-on-surface">{title}</h1>
         {subtitle ? <p className="mt-1 truncate text-sm text-on-surface-variant">{subtitle}</p> : null}
       </div>

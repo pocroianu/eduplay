@@ -9,7 +9,7 @@ import {
 import { getTeacherOwnedActivities } from "@/features/teacher-activities/server";
 import { getPublishedGames } from "@/features/games/server";
 import { I18nProvider } from "@/lib/i18n/I18nProvider";
-import { getServerLanguage, preloadNamespaces } from "@/lib/i18n/server";
+import { getServerLanguage, getServerTranslation, preloadNamespaces } from "@/lib/i18n/server";
 
 function parseTab(tab: string | undefined): TeacherActivitiesTab {
   return tab === "my" ? "my" : "library";
@@ -65,24 +65,37 @@ export default async function TeacherActivitiesPage({
     redirect(ROUTES.AUTH.LOGIN);
   }
 
-  const [libraryResult, ownedActivities, lang] = await Promise.all([
-    getPublishedGames().catch((error) => {
-      console.error("Error fetching activities:", error);
-      return [];
-    }),
+  const [library, ownedActivities, lang] = await Promise.all([
+    getPublishedGames()
+      .then((games) => ({ games, failed: false }))
+      .catch((error) => {
+        console.error("Error fetching activities:", error);
+        return { games: [], failed: true };
+      }),
     getTeacherOwnedActivities(supabase, user.id),
     getServerLanguage(),
   ]);
   const resources = await preloadNamespaces(lang, ["teacher"]);
+  const libraryError = library.failed
+    ? await getServerTranslation(lang, "teacher", "activities.libraryLoadError")
+    : null;
 
   return (
     <I18nProvider lang={lang} resources={resources}>
       <div className="p-6 lg:p-10">
+        {libraryError ? (
+          <div
+            role="alert"
+            className="mb-6 rounded-lg border border-error bg-error-soft px-4 py-3 text-sm font-semibold text-error"
+          >
+            {libraryError}
+          </div>
+        ) : null}
         <TeacherActivitiesHub
           activeTab={activeTab}
           statusFilter={statusFilter}
           sortBy={sortBy}
-          libraryActivities={libraryResult}
+          libraryActivities={library.games}
           ownedActivities={ownedActivities}
         />
       </div>

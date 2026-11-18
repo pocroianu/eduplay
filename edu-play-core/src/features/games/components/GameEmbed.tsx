@@ -249,6 +249,7 @@ export function GameEmbed({
           )}
         </AnimatePresence>
 
+        {/* Proxied games need their real origin for config fetches, storage and origin-checked messages. On same-origin frames these two permissions do not provide strong isolation; move renderers to a separate origin for that. */}
         <iframe
           ref={iframeRef}
           src={iframeSrc}
@@ -272,6 +273,7 @@ export function GameEmbed({
             onLoadError?.();
           }}
           allow="autoplay; fullscreen"
+          sandbox="allow-scripts allow-same-origin"
           title={t("iframe.title")}
         />
       </div>
@@ -318,7 +320,7 @@ export function GameEmbed({
               }
             >
               <Card
-                mode="standard"
+                mode="kid"
                 tone="cream"
                 padding="lg"
                 className="border border-outline-variant shadow-soft"
@@ -341,7 +343,7 @@ export function GameEmbed({
 
                   <div className="grid w-full grid-cols-2 gap-2 rounded-2xl bg-surface-container p-3 text-left">
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+                      <p className="text-base font-bold uppercase tracking-wider text-on-surface-variant">
                         {t("results.labels.time")}
                       </p>
                       <p className="font-headline text-xl font-bold text-on-surface">
@@ -349,7 +351,7 @@ export function GameEmbed({
                       </p>
                     </div>
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-wider text-on-surface-variant">
+                      <p className="text-base font-bold uppercase tracking-wider text-on-surface-variant">
                         {t("pauseOverlay.progress")}
                       </p>
                       <p className="font-headline text-xl font-bold text-on-surface">
@@ -360,7 +362,7 @@ export function GameEmbed({
 
                   <div className="grid w-full gap-2 sm:grid-cols-2">
                     <Button
-                      mode="standard"
+                      mode="kid"
                       variant="primary"
                       size="lg"
                       onClick={togglePause}
@@ -371,7 +373,7 @@ export function GameEmbed({
                       {t("pauseOverlay.resume")}
                     </Button>
                     <Button
-                      mode="standard"
+                      mode="kid"
                       variant="secondary"
                       size="lg"
                       onClick={handleRestart}
@@ -382,7 +384,7 @@ export function GameEmbed({
                       {t("pauseOverlay.restart")}
                     </Button>
                     <Button
-                      mode="standard"
+                      mode="kid"
                       variant="secondary"
                       size="lg"
                       onClick={toggleMute}
@@ -404,7 +406,7 @@ export function GameEmbed({
                         : t("pauseOverlay.soundOff")}
                     </Button>
                     <Button
-                      mode="standard"
+                      mode="kid"
                       variant="secondary"
                       size="lg"
                       onClick={toggleFullscreen}
@@ -427,7 +429,7 @@ export function GameEmbed({
 
                   {onRequestExit && (
                     <Button
-                      mode="standard"
+                      mode="kid"
                       variant="secondary"
                       size="lg"
                       onClick={onRequestExit}

@@ -27,7 +27,7 @@ import { createAssignment, updateAssignment } from '../actions/assignment-action
 
 const composerSchema = z
   .object({
-    activityId: z.string().uuid({ message: 'Selectați o activitate' }),
+    activityId: z.string().uuid({ message: 'Selectează o activitate' }),
     targetType: z.enum(['class', 'student']),
     classId: z.string().uuid().optional(),
     studentIds: z.array(z.string().uuid()).optional(),
@@ -36,11 +36,11 @@ const composerSchema = z
   })
   .superRefine((data, ctx) => {
     if (data.targetType === 'class' && !data.classId) {
-      ctx.addIssue({ code: 'custom', message: 'Selectați o clasă', path: ['classId'] })
+      ctx.addIssue({ code: 'custom', message: 'Selectează o clasă', path: ['classId'] })
     }
 
     if (data.targetType === 'student' && (!data.studentIds || data.studentIds.length === 0)) {
-      ctx.addIssue({ code: 'custom', message: 'Selectați cel puțin un elev', path: ['studentIds'] })
+      ctx.addIssue({ code: 'custom', message: 'Selectează cel puțin un elev', path: ['studentIds'] })
     }
   })
 

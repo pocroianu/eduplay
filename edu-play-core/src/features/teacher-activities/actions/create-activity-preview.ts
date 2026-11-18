@@ -8,6 +8,9 @@ import {
   validateConfigForType,
 } from '@/features/activities/server'
 import { getTeacherActivityContext } from './teacher-context'
+import { ROUTES } from '@/shared/lib/constants/routes'
+
+const MY_ACTIVITIES_HREF = `${ROUTES.TEACHER.ACTIVITIES}?tab=my`
 
 interface PreviewActivityRow {
   id: string
@@ -20,7 +23,7 @@ interface PreviewActivityRow {
 
 export async function createTeacherActivityPreview(activityId: string): Promise<void> {
   const auth = await getTeacherActivityContext()
-  if (!auth || !activityId) redirect('/teacher/activities?tab=my')
+  if (!auth || !activityId) redirect(MY_ACTIVITIES_HREF)
 
   const { data: activity, error } = await auth.supabase
     .from('activities')
@@ -30,7 +33,7 @@ export async function createTeacherActivityPreview(activityId: string): Promise<
     .maybeSingle<PreviewActivityRow>()
 
   if (error || !activity || activity.created_by !== auth.userId || !activity.config_data) {
-    redirect('/teacher/activities?tab=my')
+    redirect(MY_ACTIVITIES_HREF)
   }
 
   const activityType = await validateConfigForType(
@@ -41,7 +44,7 @@ export async function createTeacherActivityPreview(activityId: string): Promise<
   )
 
   if (activityType.authoringMode !== 'teacher-simple') {
-    redirect('/teacher/activities?tab=my')
+    redirect(MY_ACTIVITIES_HREF)
   }
 
   await cleanupExpiredPreviewSessions()
@@ -52,5 +55,5 @@ export async function createTeacherActivityPreview(activityId: string): Promise<
     createdBy: auth.userId,
   })
 
-  redirect(`/play/${activity.id}?previewId=${encodeURIComponent(preview.previewId)}`)
+  redirect(`${ROUTES.PLAY.ACTIVITY(activity.id)}?previewId=${encodeURIComponent(preview.previewId)}`)
 }

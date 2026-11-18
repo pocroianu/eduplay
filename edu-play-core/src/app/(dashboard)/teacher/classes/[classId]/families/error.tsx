@@ -21,10 +21,10 @@ export default function ClassFamiliesError({ error, reset }: ErrorProps) {
         <Icon name="Warning" size="xl" className="mx-auto text-error" aria-hidden />
         <h2 className="mt-4 text-lg font-bold text-on-surface">Eroare la încărcarea invitațiilor pentru familii</h2>
         <p className="mt-2 text-sm text-on-surface-variant">
-          A apărut o eroare neașteptată. Încercați din nou sau reveniți la setările clasei.
+          A apărut o eroare neașteptată. Încearcă din nou sau revino la setările clasei.
         </p>
         <div className="mt-5 flex flex-wrap justify-center gap-3">
-          <Button mode="standard" onClick={reset}>Încercați din nou</Button>
+          <Button mode="standard" onClick={reset}>Încearcă din nou</Button>
           <Button mode="standard" variant="secondary" href={ROUTES.TEACHER.CLASSES}>Clase</Button>
         </div>
         {error.digest && (

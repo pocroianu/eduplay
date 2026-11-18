@@ -4,7 +4,7 @@ function LoadingRow({ className = '' }: { className?: string }) {
 
 export default function TeacherActivityReviewLoading() {
   return (
-    <main className="min-h-screen bg-surface p-6 lg:p-10">
+    <div className="min-h-screen bg-surface p-6 lg:p-10">
       <div className="mx-auto max-w-[1440px] space-y-5 animate-pulse motion-reduce:animate-none">
         <section className="rounded-lg border border-outline-variant bg-surface-container-lowest p-5">
           <LoadingRow className="h-6 w-56" />
@@ -28,6 +28,6 @@ export default function TeacherActivityReviewLoading() {
           ))}
         </section>
       </div>
-    </main>
+    </div>
   )
 }

@@ -176,7 +176,7 @@ export default async function TeacherPortfolioPage({
         </div>
       </header>
 
-      <main className="flex-1 bg-surface-container">
+      <div className="flex-1 bg-surface-container">
         <div className="mx-auto flex max-w-[1280px] flex-col gap-5 px-5 py-5 md:px-8 lg:grid lg:grid-cols-[280px_minmax(0,1fr)] lg:items-start">
           <TeacherPortfolioFilters
             classes={classes}
@@ -197,7 +197,7 @@ export default async function TeacherPortfolioPage({
                 <p className="truncate text-sm font-bold text-on-surface">
                   {journalLabel}
                 </p>
-                <p className="text-xs font-semibold text-on-surface-muted">
+                <p className="text-xs font-semibold text-on-surface-variant">
                   Revizuiește lucrările înainte să fie aprobate sau publicate.
                 </p>
               </div>
@@ -233,7 +233,7 @@ export default async function TeacherPortfolioPage({
             )}
           </section>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

@@ -69,7 +69,7 @@ export function PreGameCover({
             </motion.div>
 
             <motion.div variants={itemVariants} className="flex flex-col items-center gap-2">
-              <span className="text-xs font-bold text-primary-deep">
+              <span className="text-lg font-bold text-primary-deep">
                 Gata de joc?
               </span>
               <h1
@@ -132,7 +132,6 @@ export function PreGameCover({
                 size="lg"
                 tone="cream"
                 onClick={onBack}
-                aria-label="Înapoi la jocuri"
                 fullWidth
               >
                 <Icon name="ArrowLeft" size={20} aria-hidden />

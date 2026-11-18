@@ -253,7 +253,7 @@ export default async function TeacherAccountSchoolPage() {
   const workspace = interpolate(copy.workspace, { summary: classSummary });
 
   return (
-    <main className="min-h-screen bg-surface text-on-surface">
+    <div className="min-h-screen bg-surface text-on-surface">
       <header className="border-b border-outline-variant bg-surface-container-lowest px-6 py-5 lg:px-10">
         <div className="mx-auto flex max-w-5xl flex-col gap-5">
           <div className="flex items-center gap-3">
@@ -324,6 +324,6 @@ export default async function TeacherAccountSchoolPage() {
           </div>
         </Section>
       </div>
-    </main>
+    </div>
   );
 }

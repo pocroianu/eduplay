@@ -1,3 +1,16 @@
+.teacherScrollPage {
+  height: auto;
+  overflow: visible;
+}
+
+@media (min-width: 48em) {
+  .teacherScrollPage {
+    height: calc(100dvh - 68px);
+    min-height: 0;
+    overflow-y: auto;
+  }
+}
+
 .interactive {
   transition:
     background-color 150ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -9,11 +22,15 @@
 }
 
 .surfaceInteractive:hover,
-.surfaceInteractive:focus-visible,
-.surfaceInteractive:focus-within {
+.surfaceInteractive:focus-visible {
   border-color: var(--color-primary);
   background-color: var(--color-surface-hover);
   box-shadow: var(--shadow-soft);
+}
+
+.surfaceInteractive:not(input):focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .actionInteractive:hover,
@@ -24,10 +41,15 @@
 
 .librariesControlSurface {
   min-height: 44px;
-  border: 1px solid var(--color-outline);
+  border: 1px solid var(--color-outline-strong);
   border-radius: 8px;
   background-color: var(--color-surface-container-lowest);
   color: var(--color-on-surface);
+}
+
+form.librariesControlSurface:focus-within {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
 }
 
 .librariesTopicSurface {
@@ -57,15 +79,16 @@
 }
 
 .librariesFloatingAction {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius-md);
   border: 1px solid var(--color-outline);
   background-color: var(--color-surface-container-lowest);
   color: var(--color-on-surface);
   box-shadow: var(--shadow-soft-sm);
-}
-
-.librariesPage {
-  overflow-x: hidden;
-  overflow-y: auto;
 }
 
 .librariesColumn {
@@ -109,26 +132,14 @@
   min-width: 148px;
 }
 
-.librariesCurriculumBadge {
-  flex: 0 1 auto;
-  min-width: 0;
-}
-
-.librariesCollectionCard {
-  min-height: 104px;
-}
-
-.librariesCollectionThumb {
-  width: 96px;
-  height: 100%;
-  flex: 0 0 96px;
-}
-
 .librariesActivityCard {
   min-height: 236px;
 }
 
 .librariesActivityThumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 134px;
 }
 
@@ -167,7 +178,7 @@
   box-shadow: 0 0 0 4px var(--color-purple-soft);
 }
 
-.choiceButton[data-selected='true'] {
+.choiceButton[data-selected="true"] {
   border-color: var(--color-primary);
   background: var(--color-primary-soft);
   color: var(--color-primary-deep);
@@ -191,7 +202,7 @@
 
 .choiceTitle {
   display: block;
-  font-size: var(--font-size-md);
+  font-size: var(--text-base);
   font-weight: 700;
 }
 
@@ -199,7 +210,7 @@
   display: block;
   margin-top: 4px;
   color: var(--color-on-surface-variant);
-  font-size: var(--font-size-sm);
+  font-size: var(--text-sm);
   font-weight: 500;
 }
 
@@ -371,7 +382,6 @@
 @media (max-width: 767px) {
   .librariesColumn {
     width: calc(100% - 24px);
-    padding-bottom: 88px;
   }
 
   .librariesSearchBlock {
@@ -389,10 +399,6 @@
   .librariesFilterSelect {
     flex: 1 1 calc(50% - 6px);
     min-width: 0;
-  }
-
-  .librariesCurriculumBadge {
-    width: 100%;
   }
 
   .libraryColumn {
@@ -428,4 +434,86 @@
   .choiceButton {
     transition: none;
   }
+}
+
+.librariesHeading,
+.librariesSectionHeading {
+  color: var(--color-on-surface);
+  font-size: var(--mantine-font-size-lg);
+  font-weight: 700;
+  line-height: 1.5;
+  margin: 0;
+}
+.librariesSectionHeading {
+  margin-bottom: var(--mantine-spacing-md);
+}
+.librariesSearchButton {
+  width: 44px;
+  height: 44px;
+  margin-right: 4px;
+  border-radius: var(--radius-sm);
+}
+.librariesTopicIcon {
+  display: inline-flex;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+}
+.librariesTopicButton {
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+}
+.librariesCardBase {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+.librariesActivityLink {
+  display: flex;
+  min-height: 233px;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+}
+.librariesCardBody {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  padding: 10px 12px 12px;
+}
+.librariesCreator {
+  color: var(--color-on-surface-variant);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 600;
+  line-height: 1.25;
+}
+.librariesCardTitle {
+  display: -webkit-box;
+  overflow: hidden;
+  color: var(--color-on-surface);
+  font-size: var(--mantine-font-size-sm);
+  font-weight: 700;
+  line-height: 1.35;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+.librariesCardMeta {
+  margin-top: auto;
+  padding-top: 8px;
+  color: var(--color-on-surface-variant);
+  font-size: var(--mantine-font-size-xs);
+  font-weight: 700;
+}
+.librariesEmpty {
+  border: 1px solid var(--color-outline);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface-container-lowest);
+  color: var(--color-on-surface-variant);
+  font-size: var(--mantine-font-size-md);
+  font-weight: 600;
 }

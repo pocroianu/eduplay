@@ -160,7 +160,7 @@ export function ClassPathProgressMatrix({
                   Progresul clasei pentru {result.path.title}
                 </Table.Caption>
                 <Table.Thead>
-                  <Table.Tr className="text-xs font-bold uppercase text-on-surface-muted">
+                  <Table.Tr className="text-xs font-bold uppercase text-on-surface-variant">
                     <Table.Th scope="col" className="border-b-2 border-outline-variant px-4 py-3">
                       Elev
                     </Table.Th>
@@ -196,7 +196,7 @@ export function ClassPathProgressMatrix({
                             <p className="font-headline text-lg font-bold text-on-surface">
                               {displayName(row)}
                             </p>
-                            <p className="text-sm font-semibold text-on-surface-muted">
+                            <p className="text-sm font-semibold text-on-surface-variant">
                               @{row.student.username}
                             </p>
                           </div>

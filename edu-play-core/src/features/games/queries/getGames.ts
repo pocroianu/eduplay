@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { getAssignmentActivityPlayHref } from "@/features/activities";
 import { filterStudentVisibleGames } from "@/lib/feature-flags";
+import { ROUTES } from "@/shared/lib/constants";
 import type {
   Game,
   GameProgress,
@@ -43,7 +44,7 @@ function toCatalogGame(row: ActivityCatalogRow): Game {
     description: row.description,
     template: row.template,
     thumbnail_url: row.thumbnail_url,
-    game_url: `/play/${row.id}`,
+    game_url: ROUTES.PLAY.ACTIVITY(row.id),
     category: row.category as GameCategory | null,
     difficulty_level: difficultyToLevel(row.difficulty),
     target_age_min: row.target_age_min,

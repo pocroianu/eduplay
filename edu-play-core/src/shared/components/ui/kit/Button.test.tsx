@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Button } from './Button';
-import { SEESAW_STANDARD_BUTTON_INTERACTION_CLASS } from './seesawInteraction';
+import { STANDARD_BUTTON_INTERACTION_CLASS } from './interactionTokens';
 
 describe('Button (standard mode)', () => {
   it('renders children and handles click', () => {
@@ -24,7 +24,7 @@ describe('Button (standard mode)', () => {
     expect(className).not.toContain('shadow-chunk-green');
     expect(className).not.toContain('uppercase');
     expect(className).not.toMatch(/hover:scale-|group-hover:scale-/);
-    expect(className).toContain(SEESAW_STANDARD_BUTTON_INTERACTION_CLASS);
+    expect(className).toContain(STANDARD_BUTTON_INTERACTION_CLASS);
     expect(className).not.toContain(
       'transition-[background-color,color,box-shadow,transform]',
     );

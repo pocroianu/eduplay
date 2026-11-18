@@ -106,7 +106,7 @@ export default async function TeacherTrialPage() {
   ]);
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-surface-container px-4 py-8 text-on-surface sm:px-6 lg:px-10">
+    <div className="flex min-h-screen items-center justify-center bg-surface-container px-4 py-8 text-on-surface sm:px-6 lg:px-10">
       <Card className="w-full max-w-4xl overflow-hidden border border-outline-variant bg-surface-container-lowest" padding="none">
         <div className="flex items-start justify-between gap-4 border-b border-outline-variant px-6 py-6">
           <div className="text-left">
@@ -151,9 +151,7 @@ export default async function TeacherTrialPage() {
         </div>
 
         <div className="flex flex-col items-center gap-3 border-t border-outline-variant bg-surface px-5 py-5 text-center sm:flex-row sm:justify-center">
-          <Button type="button" disabled aria-describedby="premium-trial-unavailable">
-            {startUnavailable}
-          </Button>
+          <p className="text-sm font-semibold text-on-surface-variant">{startUnavailable}</p>
           <Button href={ROUTES.HOME} variant="secondary">
             {learnMoreUnavailable}
           </Button>
@@ -162,6 +160,6 @@ export default async function TeacherTrialPage() {
           </p>
         </div>
       </Card>
-    </main>
+    </div>
   );
 }

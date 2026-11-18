@@ -55,6 +55,7 @@ vi.mock('@/lib/i18n/I18nProvider', () => ({
 }))
 
 import ClassJournalPage from './page'
+import ClassNotificationsPage from '../notifications/page'
 
 const classDetailData = {
   profile: {
@@ -112,6 +113,12 @@ beforeEach(() => {
 })
 
 describe('/teacher/classes/[classId]/journal', () => {
+  it('shows an honest unavailable state for notifications', async () => {
+    getClassDetailDataMock.mockResolvedValue(classDetailData)
+    render(<MantineProvider>{await ClassNotificationsPage({ params: Promise.resolve({ classId: 'class-1' }) })}</MantineProvider>)
+    expect(screen.getByText('Notificările nu sunt disponibile încă.')).toBeInTheDocument()
+    expect(screen.queryByText(/28 apr/)).not.toBeInTheDocument()
+  })
   it('adds teacher class tab route constants', () => {
     expect(ROUTES.TEACHER.CLASS_JOURNAL('class-1')).toBe('/teacher/classes/class-1/journal')
     expect(ROUTES.TEACHER.CLASS_ACTIVITIES('class-1')).toBe('/teacher/classes/class-1/activities')
@@ -151,9 +158,8 @@ describe('/teacher/classes/[classId]/journal', () => {
     expect(screen.getByRole('heading', { name: 'Jurnalul clasei' })).toBeInTheDocument()
     expect(screen.getAllByText('Andrei Popescu').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Ioana Marin').length).toBeGreaterThan(0)
-    expect(screen.getByRole('heading', { name: 'Fluxul jurnalului clasei' })).toBeInTheDocument()
-    expect(screen.getByText('Toată lumea')).toBeInTheDocument()
-    expect(screen.getAllByText(/22 mai 2026/).length).toBeGreaterThan(0)
+    expect(screen.getByText(/Nicio postare din jurnal/)).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /apreciază|comentează/i })).not.toBeInTheDocument()
     const tabNavigation = screen.getByRole('navigation', {
       name: 'Filele clasei Clasa Buburuzelor',
     })
@@ -179,7 +185,7 @@ describe('/teacher/classes/[classId]/journal', () => {
       ROUTES.TEACHER.CLASS_JOURNAL_NEW('class-1'),
     )
     expect(screen.queryByRole('button', { name: 'Așteaptă aprobare' })).not.toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Apreciază' })).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Comentează' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Apreciază' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: 'Comentează' })).not.toBeInTheDocument()
   })
 })
