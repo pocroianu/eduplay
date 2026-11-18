@@ -344,7 +344,7 @@ export function InteractiveLesson({
       {/* ---- Header ---- */}
       <header className="bg-surface-container-lowest flex justify-between items-center w-full px-4 md:px-6 py-4 z-30 flex-wrap gap-3 border-b border-outline-variant">
         {/* Left: back + logo */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex min-w-0 items-center gap-3 shrink-0">
           <Button
             mode="kid"
             onClick={onBack}
@@ -362,9 +362,9 @@ export function InteractiveLesson({
         </div>
 
         {/* Center: progress */}
-        <div className="flex-1 max-w-md mx-2 sm:mx-8 order-last sm:order-none w-full sm:w-auto">
-          <div className="flex items-center gap-3">
-            <div className="flex-1">
+        <div className="min-w-0 flex-1 max-w-md mx-0 sm:mx-8 order-last sm:order-none w-full sm:w-auto">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+            <div className="min-w-[8rem] flex-1">
               <ProgressBar
                 value={currentStepIndex + (answered ? 1 : 0)}
                 max={totalSteps}
@@ -373,7 +373,7 @@ export function InteractiveLesson({
               />
             </div>
             {/* Step dots */}
-            <div className="flex gap-1 shrink-0">
+            <div className="flex min-w-0 max-w-full flex-wrap gap-1">
               {steps.map((_, idx) => (
                 <div
                   key={idx}
@@ -387,34 +387,34 @@ export function InteractiveLesson({
                 />
               ))}
             </div>
-            <span className="text-xs font-bold text-on-surface-variant whitespace-nowrap">
+            <span className="shrink-0 text-base font-bold text-on-surface-variant">
               {progressPercent}% Gata!
             </span>
           </div>
         </div>
 
         {/* Right: help + score + timer */}
-        <div className="flex items-center gap-3 shrink-0">
+        <div className="flex min-w-0 flex-wrap items-center gap-3">
           {showTimer && (
-            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container rounded-full text-sm font-bold text-on-surface-variant">
+            <div className="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container rounded-full text-base font-bold text-on-surface-variant">
               <Icon name="Timer" size={18} />
               {timerFormatted}
             </div>
           )}
           <div className="flex items-center gap-2 px-3 py-1.5 bg-surface-container-lowest rounded-full shadow-soft">
             <Icon name="Trophy" weight="fill" size={18} className="text-gold" />
-            <span className="font-bold text-sm">{score}</span>
+            <span className="font-bold text-base">{score}</span>
           </div>
         </div>
       </header>
 
       {/* ---- Main content ---- */}
-      <main className="flex-1 relative flex items-stretch p-4 md:p-6 overflow-hidden">
+      <div className="flex-1 relative flex items-stretch p-4 md:p-6 overflow-hidden">
         <div className="w-full max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 z-10">
           {/* ---- Left Panel: Instructions ---- */}
           <div className="lg:col-span-4 bg-surface-container-lowest rounded-2xl p-6 md:p-8 shadow-soft flex flex-col">
             <div className="mb-6">
-              <span className={`inline-block text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full ${subjectMeta.color}`}>
+              <span className={`inline-block text-base font-bold uppercase tracking-wide px-3 py-1 rounded-full ${subjectMeta.color}`}>
                 {subjectMeta.badge}
               </span>
               <h1 className="text-2xl md:text-3xl font-headline font-bold text-on-surface mt-4 leading-tight">
@@ -429,8 +429,8 @@ export function InteractiveLesson({
 
               {currentStep?.type !== 'info' && (
                 <div className="rounded-xl bg-primary-soft p-4">
-                  <p className="text-sm font-medium italic text-on-surface">
-                    &ldquo;{pickRandom(ENCOURAGEMENTS)}&rdquo;
+                  <p className="text-lg font-medium italic text-on-surface">
+                    &ldquo;{ENCOURAGEMENTS[currentStepIndex % ENCOURAGEMENTS.length]}&rdquo;
                   </p>
                 </div>
               )}
@@ -449,7 +449,7 @@ export function InteractiveLesson({
                     }`}
                   >
                     <span
-                      className={`w-8 h-8 flex items-center justify-center font-bold text-sm rounded-full shrink-0 ${
+                      className={`w-8 h-8 flex items-center justify-center font-bold text-base rounded-full shrink-0 ${
                         idx < currentStepIndex
                           ? 'bg-primary text-on-primary'
                           : idx === currentStepIndex
@@ -463,7 +463,7 @@ export function InteractiveLesson({
                         idx + 1
                       )}
                     </span>
-                    <span className="text-sm font-medium truncate">
+                    <span className="text-lg font-medium truncate">
                       {step.question.length > 40 ? step.question.slice(0, 40) + '...' : step.question}
                     </span>
                   </motion.div>
@@ -478,9 +478,9 @@ export function InteractiveLesson({
                   <Vulpita mood="think" size={56} />
                 </div>
                 <div>
-                  <p className="text-xs font-bold text-on-surface-variant uppercase">Sfat de la Vulpița:</p>
-                  <p className="text-sm font-medium">
-                    Pasul {currentStepIndex + 1} din {totalSteps}. {pickRandom(ENCOURAGEMENTS)}
+                  <p className="text-base font-bold text-on-surface-variant uppercase">Sfat de la Vulpița:</p>
+                  <p className="text-lg font-medium">
+                    Pasul {currentStepIndex + 1} din {totalSteps}. {ENCOURAGEMENTS[currentStepIndex % ENCOURAGEMENTS.length]}
                   </p>
                 </div>
               </div>
@@ -594,15 +594,15 @@ export function InteractiveLesson({
                         className={`mt-6 px-6 py-3 rounded-full font-bold text-lg flex items-center gap-2 shadow-soft ${
                           feedback === 'correct'
                             ? 'bg-primary text-on-primary'
-                            : 'bg-error text-on-error'
+                            : 'bg-gold-soft text-gold-deep'
                         }`}
-                        variants={fadeInUp}
+                        role="status" aria-live="polite" variants={fadeInUp}
                         initial="initial"
                         animate="animate"
                         exit="exit"
                       >
                         <Icon
-                          name={feedback === 'correct' ? 'CheckCircle' : 'XCircle'}
+                          name={feedback === 'correct' ? 'CheckCircle' : 'ArrowCounterClockwise'}
                           weight="fill"
                           size={24}
                         />
@@ -630,7 +630,7 @@ export function InteractiveLesson({
 
               <div className="flex items-center gap-4 flex-1 justify-end">
                 <div className="flex flex-col items-end mr-2">
-                  <span className="text-[10px] font-bold text-primary uppercase tracking-tighter">
+                  <span className="text-base font-bold text-primary uppercase tracking-normal">
                     Pas {currentStepIndex + 1}/{totalSteps}
                   </span>
                   <div className="flex gap-1 mt-1">
@@ -669,7 +669,7 @@ export function InteractiveLesson({
             </div>
           </div>
         </div>
-      </main>
+      </div>
 
       {/* ---- Floating toast ---- */}
       <AnimatePresence>
@@ -684,7 +684,7 @@ export function InteractiveLesson({
             <div className={`px-8 py-4 rounded-full shadow-soft flex items-center gap-3 font-bold text-lg ${
               feedback === 'correct'
                 ? 'bg-primary text-on-primary'
-                : 'bg-error text-on-error'
+                : 'bg-gold-soft text-gold-deep'
             }`}>
               <Icon
                 name={feedback === 'correct' ? 'CheckCircle' : 'Info'}
@@ -740,12 +740,12 @@ function MultipleChoice({ options, selectedId, onSelect, answered }: MultipleCho
           bgColor = 'bg-primary/5'
         }
         if (showCorrect) {
-          borderColor = 'border-tertiary'
+          borderColor = 'border-success'
           bgColor = 'bg-primary/10'
         }
         if (showIncorrect) {
-          borderColor = 'border-error'
-          bgColor = 'bg-error/10'
+          borderColor = 'border-gold'
+          bgColor = 'bg-gold-soft'
         }
 
         return (
@@ -760,7 +760,7 @@ function MultipleChoice({ options, selectedId, onSelect, answered }: MultipleCho
             )}
             <span className="flex-1">{option.label}</span>
             {showCorrect && <Icon name="CheckCircle" weight="fill" size={24} className="text-primary shrink-0" />}
-            {showIncorrect && <Icon name="XCircle" weight="fill" size={24} className="text-error shrink-0" />}
+            {showIncorrect && <Icon name="ArrowCounterClockwise" weight="bold" size={24} className="text-gold-deep shrink-0" />}
           </UnstyledButton>
         )
       })}
@@ -790,8 +790,8 @@ function FillInTheBlank({ blanks, values, onChange, answered }: FillInTheBlankPr
         const isFieldIncorrect = answered && !isFieldCorrect
 
         let ringClass = 'ring-outline-variant focus-within:ring-primary'
-        if (isFieldCorrect) ringClass = 'ring-tertiary'
-        if (isFieldIncorrect) ringClass = 'ring-error'
+        if (isFieldCorrect) ringClass = 'ring-success'
+        if (isFieldIncorrect) ringClass = 'ring-gold'
 
         return (
           <div key={blank.id} className="flex flex-col gap-2">
@@ -810,11 +810,11 @@ function FillInTheBlank({ blanks, values, onChange, answered }: FillInTheBlankPr
                 styles={{ input: { minHeight: 64, fontSize: "var(--text-lg)", backgroundColor: "transparent" } }}
               />
               {isFieldCorrect && <Icon name="CheckCircle" weight="fill" size={24} className="text-primary" />}
-              {isFieldIncorrect && <Icon name="XCircle" weight="fill" size={24} className="text-error" />}
+              {isFieldIncorrect && <Icon name="ArrowCounterClockwise" weight="bold" size={24} className="text-gold-deep" />}
             </div>
             {isFieldIncorrect && (
               <motion.p
-                className="text-sm font-medium text-error pl-2"
+                className="text-lg font-medium text-on-surface bg-gold-wash rounded-xl px-4 py-2"
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
               >
@@ -864,7 +864,7 @@ function DragAndDrop({ tokens, dropZones, placements, onPlace, answered }: DragA
   return (
     <MantineBoundary>
     <motion.div className="flex flex-col gap-6" variants={fadeInUp} initial="initial" animate="animate">
-      <p className="text-sm font-medium text-on-surface-variant text-center">
+      <p className="text-lg font-medium text-on-surface-variant text-center">
         Selectează un element, apoi apasă pe zona potrivită.
       </p>
 
@@ -883,9 +883,9 @@ function DragAndDrop({ tokens, dropZones, placements, onPlace, answered }: DragA
               disabled={answered}
                   className={`min-h-[64px] min-w-[80px] px-5 py-3 rounded-2xl font-bold text-lg shadow-soft transition-all disabled:cursor-default ${
                 isCorrectlyPlaced
-                  ? 'bg-primary/20 border border-tertiary text-on-surface'
+                  ? 'bg-primary/20 border border-success text-on-surface'
                   : isIncorrectlyPlaced
-                    ? 'bg-error/20 border border-error text-on-surface'
+                    ? 'bg-gold-soft border border-gold text-on-surface'
                     : isActive
                       ? 'bg-primary text-on-primary ring-2 ring-primary/30'
                       : placed
@@ -913,9 +913,9 @@ function DragAndDrop({ tokens, dropZones, placements, onPlace, answered }: DragA
               disabled={answered}
                 className={`min-h-[80px] min-w-[120px] px-6 py-4 rounded-2xl border border-dashed flex flex-col items-center justify-center gap-1 transition-all disabled:cursor-default ${
                 isCorrect
-                  ? 'border-tertiary bg-primary/10'
+                  ? 'border-success bg-primary/10'
                   : isIncorrect
-                    ? 'border-error bg-error/10'
+                    ? 'border-gold bg-gold-soft'
                     : tokenInZone
                       ? 'border-primary/40 bg-primary/5'
                       : activeTokenId
@@ -923,12 +923,12 @@ function DragAndDrop({ tokens, dropZones, placements, onPlace, answered }: DragA
                         : 'border-outline-variant/30 bg-surface-container/30'
               }`}
             >
-              <span className="text-xs font-semibold text-on-surface-variant uppercase">{zone.label}</span>
+              <span className="text-base font-semibold text-on-surface-variant uppercase">{zone.label}</span>
               {tokenInZone && (
                 <span className="font-bold text-lg text-on-surface">{tokenInZone.label}</span>
               )}
               {!tokenInZone && (
-                <span className="text-on-surface-variant/50 text-sm">Trage aici</span>
+                <span className="text-on-surface-variant/50 text-base">Atinge aici ca să pui cuvântul</span>
               )}
             </UnstyledButton>
           )

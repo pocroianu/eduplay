@@ -245,7 +245,7 @@ export function VoiceRecorderCapture({
     return (
       <div className="flex flex-col items-center gap-4 py-8 text-center">
         <Icon name="MicrophoneSlash" size="xl" />
-        <h2 className="text-title font-heading text-on-surface">
+        <h2 className="text-title font-headline text-on-surface">
           Dispozitivul tău nu poate înregistra
         </h2>
         <p className="max-w-md text-body text-on-surface-variant">
@@ -259,7 +259,7 @@ export function VoiceRecorderCapture({
     return (
       <div className="flex flex-col items-center gap-4 py-8 text-center">
         <Icon name="MicrophoneSlash" size="xl" />
-        <h2 className="text-title font-heading text-on-surface">
+        <h2 className="text-title font-headline text-on-surface">
           Avem nevoie să folosim microfonul
         </h2>
         <p className="max-w-md text-body text-on-surface-variant">
@@ -327,7 +327,7 @@ export function VoiceRecorderCapture({
             }`}
           />
           <span
-            className={`text-title font-heading tabular-nums ${
+            className={`text-title font-headline tabular-nums ${
               past ? 'text-error' : warn ? 'text-warning' : 'text-on-surface'
             }`}
             data-testid="voice-elapsed"

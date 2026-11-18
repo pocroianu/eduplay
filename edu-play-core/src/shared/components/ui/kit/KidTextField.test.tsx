@@ -28,4 +28,10 @@ describe('KidTextField', () => {
     expect(input).toBeDisabled();
     expect(input).toBeRequired();
   });
+
+  it('applies the shared focus ring, not only a border colour change', () => {
+    render(<KidTextField label="Nume" />);
+    const input = screen.getByRole('textbox', { name: 'Nume' });
+    expect(input).toHaveClass('focus-ring');
+  });
 });

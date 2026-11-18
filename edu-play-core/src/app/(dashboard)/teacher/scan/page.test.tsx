@@ -70,6 +70,6 @@ describe('/teacher/scan', () => {
     expect(screen.queryByText('Loading...')).not.toBeInTheDocument();
     expect(screen.getByRole('heading', { name: 'Camera Permission Denied' })).toBeInTheDocument();
     expect(screen.getByText('Please grant camera access in your browser settings and try again.')).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: 'OK' })).toBeDisabled();
+    expect(screen.queryByRole('button', { name: 'OK' })).not.toBeInTheDocument();
   });
 });

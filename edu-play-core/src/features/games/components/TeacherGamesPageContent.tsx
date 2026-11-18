@@ -119,8 +119,8 @@ export function TeacherGamesPageContent({
   const sourceOptions = useMemo<FilterChipOption[]>(
     () => [
       {
-        value: 'seesaw',
-        label: t('activities.library.seesawLibrary'),
+        value: 'ep',
+        label: t('activities.library.epLibrary'),
       },
       {
         value: 'community',
@@ -227,7 +227,7 @@ export function TeacherGamesPageContent({
                 className="mt-4"
                 items={sourceOptions}
                 onChange={() => undefined}
-                value="seesaw"
+                value="ep"
               />
             </div>
             <TextInput
@@ -324,7 +324,7 @@ export function TeacherGamesPageContent({
                 ? t('activities.empty.noActivities')
                 : t('activities.empty.noResults')}
             </h3>
-            <p className="text-outline">
+            <p className="text-on-surface-variant">
               {games.length === 0
                 ? t('activities.empty.noActivitiesBody')
                 : t('activities.empty.noResultsBody')}

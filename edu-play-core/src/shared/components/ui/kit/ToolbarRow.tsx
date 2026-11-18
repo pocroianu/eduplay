@@ -99,9 +99,9 @@ export function ToolbarRow<TKey extends string = string>({
                   aria-pressed={selected}
                   onClick={() => onFilterChange?.(filter.key)}
                   className={cn(
-                    "inline-flex min-h-[40px] items-center rounded-full border px-4 py-2 text-sm font-semibold transition-colors",
+                    "inline-flex min-h-11 items-center rounded-full border px-4 py-2 text-sm font-semibold transition-colors",
 
-                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
+                    "focus-ring",
 
                     selected
                       ? "border-primary bg-primary text-on-primary"
@@ -139,7 +139,7 @@ export function ToolbarRow<TKey extends string = string>({
 
                   "text-sm font-medium text-on-surface placeholder:text-on-surface-variant",
 
-                  "focus:border-primary focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/40",
+                  "focus:border-primary focus-ring",
                 ),
               }}
             />

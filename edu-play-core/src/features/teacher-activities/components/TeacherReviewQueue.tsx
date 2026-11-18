@@ -152,7 +152,7 @@ function ReviewQueueItemCard({ item }: { item: TeacherReviewQueueItem }) {
               </div>
               <h2 className="font-headline text-xl font-bold tracking-tight text-on-surface md:text-2xl">{item.activityTitle}</h2>
               <p className="text-sm font-semibold text-on-surface-variant">
-                {item.studentName} <span className="text-on-surface-muted">(@{item.studentUsername})</span>
+                {item.studentName} <span className="text-on-surface-variant">(@{item.studentUsername})</span>
               </p>
             </div>
           </div>

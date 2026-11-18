@@ -160,7 +160,7 @@ export default async function TeacherAccountDevicePage() {
   const browserLine = interpolate(copy.browserLine, { browser: browser.name, version: browser.version });
 
   return (
-    <main className="min-h-screen bg-surface text-on-surface">
+    <div className="min-h-screen bg-surface text-on-surface">
       <header className="border-b border-outline-variant bg-surface-container-lowest px-6 py-5 lg:px-10">
         <div className="mx-auto flex max-w-5xl flex-col gap-5">
           <div className="flex items-center gap-3">
@@ -218,6 +218,6 @@ export default async function TeacherAccountDevicePage() {
           __html: `(() => { const button = document.querySelector('[data-copy-device-info]'); const info = document.querySelector('[data-device-info]'); if (!button || !info) return; button.addEventListener('click', async () => { const text = info.textContent || ''; if (navigator.clipboard && window.isSecureContext) { await navigator.clipboard.writeText(text.trim()); return; } const field = document.createElement('textarea'); field.value = text.trim(); field.setAttribute('readonly', ''); field.style.position = 'fixed'; field.style.opacity = '0'; document.body.appendChild(field); field.select(); document.execCommand('copy'); field.remove(); }); })();`,
         }}
       />
-    </main>
+    </div>
   );
 }

@@ -15,7 +15,7 @@ import {
   DEFAULT_PREFERENCES,
   type PreferencesFormData,
   type ThemeMode,
-} from '../schemas/preferences.schema';
+} from '../schemas/preferences.defaults';
 
 interface PreferencesContextValue {
   preferences: PreferencesFormData;

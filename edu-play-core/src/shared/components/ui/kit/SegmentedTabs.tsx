@@ -92,7 +92,7 @@ function SegmentedTabsContent({
               aria-pressed={selected}
               onClick={() => onChange(tab.value)}
               className={cn(
-                "flex-1 flex min-h-16 items-center justify-center gap-2 rounded-xl py-3 font-headline font-bold uppercase text-sm tracking-wide transition-colors focus:outline-none focus-visible:ring-4 focus-visible:ring-primary/40",
+                "flex-1 flex min-h-16 items-center justify-center gap-2 rounded-xl py-3 font-headline font-bold uppercase text-sm tracking-wide transition-colors focus-ring",
 
                 selected
                   ? "bg-primary text-on-primary shadow-soft-sm"
@@ -130,7 +130,7 @@ function SegmentedTabsContent({
             aria-pressed={selected}
             onClick={() => onChange(tab.value)}
             className={cn(
-              "flex-1 flex items-center justify-center gap-2 py-3 rounded-full font-label font-bold text-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+              "flex-1 flex items-center justify-center gap-2 py-3 rounded-full font-label font-bold text-sm transition-colors focus-ring",
 
               selected
                 ? "bg-surface-container-lowest shadow-soft text-primary"

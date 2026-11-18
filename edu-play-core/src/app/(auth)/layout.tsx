@@ -18,7 +18,7 @@ export default async function AuthLayout({
             <LanguageSwitcher size="sm" tone="onSurface" />
           </div>
         </div>
-        {children}
+        <main>{children}</main>
       </div>
     </I18nProvider>
   )

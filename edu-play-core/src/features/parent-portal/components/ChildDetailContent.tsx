@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Tabs } from '@mantine/core';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import Link from 'next/link';
 import { Icon } from '@/shared/components/ui/Icon';
 import type { IconName } from '@/shared/components/ui/Icon.registry';
@@ -83,7 +83,7 @@ interface OverviewStatCardProps {
 function OverviewStatCard({ label, value, icon, iconClassName }: OverviewStatCardProps) {
   return (
     <div className="min-h-[126px] rounded-xl bg-surface-container-lowest border border-outline-variant shadow-soft-sm">
-      <div className="p-5">
+      <div className="p-4 sm:p-5">
         <div className="flex items-center justify-between gap-3">
           <div className="min-w-0">
             <p className="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant mb-1">
@@ -94,7 +94,7 @@ function OverviewStatCard({ label, value, icon, iconClassName }: OverviewStatCar
             </p>
           </div>
           <div
-            className={`w-[44px] h-[44px] rounded-md flex items-center justify-center shrink-0 ${iconClassName}`}
+            className={`w-[44px] h-[44px] rounded-md hidden min-[360px]:flex items-center justify-center shrink-0 ${iconClassName}`}
           >
             <Icon name={icon} size={22} />
           </div>
@@ -112,6 +112,7 @@ export function ChildDetailContent({
   consents,
   streakDays,
 }: ChildDetailContentProps) {
+  const reduceMotion = useReducedMotion();
   const streak = streakDays;
 
   const [activeTab, setActiveTab] = useState<ChildDetailTabValue>('progress');
@@ -150,7 +151,7 @@ export function ChildDetailContent({
     <div className="bg-surface-alt p-6 lg:p-10">
       <div className="mx-auto flex max-w-7xl flex-col gap-6">
         <motion.div
-          initial={{ opacity: 0, x: -8 }}
+          initial={{ opacity: 0, x: reduceMotion ? 0 : -8 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.25 }}
         >
@@ -164,7 +165,7 @@ export function ChildDetailContent({
         </motion.div>
 
         <motion.section
-          initial={{ opacity: 0, y: -10 }}
+          initial={{ opacity: 0, y: reduceMotion ? 0 : -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, ease: 'easeOut' }}
           className="overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest shadow-soft-sm"
@@ -206,7 +207,7 @@ export function ChildDetailContent({
         </motion.section>
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.12, duration: 0.35 }}
         >
@@ -285,7 +286,7 @@ export function ChildDetailContent({
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.18, duration: 0.35 }}
         >

@@ -26,7 +26,7 @@ export default async function ParentLinkChildPage() {
   }
 
   return (
-    <main aria-labelledby="parent-link-child-title" className="bg-surface-alt p-6 lg:p-10">
+    <div aria-labelledby="parent-link-child-title" className="bg-surface-alt p-6 lg:p-10">
       <div className="mx-auto flex max-w-6xl min-w-0 flex-col gap-6">
         <Link
           href={ROUTES.PARENT.DASHBOARD}
@@ -86,6 +86,6 @@ export default async function ParentLinkChildPage() {
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

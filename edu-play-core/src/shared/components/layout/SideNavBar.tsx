@@ -18,7 +18,7 @@ import {
   Text,
   VisuallyHidden,
 } from '@mantine/core'
-import { createClient } from '@/lib/supabase/client'
+import { signOutBrowserClient } from '@/lib/supabase/sign-out'
 import { ROUTES } from '@/shared/lib/constants'
 import { getInitials } from '@/shared/lib/utils/initials'
 import { Icon } from '@/shared/components/ui/Icon'
@@ -447,7 +447,7 @@ export function SideNavBar({
   )
 
   const handleLogout = async () => {
-    await createClient().auth.signOut()
+    await signOutBrowserClient()
     router.push(ROUTES.AUTH.LOGIN)
     router.refresh()
   }

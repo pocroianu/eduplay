@@ -9,7 +9,7 @@ const projectRoot = path.resolve(
 );
 const sourceRoot = path.join(projectRoot, "src");
 const excluded =
-  /(?:\.test\.|\.spec\.|\.stories\.|\.d\.ts$|[/\\]test-utils[/\\]|[/\\]seesaw-design-system[/\\])/;
+  /(?:\.test\.|\.spec\.|\.stories\.|\.d\.ts$|[/\\]test-utils[/\\])/;
 const files = [];
 function walk(directory) {
   for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {

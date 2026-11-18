@@ -12,7 +12,7 @@ function LoadingLine({ className = '' }: { className?: string }) {
 
 export default function ParentActivitiesLoading() {
   return (
-    <main
+    <div
       role="status"
       aria-label="Se încarcă activitățile"
       className="min-h-screen flex-1 bg-surface p-6 lg:p-10"
@@ -75,6 +75,6 @@ export default function ParentActivitiesLoading() {
           ))}
         </section>
       </div>
-    </main>
+    </div>
   );
 }

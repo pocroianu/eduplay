@@ -1,6 +1,6 @@
 'use client'
 
-import { Button as MantineButton, ThemeIcon, rem } from '@mantine/core'
+import { Button as MantineButton, rem } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -44,6 +44,7 @@ function validateClassForm(values: CreateClassFormData) {
 
 export default function NewClassPage() {
   const [isLoading, setIsLoading] = useState(false)
+  const [saveError, setSaveError] = useState(false)
   const router = useRouter()
   const supabase = createClient()
   const { t } = useTranslation('teacher')
@@ -60,6 +61,7 @@ export default function NewClassPage() {
   })
 
   const onSubmit = async (data: CreateClassFormData) => {
+    setSaveError(false)
     setIsLoading(true)
     try {
       const {
@@ -82,8 +84,8 @@ export default function NewClassPage() {
 
       router.push(ROUTES.TEACHER.CLASSES)
       router.refresh()
-    } catch (error) {
-      console.error('Error creating class', error instanceof Error ? error.message : 'Something went wrong')
+    } catch {
+      setSaveError(true)
     } finally {
       setIsLoading(false)
     }
@@ -98,7 +100,7 @@ export default function NewClassPage() {
   }))
 
   return (
-    <main className="min-h-screen bg-surface-container text-on-surface">
+    <div className="min-h-screen bg-surface-container text-on-surface">
       <div className="mx-auto flex min-h-screen max-w-3xl flex-col justify-center px-5 py-8">
         <nav aria-label="Navigation" className="mb-4">
           <MantineButton
@@ -123,6 +125,7 @@ export default function NewClassPage() {
 
         <Card padding="none" shadow={false} className="overflow-hidden border border-outline-variant bg-surface-container-lowest">
           <form onSubmit={form.onSubmit(onSubmit)} noValidate>
+            {saveError && <p role="alert" className="px-6 pt-4 text-error">Nu am putut salva. Încearcă din nou.</p>}
             <div className="space-y-6 px-6 py-6 sm:px-10 sm:py-8">
               <div className="text-center">
                 <h1 className="font-headline text-3xl font-bold text-on-surface">{t('createClass.heading')}</h1>
@@ -131,48 +134,7 @@ export default function NewClassPage() {
                 </p>
               </div>
 
-              <MantineButton
-                type="button"
-                disabled
-                aria-describedby="google-classroom-note"
-                fullWidth
-                justify="center"
-                leftSection={
-                  <ThemeIcon
-                    aria-hidden="true"
-                    color="var(--color-primary-soft)"
-                    c="var(--color-primary)"
-                    radius="md"
-                    size={36}
-                    variant="light"
-                  >
-                    <Icon name="Archive" size="sm" weight="bold" />
-                  </ThemeIcon>
-                }
-                styles={{
-                  root: {
-                    backgroundColor: 'var(--color-surface)',
-                    borderColor: 'var(--color-outline-variant)',
-                    borderRadius: rem(8),
-                    color: 'var(--color-on-surface-variant)',
-                    fontFamily: 'var(--font-lexend)',
-                    fontSize: rem(14),
-                    fontWeight: 700,
-                    minHeight: rem(56),
-                  },
-                }}
-              >
-                {t('createClass.importGoogle')}
-              </MantineButton>
-              <p id="google-classroom-note" className="-mt-4 text-center text-xs font-semibold text-on-surface-muted">
-                {t('createClass.importNote')}
-              </p>
-
-              <div className="flex items-center gap-3">
-                <div className="h-px flex-1 bg-outline-variant" />
-                <span className="text-sm font-bold text-on-surface-muted">{t('createClass.or')}</span>
-                <div className="h-px flex-1 bg-outline-variant" />
-              </div>
+              <p className="text-center text-xs font-semibold text-on-surface-variant">{t('createClass.importNote')}</p>
 
               <TextField
                 label={t('createClass.name')}
@@ -249,6 +211,6 @@ export default function NewClassPage() {
           </form>
         </Card>
       </div>
-    </main>
+    </div>
   )
 }

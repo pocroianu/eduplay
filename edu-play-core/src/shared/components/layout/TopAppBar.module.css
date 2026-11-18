@@ -96,7 +96,7 @@
 }
 
 .libraryTab {
-  min-height: 40px;
+  min-height: 44px;
   min-width: max-content;
   border-radius: 999px;
   padding-inline: 16px;
@@ -179,7 +179,7 @@
   color: currentColor;
 }
 
-.librarySeesawIcon {
+.libraryEduPlayIcon {
   border-radius: 999px;
   background-color: var(--color-purple-wash);
   color: var(--color-purple-dim);
@@ -265,5 +265,22 @@
 
   .libraryExploreTabs {
     gap: 8px;
+  }
+}
+
+/* Narrow phones: the absolutely placed create action collapses to its icon so it never covers the title. */
+@media (max-width: 479px) {
+  .libraryActionLabel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .libraryExploreAction {
+    min-width: 44px;
+    padding-inline: 12px;
   }
 }

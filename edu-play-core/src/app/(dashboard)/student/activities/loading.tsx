@@ -26,7 +26,7 @@ function ActivityCardSkeleton({ id }: { id: number }) {
 
 export default function StudentActivitiesLoading() {
   return (
-    <main
+    <div
       role="status"
       aria-label="Se încarcă activitățile"
       className="min-h-screen flex-1 bg-surface p-6 lg:p-10"
@@ -59,6 +59,6 @@ export default function StudentActivitiesLoading() {
           ))}
         </SimpleGrid>
       </Stack>
-    </main>
+    </div>
   );
 }

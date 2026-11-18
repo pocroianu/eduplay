@@ -148,6 +148,8 @@ export const FilterSelect = factory<FilterSelectFactory>((_props) => {
   } = props;
 
   const labelId = useId();
+  const ariaLabelId = useId();
+  const valueId = useId();
   const selectedOption = options.find((option) => option.value === value);
   const combobox = useCombobox({
     onDropdownClose: () => combobox.resetSelectedOption(),
@@ -189,6 +191,12 @@ export const FilterSelect = factory<FilterSelectFactory>((_props) => {
         </Box>
       ) : null}
 
+      {!label && ariaLabel ? (
+        <span id={ariaLabelId} hidden>
+          {ariaLabel}
+        </span>
+      ) : null}
+
       <Combobox
         store={combobox}
         onOptionSubmit={handleOptionSubmit}
@@ -203,8 +211,8 @@ export const FilterSelect = factory<FilterSelectFactory>((_props) => {
             type="button"
             pointer
             disabled={disabled}
-            aria-label={label ? undefined : ariaLabel}
-            aria-labelledby={label ? labelId : undefined}
+            // Name = label + visible value, so the accessible name always contains the visible text (WCAG 2.5.3).
+            aria-labelledby={label ? `${labelId} ${valueId}` : ariaLabel ? `${ariaLabelId} ${valueId}` : undefined}
             aria-describedby={ariaDescribedBy}
             aria-invalid={invalid || undefined}
             data-invalid={invalid || undefined}
@@ -214,6 +222,7 @@ export const FilterSelect = factory<FilterSelectFactory>((_props) => {
             {...getStyles('input')}
           >
             <span
+              id={valueId}
               {...getStyles('value')}
               data-placeholder={selectedOption ? undefined : true}
             >

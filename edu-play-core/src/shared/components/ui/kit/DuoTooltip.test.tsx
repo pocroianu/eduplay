@@ -18,4 +18,18 @@ describe('DuoTooltip', () => {
     expect(tooltip).not.toHaveClass('border-ink');
     expect(tooltip).not.toHaveStyle({ boxShadow: 'var(--shadow-chunk-sm)' });
   });
+
+  it('makes plain-text triggers keyboard focusable and shows the tooltip on focus', async () => {
+    render(
+      <DuoTooltip content="Explicație" delay={0}>
+        Termen
+      </DuoTooltip>,
+    );
+
+    const trigger = screen.getByText('Termen');
+    expect(trigger).toHaveAttribute('tabindex', '0');
+
+    fireEvent.focus(trigger);
+    expect(await waitFor(() => screen.getByRole('tooltip'))).toHaveTextContent('Explicație');
+  });
 });

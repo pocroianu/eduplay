@@ -146,13 +146,13 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
                 priority
               />
             </div>
-            <span className="absolute -bottom-2 -right-2 rounded-lg border border-outline-variant bg-surface-container-lowest px-2.5 py-1 text-xs font-semibold text-on-surface shadow-soft-sm">
+            <span className="absolute -bottom-2 -right-2 rounded-lg border border-outline-variant bg-surface-container-lowest px-2.5 py-1 text-base font-semibold text-on-surface shadow-soft-sm">
               Nivel {profile.stats.level}
             </span>
           </div>
 
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-semibold uppercase tracking-wide text-on-surface-variant">
+            <p className="text-base font-semibold uppercase tracking-wide text-on-surface-variant">
               {stageLabel}
             </p>
             <h1 className="mt-1 text-3xl font-semibold text-on-surface md:text-4xl">
@@ -192,6 +192,7 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
 
           <Button
             variant="secondary"
+            mode="kid"
             size="lg"
             onClick={() => setAvatarOpen(true)}
             data-testid="open-avatar-picker"
@@ -310,6 +311,7 @@ function StudentProfileBody({ profile }: StudentProfileContentProps) {
             </div>
             <Button
               variant="ghost"
+              mode="kid"
               size="lg"
               onClick={() => setLogoutOpen(true)}
               data-testid="open-logout"
@@ -377,7 +379,7 @@ interface SectionTitleProps {
 function SectionTitle({ id, eyebrow, title, description }: SectionTitleProps) {
   return (
     <div>
-      <p className="text-sm font-semibold uppercase tracking-wide text-on-surface-variant">
+      <p className="text-base font-semibold uppercase tracking-wide text-on-surface-variant">
         {eyebrow}
       </p>
       <h2 id={id} className="mt-1 text-2xl font-semibold text-on-surface">
@@ -404,7 +406,7 @@ function SummaryCell({ icon, label, value }: SummaryCellProps) {
         <Icon name={icon} size={22} />
       </span>
       <div className="min-w-0">
-        <p className="text-sm font-medium text-on-surface-variant">{label}</p>
+        <p className="text-base font-medium text-on-surface-variant">{label}</p>
         <p className="text-2xl font-semibold text-on-surface">{value}</p>
       </div>
     </div>
@@ -432,7 +434,7 @@ function ToggleRow({
     <div className="flex items-center justify-between gap-4 px-5 py-5 md:px-6 md:py-6">
       <div className="min-w-0">
         <p className="text-[18px] font-semibold text-on-surface">{label}</p>
-        <p className="text-sm text-on-surface-variant mt-0.5">{description}</p>
+        <p className="text-lg text-on-surface-variant mt-0.5">{description}</p>
       </div>
       <Switch
         aria-label={label}
@@ -469,7 +471,7 @@ function ThemeRow({ value, onChange, disabled }: ThemeRowProps) {
       <div className="flex items-center justify-between gap-4 mb-3">
         <div>
           <p className="text-[18px] font-semibold text-on-surface">Temă</p>
-          <p className="text-sm text-on-surface-variant mt-0.5">
+          <p className="text-lg text-on-surface-variant mt-0.5">
             Cum arată culorile aplicației
           </p>
         </div>
@@ -490,7 +492,7 @@ function ThemeRow({ value, onChange, disabled }: ThemeRowProps) {
               disabled={disabled}
               data-testid={option.value}
               label={
-                <span className="flex min-h-16 flex-col items-center justify-center gap-2 text-sm font-bold">
+                <span className="flex min-h-16 flex-col items-center justify-center gap-2 text-base font-bold">
                   <Icon name={option.icon} size={24} />
                   {option.label}
                 </span>
@@ -517,14 +519,14 @@ function ThemeRow({ value, onChange, disabled }: ThemeRowProps) {
 
 function LanguageRow() {
   return (
-    <div className="px-5 py-5 md:px-6 md:py-6 flex items-center justify-between gap-4 opacity-70">
+    <div className="px-5 py-5 md:px-6 md:py-6 flex items-center justify-between gap-4">
       <div>
         <p className="text-[18px] font-semibold text-on-surface">Limbă</p>
-        <p className="text-sm text-on-surface-variant mt-0.5">
+        <p className="text-lg text-on-surface-variant mt-0.5">
           Curând: vei putea alege limba aplicației
         </p>
       </div>
-      <span className="rounded-md border border-outline-variant bg-surface-container px-3 py-1 text-sm font-semibold text-on-surface">
+      <span className="rounded-md border border-outline-variant bg-surface-container px-3 py-1 text-base font-semibold text-on-surface">
         Română
       </span>
     </div>
@@ -556,11 +558,12 @@ function SecurityRow({
         </span>
         <div>
           <p className="text-[18px] font-semibold text-on-surface">{title}</p>
-          <p className="text-sm text-on-surface-variant">{description}</p>
+          <p className="text-lg text-on-surface-variant">{description}</p>
         </div>
       </div>
       <Button
         variant="secondary"
+        mode="kid"
         size="lg"
         onClick={onAction}
         data-testid={testId}

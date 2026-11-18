@@ -152,7 +152,7 @@ export function QuestMap({ profile, stats, units, lessons, activities = [] }: Qu
               <h1 id="quest-map-heading" className="text-[22px] font-bold tracking-tight">
                 {t('questMap.greeting', { name: profile.firstName })}
               </h1>
-              <p className="text-[18px] font-semibold text-on-surface-muted">
+              <p className="text-[18px] font-semibold text-on-surface-variant">
                 {subtitle}
               </p>
             </div>

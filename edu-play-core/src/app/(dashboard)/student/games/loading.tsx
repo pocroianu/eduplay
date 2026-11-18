@@ -23,7 +23,7 @@ function GameCardSkeleton({ id }: { id: number }) {
 export default function GamesLoading() {
   return (
     <Box
-      component="main"
+      component="div"
       className="min-h-screen flex-1 bg-surface p-5 md:p-8"
       role="status"
       aria-label="Se încarcă jocurile."

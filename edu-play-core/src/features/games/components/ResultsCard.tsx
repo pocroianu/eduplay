@@ -132,7 +132,7 @@ export function ResultsCard({
           <div className="font-headline text-lg font-bold text-on-surface leading-none">
             {safeScore}
           </div>
-          <div className="text-[10px] uppercase font-bold tracking-wider text-on-surface-variant mt-1">
+          <div className="text-base uppercase font-bold tracking-wider text-on-surface-variant mt-1">
             {t("results.labels.points")}
           </div>
         </motion.div>
@@ -143,7 +143,7 @@ export function ResultsCard({
           <div className="font-headline text-lg font-bold text-on-surface leading-none">
             {formatDuration(result.timeSpent)}
           </div>
-          <div className="text-[10px] uppercase font-bold tracking-wider text-on-surface-variant mt-1">
+          <div className="text-base uppercase font-bold tracking-wider text-on-surface-variant mt-1">
             {t("results.labels.time")}
           </div>
         </motion.div>
@@ -154,7 +154,7 @@ export function ResultsCard({
           <div className="font-headline text-lg font-bold text-on-surface leading-none">
             {Math.max(1, attempts)}
           </div>
-          <div className="text-[10px] uppercase font-bold tracking-wider text-on-surface-variant mt-1">
+          <div className="text-base uppercase font-bold tracking-wider text-on-surface-variant mt-1">
             {t("results.labels.attempts")}
           </div>
         </motion.div>
@@ -164,7 +164,7 @@ export function ResultsCard({
 
       {/* Encouragement */}
       <p
-        className="text-sm italic text-on-surface-variant max-w-[260px]"
+        className="text-lg italic text-on-surface-variant max-w-[260px]"
         role="status"
         aria-live="polite"
       >

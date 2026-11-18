@@ -166,7 +166,7 @@ describe('/teacher/classes/[classId]/families', () => {
     expect(screen.getByText('Families can follow learning updates from home.')).toBeInTheDocument()
     expect(screen.getByText('Andrei Popescu')).toBeInTheDocument()
     expect(screen.getByText('Ioana Marin')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Turn on family access' })).toBeDisabled()
+    expect(screen.getByText('Accesul familiei nu poate fi activat încă.')).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Invite by message' })).not.toBeInTheDocument()
     expect(screen.getAllByText('Invite needed')).toHaveLength(2)
     expect(screen.getAllByText('No family connection is recorded yet.')).toHaveLength(2)

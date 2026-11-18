@@ -6,7 +6,6 @@ import { AdminPageHeader } from '@/features/admin/components/overview/AdminPageH
 import { AdminStatStrip } from '@/features/admin/components/overview/AdminStatStrip'
 import { AdminActivityFeed } from '@/features/admin/components/overview/AdminActivityFeed'
 import { AdminQuickShortcuts } from '@/features/admin/components/overview/AdminQuickShortcuts'
-import { AdminSystemHealth } from '@/features/admin/components/overview/AdminSystemHealth'
 import { AdminRecentReleases } from '@/features/admin/components/overview/AdminRecentReleases'
 
 export const dynamic = 'force-dynamic'
@@ -42,7 +41,6 @@ export default async function AdminOverviewPage() {
           <AdminQuickShortcuts />
         </div>
         <aside className="flex flex-col gap-6 min-w-0">
-          <AdminSystemHealth />
           <AdminRecentReleases changes={snapshot.recentFlagChanges} />
         </aside>
       </div>

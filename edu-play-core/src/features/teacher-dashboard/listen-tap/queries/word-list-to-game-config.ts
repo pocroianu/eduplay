@@ -29,13 +29,13 @@ export interface ListenTapGameConfig {
 
 const DEFAULT_DISTRACTORS = 2
 const DIACRITIC_MAP: Record<string, string> = {
-  ă: 'a', â: 'a', î: 'i', ș: 's', ş: 's', ț: 't', ţ: 't',
-  Ă: 'A', Â: 'A', Î: 'I', Ș: 'S', Ş: 'S', Ț: 'T', Ţ: 'T',
+  ă: 'a', â: 'a', î: 'i', ș: 's', '\u015F': 's', ț: 't', '\u0163': 't',
+  Ă: 'A', Â: 'A', Î: 'I', Ș: 'S', '\u015E': 'S', Ț: 'T', '\u0162': 'T',
 }
 
 function slugify(value: string): string {
   return value
-    .replace(/[ăâîșşțţĂÂÎȘŞȚŢ]/g, (ch) => DIACRITIC_MAP[ch] ?? ch)
+    .replace(/[ăâîș\u015Fț\u0163ĂÂÎȘ\u015EȚ\u0162]/g, (ch) => DIACRITIC_MAP[ch] ?? ch)
     .toLowerCase()
     .trim()
     .replace(/[^a-z0-9]+/g, '-')

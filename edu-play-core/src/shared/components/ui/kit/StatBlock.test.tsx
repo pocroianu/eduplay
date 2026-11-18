@@ -41,6 +41,6 @@ describe('StatBlock', () => {
     render(
       <StatBlock label="L" value={1} icon="X" />,
     )
-    expect(screen.getByText("L").parentElement?.parentElement).toHaveClass('focus-within:ring-2')
+    expect(screen.getByText("L").parentElement?.parentElement).toHaveClass('focus-within:outline-primary')
   })
 })

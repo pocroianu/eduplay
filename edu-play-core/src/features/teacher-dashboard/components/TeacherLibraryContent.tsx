@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Anchor, Badge, Box, Button, Group, Input, Text, TextInput, UnstyledButton } from '@mantine/core';
+import { Anchor, Badge, Box, Button, Group, Input, Text, UnstyledButton } from '@mantine/core';
 import type {
   TeacherActivitiesStatusFilter,
   TeacherOwnedActivity,
@@ -32,10 +32,6 @@ const STATUS_LABELS: Record<TeacherOwnedActivityStatus, string> = {
 const ACTIVITY_TONES: readonly LibraryActivityCardTone[] = ['green', 'blue', 'pink', 'gold', 'purple'];
 
 const pageStyle = {
-  height: 'calc(100vh - 68px)',
-  minHeight: 0,
-  overflowX: 'hidden',
-  overflowY: 'auto',
   backgroundColor: 'var(--color-surface)',
   color: 'var(--color-on-surface)',
 } as const;
@@ -45,8 +41,6 @@ const actionInteractiveClassName = `${classes.interactive} ${classes.actionInter
 const searchSurfaceInteractiveClassName = `${surfaceInteractiveClassName} ${classes.librarySearchSurface}`;
 const searchActionInteractiveClassName = `${actionInteractiveClassName} ${classes.librarySearchButton}`;
 const collectionRowInteractiveClassName = `${surfaceInteractiveClassName} ${classes.libraryCollectionRow}`;
-const createInputInteractiveClassName = `${surfaceInteractiveClassName} ${classes.libraryCreateCollectionInput}`;
-const createButtonInteractiveClassName = `${actionInteractiveClassName} ${classes.libraryCreateCollectionButton}`;
 
 function buildHref(status: TeacherActivitiesStatusFilter, sort: OwnedActivitySort, query: string) {
   const params = new URLSearchParams();
@@ -111,7 +105,7 @@ export function TeacherLibraryContent({
   const listHref = buildHref(statusFilter, sortBy, searchQuery);
 
   return (
-    <Box component="main" aria-label="Biblioteca mea" style={pageStyle}>
+    <Box component="div" data-testid="teacher-library-content" className={`${classes.teacherScrollPage} teacher-scroll-page`} style={pageStyle}>
       <Box component="section" aria-label="Conținut Biblioteca mea" className={classes.libraryColumn}>
         <Box component="form" action={ROUTES.TEACHER.LIBRARY} role="search" className={classes.libraryToolbar}>
           <StaticFilterBadge label="Toate clasele" />
@@ -187,18 +181,7 @@ export function TeacherLibraryContent({
             </Box>
             <Text component="span">{activitiesWithoutCollectionLabel(collectionCount)}</Text>
           </UnstyledButton>
-          <Group className={classes.libraryCreateCollection} gap={8} wrap="nowrap">
-            <TextInput
-              aria-label="Creează o colecție nouă pentru a-ți organiza activitățile"
-              placeholder="Creează o colecție nouă pentru a-ți organiza activitățile"
-              variant="unstyled"
-              className={classes.libraryCreateCollectionField}
-              classNames={{ input: createInputInteractiveClassName }}
-            />
-            <Button type="button" disabled variant="default" className={createButtonInteractiveClassName}>
-              Creează
-            </Button>
-          </Group>
+          <Text className="text-sm text-on-surface-variant">Crearea colecțiilor nu este disponibilă încă.</Text>
         </Box>
       </Box>
     </Box>

@@ -13,7 +13,7 @@ export default function ParentChildPortfolioError({
   reset,
 }: ParentChildPortfolioErrorProps) {
   return (
-    <main className="min-h-screen bg-surface text-on-surface">
+    <div className="min-h-screen bg-surface text-on-surface">
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-5 px-6 py-8 lg:px-10">
         <header className="flex items-center gap-3">
           <span
@@ -53,6 +53,6 @@ export default function ParentChildPortfolioError({
           </div>
         </Card>
       </div>
-    </main>
+    </div>
   );
 }

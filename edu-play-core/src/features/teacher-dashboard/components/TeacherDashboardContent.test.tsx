@@ -10,6 +10,7 @@ import {
 } from './TeacherDashboardContent'
 
 const dashboardProps: TeacherDashboardContentProps = {
+  libraryActivities: Array.from({ length: 4 }, (_, i) => ({ id: `game-${i}`, title: `Activitate ${i}`, category: 'math' as const, target_age_min: 6, target_age_max: 7, estimated_duration: 10 })),
   profile: {
     id: 'teacher-1',
     full_name: 'Ana Popescu',
@@ -109,7 +110,7 @@ describe('TeacherDashboardContent', () => {
   it('renders the teacher home surface as the main landmark', () => {
     renderDashboard()
 
-    const main = screen.getByRole('main', { name: /acasă profesor/i })
+    const main = screen.getByTestId('teacher-home')
 
     expect(main).toHaveAttribute('data-testid', 'teacher-home')
   })
@@ -143,13 +144,16 @@ describe('TeacherDashboardContent', () => {
     ).toBeInTheDocument()
     expect(
       within(discovery).getByRole('heading', {
-        name: /activități populare din comunitate/i,
+        name: /activități din biblioteca eduplay/i,
       }),
     ).toBeInTheDocument()
     expect(within(discovery).getByRole('link', { name: /vezi biblioteca/i })).toHaveAttribute(
       'href',
       ROUTES.TEACHER.LIBRARIES_EXPLORE,
     )
+
+    expect(within(discovery).getByRole('link', { name: /activitate 0/i })).toHaveAttribute('href', ROUTES.PLAY.ACTIVITY('game-0'))
+    expect(within(discovery).getAllByText('Vârste 6-7')).toHaveLength(4)
 
     const classes = screen.getByRole('region', { name: /clasele mele/i })
     expect(within(classes).getByRole('link', { name: /clasa i/i })).toHaveAttribute(
@@ -164,14 +168,20 @@ describe('TeacherDashboardContent', () => {
     expect(screen.queryByText(/reușite recente/i)).not.toBeInTheDocument()
   })
 
+  it('shows an empty library message when there are no activities', () => {
+    renderDashboard({ ...dashboardProps, libraryActivities: [] })
+    expect(screen.getByText('Nu există încă activități în bibliotecă.')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: /vezi biblioteca/i })).toBeInTheDocument()
+  })
+
   it('does not depend on legacy EduPlay home utility classes', () => {
     const { container } = renderDashboard()
 
-    expect(container.querySelector('.seesaw-home')).not.toBeInTheDocument()
-    expect(container.querySelector('.seesaw-action-card')).not.toBeInTheDocument()
-    expect(container.querySelector('.seesaw-community-card')).not.toBeInTheDocument()
-    expect(container.querySelector('.seesaw-class-card')).not.toBeInTheDocument()
-    expect(container.querySelector('.seesaw-resource-card')).not.toBeInTheDocument()
+    expect(container.querySelector('.ep-home')).not.toBeInTheDocument()
+    expect(container.querySelector('.ep-action-card')).not.toBeInTheDocument()
+    expect(container.querySelector('.ep-community-card')).not.toBeInTheDocument()
+    expect(container.querySelector('.ep-class-card')).not.toBeInTheDocument()
+    expect(container.querySelector('.ep-resource-card')).not.toBeInTheDocument()
   })
 
   it('keeps the home content centered and scroll-contained below the persistent dashboard chrome with Mantine layout primitives', () => {
@@ -179,10 +189,7 @@ describe('TeacherDashboardContent', () => {
     const home = screen.getByTestId('teacher-home')
     const column = screen.getByTestId('teacher-home-column')
 
-    expect(home).toHaveStyle({
-      height: 'calc(100vh - 68px)',
-      overflowY: 'auto',
-    })
+    expect(home).toHaveClass('teacher-scroll-page')
     expect(column).toHaveStyle({
       width: 'min(1520px, calc(100% - 48px))',
       marginInline: 'auto',

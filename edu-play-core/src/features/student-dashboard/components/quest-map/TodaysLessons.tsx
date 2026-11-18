@@ -19,7 +19,7 @@ export function TodaysLessons({ lessons, emptyHref }: TodaysLessonsProps) {
       <section aria-labelledby="todays-lessons-empty">
         <h2
           id="todays-lessons-empty"
-          className="mb-2 text-[18px] font-bold uppercase tracking-[0.08em] text-on-surface-muted"
+          className="mb-2 text-[18px] font-bold uppercase tracking-[0.08em] text-on-surface-variant"
         >
           {t('questMap.todaysLessons.empty.title')}
         </h2>
@@ -42,7 +42,7 @@ export function TodaysLessons({ lessons, emptyHref }: TodaysLessonsProps) {
     <section aria-labelledby="todays-lessons-heading">
       <h2
         id="todays-lessons-heading"
-        className="mb-2 text-[18px] font-bold uppercase tracking-[0.08em] text-on-surface-muted"
+        className="mb-2 text-[18px] font-bold uppercase tracking-[0.08em] text-on-surface-variant"
       >
         {t('questMap.todaysLessons.title', { count: lessons.length })}
       </h2>
@@ -54,7 +54,7 @@ export function TodaysLessons({ lessons, emptyHref }: TodaysLessonsProps) {
               aria-label={`${lesson.title} — ${t('questMap.todaysLessons.duration', {
                 minutes: lesson.durationMinutes,
               })}`}
-              className="block rounded-xl focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/30"
+              className="block rounded-xl focus-ring"
             >
               <Card
                 className="flex min-h-[64px] items-center gap-3"
@@ -87,7 +87,7 @@ export function TodaysLessons({ lessons, emptyHref }: TodaysLessonsProps) {
                   <span className="mt-1 block truncate text-[18px] font-bold">
                     {lesson.title}
                   </span>
-                  <span className="block text-[18px] font-semibold text-on-surface-muted">
+                  <span className="block text-[18px] font-semibold text-on-surface-variant">
                     {t('questMap.todaysLessons.duration', {
                       minutes: lesson.durationMinutes,
                     })}

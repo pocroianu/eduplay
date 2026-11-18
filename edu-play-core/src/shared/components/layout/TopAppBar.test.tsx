@@ -109,7 +109,7 @@ describe('TopAppBar', () => {
 
     const banner = screen.getByRole('banner')
     expect(banner).toHaveStyle({ height: 'calc(4.25rem * var(--mantine-scale))' })
-    expect(banner.className).not.toContain('seesaw-library-topbar')
+    expect(banner.className).not.toContain('ep-library-topbar')
     expect(screen.getByRole('heading', { name: 'Biblioteca mea' })).toHaveClass('mantine-Text-root')
     expect(screen.getByRole('link', { name: /creează activitate/i })).toHaveClass('mantine-Button-root')
     expect(screen.getByRole('link', { name: /creează activitate/i })).toHaveAttribute(
@@ -126,23 +126,23 @@ describe('TopAppBar', () => {
 
     const banner = screen.getByRole('banner')
     expect(banner).toHaveStyle({ height: 'calc(6.125rem * var(--mantine-scale))' })
-    expect(banner.className).not.toContain('seesaw-library-topbar')
+    expect(banner.className).not.toContain('ep-library-topbar')
     expect(screen.getByRole('heading', { name: 'Biblioteci' })).toHaveClass('mantine-Text-root')
     expect(screen.getByTestId('libraries-explore-title-icon')).toBeInTheDocument()
 
     const sourceNav = screen.getByRole('navigation', { name: /surse bibliotecă/i })
-    expect(sourceNav.className).not.toContain('seesaw-library-topbar__explore-tabs')
-    expect(screen.getByTestId('libraries-seesaw-tab-icon')).toBeInTheDocument()
+    expect(sourceNav.className).not.toContain('ep-library-topbar__explore-tabs')
+    expect(screen.getByTestId('libraries-ep-tab-icon')).toBeInTheDocument()
     expect(screen.getByTestId('libraries-community-tab-icon')).toBeInTheDocument()
     expect(screen.queryByRole('tablist', { name: /surse bibliotecă/i })).not.toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Biblioteca EduPlay' })).not.toHaveAttribute('aria-current')
     expect(screen.getByRole('link', { name: 'Biblioteca comunității' })).toHaveAttribute('aria-current', 'page')
     expect(screen.getByRole('link', { name: 'Biblioteca comunității' })).toHaveClass('mantine-Button-root')
-    expect(screen.getByRole('link', { name: 'Biblioteca comunității' })).not.toHaveClass('seesaw-interactive')
+    expect(screen.getByRole('link', { name: 'Biblioteca comunității' })).not.toHaveClass('ep-interactive')
 
     const createLink = screen.getByRole('link', { name: /creează activitate/i })
     expect(createLink).toHaveClass('mantine-Button-root')
-    expect(createLink).not.toHaveClass('seesaw-interactive')
+    expect(createLink).not.toHaveClass('ep-interactive')
     expect(screen.getByTestId('libraries-create-action-icon')).toBeInTheDocument()
 
     expect(cssRule('.libraryExploreTopbarContent')).toContain('position: relative;')

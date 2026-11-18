@@ -7,7 +7,7 @@ import { ActionIcon, Box, Button, Group, Text, ThemeIcon } from '@mantine/core'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useTranslation } from 'react-i18next'
 import type { TFunction } from 'i18next'
-import { createClient } from '@/lib/supabase/client'
+import { signOutBrowserClient } from '@/lib/supabase/sign-out'
 import { ROUTES } from '@/shared/lib/constants'
 import { cn } from '@/shared/lib/utils/cn'
 import { getInitials } from '@/shared/lib/utils/initials'
@@ -161,7 +161,8 @@ function LibraryCreateAction({
           </span>
         ) : undefined
       }
-      classNames={{ root: cn(topbarClasses.libraryPrimaryAction, className) }}
+      aria-label={label}
+      classNames={{ root: cn(topbarClasses.libraryPrimaryAction, className), label: topbarClasses.libraryActionLabel }}
     >
       {label}
     </Button>
@@ -201,7 +202,7 @@ interface TopAppBarChromeState {
   isTeacherLibrariesExplore: boolean
   isTeacherReferenceChrome: boolean
   shouldShowTeacherUtilityMenu: boolean
-  activeLibrarySource: 'seesaw' | 'community'
+  activeLibrarySource: 'ep' | 'community'
   resolvedTitle: string
 }
 
@@ -322,7 +323,7 @@ function MobileStandardAccountMenu({
         type="button"
         aria-expanded={opened}
         aria-haspopup="dialog"
-        aria-label={labels.accountMenuButton}
+        aria-label={profile.avatar_url ? labels.accountMenuButton : `${getInitials(profile.full_name)} ${labels.accountMenuButton}`}
         onClick={onToggle}
         variant="default"
         size={44}
@@ -386,7 +387,7 @@ function TeacherLibrariesExploreChrome({
   label: string
   title: string
   createLabel: string
-  activeLibrarySource: 'seesaw' | 'community'
+  activeLibrarySource: 'ep' | 'community'
 }) {
   return (
     <Box component="header" aria-label={label} h={98} className={topbarClasses.libraryTopbar}>
@@ -408,10 +409,10 @@ function TeacherLibrariesExploreChrome({
         >
           <LibrarySourceTab
             href={ROUTES.TEACHER.LIBRARIES_EXPLORE}
-            active={activeLibrarySource === 'seesaw'}
+            active={activeLibrarySource === 'ep'}
             className={topbarClasses.libraryExploreTab}
             selectedClassName={topbarClasses.libraryExploreTabSelected}
-            icon={<SeesawLibraryIcon />}
+            icon={<EduPlayLibraryIcon />}
           >
             Biblioteca EduPlay
           </LibrarySourceTab>
@@ -437,11 +438,11 @@ function TeacherLibrariesExploreChrome({
   )
 }
 
-function SeesawLibraryIcon() {
+function EduPlayLibraryIcon() {
   return (
     <span
-      className={cn(topbarClasses.libraryTabIcon, topbarClasses.librarySeesawIcon)}
-      data-testid="libraries-seesaw-tab-icon"
+      className={cn(topbarClasses.libraryTabIcon, topbarClasses.libraryEduPlayIcon)}
+      data-testid="libraries-ep-tab-icon"
       aria-hidden="true"
     >
       S
@@ -487,7 +488,7 @@ function StandardTopAppBar({
   isTeacherLibrary: boolean
   label: string
   resolvedTitle: string
-  activeLibrarySource: 'seesaw' | 'community'
+  activeLibrarySource: 'ep' | 'community'
   badge?: TopAppBarProps['badge']
   action?: ReactNode
   showLogo: boolean
@@ -716,7 +717,7 @@ function resolveTopAppBarChromeState({
     isTeacherLibrariesExplore,
     isTeacherReferenceChrome,
     shouldShowTeacherUtilityMenu: role === 'teacher',
-    activeLibrarySource: searchParams.get('source') === 'community' ? 'community' : 'seesaw',
+    activeLibrarySource: searchParams.get('source') === 'community' ? 'community' : 'ep',
     resolvedTitle: resolveHeaderTitle({
       title,
       isTeacherHome,
@@ -814,8 +815,7 @@ export function TopAppBar({
 
   const handleLogout = async () => {
     setIsUtilityMenuOpen(false)
-    const supabase = createClient()
-    await supabase.auth.signOut()
+    await signOutBrowserClient()
     router.push(ROUTES.AUTH.LOGIN)
     router.refresh()
   }

@@ -26,7 +26,7 @@ export function CoachFAB({ onClick }: CoachFABProps) {
       <GameChromeButton
         onClick={onClick}
         aria-label={t('coach.open')}
-        className="flex h-16 w-16 items-center justify-center rounded-full border border-outline-variant bg-surface-container-lowest text-primary shadow-soft-sm transition-colors hover:bg-primary-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+        className="flex h-16 w-16 items-center justify-center rounded-full border border-outline-variant bg-surface-container-lowest text-primary shadow-soft-sm transition-colors hover:bg-primary-soft focus-ring"
       >
         <Icon name="MagicWand" size={26} />
       </GameChromeButton>

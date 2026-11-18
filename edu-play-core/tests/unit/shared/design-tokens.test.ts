@@ -30,7 +30,6 @@ function collectProductionSourceFiles(dir: string): string[] {
 
     if (
       entry.isDirectory() &&
-      entry.name !== 'seesaw-design-system' &&
       entry.name !== '__tests__'
     ) {
       return collectProductionSourceFiles(fullPath);

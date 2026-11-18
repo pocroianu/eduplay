@@ -1,9 +1,5 @@
+import { formatMonthYear } from '@/lib/i18n/formatters';
 import type { Artifact } from '../types';
-
-const MONTH_LABEL_FORMATTER = new Intl.DateTimeFormat('ro-RO', {
-  month: 'long',
-  year: 'numeric',
-});
 
 export interface ArtifactMonthGroup {
   /** ISO key of the form `YYYY-MM` so the React key is stable across renders. */
@@ -34,7 +30,7 @@ export function groupArtifactsByMonth(
     } else {
       buckets.set(key, {
         key,
-        label: MONTH_LABEL_FORMATTER.format(date),
+        label: formatMonthYear(date),
         artifacts: [artifact],
       });
     }

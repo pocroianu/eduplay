@@ -110,7 +110,7 @@ export function ClassesPageContent({ classes, countByClass }: ClassesPageContent
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-[1440px] flex-1 space-y-5 px-6 py-6 lg:px-10">
+      <div className="mx-auto w-full max-w-[1440px] flex-1 space-y-5 px-6 py-6 lg:px-10">
         {hasAnyClass ? (
           <>
             <Card className="p-4">
@@ -190,7 +190,7 @@ export function ClassesPageContent({ classes, countByClass }: ClassesPageContent
             />
           </Card>
         )}
-      </main>
+      </div>
     </div>
   )
 }
@@ -222,7 +222,6 @@ function ClassCard({ cls, studentCount, reduceMotion, index }: ClassCardProps) {
     >
       <Link
         href={ROUTES.TEACHER.CLASS(cls.id)}
-        aria-label={t('classes.card.openClass', { name: cls.name })}
         className={classes.classCardLink}
       >
         <Card className="h-full p-5 transition-shadow hover:shadow-soft">

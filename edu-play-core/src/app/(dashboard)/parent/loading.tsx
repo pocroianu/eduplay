@@ -11,7 +11,7 @@ function Skeleton({ className }: { className: string }) {
 
 export default function ParentDashboardLoading() {
   return (
-    <main
+    <div
       aria-busy="true"
       aria-label="Se încarcă panoul părintelui"
       className="min-h-screen bg-surface text-on-surface"
@@ -95,6 +95,6 @@ export default function ParentDashboardLoading() {
           </aside>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

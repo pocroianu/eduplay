@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { ActionIcon } from '@mantine/core'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion'
 import { Icon } from '@/shared/components/ui/Icon';
 import type { IconName } from '@/shared/components/ui/Icon.registry';
 import { ProgressBar } from '@/shared/components/ui/ProgressBar'
@@ -15,7 +15,7 @@ import { ROUTES } from '@/shared/lib/constants/routes'
 import { formatNumber } from '@/lib/i18n/formatters'
 import {
   fadeInUp,
-  float,
+  motionPreset,
   staggerContainer,
   staggerItem,
   transitions,
@@ -140,6 +140,7 @@ function StageStars({ stars = 0, maxStars = 3 }: { stars?: number; maxStars?: nu
 }
 
 function LockedStageNode({ stage, index }: { stage: LearningStage; index: number }) {
+  const reducedMotion = useReducedMotion()
   const offsetClass = index % 2 === 0 ? 'md:ml-40' : 'md:-ml-32'
 
   return (
@@ -152,7 +153,7 @@ function LockedStageNode({ stage, index }: { stage: LearningStage; index: number
           <span className="bg-surface-container px-4 py-1 rounded-full text-lg font-bold uppercase tracking-widest">
             Etapa {stage.stageNumber}
           </span>
-          <h3 className="text-lg font-bold text-on-surface mt-1 font-headline">{stage.name}</h3>
+          <h2 className="text-lg font-bold text-on-surface mt-1 font-headline">{stage.name}</h2>
         </div>
       )}
       <div className="w-20 h-20 md:w-24 md:h-24 bg-surface-container rounded-full flex items-center justify-center border-4 border-outline-variant opacity-60">
@@ -160,7 +161,7 @@ function LockedStageNode({ stage, index }: { stage: LearningStage; index: number
       </div>
       {stage.decorIcon && (
         <motion.div
-          variants={float}
+          variants={motionPreset('float', reducedMotion ?? false)}
           animate="animate"
           className="absolute -right-12 top-0"
         >
@@ -174,6 +175,7 @@ function LockedStageNode({ stage, index }: { stage: LearningStage; index: number
 }
 
 function CurrentStageNode({ stage }: { stage: LearningStage }) {
+  const reducedMotion = useReducedMotion()
   const colors = STAGE_COLOR_MAP[stage.color ?? 'primary']
   const firstLesson = stage.lessons[0]
   const href = firstLesson?.href
@@ -206,7 +208,7 @@ function CurrentStageNode({ stage }: { stage: LearningStage }) {
         <span className={`${colors.label} px-4 py-1 rounded-full text-lg font-bold uppercase tracking-widest`}>
           Etapa {stage.stageNumber}
         </span>
-        <h3 className="text-xl font-bold text-on-surface mt-1 font-headline">{stage.name}</h3>
+        <h2 className="text-xl font-bold text-on-surface mt-1 font-headline">{stage.name}</h2>
       </div>
 
       <motion.div
@@ -236,7 +238,7 @@ function CurrentStageNode({ stage }: { stage: LearningStage }) {
 
         {/* Current-position badge */}
         <motion.div
-          variants={float}
+          variants={motionPreset('float', reducedMotion ?? false)}
           animate="animate"
           className="absolute -top-10 left-1/2 -translate-x-1/2 z-20"
         >
@@ -278,7 +280,7 @@ function CompletedStageNode({
           <span className={`${colors.label} px-4 py-1 rounded-full text-lg font-bold uppercase tracking-widest`}>
             Etapa {stage.stageNumber}
           </span>
-          <h3 className="text-lg font-bold text-on-surface mt-1 font-headline">{stage.name}</h3>
+          <h2 className="text-lg font-bold text-on-surface mt-1 font-headline">{stage.name}</h2>
         </div>
       )}
 
@@ -365,14 +367,14 @@ function StageDetailHeader({
         <span className={`${colors.label} px-4 py-0.5 rounded-full text-lg font-bold uppercase tracking-widest`}>
           Etapa {stage.stageNumber}
         </span>
-        <h4 className="font-bold text-lg font-headline mt-1">{stage.name}</h4>
+        <h3 className="font-bold text-lg font-headline mt-1">{stage.name}</h3>
       </div>
       <ActionIcon
         onClick={onClose}
         type="button"
         variant="subtle"
         radius="50%"
-        size={44}
+        size={64}
         aria-label="Închide detalii"
         styles={{
           root: {
@@ -481,7 +483,7 @@ function NextLessonPanel({
       <div className="bg-surface-container-lowest rounded-xl shadow-soft overflow-hidden">
         <div className="h-1 bg-primary rounded-full" />
         <div className="p-6">
-        <h4 className="font-bold text-lg mb-2 font-headline">Următoarea lecție</h4>
+        <h3 className="font-bold text-lg mb-2 font-headline">Următoarea lecție</h3>
         <p className="text-on-surface-variant text-lg mb-4">{nextLesson.description}</p>
         <Button
           href={nextLesson.href}
@@ -591,7 +593,7 @@ export function LearningMap({
   }
 
   return (
-    <main
+    <div
       data-testid="learning-map-shell"
       aria-label="Harta de învățare"
       className="relative flex min-h-screen flex-col overflow-x-hidden bg-surface pb-28 md:pb-0"
@@ -708,6 +710,6 @@ export function LearningMap({
       <BackgroundDecorations />
       <BottomNavBar items={STUDENT_BOTTOM_NAV_ITEMS} mode="kid" />
 
-    </main>
+    </div>
   )
 }

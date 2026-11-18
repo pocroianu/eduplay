@@ -141,7 +141,7 @@ export function StudentRewardsContent({ profile, ageBand, games }: StudentReward
           <Card shadow={false} className="border border-outline-variant p-0">
             <div className="flex flex-col gap-4 p-5 md:flex-row md:items-center md:justify-between md:p-6">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-on-surface-variant">
+                <p className="text-base font-semibold uppercase tracking-wide text-on-surface-variant">
                   Premiile mele
                 </p>
                 <h1 className="mt-1 text-3xl font-semibold text-on-surface">
@@ -171,7 +171,7 @@ export function StudentRewardsContent({ profile, ageBand, games }: StudentReward
                   <Icon name={stat.icon} size={22} />
                 </span>
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-on-surface-variant">{stat.label}</p>
+                  <p className="text-base font-medium text-on-surface-variant">{stat.label}</p>
                   <p className="truncate text-2xl font-semibold text-on-surface">{stat.value}</p>
                 </div>
               </div>
@@ -190,7 +190,7 @@ export function StudentRewardsContent({ profile, ageBand, games }: StudentReward
               </div>
               <Link
                 href={ROUTES.STUDENT.ACTIVITIES}
-                className="inline-flex min-h-16 items-center gap-2 rounded-lg px-4 text-[18px] font-semibold text-primary hover:bg-surface-container focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+                className="inline-flex min-h-16 items-center gap-2 rounded-lg px-4 text-[18px] font-semibold text-primary hover:bg-surface-container focus-ring"
               >
                 Joacă din nou
                 <Icon name="RocketLaunch" size={18} />
@@ -221,7 +221,7 @@ export function StudentRewardsContent({ profile, ageBand, games }: StudentReward
                       >
                         <Icon name={slot.icon} size={32} weight="fill" style={{ color: slot.category.color }} aria-hidden />
                       </div>
-                      <span className="mb-3 inline-block rounded-md bg-primary px-3 py-1 text-xs font-semibold text-on-primary">
+                      <span className="mb-3 inline-block rounded-md bg-primary px-3 py-1 text-base font-semibold text-on-primary">
                         {slot.isNewlyUnlocked ? 'Sticker nou' : 'Sticker'}
                       </span>
                       <p className="text-lg font-semibold text-on-surface line-clamp-2">{slot.title}</p>
@@ -244,7 +244,7 @@ export function StudentRewardsContent({ profile, ageBand, games }: StudentReward
                   <article
                     key={`locked-${index}`}
                     aria-label="Sticker încă neobținut. Joacă pentru a-l debloca."
-                    className="rounded-lg border border-outline-variant bg-surface-container opacity-70"
+                    className="rounded-lg border border-dashed border-outline-variant bg-surface-container"
                   >
                     <div className="p-5 text-center">
                       <div
@@ -253,7 +253,7 @@ export function StudentRewardsContent({ profile, ageBand, games }: StudentReward
                       >
                         <Icon name="Diamond" size={32} className="text-outline-variant" />
                       </div>
-                      <span className="mb-3 inline-block rounded-md bg-surface-container px-3 py-1 text-xs font-semibold text-on-surface-variant">
+                      <span className="mb-3 inline-block rounded-md bg-surface-container px-3 py-1 text-base font-semibold text-on-surface-variant">
                         Curând
                       </span>
                       <p className="text-lg font-semibold text-on-surface">Următorul sticker</p>
@@ -273,7 +273,7 @@ export function StudentRewardsContent({ profile, ageBand, games }: StudentReward
           className="grid grid-cols-1 xl:grid-cols-2 gap-4"
         >
           <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-5">
-            <span className="mb-3 inline-block rounded-md bg-gold-container px-3 py-1 text-sm font-semibold text-on-secondary-container">
+            <span className="mb-3 inline-block rounded-md bg-gold-container px-3 py-1 text-base font-semibold text-on-secondary-container">
               Recomandare
             </span>
             <h3 className="text-lg font-semibold text-on-surface mb-2">
@@ -284,7 +284,7 @@ export function StudentRewardsContent({ profile, ageBand, games }: StudentReward
             </p>
             <Link
               href={ROUTES.STUDENT.PROGRESS}
-              className="inline-flex min-h-16 items-center gap-2 rounded-lg bg-primary px-5 text-[18px] font-semibold text-on-primary hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+              className="inline-flex min-h-16 items-center gap-2 rounded-lg bg-primary px-5 text-[18px] font-semibold text-on-primary hover:bg-primary-dim focus-ring"
             >
               <Icon name="MapPin" size={20} />
               Vezi harta
@@ -292,7 +292,7 @@ export function StudentRewardsContent({ profile, ageBand, games }: StudentReward
           </div>
 
           <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-5">
-            <span className="mb-3 inline-block rounded-md bg-primary px-3 py-1 text-sm font-semibold text-on-primary">
+            <span className="mb-3 inline-block rounded-md bg-primary px-3 py-1 text-base font-semibold text-on-primary">
               Rezumat rapid
             </span>
             <h3 className="text-lg font-semibold text-on-surface mb-2">
@@ -309,7 +309,7 @@ export function StudentRewardsContent({ profile, ageBand, games }: StudentReward
                 aria-hidden="true"
               />
             </div>
-            <p className="text-sm text-on-surface-variant mt-2">
+            <p className="text-lg text-on-surface-variant mt-2">
               {completionPercent}% din colecția disponibilă
             </p>
           </div>

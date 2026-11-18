@@ -41,7 +41,7 @@ export function LessonDrawer({
             <GameChromeButton
               onClick={onClose}
               data-autofocus
-              className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-surface-container text-on-surface-variant transition-colors hover:bg-surface-container-high focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-surface-container text-on-surface-variant transition-colors hover:bg-surface-container-high focus-ring"
               aria-label={t("drawer.close")}
             >
               <Icon name="X" size={22} />
@@ -53,7 +53,7 @@ export function LessonDrawer({
           <Drawer.Body className="flex-1 overflow-y-auto p-6">
             <div className="flex flex-col gap-6">
               <span
-                className="inline-flex w-fit items-center rounded-full bg-primary-wash px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary-deep"
+                className="inline-flex w-fit items-center rounded-full bg-primary-wash px-3 py-1 text-base font-semibold uppercase tracking-wider text-primary-deep"
                 style={{
                   backgroundColor: theme.accentSoft,
                   color: theme.accentColor,
@@ -83,7 +83,7 @@ export function LessonDrawer({
                     className="flex items-center gap-4 rounded-xl bg-surface p-3 shadow-soft-sm"
                   >
                     <div
-                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+                      className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-base font-bold text-white"
                       style={{ backgroundColor: theme.accentColor }}
                     >
                       {index + 1}
@@ -111,7 +111,7 @@ export function LessonDrawer({
                     />
                   </div>
                   <div>
-                    <span className="text-xs font-semibold uppercase text-on-surface-variant">
+                    <span className="text-base font-semibold uppercase text-on-surface-variant">
                       {theme.coach}
                     </span>
                     <p className="text-base font-medium">{helperText}</p>

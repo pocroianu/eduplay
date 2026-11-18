@@ -135,7 +135,7 @@ export default async function TeacherHelpPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-surface-container px-4 py-8 text-on-surface sm:px-6 lg:px-10">
+    <div className="min-h-screen bg-surface-container px-4 py-8 text-on-surface sm:px-6 lg:px-10">
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-md items-start justify-center">
         <Card className="w-full overflow-hidden border border-outline-variant bg-surface-container-lowest" padding="none">
           <div className="flex items-center justify-between gap-4 border-b border-outline-variant px-5 py-4">
@@ -166,6 +166,6 @@ export default async function TeacherHelpPage() {
           </nav>
         </Card>
       </div>
-    </main>
+    </div>
   );
 }

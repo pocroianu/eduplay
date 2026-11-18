@@ -104,7 +104,7 @@ export default async function TeacherLanguagePage() {
   const languages = await getLanguages(lang, current);
 
   return (
-    <main className="min-h-screen bg-surface-container px-4 py-8 text-on-surface sm:px-6 lg:px-10">
+    <div className="min-h-screen bg-surface-container px-4 py-8 text-on-surface sm:px-6 lg:px-10">
       <div className="mx-auto flex min-h-[calc(100vh-4rem)] max-w-2xl items-center justify-center">
         <Card className="w-full overflow-hidden border border-outline-variant bg-surface-container-lowest" padding="none">
           <form action={updateLanguage}>
@@ -163,6 +163,6 @@ export default async function TeacherLanguagePage() {
           </form>
         </Card>
       </div>
-    </main>
+    </div>
   );
 }

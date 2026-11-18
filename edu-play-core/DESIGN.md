@@ -36,6 +36,60 @@ There is no runtime theme switch. Routes and primitives use the same EduPlay tok
 
 ## 3. Tokens
 
+Use `focus-ring` for keyboard focus. CSS modules use `:focus-visible` with
+`outline: 2px solid var(--color-primary); outline-offset: 2px;`.
+
+### Focus ring convention
+
+Every interactive control shows the same ring: `2px solid var(--color-primary)`
+with a `2px` offset, on `:focus-visible` only.
+
+- Tailwind/kit markup: use the `focus-ring` utility. Do not hand-roll
+  `focus-visible:outline ...` class strings (they drop the offset).
+- CSS modules: `:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }`.
+- Mantine components: the theme keeps `focusRing: 'auto'`, and `globals.css`
+  pins `html .mantine-focus-auto:focus-visible` to the same declaration, so
+  Mantine and kit controls are visually identical.
+
+### Fonts
+
+`src/app/fonts.ts` exposes next/font variables `--font-lexend` and
+`--font-jetbrains-mono` on `<html>`. The theme tokens `--font-display`,
+`--font-body`, `--font-headline` and `--font-mono` reference those variables
+with system fallbacks; use the theme tokens (`font-mono`, `--font-body`), not the
+next/font variables, in new code.
+
+### Colour scheme
+
+EduPlay ships **light only**. There is no dark mode and no runtime theme switch;
+this is a deliberate, documented gap, not an oversight. Adding one requires:
+
+1. A dark value for every colour token (surfaces, `on-*`, outlines, primary
+   tints, status colours, shadows) declared under
+   `[data-mantine-color-scheme="dark"]` in `globals.css`, re-checked for WCAG AA.
+2. Mantine's `ColorSchemeScript` in `src/app/layout.tsx` (plus a
+   `defaultColorScheme`), so the attribute is set before paint.
+3. A Mantine dark palette/`colors` review in `src/shared/theme/mantine-theme.ts`
+   (the purple tuple is light-tuned) and `color-scheme` on `html`.
+4. Replacing literal light-only values (`rgba(255,255,255,…)` in `.glass-card`,
+   hard-coded white fills) with tokens, and a dark pass over Vulpita and game art.
+
+### Legacy aliases (do not use in new code)
+
+These exist only because existing code still references them. Prefer the
+canonical token on the right.
+
+| Alias | Use instead |
+| --- | --- |
+| `--color-purple`, `-dim`, `-deep`, `-soft`, `-wash` (and `bg-purple-*`, `text-purple-*`) | `--color-primary`, `-dim`, `-deep`, `-soft`, `-wash` |
+| `--color-fun-purple` | `--color-primary` |
+| `--ep-purple-600` | `--color-primary` (kept only because `tests/unit/shared/design-tokens.test.ts` asserts it) |
+| `--shadow-soft-md` | `--shadow-soft` |
+| `--color-tertiary-container`, `--color-on-tertiary-container` | `--color-success-soft` / `--color-primary-deep` |
+
+Removed: `--color-tertiary` (no usages), `.bg-ep-page`, `.bg-ep-green`,
+`.bg-ep-purple`, `.bg-ep-blue`, `.text-ep-purple` (no usages).
+
 Use token classes from `src/app/globals.css`. Do not put raw hex values,
 arbitrary radii, or arbitrary shadows in production UI components.
 
@@ -54,6 +108,15 @@ arbitrary radii, or arbitrary shadows in production UI components.
 | `--color-on-surface` | Primary text. |
 | `--color-on-surface-variant` | Secondary text and resting nav labels. |
 | `--color-outline` / `--color-outline-variant` | 1px borders and dividers. |
+| `--color-outline-strong` | Form control borders with at least 3:1 contrast on white. |
+| `--color-error-container`, `--color-error-soft` | Error surfaces. |
+| `--color-gold-container`, `--color-gold-fixed`, `--color-warning` | Reward surfaces and warning text, derived from the gold palette. |
+| `--shadow-inner-soft`, `--shadow-modal` | Inset surfaces and modal elevation. |
+
+Purple palette steps and `--color-fun-purple` alias the corresponding primary
+tokens; `--shadow-soft-md` aliases `--shadow-soft`. Run `npm run
+check:css-classes` after changing tokens or utility classes; it checks missing
+classes, unresolved custom properties, and declaration drift.
 
 ### Typography
 

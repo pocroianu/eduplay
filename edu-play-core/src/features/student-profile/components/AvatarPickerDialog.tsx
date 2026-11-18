@@ -128,7 +128,7 @@ function AvatarPickerDialogBody({
                     "relative flex items-center justify-center",
                     "aspect-square min-h-[64px] w-full min-w-[64px] overflow-hidden rounded-2xl",
                     "outline-none transition-[box-shadow,background-color] duration-200 ease-press",
-                    "focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+                    "focus-ring",
                     isSelected
                       ? "bg-primary-wash ring-2 ring-primary shadow-soft-sm"
                       : "ring-1 ring-outline-variant hover:bg-primary-wash hover:ring-primary/40",
@@ -155,6 +155,7 @@ function AvatarPickerDialogBody({
         <footer className="flex shrink-0 flex-col-reverse gap-3 border-t border-outline-variant px-5 py-4 md:flex-row md:px-6">
           <Button
             variant="ghost"
+            mode="kid"
             size="lg"
             onClick={onCancel}
             disabled={busy}
@@ -165,6 +166,7 @@ function AvatarPickerDialogBody({
           </Button>
           <Button
             variant="primary"
+            mode="kid"
             size="lg"
             onClick={handleConfirm}
             disabled={busy}

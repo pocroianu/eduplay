@@ -182,7 +182,7 @@ function GameProgressCard({ game }: GameCardProps) {
 
         {/* Category badge + Difficulty stars */}
         <div className="flex items-center gap-2 mb-3">
-          <span className="text-xs px-2 py-0.5 rounded bg-opacity-20" style={{ backgroundColor: categoryConfig.bgColor }}>
+          <span className="text-xs px-2 py-0.5 rounded " style={{ backgroundColor: categoryConfig.bgColor }}>
             {categoryConfig.label}
           </span>
           <div className="flex items-center gap-0.5">
@@ -217,7 +217,7 @@ function GameProgressCard({ game }: GameCardProps) {
                   <Icon name="Trophy" size={14} className="text-gold" />
                   <span className="text-xs text-on-surface-variant">Scor</span>
                 </div>
-                <span className="font-bold text-sm" style={{ color: categoryConfig.color }}>
+                <span className="font-bold text-sm text-on-surface">
                   {game.progress.score}%
                 </span>
               </div>
@@ -243,7 +243,7 @@ function GameProgressCard({ game }: GameCardProps) {
             </div>
           </div>
         ) : (
-          <p className="text-xs text-outline text-center py-2">
+          <p className="text-xs text-on-surface-variant text-center py-2">
             Încă nu a jucat acest joc
           </p>
         )}

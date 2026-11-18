@@ -22,7 +22,7 @@ describe('ParentError', () => {
     const user = userEvent.setup();
     const { reset } = renderError();
 
-    const retry = screen.getByRole('button', { name: /încercați din nou/i });
+    const retry = screen.getByRole('button', { name: /încearcă din nou/i });
     expect(retry).toHaveClass('mantine-Button-root');
 
     await user.click(retry);

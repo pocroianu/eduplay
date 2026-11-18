@@ -23,7 +23,7 @@ export interface AdminPlaceholderPageProps {
   subtitle: string
   /** Canonical icon shown in the unavailable-state callout. */
   icon: IconName
-  /** Identifier of the follow-up ticket this surface ships under. */
+  /** Internal follow-up ticket id; exposed only as a data attribute, never rendered. */
   trackingTicket: string
   /** Read-only rows modelled after the EduPlay account settings list. */
   rows?: AdminPlaceholderRow[]
@@ -52,7 +52,7 @@ export function AdminPlaceholderPage({
   return (
     <div className="max-w-4xl space-y-6" data-testid="admin-placeholder-page" data-tracking-ticket={trackingTicket}>
       <header className="border-b border-outline-variant bg-surface-container-lowest px-5 py-5">
-        <p className="mb-2 text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">
+        <p className="mb-2 text-xs font-bold uppercase tracking-widest text-on-surface-variant">
           {eyebrow}
         </p>
         <h1 className="font-headline text-[clamp(28px,4vw,36px)] font-bold tracking-tight text-on-surface">
@@ -67,7 +67,7 @@ export function AdminPlaceholderPage({
             <Card key={card.label} padding="md" shadow={false} className="border border-outline-variant bg-surface-container-lowest">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-on-surface-variant">
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-on-surface-variant">
                     {card.label}
                   </p>
                   <p className="mt-2 text-xl font-bold text-on-surface">{card.value}</p>
@@ -80,7 +80,7 @@ export function AdminPlaceholderPage({
                 </span>
               </div>
               {card.helper ? (
-                <p className="mt-3 text-[13px] leading-relaxed text-on-surface-variant">{card.helper}</p>
+                <p className="mt-3 text-sm leading-relaxed text-on-surface-variant">{card.helper}</p>
               ) : null}
             </Card>
           ))}
@@ -90,18 +90,18 @@ export function AdminPlaceholderPage({
       {rows.length > 0 ? (
         <section aria-labelledby="admin-placeholder-settings-title" className="overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest">
           <div className="border-b border-outline-variant px-5 py-3">
-            <h2 id="admin-placeholder-settings-title" className="text-[13px] font-bold uppercase tracking-[0.16em] text-on-surface-variant">
+            <h2 id="admin-placeholder-settings-title" className="text-sm font-bold uppercase tracking-[0.16em] text-on-surface-variant">
               {sectionTitle}
             </h2>
           </div>
           <dl className="divide-y divide-outline-variant">
             {rows.map((row) => (
               <div key={row.label} className="grid gap-2 px-5 py-4 sm:grid-cols-[minmax(10rem,14rem)_1fr] sm:items-center">
-                <dt className="text-[14px] font-semibold text-on-surface">{row.label}</dt>
-                <dd className="text-[14px] text-on-surface-variant">
+                <dt className="text-sm font-semibold text-on-surface">{row.label}</dt>
+                <dd className="text-sm text-on-surface-variant">
                   <span className="font-semibold text-on-surface">{row.value}</span>
                   {row.helper ? (
-                    <span className="mt-1 block text-[13px] leading-relaxed text-on-surface-variant">
+                    <span className="mt-1 block text-sm leading-relaxed text-on-surface-variant">
                       {row.helper}
                     </span>
                   ) : null}
@@ -125,9 +125,7 @@ export function AdminPlaceholderPage({
               În pregătire
             </h2>
             <p className="mt-1 max-w-2xl text-sm leading-relaxed text-on-surface-variant">
-              Această pagină va fi finalizată într-un ticket dedicat
-              ({trackingTicket}). Navigarea funcționează deja pentru a păstra
-              continuitatea consolei.
+              Această pagină este încă în lucru. Navigarea funcționează deja pentru a păstra continuitatea consolei.
             </p>
           </div>
         </div>

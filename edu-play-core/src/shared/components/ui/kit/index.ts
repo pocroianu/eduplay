@@ -40,16 +40,15 @@ export type {
 } from './LibraryExploreCard';
 export type { InteractiveSurfaceProps } from './InteractiveSurface';
 export {
-  SEESAW_CARD_ACTION_AREA_HOVER_CAPTURE,
-  SEESAW_ACTIVITY_CARD_CHROME_CLASS,
-  SEESAW_EASING_CLASS,
-  SEESAW_FOCUS_RING_CLASS,
-  SEESAW_HOVER_HIGHLIGHT_CLASS,
-  SEESAW_HOVER_HIGHLIGHT_STYLE,
-  SEESAW_HOVER_HIGHLIGHT_TRIGGER_CLASS,
-  SEESAW_STANDARD_BUTTON_INTERACTION_CLASS,
-  SEESAW_SURFACE_INTERACTION_CLASS,
-} from './seesawInteraction';
+  ACTIVITY_CARD_CHROME_CLASS,
+  EASING_CLASS,
+  FOCUS_RING_CLASS,
+  HOVER_HIGHLIGHT_CLASS,
+  HOVER_HIGHLIGHT_STYLE,
+  HOVER_HIGHLIGHT_TRIGGER_CLASS,
+  STANDARD_BUTTON_INTERACTION_CLASS,
+  SURFACE_INTERACTION_CLASS,
+} from './interactionTokens';
 export { Badge } from './Badge';
 export type { BadgeProps } from './Badge';
 export { Pill } from './Pill';
@@ -82,6 +81,7 @@ export type {
 export { PageHeader } from './PageHeader';
 export type { PageHeaderProps } from './PageHeader';
 export type { HeroBannerProps, HeroBannerTone } from './HeroBanner';
+export { StatBlock } from './StatBlock';
 export type { StatBlockProps, StatBlockVariant } from './StatBlock';
 export { TextField } from './TextField';
 export type { TextFieldProps } from './TextField';

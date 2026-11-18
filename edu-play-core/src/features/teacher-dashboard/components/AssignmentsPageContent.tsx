@@ -69,6 +69,7 @@ export function AssignmentsPageContent({
   const { t } = useTranslation('teacher')
   const [filter, setFilter] = useState<FilterStatus>('all')
   const [deleteTarget, setDeleteTarget] = useState<string | null>(null)
+  const [deleteError, setDeleteError] = useState(false)
 
   const now = useMemo(() => new Date(), [])
 
@@ -111,11 +112,16 @@ export function AssignmentsPageContent({
   async function handleDelete() {
     if (!deleteTarget) return
 
-    const result = await deleteAssignment(deleteTarget)
-    setDeleteTarget(null)
-
-    if (!result.success) {
-      console.error('Delete failed:', result.error)
+    setDeleteError(false)
+    try {
+      const result = await deleteAssignment(deleteTarget)
+      if (!result.success) {
+        setDeleteError(true)
+        return
+      }
+      setDeleteTarget(null)
+    } catch {
+      setDeleteError(true)
     }
   }
 
@@ -211,7 +217,7 @@ export function AssignmentsPageContent({
                 key={assignment.id}
                 assignment={assignment}
                 now={now}
-                onDelete={() => setDeleteTarget(assignment.id)}
+                onDelete={() => { setDeleteError(false); setDeleteTarget(assignment.id) }}
                 tileVariants={tileVariants}
                 labels={{
                   delete: t('assignments.delete'),
@@ -228,7 +234,7 @@ export function AssignmentsPageContent({
       <ConfirmDialog
         open={deleteTarget !== null}
         title={t('assignments.deleteConfirm.title')}
-        body={t('assignments.deleteConfirm.message')}
+        body={<>{t('assignments.deleteConfirm.message')}{deleteError && <span role="alert" className="mt-2 block text-error">Nu am putut șterge. Încearcă din nou.</span>}</>}
         confirmLabel={t('assignments.deleteConfirm.confirm')}
         cancelLabel={t('assignments.deleteConfirm.cancel')}
         onConfirm={handleDelete}

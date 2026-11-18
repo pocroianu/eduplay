@@ -80,7 +80,7 @@ export function GamesPageContent({
         <div className="flex items-center gap-4">
           <Link
             href={ROUTES.STUDENT.DASHBOARD}
-            className="inline-flex items-center gap-2 px-4 h-16 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors text-lg focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+            className="inline-flex items-center gap-2 px-4 h-16 rounded-xl text-on-surface-variant hover:bg-surface-container transition-colors text-lg focus-ring"
           >
             <Icon name="ArrowLeft" />
             Înapoi

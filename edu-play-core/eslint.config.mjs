@@ -95,7 +95,7 @@ const eslintConfig = defineConfig([
     // Design handoff bundles: HTML/JSX design references, not production code.
     // README files state these prototypes should be recreated, not copied verbatim.
     "design_handoff_eduplay_duo/**",
-    "src/shared/components/ui/seesaw-design-system/**",
+    "docs/archive/legacy-prototype/**",
   ]),
 ]);
 

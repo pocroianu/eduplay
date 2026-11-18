@@ -176,6 +176,7 @@ larger `StatCard` treatment.
 4. Use EduPlay tokens only. Computed styles may use `var(--color-*)`; component code
    must not introduce raw hex.
 5. Colocate a focused `*.test.tsx` next to the primitive.
+6. Add the primitive to `tests/unit/a11y/kit-a11y.test.tsx` (vitest-axe; only the page-level `region` rule is disabled). Use the `focus-ring` utility for keyboard focus.
 6. Export the component and prop types from `src/shared/components/ui/kit/index.ts`.
 7. Update this document when the public contract changes.
 

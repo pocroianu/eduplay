@@ -42,6 +42,7 @@ vi.mock('@/features/teacher-activities', () => ({
 vi.mock('@/lib/i18n/server', () => ({
   getServerLanguage: () => Promise.resolve('ro'),
   preloadNamespaces: () => Promise.resolve({}),
+  getServerTranslation: (_lang: string, _ns: string, key: string) => Promise.resolve(key),
 }))
 
 vi.mock('@/lib/i18n/I18nProvider', () => ({
@@ -110,5 +111,15 @@ describe('/teacher/activities page', () => {
     await expect(TeacherActivitiesPage({ searchParams: Promise.resolve({}) })).rejects.toMatchObject({
       __redirect__: '/login',
     })
+  })
+
+  it('shows an alert when the public library fails to load', async () => {
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+    getPublishedGamesMock.mockRejectedValue(new Error('boom'))
+
+    render(await TeacherActivitiesPage({ searchParams: Promise.resolve({}) }))
+
+    expect(screen.getByRole('alert')).toHaveTextContent('activities.libraryLoadError')
+    errorSpy.mockRestore()
   })
 })

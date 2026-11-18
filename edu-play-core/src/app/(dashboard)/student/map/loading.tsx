@@ -2,7 +2,7 @@ import { Box, Group, Paper, Skeleton, Stack } from '@mantine/core'
 
 export default function StudentMapLoading() {
   return (
-    <Box component="main" className="min-h-screen flex-1 bg-surface px-4 py-8 md:py-12">
+    <Box component="div" className="min-h-screen flex-1 bg-surface px-4 py-8 md:py-12">
       <Stack className="mx-auto w-full max-w-4xl items-center" gap={0}>
         <Paper
           radius="lg"

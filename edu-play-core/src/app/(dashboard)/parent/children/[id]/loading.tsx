@@ -1,6 +1,6 @@
 export default function ChildDetailLoading() {
   return (
-    <main className="min-h-screen flex-1 animate-pulse bg-surface p-8 motion-reduce:animate-none">
+    <div className="min-h-screen flex-1 animate-pulse bg-surface p-8 motion-reduce:animate-none">
       {/* Back Button Skeleton */}
       <div className="bg-surface-container h-5 w-[130px] mb-4 rounded-md" />
 
@@ -67,6 +67,6 @@ export default function ChildDetailLoading() {
           ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

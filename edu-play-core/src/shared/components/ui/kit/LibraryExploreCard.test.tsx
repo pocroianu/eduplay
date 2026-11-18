@@ -17,8 +17,8 @@ describe('LibraryExploreCard', () => {
     const article = screen.getByRole('article', { name: /învățare de vară/i });
     const link = within(article).getByRole('link', { name: /învățare de vară/i });
     expect(link).toHaveAttribute('href', '/teacher/libraries/explore?collection=summer');
-    expect(link).toHaveClass('seesaw-explore-card__main');
-    expect(article).toHaveClass('seesaw-explore-card--collection');
+    expect(link).toHaveClass('ep-explore-card__main');
+    expect(article).toHaveClass('ep-explore-card--collection');
     expect(within(article).getByText('48 de lecții')).toBeInTheDocument();
   });
 
@@ -40,7 +40,7 @@ describe('LibraryExploreCard', () => {
       '/play/activity/game-1',
     );
     const action = within(article).getByRole('button', { name: 'Atribuie' });
-    expect(action).toHaveClass('seesaw-explore-card__action');
-    expect(action).toHaveClass('seesaw-interactive');
+    expect(action).toHaveClass('ep-explore-card__action');
+    expect(action).toHaveClass('ep-interactive');
   });
 });

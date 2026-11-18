@@ -335,7 +335,7 @@ export function VoiceRecorderRenderer({
     return (
       <div className="flex flex-col items-center gap-4 text-center py-8">
         <Icon name="MicrophoneSlash" size="xl" />
-        <h2 className="text-title font-heading text-on-surface">
+        <h2 className="text-title font-headline text-on-surface">
           Dispozitivul tău nu poate înregistra
         </h2>
         <p className="text-body text-on-surface-variant max-w-md">
@@ -350,7 +350,7 @@ export function VoiceRecorderRenderer({
     return (
       <div className="flex flex-col items-center gap-4 text-center py-8">
         <Icon name="MicrophoneSlash" size="xl" />
-        <h2 className="text-title font-heading text-on-surface">
+        <h2 className="text-title font-headline text-on-surface">
           Avem nevoie să folosim microfonul
         </h2>
         <p className="text-body text-on-surface-variant max-w-md">
@@ -381,7 +381,7 @@ export function VoiceRecorderRenderer({
           </div>
         ) : null}
         <p className="text-body text-on-surface-variant max-w-md">
-          Apasă butonul de mai jos ca să porneşti microfonul. Avem nevoie de
+          Apasă butonul de mai jos ca să pornești microfonul. Avem nevoie de
           permisiunea ta înainte să începem.
         </p>
         <ChunkyButton
@@ -424,25 +424,25 @@ export function VoiceRecorderRenderer({
             }`}
           />
           <span
-            className={`text-title font-heading tabular-nums ${
+            className={`text-title font-headline tabular-nums ${
               past ? 'text-error' : warn ? 'text-warning' : 'text-on-surface'
             }`}
             data-testid="voice-elapsed"
           >
             {formatSeconds(cappedElapsed)}
           </span>
-          <span className="text-body-sm text-on-surface-variant tabular-nums">
+          <span className="text-lg text-on-surface-variant tabular-nums">
             / {formatSeconds(RECORDING_SOFT_CAP_MS)}
           </span>
         </div>
         {warn ? (
-          <p className="text-body-sm text-warning" role="status">
+          <p className="text-lg text-warning" role="status">
             Timpul aproape s-a terminat. Încheie acum sau apasă „Oprește”.
           </p>
         ) : null}
         {past ? (
-          <p className="text-body-sm text-error" role="status">
-            Ai depăşit minutul. Apasă „Oprește” ca să salvezi.
+          <p className="text-lg text-error" role="status">
+            Ai depășit minutul. Apasă „Oprește” ca să salvezi.
           </p>
         ) : null}
         <motion.canvas
@@ -490,7 +490,7 @@ export function VoiceRecorderRenderer({
           />
         ) : null}
         {state.stage === 'submit_error' && state.errorMessage ? (
-          <p role="alert" className="text-body-sm text-error">
+          <p role="alert" className="text-lg text-error">
             {state.errorMessage}
           </p>
         ) : null}
@@ -540,7 +540,7 @@ export function VoiceRecorderRenderer({
         }}
       />
       <Icon name="CheckCircle" size="xl" weight="fill" />
-      <h2 className="text-title font-heading text-on-surface">
+      <h2 className="text-title font-headline text-on-surface">
         Înregistrarea a fost trimisă!
       </h2>
       <p className="text-body text-on-surface-variant max-w-md">

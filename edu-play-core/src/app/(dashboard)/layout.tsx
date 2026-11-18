@@ -7,7 +7,7 @@ import { getNotifications, getUnreadNotificationCount } from '@/features/parent-
 import { SideNavBar } from '@/shared/components/layout/SideNavBar'
 import { TopAppBar } from '@/shared/components/layout/TopAppBar'
 import { ROLE_NAV_CONFIG } from '@/config/navigation'
-import { ToastProvider } from '@/shared/components/ui/kit'
+import { ToastProvider } from '@/shared/components/ui/kit/Toast'
 
 import { pathOwnsShell } from './path-owns-shell'
 
@@ -25,6 +25,10 @@ function sidebarClassInitials(name: string) {
 function teacherClassCountLabel(count: number) {
   if (count === 1) return 'Profesor - o clasă'
   return `Profesor - ${count} clase`
+}
+
+function SkipLink() {
+  return <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:flex focus:min-h-11 focus:items-center focus:rounded-md focus:bg-surface focus:px-4 focus:text-primary focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-primary">Sari la conținut</a>
 }
 
 export default async function DashboardLayout({
@@ -64,7 +68,7 @@ export default async function DashboardLayout({
   const pathname = (await headers()).get('x-pathname')
 
   if (pathOwnsShell(pathname)) {
-    return <ToastProvider>{children}</ToastProvider>
+    return <ToastProvider><SkipLink /><main id="main-content" tabIndex={-1}>{children}</main></ToastProvider>
   }
 
   const parentNotifications =
@@ -101,6 +105,7 @@ export default async function DashboardLayout({
 
   return (
     <ToastProvider>
+      <SkipLink />
       <div className="flex min-h-screen bg-surface">
         <SideNavBar
           variant={navConfig.variant}
@@ -132,7 +137,7 @@ export default async function DashboardLayout({
               ) : undefined
             }
           />
-          {children}
+          <main id="main-content" tabIndex={-1} className="min-w-0 flex-1">{children}</main>
         </div>
       </div>
     </ToastProvider>

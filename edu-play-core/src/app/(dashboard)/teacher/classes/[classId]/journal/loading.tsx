@@ -22,7 +22,7 @@ function ClassTabLoading() {
           </div>
         </div>
       </div>
-      <main className="mx-auto grid max-w-[1440px] gap-0 px-6 py-6 lg:grid-cols-[300px_minmax(0,1fr)] lg:px-10">
+      <div className="mx-auto grid max-w-[1440px] gap-0 px-6 py-6 lg:grid-cols-[300px_minmax(0,1fr)] lg:px-10">
         <div className="min-h-[540px] rounded-t-lg border border-outline-variant bg-surface-container-lowest p-4 lg:rounded-l-lg lg:rounded-tr-none">
           <div className="space-y-3">
             {[1, 2, 3, 4, 5].map((item) => (
@@ -34,7 +34,7 @@ function ClassTabLoading() {
           <div className="h-10 animate-pulse rounded-md bg-surface-container motion-reduce:animate-none" />
           <div className="mt-5 h-72 animate-pulse rounded-md bg-surface-container motion-reduce:animate-none" />
         </div>
-      </main>
+      </div>
     </div>
   )
 }

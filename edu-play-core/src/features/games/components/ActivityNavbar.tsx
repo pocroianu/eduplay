@@ -83,7 +83,7 @@ export function ActivityNavbar({
 
       <div className="order-3 grid grid-cols-2 gap-2 sm:order-2 sm:flex sm:items-center sm:justify-end md:order-none md:gap-3">
         <Button
-          mode="standard"
+          mode="kid"
           variant="primary"
           size="lg"
           onClick={onRepeat}
@@ -100,7 +100,7 @@ export function ActivityNavbar({
         </Button>
 
         <Button
-          mode="standard"
+          mode="kid"
           variant={isPaused ? "primary" : "secondary"}
           size="lg"
           onClick={onPause}

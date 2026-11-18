@@ -1,4 +1,3 @@
-import { Switch } from '@mantine/core'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { getClassDetailData, type ClassDetailData } from '@/features/teacher-dashboard/server'
@@ -6,7 +5,7 @@ import { I18nProvider } from '@/lib/i18n/I18nProvider'
 import type { Language } from '@/lib/i18n/config'
 import { getServerLanguage, getServerTranslation, preloadNamespaces } from '@/lib/i18n/server'
 import { Icon } from '@/shared/components/ui/Icon'
-import { Button, Card, MantineBoundary, Pill } from '@/shared/components/ui/kit'
+import { Button, Card, Pill } from '@/shared/components/ui/kit'
 import { ROUTES } from '@/shared/lib/constants'
 
 
@@ -20,7 +19,7 @@ type SettingsHomeCopy = {
   sectionClassSettings: string
   sectionStudents: string
   manageStudents: string
-  sharedDevices: string
+  studentSignInModeDescription: string
   likesComments: string
   itemEditing: string
   sectionFamilies: string
@@ -62,7 +61,7 @@ async function getSettingsHomeCopy(lang: Language): Promise<SettingsHomeCopy> {
     sectionClassSettings,
     sectionStudents,
     manageStudents,
-    sharedDevices,
+    studentSignInModeDescription,
     likesComments,
     itemEditing,
     sectionFamilies,
@@ -97,7 +96,7 @@ async function getSettingsHomeCopy(lang: Language): Promise<SettingsHomeCopy> {
     t(lang, 'settingsHome.sectionClassSettings'),
     t(lang, 'settingsHome.sectionStudents'),
     t(lang, 'settingsHome.manageStudents'),
-    t(lang, 'settingsHome.sharedDevices'),
+    t(lang, 'settingsHome.studentSignInModeDescription'),
     t(lang, 'settingsHome.likesComments'),
     t(lang, 'settingsHome.itemEditing'),
     t(lang, 'settingsHome.sectionFamilies'),
@@ -134,7 +133,7 @@ async function getSettingsHomeCopy(lang: Language): Promise<SettingsHomeCopy> {
     sectionClassSettings,
     sectionStudents,
     manageStudents,
-    sharedDevices,
+    studentSignInModeDescription,
     likesComments,
     itemEditing,
     sectionFamilies,
@@ -200,31 +199,24 @@ function ClassSettingsContent({ data, copy }: { data: SettingsPageData; copy: Se
       group: copy.sectionClassSettings,
       items: [
         { id: 'class-info', label: copy.sectionClassSettings, value: classData.name, icon: 'BookOpen' as const },
-        { id: 'student-sign-in-mode', label: copy.studentSignInMode, value: copy.sharedDevices, icon: 'Key' as const },
+        { id: 'student-sign-in-mode', label: copy.studentSignInMode, value: copy.studentSignInModeDescription, icon: 'Key' as const },
       ],
     },
     {
       group: copy.sectionStudents,
       items: [
         { id: 'manage-students', label: copy.manageStudents, value: classSummary, icon: 'Users' as const },
-        { id: 'manage-student-groups', label: copy.studentGroups, value: copy.studentGroupsDescription, icon: 'ListChecks' as const },
-        { id: 'home-learning-codes', label: copy.homeLearningCodes, value: copy.homeLearningCodesDescription, icon: 'House' as const },
-        { id: 'student-likes-comments', label: copy.likesComments, value: copy.studentLikesCommentsDescription, icon: 'ThumbsUp' as const },
-        { id: 'item-editing', label: copy.itemEditing, value: copy.itemEditingDescription, icon: 'PencilSimple' as const },
       ],
     },
     {
       group: copy.organization,
       items: [
-        { id: 'manage-folders', label: copy.folders, value: copy.foldersDescription, icon: 'SquaresFour' as const },
-        { id: 'show-add-folder-step', label: copy.addFolderStep, value: copy.addFolderStepDescription, icon: 'PlusCircle' as const },
         { id: 'manage-teachers', label: copy.teachers, value: copy.teachersDescription, icon: 'GraduationCap' as const },
       ],
     },
     {
       group: copy.sectionFamilies,
       items: [
-        { id: 'families-toggle', label: copy.enableFamilyAccess, value: copy.inviteFamiliesLabel, icon: 'HandHeart' as const, toggle: true },
         { id: 'families', label: copy.inviteFamiliesLabel, value: copy.inviteFamiliesLabel, icon: 'PaperPlaneTilt' as const },
       ],
     },
@@ -237,7 +229,7 @@ function ClassSettingsContent({ data, copy }: { data: SettingsPageData; copy: Se
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-on-surface-variant">
             <Link
               href={ROUTES.TEACHER.CLASS(classData.id)}
-              className="inline-flex items-center gap-2 rounded-sm font-semibold text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="inline-flex items-center gap-2 rounded-sm font-semibold text-primary hover:underline focus-ring"
             >
               <Icon name="ArrowLeft" size="sm" aria-hidden />
               {copy.back}
@@ -258,7 +250,7 @@ function ClassSettingsContent({ data, copy }: { data: SettingsPageData; copy: Se
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-[760px] px-5 py-6">
+      <div className="mx-auto w-full max-w-[760px] px-5 py-6">
         <Card padding="none" shadow={false} className="overflow-hidden border border-outline-variant bg-surface-container-lowest">
           <div className="grid gap-3 border-b border-outline-variant p-4 sm:grid-cols-2">
             <Button mode="standard" variant="secondary" size="lg" href={ROUTES.TEACHER.CLASS_STUDENT_NEW(classData.id)} className="justify-center">
@@ -279,29 +271,20 @@ function ClassSettingsContent({ data, copy }: { data: SettingsPageData; copy: Se
                 </h2>
                 <div className="overflow-hidden rounded-md border border-outline-variant bg-surface">
                   {section.items.map((item) => (
-                    'toggle' in item && item.toggle ? (
-                      <SettingsSwitchRow
-                        key={item.id}
-                        icon={item.icon}
-                        label={item.label}
-                        value={item.value}
-                      />
-                    ) : (
-                      <SettingsLink
-                        key={item.id}
-                        href={settingsHref(classData.id, item.id)}
-                        icon={item.icon}
-                        label={item.label}
-                        value={item.value}
-                      />
-                    )
+                    <SettingsLink
+                      key={item.id}
+                      href={settingsHref(classData.id, item.id)}
+                      icon={item.icon}
+                      label={item.label}
+                      value={item.value}
+                    />
                   ))}
                 </div>
               </section>
             ))}
           </nav>
         </Card>
-      </main>
+      </div>
     </div>
   )
 }
@@ -325,7 +308,7 @@ function SettingsLink({
   return (
     <Link
       href={href}
-      className="flex min-h-14 items-center gap-3 border-b border-outline-variant px-4 py-3 last:border-b-0 hover:bg-surface-container focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+      className="flex min-h-14 items-center gap-3 border-b border-outline-variant px-4 py-3 last:border-b-0 hover:bg-surface-container focus-ring"
     >
       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-primary-soft text-primary" aria-hidden>
         <Icon name={icon} size="sm" />
@@ -336,30 +319,6 @@ function SettingsLink({
       </span>
       <Icon name="CaretRight" size="xs" className="shrink-0 text-outline" aria-hidden />
     </Link>
-  )
-}
-
-function SettingsSwitchRow({
-  icon,
-  label,
-  value,
-}: {
-  icon: 'BookOpen' | 'Users' | 'ListChecks' | 'SquaresFour' | 'GraduationCap' | 'House' | 'Key' | 'ThumbsUp' | 'PencilSimple' | 'PlusCircle' | 'HandHeart' | 'PaperPlaneTilt'
-  label: string
-  value: string
-}) {
-  return (
-    <div className="flex min-h-14 items-center gap-3 border-b border-outline-variant px-4 py-3 last:border-b-0">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-primary-soft text-primary" aria-hidden>
-        <Icon name={icon} size="sm" />
-      </span>
-      <span className="min-w-0 flex-1">
-        <span className="block truncate text-sm font-semibold text-on-surface">{label}</span>
-        <span className="block truncate text-xs text-on-surface-variant">{value}</span>
-      </span>
-      <MantineBoundary><Switch disabled checked={false} aria-label={label}
-        aria-checked={false} aria-disabled="true" className="shrink-0" /></MantineBoundary>
-    </div>
   )
 }
 

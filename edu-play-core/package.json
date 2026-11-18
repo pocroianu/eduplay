@@ -2,6 +2,7 @@
   "name": "edu-play-core",
   "version": "0.1.0",
   "private": true,
+  "sideEffects": ["*.css", "**/registrations.ts", "**/register-types.ts"],
   "engines": {
     "node": "24.12.0"
   },
@@ -22,7 +23,8 @@
     "format": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "build:activity-protocol": "npm run build --workspace=@edu-play/activity-protocol",
-    "verify:agent": "npm run lint && npm run typecheck && npm run test:unit && tsx scripts/check-agent-guardrails.ts --types-drift-if-needed",
+    "verify:agent": "npm run lint && npm run typecheck && npm run check:css-classes && npm run test:unit && tsx scripts/check-agent-guardrails.ts --types-drift-if-needed",
+    "check:css-classes": "tsx scripts/check-css-classes.ts",
     "check:agent-guardrails": "tsx scripts/check-agent-guardrails.ts",
     "audit:mantine": "node scripts/audit-mantine.mjs",
     "test": "npm run test:unit && npm run test:e2e",
@@ -74,6 +76,7 @@
     "zxcvbn": "4.4.2"
   },
   "devDependencies": {
+    "@axe-core/playwright": "4.14.0",
     "@playwright/test": "1.59.1",
     "@tailwindcss/postcss": "4.2.4",
     "@testing-library/dom": "10.4.1",
@@ -97,7 +100,8 @@
     "tailwindcss": "4.2.4",
     "tsx": "4.21.0",
     "typescript": "5.9.3",
+    "vite": "8.0.2",
     "vitest": "4.1.5",
-    "vite": "8.0.2"
+    "vitest-axe": "0.1.0"
   }
 }

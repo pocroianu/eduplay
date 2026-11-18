@@ -28,7 +28,7 @@ export function WordListPreviewContent({
   }
 
   return (
-    <main
+    <div
       className="flex h-screen w-screen flex-col bg-surface text-on-surface"
       aria-label={t('listenTap.preview.pageLabel', { name: wordListName })}
     >
@@ -48,6 +48,6 @@ export function WordListPreviewContent({
           onRequestExit={handleExit}
         />
       </div>
-    </main>
+    </div>
   )
 }

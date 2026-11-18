@@ -97,7 +97,7 @@ function StandardAuthShell({
   className,
 }: AuthShellStandardProps) {
   return (
-    <main
+    <div
       className={cn(
         "relative min-h-screen overflow-x-hidden bg-primary-wash px-6 py-10 md:px-8",
 
@@ -107,7 +107,7 @@ function StandardAuthShell({
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-[520px] flex-col justify-center">
         <Link
           href="/"
-          className="mb-8 inline-flex min-h-11 w-fit items-center gap-2 rounded-full px-3 py-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          className="mb-8 inline-flex min-h-11 w-fit items-center gap-2 rounded-full px-3 py-1 focus-ring"
         >
           <span className="font-headline text-3xl font-semibold tracking-tight text-primary">
             EduPlay
@@ -139,7 +139,7 @@ function StandardAuthShell({
 
         {footerSlot && <div className="mt-8">{footerSlot}</div>}
       </div>
-    </main>
+    </div>
   );
 }
 
@@ -170,7 +170,7 @@ function KidAuthShell({
   className,
 }: AuthShellKidProps) {
   return (
-    <main
+    <div
       className={cn(
         "relative min-h-screen overflow-x-hidden bg-primary-wash px-4 pt-14 pb-8 md:pt-16 md:pb-12",
 
@@ -180,7 +180,7 @@ function KidAuthShell({
       {backLink && (
         <Link
           href={backLink.href}
-          className="absolute top-4 left-4 md:top-6 md:left-6 z-10 inline-flex min-h-16 items-center rounded-full px-4 py-1 text-sm font-semibold text-on-surface-variant hover:text-on-surface focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+          className="absolute top-4 left-4 md:top-6 md:left-6 z-10 inline-flex min-h-16 items-center rounded-full px-4 py-1 text-sm font-semibold text-on-surface-variant hover:text-on-surface focus-ring"
         >
           <span>{backLink.label}</span>
         </Link>
@@ -207,7 +207,7 @@ function KidAuthShell({
           {footerSlot && <div className="mt-4">{footerSlot}</div>}
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 

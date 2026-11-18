@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { Avatar, Box, Divider, FocusTrap, Modal, Stack, Text, UnstyledButton } from '@mantine/core'
 import { useTranslation } from 'react-i18next'
-import { createClient } from '@/lib/supabase/client'
+import { signOutBrowserClient } from '@/lib/supabase/sign-out'
 import { ROUTES } from '@/shared/lib/constants'
 import { getInitials } from '@/shared/lib/utils/initials'
 import { Icon } from '@/shared/components/ui/Icon'
@@ -97,7 +97,7 @@ export function AccountMenuModal({
 
   const signOutToLogin = async () => {
     onClose()
-    await createClient().auth.signOut()
+    await signOutBrowserClient()
     router.push(ROUTES.AUTH.LOGIN)
     router.refresh()
   }

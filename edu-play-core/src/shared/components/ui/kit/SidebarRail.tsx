@@ -154,7 +154,7 @@ const badgeStyle: CSSProperties = {
 };
 
 const sectionLabelStyle: CSSProperties = {
-  color: 'var(--color-on-surface-muted)',
+  color: 'var(--color-on-surface-variant)',
   fontSize: 12,
   fontWeight: 700,
   lineHeight: 1.2,
@@ -195,6 +195,8 @@ function itemStyle(item: SidebarRailItem) {
 
 function SidebarItem({ item, collapsed }: { item: SidebarRailItem; collapsed?: boolean }) {
   const accessibleLabel = `${item.label}${item.badge ? ` ${item.badge}` : ''}${item.dot ? ' notificare nouă' : ''}`;
+  // Expanded rows already expose their visible text; an aria-label that drops it breaks WCAG 2.5.3.
+  const expandedLabel = item.badge || item.dot ? accessibleLabel : undefined;
   const content = collapsed ? (
     <ActionIcon
       component={Link}
@@ -213,7 +215,7 @@ function SidebarItem({ item, collapsed }: { item: SidebarRailItem; collapsed?: b
       component={Link}
       href={item.href}
       aria-current={item.active ? 'page' : undefined}
-      aria-label={accessibleLabel}
+      aria-label={expandedLabel}
       active={item.active}
       noWrap
       label={item.label}
@@ -321,7 +323,7 @@ export function SidebarRail({
 
         {profile ? (
           onProfileClick ? (
-            <UnstyledButton type="button" onClick={onProfileClick} aria-label="Deschide meniul contului" style={profileStyle}>
+            <UnstyledButton type="button" onClick={onProfileClick} aria-label={collapsed ? `${profile.initials} ${profile.name}: Deschide meniul contului` : undefined} style={profileStyle}>
               <ProfileContent profile={profile} collapsed={collapsed} />
             </UnstyledButton>
           ) : (

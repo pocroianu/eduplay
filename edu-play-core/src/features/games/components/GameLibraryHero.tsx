@@ -19,7 +19,7 @@ export function GameLibraryHero() {
       className="relative flex min-h-[280px] items-center overflow-hidden rounded-xl bg-primary p-6 md:p-12"
     >
       <div className="pointer-events-none absolute right-0 top-0 h-64 w-64 rounded-full bg-white/30 blur-3xl" />
-      <div className="pointer-events-none absolute bottom-0 right-12 h-48 w-48 rounded-full bg-gold-fixed/30 blur-2xl" />
+      <div className="pointer-events-none absolute bottom-0 right-12 h-48 w-48 rounded-full bg-gold/30 blur-2xl" />
 
       <div className="relative z-10 max-w-lg space-y-4">
         <h1 className="font-headline text-3xl font-bold leading-tight text-white md:text-4xl">

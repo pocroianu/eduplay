@@ -1,6 +1,7 @@
 'use server';
 
 import { revalidatePath } from 'next/cache';
+import { ROUTES } from '@/shared/lib/constants/routes';
 import { teacherUploadArtifactSchema } from '../schemas';
 import type { ActionResult } from '../types';
 import {
@@ -33,7 +34,7 @@ export async function teacherUploadArtifact(
 
   const result = await runTeacherUploadArtifact(parsed.data);
   if (result.success) {
-    revalidatePath('/teacher/portfolio');
+    revalidatePath(ROUTES.TEACHER.PORTFOLIO);
   }
   return result;
 }

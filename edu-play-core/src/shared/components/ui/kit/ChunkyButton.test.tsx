@@ -164,9 +164,7 @@ describe('ChunkyButton', () => {
   it('exposes a focus-visible ring', () => {
     render(<ChunkyButton>Focus</ChunkyButton>);
     const btn = screen.getByRole('button', { name: /focus/i });
-    expect(btn).toHaveClass('focus-visible:ring-2');
-    expect(btn).toHaveClass('focus-visible:ring-primary');
-    expect(btn).toHaveClass('focus-visible:ring-offset-2');
+    expect(btn).toHaveClass('focus-ring');
   });
 
   describe('as link (href set)', () => {
@@ -272,9 +270,7 @@ describe('ChunkyButton', () => {
     it('exposes the same focus-visible ring classes on link branch', () => {
       render(<ChunkyButton href="/x">Focus</ChunkyButton>);
       const link = screen.getByRole('link', { name: /focus/i });
-      expect(link).toHaveClass('focus-visible:ring-2');
-      expect(link).toHaveClass('focus-visible:ring-primary');
-      expect(link).toHaveClass('focus-visible:ring-offset-2');
+      expect(link).toHaveClass('focus-ring');
     });
 
     it('does not throw on pointer/touch press events on link branch', () => {

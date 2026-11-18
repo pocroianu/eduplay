@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { beforeAll, describe, expect, it, vi } from 'vitest'
 
+import { GamePreviewCarousel } from './GamePreviewCarousel'
 import { HomePage } from './HomePage'
 
 beforeAll(() => {
@@ -48,7 +49,7 @@ describe('HomePage', () => {
     expect(
       screen.getByRole('heading', {
         level: 2,
-        name: '10+ JOCURI',
+        name: 'Jocuri educaționale',
       }),
     ).toBeInTheDocument()
     expect(
@@ -58,7 +59,12 @@ describe('HomePage', () => {
       }),
     ).toHaveAttribute('aria-label', 'Începe într-un minut.')
     expect(screen.getByRole('link', { name: 'Autentifică-te' })).toHaveAttribute('href', '/login')
-    expect(screen.getByText('100%')).toBeInTheDocument()
+    expect(screen.getByText('Fără reclame și trackere')).toBeInTheDocument()
+    expect(screen.queryByText('100%')).not.toBeInTheDocument()
+    expect(screen.queryByText(/GDPR/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/săptămânal/)).not.toBeInTheDocument()
+    expect(screen.queryByText(/testat/i)).not.toBeInTheDocument()
+    expect(screen.getByText(`© ${new Date().getFullYear()} EduPlay România`)).toBeInTheDocument()
     expect(screen.getAllByText('Diacritice corecte').length).toBeGreaterThan(0)
     expect(screen.getAllByRole('link', { name: 'Începe gratuit' })[0]).toHaveClass(
       'bg-primary',
@@ -96,5 +102,13 @@ describe('HomePage', () => {
     }
 
     expect(screen.getByTestId('landing-role-card')).toHaveClass('rounded-xl', 'bg-primary-wash')
+  })
+
+  it('labels the dashboard preview card as an illustration', () => {
+    render(<GamePreviewCarousel />)
+
+    expect(screen.getByText('Exemplu')).toBeInTheDocument()
+    expect(screen.queryByText('Live')).not.toBeInTheDocument()
+    expect(screen.getByText(/Exemplu de tablou pentru o clasă/)).toBeInTheDocument()
   })
 })

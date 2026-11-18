@@ -72,6 +72,27 @@ describe('<ActivityPlayer /> gate', () => {
     expect(screen.getByTestId('renderer')).toBeInTheDocument();
   });
 
+  it('renders exactly one Vulpita in the gate-denied state', () => {
+    registerGatedType();
+
+    render(
+      <ActivityPlayer
+        instance={INSTANCE}
+        gateResult={{ allowed: false, reason: 'consent_required' }}
+      />,
+    );
+
+    expect(screen.getAllByRole('img', { name: /vulpi/i })).toHaveLength(1);
+  });
+
+  it('keeps the header Vulpita when the activity is playable', () => {
+    registerGatedType();
+
+    render(<ActivityPlayer instance={INSTANCE} gateResult={{ allowed: true }} />);
+
+    expect(screen.getAllByRole('img', { name: /vulpi/i })).toHaveLength(1);
+  });
+
   it('renders the consent_required empty state and hides the renderer', () => {
     registerGatedType();
 

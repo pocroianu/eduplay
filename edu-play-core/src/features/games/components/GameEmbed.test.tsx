@@ -72,6 +72,12 @@ describe("GameEmbed host controls", () => {
     return onComplete;
   }
 
+  it('limits iframe permissions while retaining the origin required by the protocol', () => {
+    const { container } = renderReadyGame();
+    expect(container.querySelector('iframe')).toHaveAttribute('sandbox', 'allow-scripts allow-same-origin');
+    expect(container.querySelector('iframe')).toHaveAttribute('allow', 'autoplay; fullscreen');
+  });
+
   it("normalizes missing star rating from schema-valid game completion", async () => {
     const onComplete = renderCompletableGame();
 

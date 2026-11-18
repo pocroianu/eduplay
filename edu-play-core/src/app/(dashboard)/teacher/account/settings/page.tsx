@@ -284,7 +284,7 @@ function AccountTabs({ active, tabs, label }: { active: string; tabs: AccountTab
             key={item.href}
             href={item.href}
             aria-current={isActive ? 'page' : undefined}
-            className={`flex min-h-16 items-center gap-3 rounded-lg border px-4 py-3 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary ${
+            className={`flex min-h-16 items-center gap-3 rounded-lg border px-4 py-3 text-left transition-colors focus-ring ${
               isActive
                 ? 'border-primary bg-primary-soft text-primary-deep'
                 : 'border-outline-variant bg-surface-container-lowest text-on-surface hover:bg-surface-container'
@@ -375,14 +375,14 @@ export default async function TeacherAccountSettingsPage() {
   const languageLabel = LANGUAGE_LABELS[lang];
 
   return (
-    <main className="min-h-screen bg-surface text-on-surface">
+    <div className="min-h-screen bg-surface text-on-surface">
       <header className="border-b border-outline-variant bg-surface-container-lowest px-6 py-5 lg:px-10">
         <div className="mx-auto flex max-w-5xl flex-col gap-5">
           <div className="flex items-center gap-3">
             <Link
               href={ROUTES.TEACHER.DASHBOARD}
               aria-label={copy.back}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+              className="flex h-11 w-11 items-center justify-center rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface focus-ring"
             >
               <Icon name="ArrowLeft" size="lg" aria-hidden />
             </Link>
@@ -460,6 +460,6 @@ export default async function TeacherAccountSettingsPage() {
           </Section>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

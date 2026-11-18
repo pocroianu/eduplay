@@ -1,6 +1,6 @@
 {
   "hero": {
-    "badge": "Acum live · Ediția 2026",
+    "badge": "Acum live",
     "utility": {
       "eyebrow": "Creat pentru școli primare",
       "message": "Jocuri sigure, progres vizibil și limba română corectă."
@@ -8,7 +8,7 @@
     "titleLine1": "Copiii învață",
     "titleLine2": "jucându-se",
     "titleLine3": "Serios.",
-    "description": "EduPlay este platforma cu jocuri educaționale pentru copiii români 3–12 ani. Construită cu profesori, testată cu copii reali.",
+    "description": "EduPlay este platforma cu jocuri educaționale pentru copiii români 3–12 ani. Construită pentru școlile primare din România.",
     "descriptionStrong": "Gratuit pentru profesori, mereu.",
     "ctaRegister": "Începe gratuit",
     "ctaHaveAccount": "Am deja cont",
@@ -21,14 +21,13 @@
     },
     "trustPills": {
       "ro": "Făcut în România",
-      "gdpr": "GDPR european",
+      "euHosting": "Aplicația rulează în UE (Frankfurt)",
       "noAds": "Zero reclame",
       "diacritics": "Diacritice corecte"
     },
     "visual": {
-      "gameCount": "10+",
-      "gameLabel": "JOCURI",
-      "gameSublabel": "și mai vin săptămânal",
+      "gameLabel": "Jocuri educaționale",
+      "gameSublabel": "pentru copii de 3–12 ani",
       "collageLabel": "Previzualizare EduPlay cu jocuri, progres și siguranță"
     },
     "subjects": {
@@ -39,17 +38,17 @@
     }
   },
   "socialProof": {
-    "headline": "100%",
-    "title": "garantat sigur pentru copii",
-    "subtitle": "Verificat la fiecare release.",
+    "headline": "Fără reclame și trackere",
+    "title": "pe paginile copiilor",
+    "subtitle": "",
     "stickers": {
       "ro": {
         "short": "RO",
         "label": "Făcut în România"
       },
-      "gdpr": {
-        "short": "GDPR",
-        "label": "Conformitate UE"
+      "euHosting": {
+        "short": "UE",
+        "label": "Aplicația rulează în Frankfurt"
       },
       "noAds": {
         "short": "0 ads",
@@ -63,10 +62,10 @@
   },
   "carousel": {
     "badge": "Biblioteca de jocuri",
-    "titleLine1": "Zece jocuri,",
-    "titleLine2": "o singură misiune",
+    "titleLine1": "Jocuri cu o singură",
+    "titleLine2": "misiune:",
     "titleLine3": "să le placă să învețe.",
-    "description": "Fiecare joc este construit împreună cu profesori și testat cu copii reali. Limba română corectă, fără reclame, gândit pentru atenția scurtă a celor mici.",
+    "description": "Limba română corectă, fără reclame, gândit pentru atenția scurtă a celor mici.",
     "featuredBadge": "Joc recomandat",
     "learnsLabel": "Ce învață",
     "games": {
@@ -190,12 +189,7 @@
     "titleLine1": "Patru promisiuni.",
     "titleLine2": "Verificabile",
     "description": "Nu spunem doar „suntem siguri”. Iată exact ce înseamnă, și unde poți verifica.",
-    "verifiedLabel": "Verificat",
     "promises": {
-      "gdpr": {
-        "title": "GDPR european",
-        "description": "Date stocate în UE, prelucrate doar pentru funcționarea platformei. Drept la ștergere, drept la portabilitate."
-      },
       "noTrackers": {
         "title": "Zero trackere pe rutele copiilor",
         "description": "ESLint blochează la build orice import de bibliotecă de analytics terț pe paginile copiilor. Verificat în PR."
@@ -255,11 +249,7 @@
     "haveAccountLink": "Autentifică-te"
   },
   "footer": {
-    "description": "Platformă educațională interactivă pentru copiii din România, vârste 3–12 ani. Făcută de profesori, pentru profesori și familii.",
-    "gdprBadge": {
-      "title": "GDPR European",
-      "description": "Date procesate exclusiv în UE"
-    },
+    "description": "Platformă educațională interactivă pentru copiii din România, vârste 3–12 ani. Făcută pentru profesori și familii.",
     "columns": {
       "platform": {
         "title": "Platformă",
@@ -294,7 +284,7 @@
         "contact": "Contact"
       }
     },
-    "copyright": "© 2026 EduPlay România",
+    "copyright": "© {{year}} EduPlay România",
     "madeInPrefix": "Făcut cu",
     "madeInSuffix": "în București",
     "diacriticsLetters": "ă î ș ț â",
@@ -302,7 +292,7 @@
     "navAria": "Navigare footer",
     "badges": {
       "romanian": "Română",
-      "gdpr": "GDPR",
+      "euHosting": "Servere în UE",
       "primary": "Primar"
     }
   },
@@ -339,7 +329,7 @@
       "eyebrow": "Panou școală",
       "title": "Tot ce contează, la vedere",
       "weeklyActivity": "Activitate săptămânală",
-      "live": "Live",
+      "live": "Exemplu",
       "note": "Profesorii pot trimite activități, elevii lucrează intuitiv, iar familiile primesc context fără să schimbe fluxul clasei.",
       "primaryCta": "Începe gratuit",
       "secondaryCta": "Intră în cont",
@@ -356,7 +346,8 @@
           "title": "Progres vizibil",
           "value": "87%"
         }
-      }
+      },
+      "illustrationNote": "Exemplu de tablou pentru o clasă. Cifrele sunt doar ilustrative."
     }
   }
 }

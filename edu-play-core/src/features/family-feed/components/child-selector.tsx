@@ -107,7 +107,7 @@ function SelectorPill({
       aria-pressed={active}
       data-active={active}
       onClick={onClick}
-      className="min-h-16 min-w-16 rounded-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+      className="min-h-16 min-w-16 rounded-full focus-ring"
     >
       <Pill tone={active ? 'lime' : 'neutral'}>{children}</Pill>
     </UnstyledButton>

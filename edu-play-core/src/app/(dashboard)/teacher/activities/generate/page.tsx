@@ -132,24 +132,13 @@ async function requireTeacher() {
   }
 }
 
-function ModeCard({ active, mode }: { active?: boolean; mode: Mode }) {
+function ModeCard({ mode }: { mode: Mode }) {
   return (
-    <Button
-      type="button"
-      disabled
-      aria-pressed={active}
-      className={
-        active
-          ? 'min-h-32 rounded-lg border border-primary bg-surface-container-lowest p-5 text-left'
-          : 'min-h-32 rounded-lg border border-outline-variant bg-surface-container-lowest p-5 text-left opacity-80'
-      }
-    >
-      <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary-soft text-primary-deep">
-        <Icon name={mode.icon} size="lg" aria-hidden />
-      </span>
+    <div className="min-h-32 rounded-lg border border-outline-variant bg-surface-container-lowest p-5 text-left">
+      <span className="flex h-11 w-11 items-center justify-center rounded-lg bg-primary-soft text-primary-deep"><Icon name={mode.icon} size="lg" aria-hidden /></span>
       <span className="mt-4 block text-base font-bold text-on-surface">{mode.title}</span>
       <span className="mt-2 block text-sm font-semibold leading-6 text-on-surface-variant">{mode.description}</span>
-    </Button>
+    </div>
   )
 }
 
@@ -158,14 +147,14 @@ export default async function GenerateActivityPage() {
   const copy = await getCopy(await getServerLanguage())
 
   return (
-    <main className="min-h-screen bg-surface text-on-surface">
+    <div className="min-h-screen bg-surface text-on-surface">
       <header className="border-b border-outline-variant bg-surface-container-lowest">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-4 lg:px-7">
           <div className="flex min-w-0 items-center gap-3">
             <Link
               href={ROUTES.TEACHER.ACTIVITY_CREATE}
               aria-label={copy.back}
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface-variant transition-colors hover:bg-surface-container focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-outline-variant bg-surface-container-lowest text-on-surface-variant transition-colors hover:bg-surface-container focus-ring"
             >
               <Icon name="ArrowLeft" size="lg" aria-hidden />
             </Link>
@@ -191,8 +180,8 @@ export default async function GenerateActivityPage() {
 
       <div className="mx-auto grid w-full max-w-6xl gap-6 px-5 py-6 lg:px-7">
         <section className="grid gap-4 md:grid-cols-2 xl:grid-cols-4" aria-label={copy.heading}>
-          {copy.modes.map((mode, index) => (
-            <ModeCard key={mode.title} active={index === 0} mode={mode} />
+          {copy.modes.map((mode) => (
+            <ModeCard key={mode.title} mode={mode} />
           ))}
         </section>
 
@@ -202,40 +191,20 @@ export default async function GenerateActivityPage() {
               <p className="max-w-3xl text-base font-semibold leading-7 text-on-surface">{copy.instructions}</p>
               <div className="mt-5 grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 {copy.outputTypes.map((label) => (
-                  <Button
-                    key={label}
-                    type="button"
-                    disabled
-                    className="rounded-lg border border-outline-variant bg-surface px-4 py-4 text-center text-sm font-bold text-on-surface disabled:cursor-not-allowed disabled:opacity-100"
-                  >
-                    {label}
-                  </Button>
+                  <span key={label} className="rounded-lg border border-outline-variant bg-surface px-4 py-4 text-center text-sm font-bold text-on-surface">{label}</span>
                 ))}
               </div>
             </div>
 
             <div className="rounded-lg border border-dashed border-outline-variant bg-surface p-5 text-center">
               <p className="text-sm font-semibold leading-6 text-on-surface-variant">{copy.uploadHint}</p>
-              <div className="mt-5 flex flex-col gap-3">
-                <Button type="button" disabled aria-disabled="true">
-                  <Icon name="ArrowUp" size="sm" aria-hidden />
-                  {copy.upload}
-                </Button>
-                <Button type="button" variant="secondary" disabled aria-disabled="true">
-                  <Icon name="HardDrives" size="sm" aria-hidden />
-                  {copy.googleDrive}
-                </Button>
-              </div>
+              <p className="mt-5 text-sm text-on-surface-variant">Încărcarea nu este disponibilă încă.</p>
             </div>
           </div>
         </Card>
 
-        <div className="flex justify-end">
-          <Button type="button" disabled aria-disabled="true">
-            {copy.next}
-          </Button>
-        </div>
+
       </div>
-    </main>
+    </div>
   )
 }

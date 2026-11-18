@@ -91,13 +91,18 @@ describe('ParentDashboardContent', () => {
     expect(screen.getByRole('heading', { name: 'Family Feed' })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'For Families' })).toBeInTheDocument()
     expect(screen.getByText('Recommendation')).toBeInTheDocument()
-    const main = screen.getByRole('main')
+    const main = screen.getByTestId('parent-dashboard-surface')
     expect(main).toHaveClass('bg-surface')
 
     const dashboardShell = screen.getByTestId('parent-dashboard-shell')
     expect(dashboardShell).toHaveClass('rounded-xl', 'bg-surface-container-lowest', 'shadow-soft-sm')
+    const overviewCards = screen.getAllByTestId('parent-overview-card')
+    expect(overviewCards).toHaveLength(3)
+    expect(overviewCards[0]).toHaveTextContent('Connected Children')
+    for (const card of overviewCards) {
+      expect(card.textContent).not.toBe('')
+    }
     const parentCards = [
-      ...screen.getAllByTestId('parent-overview-card'),
       screen.getByTestId('parent-action-card'),
       ...screen.getAllByTestId('parent-detail-card'),
     ]
@@ -116,7 +121,7 @@ describe('ParentDashboardContent', () => {
       'utf8',
     )
 
-    expect(source).toContain('SEESAW_FOCUS_RING_CLASS')
+    expect(source).toContain('FOCUS_RING_CLASS')
     expect(source).not.toContain('focus-visible:outline-blue')
   })
 })

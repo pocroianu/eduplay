@@ -5,7 +5,7 @@ import { I18nProvider } from '@/lib/i18n/I18nProvider'
 import type { Language } from '@/lib/i18n/config'
 import { getServerLanguage, getServerTranslation, preloadNamespaces } from '@/lib/i18n/server'
 import { Icon } from '@/shared/components/ui/Icon'
-import { Button, Card, Pill } from '@/shared/components/ui/kit'
+import { Card, Pill } from '@/shared/components/ui/kit'
 import { ROUTES } from '@/shared/lib/constants'
 
 type FamiliesPageData = ClassDetailData
@@ -150,7 +150,7 @@ function ClassFamiliesContent({ data, copy }: { data: FamiliesPageData; copy: Fa
         </div>
       </header>
 
-      <main className="mx-auto grid w-full max-w-[1180px] gap-6 px-6 py-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:px-10">
+      <div className="mx-auto grid w-full max-w-[1180px] gap-6 px-6 py-6 lg:grid-cols-[minmax(0,1fr)_340px] lg:px-10">
         <div className="space-y-6">
           <Card padding="lg" shadow={false} className="border border-outline-variant">
             <div className="flex flex-col gap-5 md:flex-row md:items-start">
@@ -170,9 +170,7 @@ function ClassFamiliesContent({ data, copy }: { data: FamiliesPageData; copy: Fa
               </div>
             </div>
             <div className="mt-6 flex flex-wrap items-center gap-3 border-t border-outline-variant pt-5">
-              <Button mode="standard" type="button" disabled>
-                {copy.turnOn}
-              </Button>
+              <p className="text-sm text-on-surface-variant">Accesul familiei nu poate fi activat încă.</p>
             </div>
           </Card>
 
@@ -205,7 +203,7 @@ function ClassFamiliesContent({ data, copy }: { data: FamiliesPageData; copy: Fa
             </div>
           </Card>
         </aside>
-      </main>
+      </div>
     </div>
   )
 }

@@ -442,7 +442,7 @@ export function TeacherUploadModal({
                       </span>
                       <div>
                         <p className="text-sm font-bold text-on-surface">Jurnal</p>
-                        <p className="text-xs font-semibold text-on-surface-muted">Ciornă profesor</p>
+                        <p className="text-xs font-semibold text-on-surface-variant">Ciornă profesor</p>
                       </div>
                     </div>
                   </div>

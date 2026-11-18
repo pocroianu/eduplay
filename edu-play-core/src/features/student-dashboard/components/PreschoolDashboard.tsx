@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
+import { getCategoryConfig } from '@/features/games'
 import { ROUTES } from '@/shared/lib/constants/routes'
 import { Icon } from '@/shared/components/ui/Icon';
 import {
@@ -124,7 +125,7 @@ export function PreschoolDashboard({
                 />
               )}
               <div className="absolute inset-0 flex flex-col justify-end p-6 text-on-surface md:p-8">
-                <span className="mb-3 w-fit rounded-full bg-primary px-3 py-1 text-sm font-bold uppercase tracking-wide text-on-primary">
+                <span className="mb-3 w-fit rounded-full bg-primary px-3 py-1 text-base font-bold uppercase tracking-wide text-on-primary">
                   {t('preschool.featured.badge')}
                 </span>
                 <h1 className="mb-2 font-headline text-3xl font-bold leading-tight text-on-surface md:text-5xl">
@@ -132,7 +133,7 @@ export function PreschoolDashboard({
                 </h1>
                 {featuredGame?.category && (
                   <p className="hidden max-w-md text-lg text-on-surface-variant md:block">
-                    {featuredGame.category}
+                    {getCategoryConfig(featuredGame.category).label}
                   </p>
                 )}
                 <motion.span
@@ -158,12 +159,12 @@ export function PreschoolDashboard({
                 {t('preschool.dailyMission.subtitle', { count: dailyStarGoal })}
               </p>
             </div>
-            <div className="z-10 mt-5 flex items-end justify-between">
+            <div className="z-10 mt-5 flex flex-wrap items-end justify-between gap-3">
               <motion.div
                 variants={staggerContainer}
                 initial="initial"
                 animate="animate"
-                className="flex gap-1"
+                className="flex flex-wrap gap-1"
               >
                 {Array.from({ length: dailyStarGoal }).map((_, i) => {
                   const isFilled = i < dailyStarProgress
@@ -171,7 +172,7 @@ export function PreschoolDashboard({
                     <motion.div
                       key={i}
                       variants={isFilled ? fadeInUp : staggerItem}
-                      className={`flex h-10 w-10 items-center justify-center rounded-full border border-outline-variant ${
+                      className={`flex h-9 w-9 items-center justify-center min-[360px]:h-10 min-[360px]:w-10 rounded-full border border-outline-variant ${
                         isFilled
                           ? 'bg-gold-soft'
                           : 'bg-surface-container'
@@ -196,12 +197,12 @@ export function PreschoolDashboard({
 
         {/* Jocuri Noi Section */}
         <section>
-          <div className="mb-6 flex items-center justify-between">
+          <div className="mb-6 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
             <div className="flex items-center gap-3">
               <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-outline-variant bg-surface-container-lowest text-primary shadow-soft-sm" aria-hidden="true">
                 <Icon name="RocketLaunch" weight="fill" className="text-primary" />
               </div>
-              <h2 className="font-headline text-2xl font-bold text-on-surface md:text-3xl">{t('preschool.newGames.title')}</h2>
+              <h2 className="font-headline text-xl font-bold text-on-surface min-[360px]:text-2xl md:text-3xl">{t('preschool.newGames.title')}</h2>
             </div>
             <Link
               href={ROUTES.STUDENT.ACTIVITIES}
@@ -247,7 +248,7 @@ export function PreschoolDashboard({
                     </h3>
                     {game.category && (
                       <span className="mt-1 text-lg text-on-surface-variant">
-                        {game.category}
+                        {getCategoryConfig(game.category).label}
                       </span>
                     )}
                   </motion.div>
@@ -317,7 +318,7 @@ export function PreschoolDashboard({
         <Link
           href={featuredHref}
           aria-label={t('preschool.fab.ariaLabel')}
-          className="flex h-16 w-16 items-center justify-center rounded-full bg-primary shadow-soft-sm transition-colors hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+          className="flex h-16 w-16 items-center justify-center rounded-full bg-primary shadow-soft-sm transition-colors hover:bg-primary-dim focus-ring"
         >
           <Icon name="Play" weight="fill" className="text-on-primary" size={32} />
         </Link>

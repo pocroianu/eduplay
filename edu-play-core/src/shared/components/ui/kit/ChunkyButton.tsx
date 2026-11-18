@@ -192,7 +192,7 @@ function ChunkyNativeButton({
       className={cn(
         "inline-flex items-center justify-center gap-2 font-semibold tracking-[0.01em] select-none shadow-soft-sm",
 
-        "outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+        "focus-ring",
 
         variantStyle.bg,
 
@@ -261,7 +261,7 @@ function ChunkyLink({
       className={cn(
         "inline-flex items-center justify-center gap-2 font-semibold tracking-[0.01em] select-none shadow-soft-sm",
 
-        "outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+        "focus-ring",
 
         variantStyle.bg,
 

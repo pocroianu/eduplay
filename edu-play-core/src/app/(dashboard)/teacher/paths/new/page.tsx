@@ -57,7 +57,7 @@ export default async function TeacherPathNewPage({
         </div>
       </div>
 
-      <main className="px-6 py-6 lg:px-10">
+      <div className="px-6 py-6 lg:px-10">
         <div className="mx-auto grid max-w-6xl gap-6 lg:grid-cols-[minmax(0,1fr)_320px]">
           <div className="space-y-4">
             <Card padding="none" shadow={false} className="overflow-hidden border border-outline-variant">
@@ -91,7 +91,7 @@ export default async function TeacherPathNewPage({
             </Card>
           </aside>
         </div>
-      </main>
+      </div>
     </div>
   );
 }

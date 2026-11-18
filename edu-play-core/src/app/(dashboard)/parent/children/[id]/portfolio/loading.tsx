@@ -11,7 +11,7 @@ function Skeleton({ className }: { className: string }) {
 
 export default function ParentChildPortfolioLoading() {
   return (
-    <main className="min-h-screen bg-surface text-on-surface">
+    <div className="min-h-screen bg-surface text-on-surface">
       <div className="mx-auto w-full max-w-5xl px-6 py-8 lg:px-10">
         <div
           aria-busy="true"
@@ -53,6 +53,6 @@ export default function ParentChildPortfolioLoading() {
           ))}
         </div>
       </div>
-    </main>
+    </div>
   );
 }

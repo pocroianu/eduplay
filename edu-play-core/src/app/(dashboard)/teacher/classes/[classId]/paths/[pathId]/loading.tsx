@@ -11,7 +11,7 @@ function Skeleton({ className = '' }: { className?: string }) {
 
 export default function TeacherClassPathProgressLoading() {
   return (
-    <main aria-busy="true" className="min-h-screen bg-surface px-6 py-8 text-on-surface lg:px-10">
+    <div aria-busy="true" className="min-h-screen bg-surface px-6 py-8 text-on-surface lg:px-10">
       <p className="sr-only" role="status">
         Se încarcă progresul parcursului clasei.
       </p>
@@ -41,6 +41,6 @@ export default function TeacherClassPathProgressLoading() {
           </div>
         </section>
       </div>
-    </main>
+    </div>
   );
 }

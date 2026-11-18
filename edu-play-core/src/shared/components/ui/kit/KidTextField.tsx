@@ -86,10 +86,10 @@ export const KidTextField = forwardRef<HTMLInputElement, KidTextFieldProps>(
                 input: cn(
                   "h-[64px] w-full rounded-full border-2 bg-surface-container-lowest pl-[60px] pr-5 font-label text-xl font-semibold text-on-surface outline-none transition-all duration-150 disabled:opacity-60",
 
-                  "focus-visible:ring-4 focus-visible:ring-primary-soft",
+                  "focus-ring",
 
                   error
-                    ? "border-error focus-visible:border-error focus-visible:ring-error/20"
+                    ? "border-error focus-visible:border-error "
                     : "border-outline-variant focus-visible:border-primary",
                 ),
               }}
@@ -106,7 +106,7 @@ export const KidTextField = forwardRef<HTMLInputElement, KidTextFieldProps>(
               {error}
             </p>
           ) : helper ? (
-            <p id={helperId} className="ml-2 text-sm text-on-surface-variant">
+            <p id={helperId} className="ml-2 text-base text-on-surface-variant">
               {helper}
             </p>
           ) : null}

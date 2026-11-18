@@ -8,7 +8,7 @@ import type {
   ReactNode,
 } from "react";
 import { cn } from "@/shared/lib/utils/cn";
-import { SEESAW_STANDARD_BUTTON_INTERACTION_CLASS } from "./seesawInteraction";
+import { STANDARD_BUTTON_INTERACTION_CLASS } from "./interactionTokens";
 type Mode = "kid" | "standard";
 type Size = "sm" | "md" | "lg" | "xl";
 type Variant = "primary" | "secondary" | "ghost" | "icon";
@@ -21,7 +21,7 @@ const KID_TONES: Record<KidTone, KidStyle> = {
   },
   sun: {
     face: "var(--color-gold)",
-    ink: "var(--color-gold-deep)",
+    ink: "var(--color-on-surface)",
   },
   sky: {
     face: "var(--color-blue)",
@@ -40,10 +40,10 @@ const KID_SIZES: Record<
   Size,
   { padX: string; padY: string; font: string; minTarget: number }
 > = {
-  sm: { padX: "1.1rem", padY: "0.6rem", font: "0.8125rem", minTarget: 64 },
-  md: { padX: "1.5rem", padY: "0.85rem", font: "0.9375rem", minTarget: 64 },
-  lg: { padX: "1.85rem", padY: "1.05rem", font: "1.0625rem", minTarget: 64 },
-  xl: { padX: "2.25rem", padY: "1.25rem", font: "1.1875rem", minTarget: 72 },
+  sm: { padX: "1.1rem", padY: "0.6rem", font: "1.125rem", minTarget: 64 },
+  md: { padX: "1.5rem", padY: "0.85rem", font: "1.25rem", minTarget: 64 },
+  lg: { padX: "1.85rem", padY: "1.05rem", font: "1.375rem", minTarget: 64 },
+  xl: { padX: "2.25rem", padY: "1.25rem", font: "1.5rem", minTarget: 72 },
 };
 const KID_RADIUS_CLASS: Record<Size, string> = {
   sm: "rounded-lg",
@@ -135,8 +135,8 @@ export function Button({
   const dims = KID_SIZES[size];
   const classes = cn(
     "inline-flex items-center justify-center gap-2 font-headline font-semibold disabled:opacity-50",
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
-    SEESAW_STANDARD_BUTTON_INTERACTION_CLASS,
+    "focus-ring",
+    STANDARD_BUTTON_INTERACTION_CLASS,
     isKid
       ? cn(
           "border border-outline-variant shadow-soft-sm",
@@ -176,7 +176,7 @@ export function Button({
       className={classes}
       classNames={{
         inner: "inline-flex items-center justify-center gap-2",
-        label: "inline-flex items-center gap-2",
+        label: "inline-flex min-w-0 items-center justify-center gap-2 whitespace-normal text-center leading-snug sm:whitespace-nowrap",
       }}
       aria-disabled={isDisabled || undefined}
       aria-busy={isPending || undefined}
@@ -205,7 +205,7 @@ export function Button({
       className={classes}
       classNames={{
         inner: "inline-flex items-center justify-center gap-2",
-        label: "inline-flex items-center gap-2",
+        label: "inline-flex min-w-0 items-center justify-center gap-2 whitespace-normal text-center leading-snug sm:whitespace-nowrap",
       }}
       disabled={isDisabled}
       aria-busy={isPending || undefined}

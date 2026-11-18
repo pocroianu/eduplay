@@ -36,7 +36,7 @@ export async function createAssignment(input: unknown): Promise<AssignmentAction
   const parsed = createAssignmentSchema.safeParse(input)
   if (!parsed.success) return { success: false, error: parsed.error.issues[0]?.message ?? 'Date invalide' }
   const auth = await getTeacherUser()
-  if (!auth) return { success: false, error: 'Nu sunteți autentificat ca profesor' }
+  if (!auth) return { success: false, error: 'Nu ești autentificat ca profesor' }
   let result: Awaited<ReturnType<typeof createTeacherAssignment>>
   try {
     result = await createTeacherAssignment(auth.supabase, auth.userId, parsed.data)
@@ -60,7 +60,7 @@ export async function updateAssignment(
 
   const auth = await getTeacherUser()
   if (!auth) {
-    return { success: false, error: 'Nu sunteți autentificat ca profesor' }
+    return { success: false, error: 'Nu ești autentificat ca profesor' }
   }
 
   const { supabase, userId } = auth
@@ -89,7 +89,7 @@ export async function deleteAssignment(
 ): Promise<AssignmentActionResult> {
   const auth = await getTeacherUser()
   if (!auth) {
-    return { success: false, error: 'Nu sunteți autentificat ca profesor' }
+    return { success: false, error: 'Nu ești autentificat ca profesor' }
   }
 
   const { supabase, userId } = auth

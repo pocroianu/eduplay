@@ -9,8 +9,8 @@ export const lexend = Lexend({
 
 
 export const mono = JetBrains_Mono({
-  variable: "--font-mono",
-  subsets: ["latin"],
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin", "latin-ext"],
   weight: ["500", "700"],
   display: "swap",
 });

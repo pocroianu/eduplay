@@ -1,23 +1,22 @@
 {
   "hero": {
-    "badge": "Now live · 2026 Edition",
+    "badge": "Now live",
     "titleLine1": "Kids learn",
     "titleLine2": "by playing",
     "titleLine3": "Seriously.",
-    "description": "EduPlay is the platform with educational games for Romanian kids ages 3–12. Built with teachers, tested with real children.",
+    "description": "EduPlay is the platform with educational games for Romanian kids ages 3–12. Built for primary schools in Romania.",
     "descriptionStrong": "Free for teachers, always.",
     "ctaRegister": "Get started free",
     "ctaHaveAccount": "I already have an account",
     "trustPills": {
       "ro": "Made in Romania",
-      "gdpr": "EU-grade GDPR",
+      "euHosting": "App runs in the EU (Frankfurt)",
       "noAds": "Zero ads",
       "diacritics": "Proper diacritics"
     },
     "visual": {
-      "gameCount": "10+",
-      "gameLabel": "GAMES",
-      "gameSublabel": "and more every week",
+      "gameLabel": "Educational games",
+      "gameSublabel": "for children ages 3–12",
       "collageLabel": "EduPlay preview with games, progress, and safety"
     },
     "subjects": {
@@ -39,17 +38,17 @@
     }
   },
   "socialProof": {
-    "headline": "100%",
-    "title": "guaranteed safe for kids",
-    "subtitle": "Verified on every release.",
+    "headline": "No ads or trackers",
+    "title": "on children's pages",
+    "subtitle": "",
     "stickers": {
       "ro": {
         "short": "RO",
         "label": "Made in Romania"
       },
-      "gdpr": {
-        "short": "GDPR",
-        "label": "EU compliance"
+      "euHosting": {
+        "short": "EU",
+        "label": "The app runs in Frankfurt"
       },
       "noAds": {
         "short": "0 ads",
@@ -63,10 +62,10 @@
   },
   "carousel": {
     "badge": "Game library",
-    "titleLine1": "Ten games,",
-    "titleLine2": "one mission",
-    "titleLine3": "make them love learning.",
-    "description": "Every game is built with teachers and tested with real children. Proper Romanian, no ads, designed for short attention spans.",
+    "titleLine1": "Games with one",
+    "titleLine2": "mission:",
+    "titleLine3": "to make learning fun.",
+    "description": "Proper Romanian, no ads, designed for short attention spans.",
     "featuredBadge": "Featured game",
     "learnsLabel": "Learns",
     "games": {
@@ -190,12 +189,7 @@
     "titleLine1": "Four promises.",
     "titleLine2": "Verifiable",
     "description": "We don't just say we're safe. Here's what that actually means, and where you can verify it.",
-    "verifiedLabel": "Verified",
     "promises": {
-      "gdpr": {
-        "title": "EU-grade GDPR",
-        "description": "Data stored in the EU, processed only to run the platform. Right to erasure, right to portability."
-      },
       "noTrackers": {
         "title": "Zero trackers on kids' routes",
         "description": "ESLint blocks any third-party analytics import on kids' pages at build time. Verified in every PR."
@@ -255,11 +249,7 @@
     "haveAccountLink": "Sign in →"
   },
   "footer": {
-    "description": "Interactive educational platform for Romanian kids ages 3–12. Made by teachers, for teachers and families.",
-    "gdprBadge": {
-      "title": "EU GDPR",
-      "description": "Data processed exclusively in the EU"
-    },
+    "description": "Interactive educational platform for Romanian kids ages 3–12. Made for teachers and families.",
     "columns": {
       "platform": {
         "title": "Platform",
@@ -294,7 +284,7 @@
         "contact": "Contact"
       }
     },
-    "copyright": "© 2026 EduPlay Romania",
+    "copyright": "© {{year}} EduPlay Romania",
     "madeInPrefix": "Made with",
     "madeInSuffix": "in Bucharest",
     "diacriticsLetters": "ă î ș ț â",
@@ -302,7 +292,7 @@
     "navAria": "Footer navigation",
     "badges": {
       "romanian": "Romanian",
-      "gdpr": "GDPR",
+      "euHosting": "EU servers",
       "primary": "Primary"
     }
   },
@@ -339,7 +329,7 @@
       "eyebrow": "School dashboard",
       "title": "Everything that matters, visible",
       "weeklyActivity": "Weekly activity",
-      "live": "Live",
+      "live": "Example",
       "note": "Teachers can send activities, students work intuitively, and families get context without changing the classroom flow.",
       "primaryCta": "Get started free",
       "secondaryCta": "Sign in",
@@ -356,7 +346,8 @@
           "title": "Visible progress",
           "value": "87%"
         }
-      }
+      },
+      "illustrationNote": "Example class dashboard. The numbers are illustrative only."
     }
   }
 }

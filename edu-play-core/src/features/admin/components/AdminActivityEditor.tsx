@@ -10,6 +10,7 @@ import type {
 } from '@/features/api';
 import { Button, useToast } from '@/shared/components/ui/kit';
 import { Icon } from '@/shared/components/ui/Icon';
+import { ROUTES } from '@/shared/lib/constants/routes';
 import { formatDateShort } from '@/lib/i18n/formatters';
 import { ActivityStatusBadge, getActivityStatus } from './ActivityStatusBadge';
 
@@ -72,7 +73,7 @@ export function AdminActivityEditor({
   }, [configDraft]);
 
   const previewSrc = preview
-    ? `/play/${currentActivity.id}?previewId=${encodeURIComponent(preview.previewId)}`
+    ? `${ROUTES.PLAY.ACTIVITY(currentActivity.id)}?previewId=${encodeURIComponent(preview.previewId)}`
     : null;
   const canPublish = getActivityStatus(currentActivity) === 'draft';
 

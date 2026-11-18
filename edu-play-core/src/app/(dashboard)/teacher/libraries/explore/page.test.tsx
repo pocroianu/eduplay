@@ -19,11 +19,13 @@ const createClientMock = vi.fn()
 const getPublishedGamesMock = vi.fn()
 const getTeacherOwnedActivitiesMock = vi.fn()
 const routerPushMock = vi.fn()
+const routerReplaceMock = vi.fn()
+let searchParams = ''
 
 vi.mock('next/navigation', () => ({
   redirect: (path: string) => redirectMock(path),
-  useRouter: () => ({ push: routerPushMock }),
-  useSearchParams: () => new URLSearchParams(),
+  useRouter: () => ({ push: routerPushMock, replace: routerReplaceMock }),
+  useSearchParams: () => new URLSearchParams(searchParams),
 }))
 
 vi.mock('@/lib/supabase/server', () => ({
@@ -114,6 +116,7 @@ beforeEach(() => {
     value: TestResizeObserver,
   })
   vi.clearAllMocks()
+  searchParams = ''
   createClientMock.mockReturnValue(makeSupabase())
   getPublishedGamesMock.mockResolvedValue([])
   getTeacherOwnedActivitiesMock.mockResolvedValue([])
@@ -166,34 +169,32 @@ describe('/teacher/libraries/explore page', () => {
 
     expect(screen.queryByRole('heading', { name: 'Biblioteci', level: 1 })).not.toBeInTheDocument()
 
-    const content = screen.getByRole('region', { name: /conținut biblioteci/i })
-    expect(content.parentElement).toHaveStyle({ height: 'calc(100vh - 98px)' })
+    const content = screen.getByTestId('library-explore-content')
+    expect(content).toHaveClass('teacher-scroll-page')
     expect(within(content).queryByRole('tablist', { name: /surse bibliotecă/i })).not.toBeInTheDocument()
     expect(within(content).getByRole('heading', { name: 'Ce vrei să predai?', level: 2 })).toBeInTheDocument()
     expect(within(content).getByRole('searchbox', { name: 'Caută' })).toBeInTheDocument()
     expect(within(content).getByRole('searchbox', { name: 'Caută' })).toHaveClass('mantine-Input-input')
     expect(within(content).getByRole('search')).toHaveStyle({ width: 'min(796px, 100%)' })
 
-    expect(within(content).getByRole('button', { name: 'Esențiale EduPlay' })).toHaveClass('mantine-UnstyledButton-root')
-    expect(within(content).getByRole('button', { name: 'Evaluări' })).toHaveClass('mantine-UnstyledButton-root')
+    expect(within(content).getByRole('button', { name: 'Toate' })).toHaveClass('mantine-UnstyledButton-root')
+    expect(within(content).getByRole('button', { name: 'Sunete și litere' })).toHaveClass('mantine-UnstyledButton-root')
+    expect(within(content).queryByRole('button', { name: 'Matematică' })).not.toBeInTheDocument()
     expect(within(content).queryByRole('button', { name: 'Derulează dreapta' })).not.toBeInTheDocument()
-    expect(within(content).getByRole('button', { name: 'Alege clasa' })).toHaveClass('mantine-InputBase-input')
-    expect(within(content).getByRole('button', { name: 'Alege limba' })).toHaveClass('mantine-InputBase-input')
-    expect(within(content).getByText(/standarde și curriculum/i)).toBeInTheDocument()
+    expect(within(content).getByRole('button', { name: /Alege clasa/ })).toHaveClass('mantine-InputBase-input')
+    expect(within(content).getByRole('button', { name: /Alege limba/ })).toHaveClass('mantine-InputBase-input')
+    expect(within(content).queryByText(/standarde și curriculum/i)).not.toBeInTheDocument()
     expect(within(content).queryByRole('button', { name: /standarde și curriculum/i })).not.toBeInTheDocument()
     expect(within(content).queryByRole('link', { name: /standarde și curriculum/i })).not.toBeInTheDocument()
-    expect(within(content).getByText(/standarde și curriculum/i)).not.toHaveClass('teacher-libraries-interactive')
+    expect(within(content).queryByRole('region', { name: /colecții recomandate/i })).not.toBeInTheDocument()
 
-    const featured = within(content).getByRole('region', { name: /colecții recomandate/i })
-    expect(within(featured).getByRole('link', { name: /rutine zilnice/i })).toHaveClass('mantine-Card-root')
-
-    const popular = within(content).getByRole('region', { name: /cele mai populare activități/i })
+    const popular = within(content).getByRole('region', { name: /activități din biblioteca eduplay/i })
     expect(within(popular).getByRole('article', { name: /exersează sunetul m/i })).toBeInTheDocument()
     expect(within(popular).getByRole('button', { name: 'Atribuie activitatea Exersează sunetul M' })).toHaveClass('mantine-ActionIcon-root')
-    expect(content.querySelector('[class*="seesaw-libraries"], [class*="seesaw-library-topic"], [class*="seesaw-explore-card"]')).toBeNull()
-    expect(container.querySelectorAll('.teacher-libraries-interactive').length).toBeGreaterThanOrEqual(18)
+    expect(content.querySelector('[class*="ep-libraries"], [class*="ep-library-topic"], [class*="ep-explore-card"]')).toBeNull()
+    expect(container.querySelectorAll('.teacher-libraries-interactive').length).toBeGreaterThanOrEqual(8)
     expect(container.querySelector('.teacher-libraries-input-interactive')).toBeInTheDocument()
-    expect(container.querySelectorAll('.mantine-Card-root.teacher-libraries-interactive').length).toBeGreaterThanOrEqual(4)
+    expect(container.querySelectorAll('.mantine-Card-root.teacher-libraries-interactive')).toHaveLength(1)
     expect(getPublishedGamesMock).toHaveBeenCalledTimes(1)
     expect(getTeacherOwnedActivitiesMock).not.toHaveBeenCalled()
   })
@@ -205,10 +206,10 @@ describe('/teacher/libraries/explore page', () => {
     const ui = await ExploreLibrariesPage()
     renderWithMantine(ui)
 
-    const content = screen.getByRole('region', { name: /conținut biblioteci/i })
-    const gradeFilter = within(content).getByRole('button', { name: 'Alege clasa' })
-    const languageFilter = within(content).getByRole('button', { name: 'Alege limba' })
-    const popular = within(content).getByRole('region', { name: /cele mai populare activități/i })
+    const content = screen.getByTestId('library-explore-content')
+    const gradeFilter = within(content).getByRole('button', { name: /Alege clasa/ })
+    const languageFilter = within(content).getByRole('button', { name: /Alege limba/ })
+    const popular = within(content).getByRole('region', { name: /activități din biblioteca eduplay/i })
 
     expect(gradeFilter).toHaveClass('mantine-InputBase-input')
     expect(gradeFilter).toHaveTextContent('Alege clasa')
@@ -220,7 +221,7 @@ describe('/teacher/libraries/explore page', () => {
     await user.click(gradeFilter)
     await user.click(await screen.findByRole('option', { name: 'Clasa a IV-a', hidden: true }))
     expect(gradeFilter).toHaveTextContent('Clasa a IV-a')
-    expect(routerPushMock).toHaveBeenLastCalledWith('/teacher/libraries/explore?grade=grade-4', {
+    expect(routerReplaceMock).toHaveBeenLastCalledWith('/teacher/libraries/explore?grade=grade-4', {
       scroll: false,
     })
     expect(within(popular).queryByRole('article', { name: /exersează sunetul m/i })).not.toBeInTheDocument()
@@ -229,9 +230,53 @@ describe('/teacher/libraries/explore page', () => {
     await user.click(languageFilter)
     await user.click(await screen.findByRole('option', { name: 'Română', hidden: true }))
     expect(languageFilter).toHaveTextContent('Română')
-    expect(routerPushMock).toHaveBeenLastCalledWith('/teacher/libraries/explore?grade=grade-4&language=ro', {
+    expect(routerReplaceMock).toHaveBeenLastCalledWith('/teacher/libraries/explore?grade=grade-4&language=ro', {
       scroll: false,
     })
+  })
+
+  it('filters by a catalog topic and persists it without adding history', async () => {
+    const user = userEvent.setup()
+    getPublishedGamesMock.mockResolvedValue([publicGame, upperGradeGame])
+    renderWithMantine(await ExploreLibrariesPage())
+    await user.click(screen.getByRole('button', { name: 'Sunete și litere' }))
+    expect(routerReplaceMock).toHaveBeenLastCalledWith('/teacher/libraries/explore?topic=phonics', { scroll: false })
+    expect(screen.getByRole('button', { name: 'Sunete și litere' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.queryByRole('article', { name: /descoperă fracțiile/i })).not.toBeInTheDocument()
+  })
+
+  it('restores known topics and treats unknown topics as all', async () => {
+    getPublishedGamesMock.mockResolvedValue([publicGame, upperGradeGame])
+    searchParams = 'topic=phonics'
+    const first = renderWithMantine(await ExploreLibrariesPage())
+    expect(screen.getByRole('button', { name: 'Sunete și litere' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.queryByRole('article', { name: /descoperă fracțiile/i })).not.toBeInTheDocument()
+    first.unmount()
+    searchParams = 'topic=unknown'
+    renderWithMantine(await ExploreLibrariesPage())
+    expect(screen.getByRole('button', { name: 'Toate' })).toHaveAttribute('aria-pressed', 'true')
+    expect(screen.getAllByRole('article')).toHaveLength(2)
+  })
+
+  it('pushes assignment navigation with the existing assignment context', async () => {
+    const user = userEvent.setup()
+    searchParams = 'classId=class-1&assignTo=class'
+    getPublishedGamesMock.mockResolvedValue([publicGame])
+    renderWithMantine(await ExploreLibrariesPage())
+    await user.click(screen.getByRole('button', { name: 'Atribuie activitatea Exersează sunetul M' }))
+    expect(routerPushMock).toHaveBeenCalledWith('/teacher/assignments/new?activityId=game-1&assignTo=class&classId=class-1')
+  })
+
+  it('reveals more results and resets the page size when searching', async () => {
+    const user = userEvent.setup()
+    getPublishedGamesMock.mockResolvedValue(Array.from({ length: 30 }, (_, i) => ({ ...publicGame, id: `game-${i}`, title: `Activitate ${i}` })))
+    renderWithMantine(await ExploreLibrariesPage())
+    expect(screen.getAllByRole('article')).toHaveLength(24)
+    expect(screen.getByText(/24 din 30/)).toBeInTheDocument()
+    await user.click(screen.getByRole('button', { name: 'Vezi mai multe' }))
+    expect(screen.getAllByRole('article')).toHaveLength(30)
+    await user.type(screen.getByRole('searchbox', { name: 'Caută' }), 'Activitate')
+    expect(screen.getAllByRole('article')).toHaveLength(24)
   })
 
   it('redirects unauthenticated visitors to login', async () => {
@@ -257,7 +302,7 @@ describe('/teacher/library page', () => {
     expect(screen.queryByRole('heading', { name: 'Activități recente', level: 1 })).not.toBeInTheDocument()
 
     const content = screen.getByRole('region', { name: /conținut biblioteca mea/i })
-    expect(content.parentElement).toHaveStyle({ height: 'calc(100vh - 68px)' })
+    expect(content.parentElement).toHaveClass('teacher-scroll-page')
     expect(within(content).getByText('Toate clasele').closest('.mantine-Badge-root')).toBeInTheDocument()
     expect(within(content).getByText('Toate subiectele').closest('.mantine-Badge-root')).toBeInTheDocument()
     expect(within(content).getByText('Toate limbile').closest('.mantine-Badge-root')).toBeInTheDocument()
@@ -291,13 +336,10 @@ describe('/teacher/library page', () => {
     expect(within(collections).getByRole('link', { name: /1 activitate fără colecție/i })).toHaveClass(
       'mantine-UnstyledButton-root',
     )
-    expect(within(collections).getByRole('textbox', { name: /creează o colecție nouă/i })).toHaveClass(
-      'mantine-Input-input',
-    )
-    expect(within(collections).getByRole('button', { name: 'Creează' })).toHaveClass('mantine-Button-root')
-    expect(within(collections).getByRole('button', { name: 'Creează' })).toBeDisabled()
-    expect(content.querySelector('[class*="seesaw-library"]')).toBeNull()
-    expect(container.querySelectorAll('.teacher-library-interactive').length).toBeGreaterThanOrEqual(6)
+    expect(within(collections).getByText('Crearea colecțiilor nu este disponibilă încă.')).toBeInTheDocument()
+    expect(within(collections).queryByRole('button', { name: 'Creează' })).not.toBeInTheDocument()
+    expect(content.querySelector('[class*="ep-library"]')).toBeNull()
+    expect(container.querySelectorAll('.teacher-library-interactive').length).toBeGreaterThanOrEqual(4)
     expect(container.querySelectorAll('.mantine-Card-root.teacher-library-interactive').length).toBeGreaterThanOrEqual(
       3,
     )
@@ -326,10 +368,7 @@ describe('teacher library reference layout CSS', () => {
     const surfaceHoverRule = cssRuleStartingAt(css, '.surfaceInteractive:hover')
     const actionHoverRule = cssRuleStartingAt(css, '.actionInteractive:hover')
 
-    expect(screen.getByRole('region', { name: /conținut biblioteca mea/i }).parentElement).toHaveStyle({
-      height: 'calc(100vh - 68px)',
-      overflowY: 'auto',
-    })
+    expect(screen.getByRole('region', { name: /conținut biblioteca mea/i }).parentElement).toHaveClass('teacher-scroll-page')
     expect(container.querySelectorAll('.teacher-library-interactive').length).toBeGreaterThanOrEqual(6)
     expect(container.querySelectorAll('.teacher-library-surface-interactive').length).toBeGreaterThanOrEqual(4)
     expect(container.querySelectorAll('.teacher-library-action-interactive').length).toBeGreaterThanOrEqual(2)
@@ -340,9 +379,9 @@ describe('teacher library reference layout CSS', () => {
   })
 
   it('removes obsolete My Library global EduPlay selectors after the Mantine rewrite', () => {
-    expect(globalsCss()).not.toContain('.seesaw-library-page')
-    expect(globalsCss()).not.toContain('.seesaw-library-column')
-    expect(globalsCss()).not.toContain('.seesaw-library-card')
+    expect(globalsCss()).not.toContain('.ep-library-page')
+    expect(globalsCss()).not.toContain('.ep-library-column')
+    expect(globalsCss()).not.toContain('.ep-library-card')
   })
 
   it('rounds Explore Library cards through Mantine component styling', async () => {
@@ -351,12 +390,11 @@ describe('teacher library reference layout CSS', () => {
     const ui = await ExploreLibrariesPage()
     renderWithMantine(ui)
 
-    const content = screen.getByRole('region', { name: /conținut biblioteci/i })
-    const featured = within(content).getByRole('region', { name: /colecții recomandate/i })
-    const popular = within(content).getByRole('region', { name: /cele mai populare activități/i })
+    const content = screen.getByTestId('library-explore-content')
+    const popular = within(content).getByRole('region', { name: /activități din biblioteca eduplay/i })
 
-    expect(within(featured).getByRole('link', { name: /rutine zilnice/i })).toHaveStyle({ borderRadius: '12px' })
-    expect(within(popular).getByRole('button', { name: 'Atribuie activitatea Exersează sunetul M' })).toHaveStyle({ borderRadius: '10px' })
+    expect(within(popular).getByRole('article').className).toContain('librariesCardBase')
+    expect(within(popular).getByRole('button', { name: 'Atribuie activitatea Exersează sunetul M' })).toHaveClass('teacher-libraries-action-interactive')
   })
   it('adds Mantine CSS-module hover feedback to every Explore Library interaction', async () => {
     getPublishedGamesMock.mockResolvedValue([publicGame])
@@ -368,9 +406,9 @@ describe('teacher library reference layout CSS', () => {
     const surfaceHoverRule = cssRuleStartingAt(css, '.surfaceInteractive:hover')
     const actionHoverRule = cssRuleStartingAt(css, '.actionInteractive:hover')
 
-    expect(container.querySelectorAll('.teacher-libraries-interactive').length).toBeGreaterThanOrEqual(18)
+    expect(container.querySelectorAll('.teacher-libraries-interactive').length).toBeGreaterThanOrEqual(8)
     expect(container.querySelectorAll('.teacher-libraries-action-interactive').length).toBeGreaterThanOrEqual(2)
-    expect(container.querySelectorAll('.teacher-libraries-surface-interactive').length).toBeGreaterThanOrEqual(16)
+    expect(container.querySelectorAll('.teacher-libraries-surface-interactive').length).toBeGreaterThanOrEqual(6)
     expect(globalsCss()).not.toContain('.teacher-libraries-interactive')
     expect(baseRule).toContain('transition:')
     expect(surfaceHoverRule).toContain('background-color: var(--color-surface-hover);')
@@ -396,9 +434,9 @@ describe('teacher library reference layout CSS', () => {
     ])
   })
   it('keeps Libraries top bar styling out of global EduPlay CSS after the Mantine rewrite', () => {
-    expect(globalsCss()).not.toContain('.seesaw-library-topbar')
-    expect(globalsCss()).not.toContain('.seesaw-library-topbar__explore-title')
-    expect(globalsCss()).not.toContain('.seesaw-library-topbar__explore-tabs')
-    expect(globalsCss()).not.toContain('.seesaw-library-topbar__action')
+    expect(globalsCss()).not.toContain('.ep-library-topbar')
+    expect(globalsCss()).not.toContain('.ep-library-topbar__explore-title')
+    expect(globalsCss()).not.toContain('.ep-library-topbar__explore-tabs')
+    expect(globalsCss()).not.toContain('.ep-library-topbar__action')
   })
 })

@@ -27,8 +27,8 @@ export default async function NotificationsPage() {
   const { notifications, total } = await getNotifications(user.id, 50, 0);
 
   return (
-    <main className="p-6 lg:p-10">
+    <div className="p-6 lg:p-10">
       <NotificationList notifications={notifications} total={total} />
-    </main>
+    </div>
   );
 }

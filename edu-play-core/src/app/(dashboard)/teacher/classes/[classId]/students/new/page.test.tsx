@@ -171,13 +171,13 @@ describe('/teacher/classes/[classId]/students/new', () => {
       'href',
       `${ROUTES.TEACHER.STUDENT_NEW}?classId=class-1`,
     )
-    expect(screen.getByRole('heading', { name: 'Paste a list of student names' })).toBeInTheDocument()
-    expect(screen.getByLabelText('Paste a list of student names')).toHaveClass('mantine-Textarea-input')
-    expect(screen.getByLabelText('Numele elevului 1')).toHaveClass('mantine-TextInput-input')
-    expect(screen.getByText('You can always add more later.')).toBeInTheDocument()
+    expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
+    expect(screen.queryByText('Editabil')).not.toBeInTheDocument()
+    expect(screen.queryByText('Preview')).not.toBeInTheDocument()
+    expect(screen.queryByText(/Numele elevului/)).not.toBeInTheDocument()
     expect(screen.getByText('Add People to Class')).toBeInTheDocument()
-    expect(screen.getAllByText('Students').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText('Families').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Students')).toHaveLength(1)
+    expect(screen.getAllByText('Families')).toHaveLength(1)
     expect(screen.getByText('Andrei Popescu')).toBeInTheDocument()
     expect(screen.getByText('Ioana Marin')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: /class settings/i })).toHaveAttribute(
@@ -186,14 +186,14 @@ describe('/teacher/classes/[classId]/students/new', () => {
     )
   })
 
-  it('keeps preview form controls on shared Mantine field wrappers', () => {
+  it('does not render mock form controls that have no submit flow', () => {
     const source = readFileSync(
       'src/app/(dashboard)/teacher/classes/[classId]/students/new/page.tsx',
       'utf8',
     )
 
-    expect(source).toContain('TextareaField')
-    expect(source).toContain('TextField')
+    expect(source).not.toContain('TextareaField')
+    expect(source).not.toContain('TextField')
     expect(source).not.toContain('<textarea')
     expect(source).not.toContain('<input')
   })

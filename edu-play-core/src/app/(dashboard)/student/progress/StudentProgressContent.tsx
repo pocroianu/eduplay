@@ -117,7 +117,7 @@ export function StudentProgressContent({ profile, ageBand, games }: StudentProgr
           <Card shadow={false} className="border border-outline-variant p-0">
             <div className="flex flex-col gap-4 p-5 md:flex-row md:items-center md:justify-between md:p-6">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-on-surface-variant">
+                <p className="text-base font-semibold uppercase tracking-wide text-on-surface-variant">
                   Harta învățării
                 </p>
                 <h1 className="mt-1 text-3xl font-semibold text-on-surface">
@@ -147,7 +147,7 @@ export function StudentProgressContent({ profile, ageBand, games }: StudentProgr
                   <Icon name={stat.icon} size={22} />
                 </span>
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-on-surface-variant">{stat.label}</p>
+                  <p className="text-base font-medium text-on-surface-variant">{stat.label}</p>
                   <p className="truncate text-2xl font-semibold text-on-surface">{stat.value}</p>
                 </div>
               </div>
@@ -171,14 +171,14 @@ export function StudentProgressContent({ profile, ageBand, games }: StudentProgr
                 <div className="flex flex-wrap items-center gap-3">
                   <Link
                     href={nextGame ? ROUTES.PLAY.ACTIVITY(nextGame.id) : ROUTES.STUDENT.ACTIVITIES}
-                    className="inline-flex min-h-16 items-center gap-2 rounded-lg bg-primary px-5 text-[18px] font-semibold text-on-primary hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+                    className="inline-flex min-h-16 items-center gap-2 rounded-lg bg-primary px-5 text-[18px] font-semibold text-on-primary hover:bg-primary-dim focus-ring"
                   >
                     <Icon name="PlayCircle" size={20} />
                     {nextGame?.progress?.status === 'completed' ? 'Vezi jocul' : 'Continuă'}
                   </Link>
                   <Link
                     href={ROUTES.STUDENT.REWARDS}
-                    className="inline-flex min-h-16 items-center gap-2 rounded-lg border border-outline-variant bg-surface-container-lowest px-5 text-[18px] font-semibold text-on-surface hover:bg-surface-container focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+                    className="inline-flex min-h-16 items-center gap-2 rounded-lg border border-outline-variant bg-surface-container-lowest px-5 text-[18px] font-semibold text-on-surface hover:bg-surface-container focus-ring"
                   >
                     <Icon name="Diamond" size={20} />
                     Stickere
@@ -200,7 +200,7 @@ export function StudentProgressContent({ profile, ageBand, games }: StudentProgr
               </div>
               <Link
                 href={ROUTES.STUDENT.ACTIVITIES}
-                className="inline-flex min-h-16 items-center gap-2 rounded-lg px-4 text-[18px] font-semibold text-primary hover:bg-surface-container focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+                className="inline-flex min-h-16 items-center gap-2 rounded-lg px-4 text-[18px] font-semibold text-primary hover:bg-surface-container focus-ring"
               >
                 Mai multe jocuri
                 <Icon name="ArrowRight" size={18} />
@@ -217,7 +217,7 @@ export function StudentProgressContent({ profile, ageBand, games }: StudentProgr
                 </p>
                 <Link
                   href={ROUTES.STUDENT.ACTIVITIES}
-                  className="inline-flex min-h-16 items-center gap-2 rounded-lg bg-primary px-5 text-[18px] font-semibold text-on-primary hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+                  className="inline-flex min-h-16 items-center gap-2 rounded-lg bg-primary px-5 text-[18px] font-semibold text-on-primary hover:bg-primary-dim focus-ring"
                 >
                   <Icon name="GameController" size={20} />
                   Alege un joc
@@ -244,10 +244,10 @@ export function StudentProgressContent({ profile, ageBand, games }: StudentProgr
                           </span>
                           <div className="min-w-0">
                             <div className="flex flex-wrap items-center gap-2">
-                              <span className="rounded-md bg-surface-container px-2 py-1 text-xs font-semibold text-on-surface-variant">
+                              <span className="rounded-md bg-surface-container px-2 py-1 text-base font-semibold text-on-surface-variant">
                                 Etapa {index + 1}
                               </span>
-                              <span className={`rounded-md px-2 py-1 text-xs font-semibold ${stageStyle.pillClass}`}>
+                              <span className={`rounded-md px-2 py-1 text-base font-semibold ${stageStyle.pillClass}`}>
                                 {stageStyle.label}
                               </span>
                             </div>
@@ -265,7 +265,7 @@ export function StudentProgressContent({ profile, ageBand, games }: StudentProgr
                             <span className="text-base text-on-surface-variant">Scor: {score}%</span>
                             <Link
                               href={ROUTES.PLAY.ACTIVITY(game.id)}
-                              className="inline-flex min-h-16 items-center gap-2 rounded-lg bg-primary px-4 text-[18px] font-semibold text-on-primary hover:bg-primary-dim focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+                              className="inline-flex min-h-16 items-center gap-2 rounded-lg bg-primary px-4 text-[18px] font-semibold text-on-primary hover:bg-primary-dim focus-ring"
                             >
                               {status === 'completed' ? 'Revino' : 'Joacă'}
                               <Icon name="ArrowRight" size={18} />
@@ -288,11 +288,11 @@ export function StudentProgressContent({ profile, ageBand, games }: StudentProgr
           >
             <Link
               href={ROUTES.STUDENT.REWARDS}
-              className="block rounded-lg border border-outline-variant bg-surface-container-lowest p-5 hover:bg-surface-container focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-primary/40"
+              className="block rounded-lg border border-outline-variant bg-surface-container-lowest p-5 hover:bg-surface-container focus-ring"
             >
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <span className="mb-3 inline-block rounded-md bg-gold-container px-3 py-1 text-sm font-semibold text-on-secondary-container">
+                  <span className="mb-3 inline-block rounded-md bg-gold-container px-3 py-1 text-base font-semibold text-on-secondary-container">
                     Stickere
                   </span>
                   <h3 className="mb-2 text-lg font-semibold text-on-surface">
@@ -314,7 +314,7 @@ export function StudentProgressContent({ profile, ageBand, games }: StudentProgr
             <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-5">
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <span className="mb-3 inline-block rounded-md bg-primary px-3 py-1 text-sm font-semibold text-on-primary">
+                  <span className="mb-3 inline-block rounded-md bg-primary px-3 py-1 text-base font-semibold text-on-primary">
                     Rezumat
                   </span>
                   <h3 className="mb-2 text-lg font-semibold text-on-surface">
